@@ -1,20 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class startController : Controller
+    public class StartController : Controller
     {
-        public string hello()
+        public string Hello()
         {
-            DateTime now = new DateTime();
-            now = DateTime.Now;
-            string result = "пустая строка";
-            int timeResult = now.Hour / 6;
+            var now = DateTime.Now;
+            var result = "пустая строка";
+            var timeResult = now.Hour / 6;
             switch (timeResult)
             {
                 case 0:
