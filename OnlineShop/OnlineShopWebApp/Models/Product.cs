@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OnlineShopWebApp.Models
+﻿namespace OnlineShopWebApp.Models
 {
     public class Product
     {
@@ -19,6 +14,10 @@ namespace OnlineShopWebApp.Models
             Name = name;
             Cost = cost;
             Description = description;
+        }
+        public override string ToString()
+        {
+            return $"{Id}\n{Name}\n{Cost}\n";
         }
     }
 }

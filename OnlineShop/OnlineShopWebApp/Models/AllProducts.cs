@@ -1,27 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using OnlineShopWebApp.Models;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace OnlineShopWebApp.Controllers
+namespace OnlineShopWebApp.Models
 {
-    public class HomeController : Controller
+    public class AllProducts
     {
-
-
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public static void Append(Product product)
         {
-            _logger = logger;
+            var products = GetAll();
+            products.Add(product);
         }
-
-
-        public string Index()
+        public static List<Product> GetAll()
         {
-            StringBuilder results = new StringBuilder();
             var products = new List<Product>();
             products.Add(new Product("Плюшевый мишка", 300, "Плюшевый мишка – символ нежности, трогательной заботы, " +
                 "тепла. Многим он знаком с первых лет жизни. "));
@@ -30,23 +19,8 @@ namespace OnlineShopWebApp.Controllers
                 "Только соблюдая четкую последовательность от большего стаканчика к меньшему у малыша получится башенка"));
             products.Add(new Product("Водный пистолет", 150, "Длагодаря водному пистолету можно весело играть в друзьями летом на лужайке"));
             products.Add(new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе"));
-            foreach (var product in products)
-            {
-                results.Append(product);
-                results.Append("");
-            }
-            return results.ToString();
+            return products;
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public static IEnumerable<Product> products1 = GetAll();
     }
 }
