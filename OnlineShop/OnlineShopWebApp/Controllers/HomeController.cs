@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
         {
             StringBuilder results = new StringBuilder();
             var allProducts = new List<Product>();
-            allProducts = AllProductsStoreage.GetAll();
+            allProducts = AllProductsStoreage.GetAllProducts();
             foreach (var product in allProducts)
             {
                 results.Append(product+"\n");

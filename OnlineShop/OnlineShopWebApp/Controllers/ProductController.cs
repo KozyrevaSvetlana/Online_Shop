@@ -2,6 +2,7 @@
 using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace OnlineShopWebApp.Controllers
@@ -41,24 +42,13 @@ namespace OnlineShopWebApp.Controllers
         private static string FindProductById(int idResult)
         {
             StringBuilder results = new StringBuilder();
-            var allProducts = new List<Product>();
-            allProducts = AllProductsStoreage.GetAll();
-            foreach (var product in allProducts)
-            {
-                if (product.Id == idResult)
-                {
-                    results.Append(product.IdToString() + "\n");
-                    results.Append("");
-                }
-            }
-            if (results.Length != 0)
-            {
-                return results.ToString();
-            }
-            else
+            var allProducts = AllProductsStoreage.GetAllProducts();
+            var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
+            if (result == null)
             {
                 return "Данный товар не найден";
             }
+            return result.IdToString();
         }
     }
 }
