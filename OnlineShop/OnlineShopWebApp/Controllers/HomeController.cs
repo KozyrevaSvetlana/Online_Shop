@@ -19,21 +19,14 @@ namespace OnlineShopWebApp.Controllers
         }
 
 
-        public static string Index()
+        public string Index()
         {
             StringBuilder results = new StringBuilder();
             var allProducts = new List<Product>();
-            allProducts = GeTAll();
-            //products.Add(new Product("Плюшевый мишка", 300, "Плюшевый мишка – символ нежности, трогательной заботы, " +
-            //    "тепла. Многим он знаком с первых лет жизни. "));
-            //products.Add(new Product("Конструктор", 1000, "Любознательным малышам придется по душе конструктор."));
-            //products.Add(new Product("Пирамидка стаканчики", 200, "«Пирамидка собирается из стаканчиков разного размера. " +
-            //    "Только соблюдая четкую последовательность от большего стаканчика к меньшему у малыша получится башенка"));
-            //products.Add(new Product("Водный пистолет", 150, "Длагодаря водному пистолету можно весело играть в друзьями летом на лужайке"));
-            //products.Add(new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе"));
+            allProducts = AllProductsStoreage.GetAll();
             foreach (var product in allProducts)
             {
-                results.Append(product);
+                results.Append(product+"\n");
                 results.Append("");
             }
             return results.ToString();
