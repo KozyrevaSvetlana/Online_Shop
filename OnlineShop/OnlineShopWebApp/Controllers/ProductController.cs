@@ -13,11 +13,33 @@ namespace OnlineShopWebApp.Controllers
         public string Index(string id)
         {
             var idResult = 0;
+            bool validResult = IsValid(id);
+            if (validResult)
+            {
+                try
+                {
+                    idResult = Int32.Parse(id);
+                }
+                catch(OverflowException)
+                {
+                    return "Вы ввели слишком длинное число";
+                }
+            }
+            else
+            {
+                return ErrorOutput(id);
+            }
+            return FindProductById(idResult);
+        }
+
+        private string ErrorOutput(string id)
+        {
+            var result = 0;
             try
             {
                 if (id != null)
                 {
-                    idResult = Int32.Parse(id);
+                    result = Int32.Parse(id);
                 }
                 else
                 {
@@ -32,11 +54,11 @@ namespace OnlineShopWebApp.Controllers
             {
                 return "Ошибка! Вы ввели слишком большое число";
             }
-            if (idResult < 1)
+            if (result < 1)
             {
                 return "Ошибка! Вы ввели слишком число, меньше 1";
             }
-            return FindProductById(idResult);
+            return "Неизвестная ошибка";
         }
 
         private static string FindProductById(int idResult)
@@ -49,6 +71,21 @@ namespace OnlineShopWebApp.Controllers
                 return "Данный товар не найден";
             }
             return result.IdToString();
+        }
+        private bool IsValid (string id)
+        {
+            if (id == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < id.Length; i++)
+            {
+                if (!char.IsDigit(id[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
