@@ -31,6 +31,10 @@ namespace OnlineShopWebApp.Controllers
             {
                 return "Ошибка! Вы ввели слишком большое число";
             }
+            if (idResult < 1)
+            {
+                return "Ошибка! Вы ввели слишком число, меньше 1";
+            }
             return FindProductById(idResult);
         }
 
