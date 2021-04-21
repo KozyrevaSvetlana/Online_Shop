@@ -2,7 +2,7 @@
 
 namespace OnlineShopWebApp.Models
 {
-    public class AllProducts
+    public static class AllProducts
     {
         public static void Append(Product product)
         {
@@ -21,6 +21,6 @@ namespace OnlineShopWebApp.Models
             products.Add(new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе"));
             return products;
         }
-        public static IEnumerable<Product> products1 = GetAll();
+        //public static IEnumerable<Product> products1 = GetAll();
     }
 }
