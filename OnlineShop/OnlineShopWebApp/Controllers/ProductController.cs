@@ -43,7 +43,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 if (product.Id == idResult)
                 {
-                    results.Append(product + "\n");
+                    results.Append(product.IdToString() + "\n");
                     results.Append("");
                 }
             }

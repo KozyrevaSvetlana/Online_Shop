@@ -19,5 +19,9 @@
         {
             return $"{Id}\n{Name}\n{Cost}\n";
         }
+        public string IdToString()
+        {
+            return $"{Id}\n{Name}\n{Cost}\n{Description}\n";
+        }
     }
 }
