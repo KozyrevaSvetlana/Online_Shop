@@ -11,8 +11,7 @@ namespace OnlineShopWebApp.Controllers
         public string Index()
         {
             var results = new StringBuilder();
-            var allProducts = new List<Product>();
-            allProducts = ProductsStorage.GetAllProducts();
+            var allProducts = ProductsStorage.GetAllProducts();
             foreach (var product in allProducts)
             {
                 results.Append(product+"\n");
