@@ -9,21 +9,11 @@ namespace OnlineShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
-
-
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-
         public string Index()
         {
-            StringBuilder results = new StringBuilder();
+            var results = new StringBuilder();
             var allProducts = new List<Product>();
-            allProducts = AllProductsStoreage.GetAllProducts();
+            allProducts = ProductsStorage.GetAllProducts();
             foreach (var product in allProducts)
             {
                 results.Append(product+"\n");

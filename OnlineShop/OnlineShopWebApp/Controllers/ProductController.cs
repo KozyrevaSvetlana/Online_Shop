@@ -64,7 +64,7 @@ namespace OnlineShopWebApp.Controllers
         private static string FindProductById(int idResult)
         {
             StringBuilder results = new StringBuilder();
-            var allProducts = AllProductsStoreage.GetAllProducts();
+            var allProducts = ProductsStorage.GetAllProducts();
             var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
             if (result == null)
             {

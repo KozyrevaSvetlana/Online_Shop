@@ -2,7 +2,7 @@
 
 namespace OnlineShopWebApp.Models
 {
-    public static class AllProductsStoreage
+    public static class ProductsStorage
     {
         private static List<Product> allProducts = new List<Product>();
         public static List<Product> Get()
@@ -25,8 +25,7 @@ namespace OnlineShopWebApp.Models
         }
         public static List<Product> GetAllProducts()
         {
-            Get();
-            return allProducts;
+            return Get();
         }
     }
 }
