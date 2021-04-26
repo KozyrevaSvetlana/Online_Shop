@@ -8,16 +8,10 @@ namespace OnlineShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()
+        public IActionResult Index()
         {
-            var results = new StringBuilder();
             var allProducts = ProductsStorage.GetAllProducts();
-            foreach (var product in allProducts)
-            {
-                results.Append(product+"\n");
-                results.Append("");
-            }
-            return results.ToString();
+            return View(allProducts);
         }
 
         public IActionResult Privacy()
