@@ -6,8 +6,16 @@
 
 <div class="text-center">
     <h1 class="display-4"></h1>
-    <p>@Model.Id</p>
-    <p>@Model.Name</p>
-    <p>@Model.Cost руб.</p>
-    <p>@Model.Description</p>
+    @if (Model == null)
+    {
+        <p>Извините, товар не найден</p>
+    }
+    else
+    {
+        <p>@Model.Id</p>
+        <p>@Model.Name</p>
+        <p>@Model.Cost руб.</p>
+        <p>@Model.Description</p>
+    }
+
 </div>
