@@ -8,7 +8,7 @@
     @foreach (var product in Model)
     {
         <p>@product.Id</p>
-        <a href="product.@product.Id">@product.Name</a>
+        <a href="Product/Index/@product.Id">@product.Name</a>
         <p>@product.Cost</p>
         <p>@product.Description</p>
     }

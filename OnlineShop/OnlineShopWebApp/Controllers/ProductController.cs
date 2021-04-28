@@ -12,15 +12,15 @@ namespace OnlineShopWebApp.Controllers
         // GET: ProductController
         public IActionResult Index(int id)
         {
-            return FindProductById(id);
+            var result = FindProductById(id);
+            return View(result);
         }
 
-        private IActionResult FindProductById(int idResult)
+        private Product FindProductById(int idResult)
         {
             var allProducts = ProductsStorage.GetAllProducts();
             var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
-            ViewBag.Product = result;
-            return View(result);
+            return result;
         }
         private bool IsValid (string id)
         {
