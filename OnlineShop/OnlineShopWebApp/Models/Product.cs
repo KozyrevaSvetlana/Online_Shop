@@ -7,13 +7,15 @@
         public string Name { get; set; }
         public decimal Cost { get; set; }
         public string Description { get; set; }
-        public Product(string name, decimal cost, string description)
+        public string Image { get; set; }
+        public Product(string name, decimal cost, string description, string image)
         {
             counter++;
             Id = counter;
             Name = name;
             Cost = cost;
             Description = description;
+            Image = image;
         }
         public override string ToString()
         {

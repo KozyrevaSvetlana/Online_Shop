@@ -1,0 +1,30 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4"></h1>
+    @if (Model == null)
+    {
+        <div class="card-body">
+            <p>Извините, товар не найден</p>
+            <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
+        </div>
+    }
+    else
+    {
+        <div class="col-6 card shadow">
+            <img class="card-img-top" href="@Model.Image" src="@Model.Image" alt="@Model.Name" />
+            <div class="card-body">
+                <p>@Model.Name</p>
+                <p>@Model.Cost руб</p>
+                <p>@Model.Description</p>
+                <a class="btn btn-success" href="#" role="button">Добавить в корзину</a>
+                <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+            </div>
+        </div>
+    }
+
+</div>
