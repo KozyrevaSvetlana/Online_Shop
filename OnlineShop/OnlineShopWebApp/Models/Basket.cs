@@ -6,7 +6,7 @@ namespace OnlineShopWebApp.Models
 {
     public class Basket
     {
-        private List<BasketList> productsLine = new List<BasketList>();
+        private static List<BasketList> productsLine = new List<BasketList>();
         public void AddProduct(BasketList basketList)
         {
             if (productsLine == null)
@@ -42,9 +42,8 @@ namespace OnlineShopWebApp.Models
             productsLine.Clear();
         }
 
-        public List<BasketList> GetBascet()
+        public static List<BasketList> GetBascet()
         {
-            AddAllProducts();
             return productsLine;
         }
 
