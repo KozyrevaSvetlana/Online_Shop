@@ -12,8 +12,15 @@ namespace OnlineShopWebApp.Controllers
     {
         public IActionResult Index()
         {
-            List<BascetLine> result = GetBascet();
+            var result = Basket.GetBascet();
             return View(result);
+        }
+        public IActionResult AddNewProduct(int id)
+        {
+            BasketList basket = new BasketList(id);
+            AddProduct(basket);
+            var result = Basket.GetBascet();
+            return View("Index", result);
         }
     }
 }

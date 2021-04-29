@@ -1,4 +1,4 @@
-﻿@model List<Basket>
+﻿@model List<Basket.BasketList>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,12 +13,18 @@
         <th>Стоимость</th>
         <th>Итого</th>
     </tr>
+    @{ int i = 1;}
     @foreach (var product in Model)
     {
-        <tr>
-            <th>@product</th>
-        </tr>
-    }
+<tr>
+    <th>@i</th>
+    <th>@product.Product.Name</th>
+    <th>@product.Count</th>
+    <th>@product.Product.Cost</th>
+    <th>@{decimal result = product.Product.Cost * product.Count;}</th>
+    @{i++;}
+</tr>
+        }
 
 
 </table>

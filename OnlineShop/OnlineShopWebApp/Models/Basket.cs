@@ -7,7 +7,7 @@ namespace OnlineShopWebApp.Models
     public class Basket
     {
         private static List<BasketList> productsLine = new List<BasketList>();
-        public void AddProduct(BasketList basketList)
+        public static void AddProduct(BasketList basketList)
         {
             if (productsLine == null)
             {
@@ -52,7 +52,7 @@ namespace OnlineShopWebApp.Models
             var allProducts = ProductsStorage.GetAllProducts();
             foreach (var item in allProducts)
             {
-                BasketList basket = new BasketList(item);
+                BasketList basket = new BasketList(item.Id);
                 AddProduct(basket);
             }
         }
@@ -60,9 +60,10 @@ namespace OnlineShopWebApp.Models
         {
             public Product Product { get; set; }
             public int Count = 0;
-            public BasketList(Product product)
+            public BasketList(int id)
             {
-                Product = product;
+                var allProducts = ProductsStorage.GetAllProducts();
+                Product = allProducts.FirstOrDefault(x => x.Id == id);
                 Count++;
             }
         }
