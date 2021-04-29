@@ -5,27 +5,36 @@
 
 
 <h1 class="display-4">Корзина</h1>
-<table>
-    <tr>
-        <th>Номер</th>
-        <th>Название</th>
-        <th>Количество</th>
-        <th>Стоимость</th>
-        <th>Итого</th>
-    </tr>
-    @{ int i = 1;}
-    @foreach (var product in Model)
-    {
-<tr>
-    <th>@i</th>
-    <th>@product.Product.Name</th>
-    <th>@product.Count</th>
-    <th>@product.Product.Cost</th>
-    <th>@{decimal result = product.Product.Cost * product.Count;}</th>
-    @{i++;}
-</tr>
+<div>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+            <th>Количество</th>
+            <th>Стоимость</th>
+            <th>Итого</th>
+        </tr>
+        @{ int i = 1;}
+        @{decimal totalResult = 0; }
+        @foreach (var product in Model)
+        {
+            <tr>
+                <th>@i</th>
+                <th>@product.Product.Name</th>
+                <th>@product.Count</th>
+                <th>@product.Product.Cost</th>
+                <th>@{decimal result = product.Product.Cost * product.Count;}@result</th>
+                @{
+                    i++;
+                    totalResult += result;}
+            </tr>
         }
+        <tr>
+            <th>Итого</th>
+            <th>@totalResult</th>
+        </tr>
+    </table>
+    <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+</div>
 
-
-</table>
 
