@@ -6,33 +6,35 @@ namespace OnlineShopWebApp.Models
 {
     public class Basket
     {
-        private List<BascetLine> productsLine = new List<BascetLine>();
-        public void AddProduct(Product product, int count)
+        private List<BasketList> productsLine = new List<BasketList>();
+        public void AddProduct(BasketList basketList)
         {
-            BascetLine bascetLine= productsLine
-                .Where(p => p.Product.Id == product.Id)
-                .FirstOrDefault();
-            if (bascetLine == null)
+            if (productsLine == null)
             {
-                productsLine.Add(new BascetLine
-                {
-                    Product = product,
-                    Count = count
-                });
+                productsLine.Add(basketList);
             }
             else
             {
-                bascetLine.Count += count;
+                var result = productsLine.FirstOrDefault(x => x.Product.Id == basketList.Product.Id);
+                if (result == null)
+                {
+                    productsLine.Add(basketList);
+                }
+                else
+                {
+                    result.Count++;
+                }
             }
         }
+
         public void RemoveLine(Product product)
         {
-            productsLine.RemoveAll(l => l.Product.Id == product.Id);
+            productsLine.RemoveAll(x => x.Product.Id == product.Id);
         }
 
         public decimal ComputeTotalValue()
         {
-            return productsLine.Sum(e => e.Product.Cost * e.Count);
+            return productsLine.Sum(x => x.Product.Cost * x.Count);
 
         }
         public void Clear()
@@ -40,16 +42,30 @@ namespace OnlineShopWebApp.Models
             productsLine.Clear();
         }
 
-        public List<BascetLine> GetBascet()
+        public List<BasketList> GetBascet()
         {
+            AddAllProducts();
             return productsLine;
         }
 
-
-        public class BascetLine
+        private void AddAllProducts()
+        {
+            var allProducts = ProductsStorage.GetAllProducts();
+            foreach (var item in allProducts)
+            {
+                BasketList basket = new BasketList(item);
+                AddProduct(basket);
+            }
+        }
+        public class BasketList
         {
             public Product Product { get; set; }
-            public int Count { get; set; }
+            public int Count = 0;
+            public BasketList(Product product)
+            {
+                Product = product;
+                Count++;
+            }
         }
     }
 }

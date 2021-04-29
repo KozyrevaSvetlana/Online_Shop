@@ -1,0 +1,25 @@
+﻿@model List<Basket>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<h1 class="display-4">Корзина</h1>
+<table>
+    <tr>
+        <th>Номер</th>
+        <th>Название</th>
+        <th>Количество</th>
+        <th>Стоимость</th>
+        <th>Итого</th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <th>@product</th>
+        </tr>
+    }
+
+
+</table>
+
