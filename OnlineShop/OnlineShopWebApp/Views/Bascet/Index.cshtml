@@ -3,38 +3,49 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-<h1 class="display-4">Корзина</h1>
-<div>
-    <table class="table">
-        <tr>
-            <th>Номер</th>
-            <th>Название</th>
-            <th>Количество</th>
-            <th>Стоимость</th>
-            <th>Итого</th>
-        </tr>
-        @{ int i = 1;}
-        @{decimal totalResult = 0; }
-        @foreach (var product in Model)
-        {
+@if (Model.Count == 0)
+{
+    <div>
+        <p>Упс, корзина пуста</p>
+        <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+    </div>
+}
+else
+{
+    <h1 class="display-4">Корзина</h1>
+    <div>
+        <table class="table">
             <tr>
-                <th>@i</th>
-                <th>@product.Product.Name</th>
-                <th>@product.Count</th>
-                <th>@product.Product.Cost</th>
-                <th>@{decimal result = product.Product.Cost * product.Count;}@result</th>
-                @{
-                    i++;
-                    totalResult += result;}
+                <th>Номер</th>
+                <th>Название</th>
+                <th>Количество</th>
+                <th>Стоимость</th>
+                <th>Итого</th>
             </tr>
-        }
-        <tr>
-            <th>Итого</th>
-            <th>@totalResult</th>
-        </tr>
-    </table>
-    <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
-</div>
+            @{ int i = 1;}
+            @{decimal totalResult = 0; }
+            @foreach (var products in Model)
+            {
+                <tr>
+                    <th>@i</th>
+                    <th>@products.Product.Name</th>
+                    <th>@products.Count</th>
+                    <th>@products.Product.Cost</th>
+                    <th>@{decimal result = products.Product.Cost * products.Count;}@result</th>
+                    @{
+                        i++;
+                        totalResult += result;}
+                </tr>
+            }
+            <tr>
+                <th>Итого</th>
+                <th>@totalResult</th>
+            </tr>
+        </table>
+        <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+    </div>
+}
+
+
 
 
