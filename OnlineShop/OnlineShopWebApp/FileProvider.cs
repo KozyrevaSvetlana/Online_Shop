@@ -18,7 +18,7 @@ namespace OnlineShopWebApp
 
         public static void Replace(string path, List<BasketList> value)
         {
-            var writer = new StreamWriter(path, false);
+            var writer = new StreamWriter(path, true);
             writer.WriteLine(value);
             writer.Close();
         }

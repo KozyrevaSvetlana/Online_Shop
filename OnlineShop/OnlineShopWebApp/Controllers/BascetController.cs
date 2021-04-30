@@ -15,7 +15,8 @@ namespace OnlineShopWebApp.Controllers
             var result = Basket.GetBascet();
             return View(result);
         }
-        public IActionResult AddNewProduct(int id)
+
+        public IActionResult AddToBascet(int id)
         {
             BasketList basket = new BasketList(id);
             AddProduct(basket);

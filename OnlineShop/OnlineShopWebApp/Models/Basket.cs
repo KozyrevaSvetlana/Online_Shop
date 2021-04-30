@@ -9,52 +9,29 @@ namespace OnlineShopWebApp.Models
         private static List<BasketList> productsLine = new List<BasketList>();
         public static void AddProduct(BasketList basketList)
         {
-            if (productsLine == null)
+            var result = productsLine.FirstOrDefault(x => x.Product.Id == basketList.Product.Id);
+            if (result == null)
             {
                 productsLine.Add(basketList);
             }
             else
             {
-                var result = productsLine.FirstOrDefault(x => x.Product.Id == basketList.Product.Id);
-                if (result == null)
-                {
-                    productsLine.Add(basketList);
-                }
-                else
-                {
-                    result.Count++;
-                }
+                result.Count++;
             }
+            BasketRepository.Save(productsLine);
         }
-
         public void RemoveLine(Product product)
         {
             productsLine.RemoveAll(x => x.Product.Id == product.Id);
         }
-
-        public decimal ComputeTotalValue()
-        {
-            return productsLine.Sum(x => x.Product.Cost * x.Count);
-
-        }
         public void Clear()
         {
             productsLine.Clear();
+            BasketRepository.Save(productsLine);
         }
-
         public static List<BasketList> GetBascet()
         {
             return productsLine;
-        }
-
-        private void AddAllProducts()
-        {
-            var allProducts = ProductsStorage.GetAllProducts();
-            foreach (var item in allProducts)
-            {
-                BasketList basket = new BasketList(item.Id);
-                AddProduct(basket);
-            }
         }
         public class BasketList
         {
