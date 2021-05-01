@@ -21,7 +21,7 @@
                 <p>@Model.Name</p>
                 <p>@Model.Cost руб</p>
                 <p>@Model.Description</p>
-                <a class="btn btn-success" href="Bascet/AddToBascet/@Model.Id" role="button">Добавить в корзину</a>
+                <a class="btn btn-success" href="/cart/add?productId=@Model.Id" role="button">Добавить в корзину</a>
                 <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
             </div>
         </div>

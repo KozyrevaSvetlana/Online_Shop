@@ -1,9 +1,8 @@
-﻿@model List<Basket.BasketList>
-@{
+﻿@model Cart
     ViewData["Title"] = "Home Page";
 }
 
-@if (Model.Count == 0)
+@if (Model == null)
 {
     <div>
         <p>Упс, корзина пуста</p>
@@ -23,26 +22,24 @@ else
                 <th>Итого</th>
             </tr>
             @{ int i = 1;}
-            @{decimal totalResult = 0; }
-            @foreach (var products in Model)
+            @foreach (var products in Model.Items)
             {
                 <tr>
                     <th>@i</th>
                     <th>@products.Product.Name</th>
-                    <th>@products.Count</th>
                     <th>@products.Product.Cost</th>
-                    <th>@{decimal result = products.Product.Cost * products.Count;}@result</th>
-                    @{
-                        i++;
-                        totalResult += result;}
+                    <th>@products.Amount</th>
+                    <th>@products.Cost</th>
+                    @{i++;}
                 </tr>
             }
             <tr>
                 <th>Итого</th>
-                <th>@totalResult</th>
+                <th>@Model.Cost</th>
             </tr>
         </table>
         <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+        <a class="btn btn-success" href="#" role="button">Оформить заказ</a>
     </div>
 }
 
