@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -23,6 +21,10 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public int AddAmountToCart(int amount)
+        {
+            return amount;
         }
     }
 }

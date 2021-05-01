@@ -22,5 +22,14 @@ namespace OnlineShopWebApp.Controllers
             CartsRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
+
+
+        public IActionResult СountTheAmount()
+        {
+            //проверка как работает
+            var model = 10;
+            ViewBag.Int = model;
+            return PartialView(model);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace OnlineShopWebApp
                         {
                             Id = Guid.NewGuid(),
                             Amount = 1,
-                            Product = product
+                            Product = product,
                         }
                     }
                 };
@@ -49,10 +49,21 @@ namespace OnlineShopWebApp
                     {
                         Id = Guid.NewGuid(),
                         Amount = 1,
-                        Product = product
+                        Product = product,
                     });
                 }
             }
+        }
+
+        public static int GetAllAmounts(string userId)
+        {
+            var existingCart = TryGetByUserId(userId);
+            if (existingCart!=null)
+            {
+                var countAmount = existingCart.Items.Sum(x => x.Amount);
+                return countAmount;
+            }
+            return 0;
         }
     }
 }
