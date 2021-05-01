@@ -27,5 +27,10 @@ namespace OnlineShopWebApp.Controllers
             CompareList.Add(product);
             return RedirectToAction("Index");
         }
+        public IActionResult Clear(int productId)
+        {
+            CompareList.Clear();
+            return RedirectToAction("Index");
+        }
     }
 }
