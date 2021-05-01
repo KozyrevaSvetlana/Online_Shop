@@ -13,6 +13,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var cart = CartsRepository.TryGetByUserId(Constants.UserId);
+            СountTheAmount();
             return View(cart);
         }
 
@@ -24,12 +25,10 @@ namespace OnlineShopWebApp.Controllers
         }
 
 
-        public IActionResult СountTheAmount()
+        public void СountTheAmount()
         {
-            //проверка как работает
-            var model = 10;
-            ViewBag.Int = model;
-            return PartialView(model);
+            var count = CartsRepository.GetAllAmounts(Constants.UserId);
+            ViewBag.Int = count;
         }
     }
 }
