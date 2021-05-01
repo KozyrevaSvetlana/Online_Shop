@@ -18,7 +18,8 @@ namespace OnlineShopWebApp.Controllers
 
         private Product FindProductById(int idResult)
         {
-            var allProducts = ProductsRepository.GetAllProducts();
+            var allProducts = ProductsRepository.GetAll();
+
             var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
             return result;
         }

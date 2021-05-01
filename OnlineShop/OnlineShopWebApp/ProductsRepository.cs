@@ -15,7 +15,7 @@ namespace OnlineShopWebApp.Models
             new Product("Водный пистолет", 150, "Длагодаря водному пистолету можно весело играть в друзьями летом на лужайке", "/img/Products/4.jpg"),
                 new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе", "/img/Products/5.jpg")
     };
-        public List<Product> GetAll()
+        public static List<Product> GetAll()
         {
             return products;
         }

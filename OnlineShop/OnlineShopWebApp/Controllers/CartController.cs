@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static OnlineShopWebApp.Models.Cart;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -17,14 +12,14 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Index()
         {
-            var cart = CartRepository.TryGetByUserId(Constants.UserId);
+            var cart = CartsRepository.TryGetByUserId(Constants.UserId);
             return View(cart);
         }
 
-        public IActionResult AddToBascet(int id)
+        public IActionResult Add(int productId)
         {
-            var product = productRepository.TryGetById(id);
-            CartRepository.Add(product, Constants.UserId);
+            var product = productRepository.TryGetById(productId);
+            CartsRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
     }

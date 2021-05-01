@@ -1,6 +1,4 @@
 ﻿@model Cart
-    ViewData["Title"] = "Home Page";
-}
 
 @if (Model == null)
 {
@@ -12,37 +10,38 @@
 else
 {
     <h1 class="display-4">Корзина</h1>
-    <div>
-        <table class="table">
-            <tr>
-                <th>Номер</th>
-                <th>Название</th>
-                <th>Количество</th>
-                <th>Стоимость</th>
-                <th>Итого</th>
-            </tr>
-            @{ int i = 1;}
-            @foreach (var products in Model.Items)
-            {
+    <div class="row">
+        <div class="col">
+            <table class="table">
                 <tr>
-                    <th>@i</th>
-                    <th>@products.Product.Name</th>
-                    <th>@products.Product.Cost</th>
-                    <th>@products.Amount</th>
-                    <th>@products.Cost</th>
-                    @{i++;}
+                    <th>Номер</th>
+                    <th>Название</th>
+                    <th>Количество</th>
+                    <th>Стоимость</th>
+                    <th>Итого</th>
                 </tr>
-            }
-            <tr>
-                <th>Итого</th>
-                <th>@Model.Cost</th>
-            </tr>
-        </table>
-        <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
-        <a class="btn btn-success" href="#" role="button">Оформить заказ</a>
+                @{ int i = 1;}
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <th>@i</th>
+                        <th>@item.Product.Name</th>
+                        <th>@item.Product.Cost</th>
+                        <th>@item.Amount</th>
+                        <th>@item.Cost</th>
+                        @{i++;}
+                    </tr>
+                }
+                <tr>
+                    <th>Итого</th>
+                    <th>@Model.Cost</th>
+                </tr>
+            </table>
+            <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+            <a class="btn btn-success" href="#" role="button">Оформить заказ</a>
+        </div>
     </div>
 }
-
 
 
 

@@ -1,17 +1,14 @@
-﻿using Newtonsoft.Json;
-using OnlineShopWebApp.Models;
+﻿using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using static OnlineShopWebApp.Models.Cart;
 
 namespace OnlineShopWebApp
 {
-    public static class CartRepository
+    public static class CartsRepository
     {
-        public static string Path = "BascetRepository.json";
         private static List<Cart> carts = new List<Cart>();
+
         public static Cart TryGetByUserId(string userId)
         {
             return carts.FirstOrDefault(x => x.UserId == userId);
