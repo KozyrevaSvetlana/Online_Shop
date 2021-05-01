@@ -1,5 +1,4 @@
 ﻿using OnlineShopWebApp.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +23,7 @@ namespace OnlineShopWebApp
             var product = compareList.FirstOrDefault(x => x.Id == idProduct);
             compareList.Remove(product);
         }
-        public static void Clear(int idProduct)
+        public static void Clear()
         {
             compareList.Clear();
         }

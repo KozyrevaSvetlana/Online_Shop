@@ -1,0 +1,34 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Сравнение товаров</h1>
+    @if (Model == null)
+    {
+        <div class="card-body">
+            <p>Извините, товаров для сравнения нет</p>
+            <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-3 card shadow">
+                    <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
+                    <div class="card-body">
+                        <a href="Product/Index/@product.Id">@product.Name</a>
+                        <p>@product.Cost руб</p>
+                        <a class="btn btn-success" href="/cart/add?productId=@product.Id" role="button">Добавить в корзину</a>
+                        <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>

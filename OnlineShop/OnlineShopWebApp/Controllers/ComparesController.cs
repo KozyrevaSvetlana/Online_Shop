@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -7,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class СompareController : Controller
+    public class ComparesController : Controller
     {
         private readonly ProductsRepository productRepository;
-        public СompareController()
+        public ComparesController()
         {
             productRepository = new ProductsRepository();
         }
-
         public IActionResult Index()
         {
             var cart = CompareList.GetCompareList();

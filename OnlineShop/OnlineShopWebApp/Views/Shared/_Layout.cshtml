@@ -15,29 +15,8 @@
         <nav>
             <a asp-controller="Home" asp-action="Index">Доставка</a>
             <a asp-controller="Home" asp-action="Index">Войти</a>
+            <a asp-controller="Cart" asp-action="Index">Корзина</a>
         </nav>
-        <span>
-            <a href="/img/icon_Cart.png" asp-controller="Cart" asp-action="Index">Корзина</a>
-        </span>
-
-        <div class="buttons">
-            <a class="ui-link compare-link" href="/compare/">
-                <span class="compare-link__badge compare-link__badge_empty"></span>
-                <span class="compare-link__icon"></span>
-                <span class="compare-link__lbl">Сравнить</span>
-            </a><a class="ui-link wishlist-link" href="/wishlist/index/">
-                <span class="wishlist-link__badge wishlist-link__badge_empty"></span>
-                <span class="wishlist-link__icon"></span><span class="wishlist-link__lbl">Избранное</span>
-            </a>
-            <a class="ui-link cart-link" href="/order/begin/" data-commerce-target="CART">
-                <span class="cart-link__badge cart-link__badge_empty"></span>
-                <span class="cart-link__icon"></span><span class="cart-link__lbl">Корзина</span>
-            </a>
-        </div>
-
-
-
-
     </header>
     <div class="container">
         <main role="main" class="pb-3">
