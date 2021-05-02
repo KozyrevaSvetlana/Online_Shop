@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var allProducts = ProductsRepository.GetAll();
-            СountTheAmount();
+            ViewBag.AllAmountAtCart = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(allProducts);
         }
 
@@ -22,11 +22,6 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        public void СountTheAmount()
-        {
-            var count = CartsRepository.GetAllAmounts(Constants.UserId);
-            ViewBag.Int = count;
         }
     }
 }

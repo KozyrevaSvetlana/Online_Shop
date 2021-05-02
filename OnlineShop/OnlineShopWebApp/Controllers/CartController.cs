@@ -13,7 +13,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var cart = CartsRepository.TryGetByUserId(Constants.UserId);
-            СountTheAmount();
+            ViewBag.AllAmountAtCart = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
 
@@ -22,13 +22,6 @@ namespace OnlineShopWebApp.Controllers
             var product = productRepository.TryGetById(productId);
             CartsRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
-        }
-
-
-        public void СountTheAmount()
-        {
-            var count = CartsRepository.GetAllAmounts(Constants.UserId);
-            ViewBag.Int = count;
         }
     }
 }

@@ -16,9 +16,9 @@
             <a asp-controller="Home" asp-action="Index">Доставка</a>
             <a asp-controller="Home" asp-action="Index">Войти</a>
             <a asp-controller="Cart" asp-action="Index">Корзина</a>
-            @if (ViewBag.Int != 0)
+            @if (ViewBag.AllAmountAtCart != 0)
             {
-                <span>@ViewBag.Int</span>
+                <span>@ViewBag.AllAmountAtCart</span>
             }
         </nav>
     </header>
@@ -30,7 +30,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            <p>2021 - Интернет-магазин дестких товаров</p>
+            <p>2021 - Интернет-магазин детcких товаров</p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

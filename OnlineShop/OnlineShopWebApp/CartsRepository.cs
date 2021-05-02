@@ -58,12 +58,7 @@ namespace OnlineShopWebApp
         public static int GetAllAmounts(string userId)
         {
             var existingCart = TryGetByUserId(userId);
-            if (existingCart!=null)
-            {
-                var countAmount = existingCart.Items.Sum(x => x.Amount);
-                return countAmount;
-            }
-            return 0;
+            return existingCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
     }
 }

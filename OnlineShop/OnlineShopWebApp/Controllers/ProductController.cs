@@ -13,7 +13,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(int id)
         {
             var result = FindProductById(id);
-            СountTheAmount();
+            ViewBag.AllAmountAtCart = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(result);
         }
 
@@ -38,12 +38,6 @@ namespace OnlineShopWebApp.Controllers
                 }
             }
             return true;
-        }
-
-        public void СountTheAmount()
-        {
-            var count = CartsRepository.GetAllAmounts(Constants.UserId);
-            ViewBag.Int = count;
         }
     }
 }

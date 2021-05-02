@@ -32,11 +32,12 @@ else
                         @{i++;}
                     </tr>
                 }
-                <tr>
-                    <th>Итого</th>
-                    <th>@Model.Cost</th>
-                </tr>
             </table>
+            <div class="text-right">
+                <h3>Итого:</h3>
+                <h3>@Model.Cost</h3>
+                <h3>@CartsRepository.GetAllAmounts(Constants.UserId)</h3>
+            </div>
             <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
             <a class="btn btn-success" href="#" role="button">Оформить заказ</a>
         </div>

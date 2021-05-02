@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var cart = CompareList.GetCompareList();
-            СountTheAmount();
+            ViewBag.AllAmountAtCart = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
 
@@ -32,11 +32,6 @@ namespace OnlineShopWebApp.Controllers
         {
             CompareList.Clear();
             return RedirectToAction("Index");
-        }
-        public void СountTheAmount()
-        {
-            var count = CartsRepository.GetAllAmounts(Constants.UserId);
-            ViewBag.Int = count;
         }
     }
 }
