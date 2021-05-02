@@ -13,14 +13,16 @@
 <body>
     <header>
         <nav>
-            <a href="/Home/Index"><img src="/img/bearIcon.png" alt="Плюшевый мишка"></a>
-            <a asp-controller="Home" asp-action="Index">Доставка</a>
-            <a asp-controller="Home" asp-action="Index">Войти</a>
-            <a asp-controller="Cart" asp-action="Index">Корзина</a>
+            <a href="/Home/Index"><img src="/img/bearIcon.png" alt="Главная страница"></a>
+            <span>Поиск <input placeholder="Поиск" type="text" name="seach" value="" /></span>
+            <a href="/Cart/Index"><img src="/img/icon_Cart.png" alt="Корзина"></a>
             @if (ViewBag.AllAmountAtCart != 0)
             {
                 <span>@ViewBag.AllAmountAtCart</span>
             }
+            <a asp-controller="Home" asp-action="Index">Доставка</a>
+            <a asp-controller="Home" asp-action="Index">Войти</a>
+
         </nav>
     </header>
     <div class="container">
