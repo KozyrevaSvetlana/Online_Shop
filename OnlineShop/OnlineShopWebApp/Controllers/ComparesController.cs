@@ -11,9 +11,9 @@ namespace OnlineShopWebApp.Controllers
     public class ComparesController : Controller
     {
         private readonly ProductsRepository productRepository;
-        public ComparesController()
+        public ComparesController(ProductsRepository productRepository)
         {
-            productRepository = new ProductsRepository();
+            this.productRepository = productRepository;
         }
         public IActionResult Index()
         {
