@@ -10,10 +10,11 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ComparesController : Controller
     {
-        private readonly ProductsRepository productRepository;
-        public ComparesController(ProductsRepository productRepository)
+        private readonly ProductsRepository productsRepository;
+
+        public ComparesController(ProductsRepository productsRepository)
         {
-            this.productRepository = productRepository;
+            this.productsRepository = productsRepository;
         }
         public IActionResult Index()
         {
@@ -24,7 +25,7 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Add(int productId)
         {
-            var product = productRepository.TryGetById(productId);
+            var product = productsRepository.TryGetById(productId);
             CompareList.Add(product);
             return RedirectToAction("Index");
         }
