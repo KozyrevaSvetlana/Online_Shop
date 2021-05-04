@@ -18,7 +18,7 @@
             <a href="/Cart/Index"><img src="/img/icon_Cart.png" alt="Корзина"></a>
             @if (ViewBag.AllAmountAtCart != 0)
             {
-                <span>@ViewBag.AllAmountAtCart</span>
+                <span>@CartItemsCount</span>
             }
             <a asp-controller="Home" asp-action="Index">Доставка</a>
             <a asp-controller="Home" asp-action="Index">Войти</a>

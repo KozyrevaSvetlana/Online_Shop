@@ -13,7 +13,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var cart = CartsRepository.TryGetByUserId(Constants.UserId);
-            ViewBag.AllAmountAtCart = CartsRepository.GetAllAmounts(Constants.UserId);
+            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
 
