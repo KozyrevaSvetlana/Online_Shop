@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -10,7 +8,8 @@ namespace OnlineShopWebApp.Controllers
     {
         public IActionResult Index()
         {
-            var allProducts = ProductsStorage.GetAllProducts();
+            var allProducts = ProductsRepository.GetAll();
+            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(allProducts);
         }
 

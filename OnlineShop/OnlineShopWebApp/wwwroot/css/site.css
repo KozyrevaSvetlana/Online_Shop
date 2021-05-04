@@ -69,3 +69,25 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.cart-link__badge {
+    border-radius: 20px;
+    align-items: center;
+    background-image: linear-gradient(to bottom, #ffbc0b, #ff7400);
+    color: #fff;
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: bolder;
+    height: 20px;
+    justify-content: center;
+    left: 9px;
+    line-height: 20px;
+    min-width: 20px;
+    padding: 0 5px;
+    position: absolute;
+    text-align: center;
+    top: -10px;
+}
+.cart-link__icon {
+    color: #afafaf;
+    font-size: 19px;
+}

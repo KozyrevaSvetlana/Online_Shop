@@ -13,12 +13,14 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(int id)
         {
             var result = FindProductById(id);
+            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(result);
         }
 
         private Product FindProductById(int idResult)
         {
-            var allProducts = ProductsStorage.GetAllProducts();
+            var allProducts = ProductsRepository.GetAll();
+
             var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
             return result;
         }
