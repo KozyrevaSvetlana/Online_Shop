@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Interfaces;
 
 namespace OnlineShopWebApp
 {
@@ -18,6 +19,7 @@ namespace OnlineShopWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IProductsRepository, ProductsRepository>();
+            services.AddSingleton<ICartsRepository, CartsRepository>();
             services.AddControllersWithViews();
         }
 

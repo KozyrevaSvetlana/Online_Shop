@@ -1,26 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Interfaces;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class CartController : Controller
     {
-        private readonly ProductsRepository productRepository;
-        public CartController(ProductsRepository productRepository)
+        private readonly IProductsRepository productsRepository;
+        private readonly ICartsRepository cartsRepository;
+
+        public CartController(IProductsRepository productsRepository, ICartsRepository cartsRepository)
         {
-            this.productRepository = productRepository;
+            this.productsRepository = productsRepository;
+            this.cartsRepository = cartsRepository;
         }
         public IActionResult Index()
         {
-            var cart = CartsRepository.TryGetByUserId(Constants.UserId);
-            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
+            var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+            ViewBag.CartItemsCount = cartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
 
         public IActionResult Add(int productId)
         {
-            //var product = productRepository.TryGetById(productId);
-            //CartsRepository.Add(product, Constants.UserId);
+            var product = productsRepository.GetProductById(productId);
+            cartsRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
     }
