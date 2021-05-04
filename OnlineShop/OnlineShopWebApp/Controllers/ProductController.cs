@@ -9,17 +9,23 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: ProductController
+        private readonly IProduct products;
+
+        public ProductController(IProduct product)
+        {
+            products = product;
+        }
+
         public IActionResult Index(int id)
         {
             var result = FindProductById(id);
-            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
+            //ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(result);
         }
 
         private Product FindProductById(int idResult)
         {
-            var allProducts = ProductsRepository.GetAll();
+            var allProducts = products.AllProducts;
 
             var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
             return result;

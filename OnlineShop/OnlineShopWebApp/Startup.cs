@@ -18,7 +18,7 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ProductsRepository>();
+            services.AddSingleton<IProductsRepository, ProductsRepository>();
             services.AddControllersWithViews();
         }
 
