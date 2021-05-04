@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var cart = CompareList.GetCompareList();
-            ViewBag.AllAmountAtCart = CartsRepository.GetAllAmounts(Constants.UserId);
+            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
 

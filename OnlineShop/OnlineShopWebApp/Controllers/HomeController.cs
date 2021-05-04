@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var allProducts = ProductsRepository.GetAll();
-            ViewBag.AllAmountAtCart = CartsRepository.GetAllAmounts(Constants.UserId);
+            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(allProducts);
         }
 

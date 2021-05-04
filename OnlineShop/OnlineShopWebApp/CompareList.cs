@@ -23,9 +23,9 @@ namespace OnlineShopWebApp
                 compareList.Add(result);
             }
         }
-        public static void Delete(int idProduct)
+        public static void Delete(int productId)
         {
-            compareList.RemoveAll(x => x.Id == idProduct);
+            compareList.RemoveAll(x => x.Id == productId);
         }
         public static void Clear()
         {
