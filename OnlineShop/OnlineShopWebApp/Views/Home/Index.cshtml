@@ -11,7 +11,7 @@
             <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
             <div class="card-body">
                 <p>@product.Id</p>
-                <a href="Product/Index/@product.Id">@product.Name</a>
+                <a href="/Product/Index/@product.Id">@product.Name</a>
                 <p>@product.Cost руб</p>
                 <a class="btn btn-success" href="/cart/add?productId=@product.Id" role="button">Добавить в корзину</a>
                 <a class="btn btn-link" href="/compares/add?productId=@product.Id" role="button">Сравнить</a>

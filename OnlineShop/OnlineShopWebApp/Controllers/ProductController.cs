@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -16,11 +12,12 @@ namespace OnlineShopWebApp.Controllers
             this.products = products;
         }
 
-        public IActionResult Index(int id)
+        // GET: ProductController
+        public ActionResult Index(int id)
         {
-            var result = products.GetProductById(id);
-            //ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
-            return View(result);
+                var result = products.GetProductById(id);
+                //ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
+                return View(result);
         }
     }
 }
