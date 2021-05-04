@@ -21,9 +21,9 @@ namespace OnlineShopWebApp.Controllers
             return View(cart);
         }
 
-        public IActionResult Add(int productId)
+        public IActionResult Add(int id)
         {
-            var product = productsRepository.GetProductById(productId);
+            var product = productsRepository.GetProductById(id);
             cartsRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }

@@ -20,6 +20,7 @@ namespace OnlineShopWebApp
         {
             services.AddSingleton<IProductsRepository, ProductsRepository>();
             services.AddSingleton<ICartsRepository, CartsRepository>();
+            services.AddSingleton<IComparesList, ComparesList>();
             services.AddControllersWithViews();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Interfaces;
 using System.Diagnostics;
 
 namespace OnlineShopWebApp.Controllers
@@ -7,16 +8,18 @@ namespace OnlineShopWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly IProductsRepository products;
+        private readonly ICartsRepository cartsRepository;
 
-        public HomeController(IProductsRepository products)
+        public HomeController(IProductsRepository products, ICartsRepository cartsRepository)
         {
             this.products = products;
+            this.cartsRepository = cartsRepository;
         }
 
         public IActionResult Index()
         {
             var allProducts = products.AllProducts;
-            //ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
+            ViewBag.CartItemsCount = cartsRepository.GetAllAmounts(Constants.UserId);
             return View(allProducts);
         }
 
