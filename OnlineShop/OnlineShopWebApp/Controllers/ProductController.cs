@@ -9,41 +9,18 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProduct products;
+        private readonly IProductsRepository products;
 
-        public ProductController(IProduct product)
+        public ProductController(IProductsRepository products)
         {
-            products = product;
+            this.products = products;
         }
 
         public IActionResult Index(int id)
         {
-            var result = FindProductById(id);
+            var result = products.GetProductById(id);
             //ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
             return View(result);
-        }
-
-        private Product FindProductById(int idResult)
-        {
-            var allProducts = products.AllProducts;
-
-            var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
-            return result;
-        }
-        private bool IsValid (string id)
-        {
-            if (id == null)
-            {
-                return false;
-            }
-            for (int i = 0; i < id.Length; i++)
-            {
-                if (!char.IsDigit(id[i]))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }

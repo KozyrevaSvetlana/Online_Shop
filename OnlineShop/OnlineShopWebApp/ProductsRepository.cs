@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
-    public class ProductsRepository: IProductsRepository
+    public class ProductsRepository : IProductsRepository
     {
-        public IEnumerable<Product> AllProducts
+        private List<Product> products = new List<Product>()
         {
-            get
-            {
-                return new List<Product>
-                {
                     new Product("Плюшевый мишка", 300, "Плюшевый мишка – символ нежности, трогательной заботы, " +
         "тепла. Многим он знаком с первых лет жизни.", "/img/Products/1.jpg"),
                     new Product("Конструктор", 1000, "Любознательным малышам придется по душе конструктор.", "/img/Products/2.jpg"),
@@ -18,7 +15,16 @@ namespace OnlineShopWebApp.Models
                     new Product("Водный пистолет", 150, "Длагодаря водному пистолету можно весело играть в друзьями летом на лужайке", "/img/Products/4.jpg"),
                     new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе", "/img/Products/5.jpg")
                 };
+        public IEnumerable<Product> AllProducts
+        {
+            get
+            {
+                return products;
             }
+        }
+        public Product GetProductById(int id)
+        {
+            return AllProducts.FirstOrDefault(p => p.Id == id);
         }
     }
 }
