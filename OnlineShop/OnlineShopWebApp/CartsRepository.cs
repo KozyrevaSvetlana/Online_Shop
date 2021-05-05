@@ -1,40 +1,32 @@
 ﻿using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace OnlineShopWebApp
 {
-    public static class CartsRepository
+    public class CartsRepository: ICartsRepository
     {
-        private static List<Cart> carts = new List<Cart>();
-
-        public static Cart TryGetByUserId(string userId)
+        private List<Cart> carts = new List<Cart>();
+        public IEnumerable<Cart> AllCarts
+        {
+            get
+            {
+                return carts;
+            }
+        }
+        public Cart TryGetByUserId(string userId)
         {
             return carts.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public static void Add(Product product, string userId)
+        public void Add(Product product, string userId)
         {
             var existingCart = TryGetByUserId(userId);
             if (existingCart == null)
             {
-                var newCart = new Cart
-                {
-                    Id = Guid.NewGuid(),
-                    UserId = userId,
-                    Items = new List<CartItem>
-                    {
-                        new CartItem
-                        {
-                            Id = Guid.NewGuid(),
-                            Amount = 1,
-                            Product = product,
-                        }
-                    }
-                };
-
-                carts.Add(newCart);
+                AddNewCart(product, userId);
             }
             else
             {
@@ -45,20 +37,38 @@ namespace OnlineShopWebApp
                 }
                 else
                 {
-                    existingCart.Items.Add(new CartItem
-                    {
-                        Id = Guid.NewGuid(),
-                        Amount = 1,
-                        Product = product,
-                    });
+                    existingCart.Items.Add(AddNewCartItem(product));
                 }
             }
         }
-
-        public static int GetAllAmounts(string userId)
+        public int GetAllAmounts(string userId)
         {
             var existingCart = TryGetByUserId(userId);
             return existingCart?.Items?.Sum(x => x.Amount) ?? 0;
+        }
+        private void AddNewCart(Product product, string userId)
+        {
+            var newCart = new Cart
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                Items = new List<CartItem>
+                    {
+                        AddNewCartItem(product)
+                    }
+            };
+
+            carts.Add(newCart);
+        }
+
+        private CartItem AddNewCartItem(Product product)
+        {
+            return new CartItem
+            {
+                Id = Guid.NewGuid(),
+                Amount = 1,
+                Product = product,
+            };
         }
     }
 }

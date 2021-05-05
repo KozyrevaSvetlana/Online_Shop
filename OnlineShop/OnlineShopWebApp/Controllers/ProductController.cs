@@ -1,43 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using OnlineShopWebApp.Models.Interfaces;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly IProductsRepository products;
+        private readonly ICartsRepository cartsRepository;
+
+        public ProductController(IProductsRepository products, ICartsRepository cartsRepository)
+        {
+            this.products = products;
+            this.cartsRepository = cartsRepository;
+        }
+
         // GET: ProductController
-        public IActionResult Index(int id)
+        public ActionResult Index(int id)
         {
-            var result = FindProductById(id);
-            ViewBag.CartItemsCount = CartsRepository.GetAllAmounts(Constants.UserId);
-            return View(result);
-        }
-
-        private Product FindProductById(int idResult)
-        {
-            var allProducts = ProductsRepository.GetAll();
-
-            var result =  allProducts.FirstOrDefault(x => x.Id == idResult);
-            return result;
-        }
-        private bool IsValid (string id)
-        {
-            if (id == null)
-            {
-                return false;
-            }
-            for (int i = 0; i < id.Length; i++)
-            {
-                if (!char.IsDigit(id[i]))
-                {
-                    return false;
-                }
-            }
-            return true;
+                var result = products.GetProductById(id);
+                ViewBag.CartItemsCount = cartsRepository.GetAllAmounts(Constants.UserId);
+                return View(result);
         }
     }
 }

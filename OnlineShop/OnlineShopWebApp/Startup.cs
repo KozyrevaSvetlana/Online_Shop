@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Interfaces;
 
 namespace OnlineShopWebApp
 {
@@ -17,6 +18,9 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IProductsRepository, ProductsRepository>();
+            services.AddSingleton<ICartsRepository, CartsRepository>();
+            services.AddSingleton<IComparesList, ComparesList>();
             services.AddControllersWithViews();
         }
 
@@ -30,7 +34,7 @@ namespace OnlineShopWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
