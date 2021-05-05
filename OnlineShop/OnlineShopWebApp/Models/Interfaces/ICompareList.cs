@@ -2,11 +2,11 @@
 
 namespace OnlineShopWebApp.Models.Interfaces
 {
-    public interface IComparesList
+    public interface ICompareList
     {
-        IEnumerable<Product> _comparesList { get; }
+        IEnumerable<Product> AllCompareList { get; }
         void Add(Product product);
-        void Delete(int productId);
+        void Delete(Product product);
         void Clear();
     }
 }

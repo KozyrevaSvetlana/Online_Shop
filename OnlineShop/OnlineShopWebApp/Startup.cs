@@ -18,9 +18,9 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IProductsRepository, ProductsRepository>();
-            services.AddSingleton<ICartsRepository, CartsRepository>();
-            services.AddSingleton<IComparesList, ComparesList>();
+            services.AddSingleton<IProductsRepository, InMemoryProductsRepository>();
+            services.AddSingleton<ICartsRepository, InMemoryCartsRepository>();
+            services.AddSingleton<ICompareList, InMemoryCompareList>();
             services.AddControllersWithViews();
         }
 

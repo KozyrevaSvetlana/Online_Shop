@@ -4,35 +4,37 @@ using OnlineShopWebApp.Models.Interfaces;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class ComparesController : Controller
+    public class СompareController : Controller
     {
-        private readonly ProductsRepository productsRepository;
+        private readonly IProductsRepository productsRepository;
         private readonly ICartsRepository cartsRepository;
-        private readonly IComparesList comparesList;
+        private readonly ICompareList comparesList;
 
-        public ComparesController(ProductsRepository productsRepository, ICartsRepository cartsRepository, IComparesList comparesList)
+        public СompareController(IProductsRepository productsRepository, ICartsRepository cartsRepository, ICompareList comparesList)
         {
             this.productsRepository = productsRepository;
             this.cartsRepository = cartsRepository;
             this.comparesList = comparesList;
         }
+
         public IActionResult Index()
         {
-            var cart = comparesList._comparesList;
+            var cart = comparesList.AllCompareList;
             ViewBag.CartItemsCount = cartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
-
         public IActionResult Add(int id)
         {
             var product = productsRepository.GetProductById(id);
             comparesList.Add(product);
             return RedirectToAction("Index");
         }
-        public IActionResult Clear()
+        public IActionResult Delete(int id)
         {
-            comparesList.Clear();
+            var product = productsRepository.GetProductById(id);
+            comparesList.Delete(product);
             return RedirectToAction("Index");
         }
+
     }
 }
