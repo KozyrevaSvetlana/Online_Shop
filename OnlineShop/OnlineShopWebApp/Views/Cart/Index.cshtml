@@ -27,7 +27,13 @@ else
                         <th>@i</th>
                         <th>@item.Product.Name</th>
                         <th>@item.Product.Cost</th>
+                        <th>
+                            <a type="button" class="btn btn-info" href="/cart/ChangeAmount?id=@item.Product.Id&sign=1">+</a>
+                        </th>
                         <th>@item.Amount</th>
+                        <th>
+                            <a type="button" class="btn btn-info" href="/cart/ChangeAmount?id=@item.Product.Id&sign=-1">-</a>
+                        </th>
                         <th>@item.Cost</th>
                         @{i++;}
                     </tr>
@@ -37,11 +43,14 @@ else
                 <h3>Итого:</h3>
                 <h3>@Model.Cost</h3>
             </div>
+            <a class="btn btn-info" asp-controller="Cart" asp-action="Clear" role="button">Очистить корзину</a>
             <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
             <a class="btn btn-success" href="#" role="button">Оформить заказ</a>
         </div>
     </div>
 }
+
+
 
 
 
