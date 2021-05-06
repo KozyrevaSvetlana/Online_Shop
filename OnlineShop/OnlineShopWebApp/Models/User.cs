@@ -1,11 +1,12 @@
-﻿using System;
+﻿using OnlineShopWebApp.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Models
 {
-    public class User
+    public class User: IUser
     {
         public static int Count = 0;
         public int Id { get; }
@@ -27,6 +28,10 @@ namespace OnlineShopWebApp.Models
             Adress = adress;
             Email = email;
             Count++;
+        }
+        public void CreateNewUser(string name, string surname, string adress, string phone, string email)
+        {
+            var user = new User(name, surname, adress, phone, email);
         }
         public void AddOrder(Order order)
         {

@@ -1,0 +1,34 @@
+﻿@model Cart
+
+<h1>Оформление заказа</h1>
+<form action="#" method="post" enctype="multipart/form-data">
+    <div>
+        <p>Имя</p>
+        <input tabindex="1" type="text" name="name" value="">
+    </div>
+    <div>
+        <p>Фамилия</p>
+        <input tabindex="2" type="text" name="surname" value="">
+    </div>
+    <div>
+        <p>Адрес</p>
+        <input tabindex="3" type="text" name="adress" value="">
+    </div>
+    <div>
+        <p>Телефон</p>
+        <input tabindex="4" type="tel" name="adress" value="">
+    </div>
+    <div>
+        <p>Электронная почта</p>
+        <input tabindex="5" type="text" name="email" value="">
+    </div>
+    <div>
+        <p>Комментарий к заказу</p>
+        <textarea tabindex="5" name="comment" cols="30" rows="10"></textarea>
+    </div>
+</form>
+<div>
+    <h3>Общая стоимость заказа</h3>
+    <h3>@Model.Cost руб.</h3>
+</div>
+<a class="btn btn-success" href="#" role="button">Оформить заказ</a>

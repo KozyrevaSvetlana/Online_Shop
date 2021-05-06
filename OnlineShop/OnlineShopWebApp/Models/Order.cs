@@ -6,9 +6,13 @@ namespace OnlineShopWebApp.Models
     {
         public int Id { get; set; }
 
-        public DateTime OrderTime { get; set; }
         public string Сomment { get; set; }
 
         public Cart Cart { get; set; }
+        public Order (string comment, Cart cart)
+        {
+            Сomment = comment;
+            Cart = cart;
+        }
     }
 }

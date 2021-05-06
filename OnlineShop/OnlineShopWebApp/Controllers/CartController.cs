@@ -13,7 +13,7 @@ namespace OnlineShopWebApp.Controllers
         {
             this.productsRepository = productsRepository;
             this.cartsRepository = cartsRepository;
-        }
+        } 
         public IActionResult Index()
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
