@@ -9,8 +9,6 @@ namespace OnlineShopWebApp
     public class InMemoryCartsRepository : ICartsRepository
     {
         private List<Cart> carts = new List<Cart>();
-        private Cart userCart = new Cart();
-        private CartItem userCartItem = new CartItem();
         public IEnumerable<Cart> AllCarts
         {
             get
@@ -25,14 +23,14 @@ namespace OnlineShopWebApp
 
         public void Add(Product product, string userId)
         {
-            userCart = TryGetByUserId(userId);
+            var userCart = TryGetByUserId(userId);
             if (userCart == null)
             {
                 AddNewCart(product, userId);
             }
             else
             {
-                userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+                var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
                 if (userCartItem != null)
                 {
                     userCartItem.Amount += 1;
@@ -45,7 +43,7 @@ namespace OnlineShopWebApp
         }
         public int GetAllAmounts(string userId)
         {
-            userCart = TryGetByUserId(userId);
+            var userCart = TryGetByUserId(userId);
             return userCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
         private void AddNewCart(Product product, string userId)
@@ -75,8 +73,8 @@ namespace OnlineShopWebApp
 
         public void ChangeAmount(Product product, int sign, string userId)
         {
-            userCart = TryGetByUserId(userId);
-            userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+            var userCart  = TryGetByUserId(userId);
+            var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
             switch(sign)
             {
                 case 1:
@@ -97,13 +95,13 @@ namespace OnlineShopWebApp
 
         private void DeleteItem(CartItem cartItem, string userId)
         {
-            userCart = TryGetByUserId(userId);
+            var userCart = TryGetByUserId(userId);
             userCart.Items.RemoveAll(x => x.Id == cartItem.Id);
         }
 
         public void ClearCart(string userId)
         {
-            userCart = TryGetByUserId(userId);
+            var userCart = TryGetByUserId(userId);
             userCart.Items.Clear();
         }
     }
