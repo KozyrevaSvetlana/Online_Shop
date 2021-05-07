@@ -4,6 +4,7 @@ namespace OnlineShopWebApp.Models
 {
     public class User
     {
+        public static int orderNumber = 1;
         public static int Count = 0;
         public int Id { get; }
         public string Name { get; set; }
@@ -30,6 +31,10 @@ namespace OnlineShopWebApp.Models
         {
             var userOrder = new Order(comment, cart);
             Orders.Add(userOrder);
+        }
+        public List<Order> GetOrders(User user)
+        {
+            return user.Orders;
         }
     }
 }

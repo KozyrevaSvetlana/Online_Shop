@@ -21,6 +21,15 @@ namespace OnlineShopWebApp
                 return users;
             }
         }
-
+        public int GetLastOrder(User user)
+        {
+            var result = user.GetOrders(user);
+            int number = 0;
+            foreach (var order in result)
+            {
+                number = order.Id;
+            }
+            return number;
+        }
     }
 }

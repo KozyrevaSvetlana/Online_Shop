@@ -4,6 +4,7 @@ namespace OnlineShopWebApp.Models
 {
     public class Order
     {
+        private static int number = 1;
         public int Id { get; set; }
 
         public string Сomment { get; set; }
@@ -13,6 +14,13 @@ namespace OnlineShopWebApp.Models
         {
             Сomment = comment;
             Cart = cart;
+            Id = number;
+            number++;
+        }
+
+        public int GetOrderNumber()
+        {
+            return Id;
         }
     }
 }

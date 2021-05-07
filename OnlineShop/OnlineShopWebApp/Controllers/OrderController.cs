@@ -26,6 +26,11 @@ namespace OnlineShopWebApp.Controllers
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
             usersRepository.AddUser(name, surname, adress, phone, email, comment, cart);
+            return RedirectToAction("Result");
+        }
+
+        public IActionResult Result()
+        {
             return View();
         }
     }
