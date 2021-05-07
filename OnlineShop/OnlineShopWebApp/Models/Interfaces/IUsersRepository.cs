@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models.Interfaces
 {
-    interface IUsersRepository
+    public interface IUsersRepository
     {
         IEnumerable<User> AllUsers { get; }
-        public void AddUser(User user);
+        public void AddUser(string name, string surname, string adress, string phone, string email, string comment, Cart cart);
     }
 }

@@ -1,5 +1,4 @@
-﻿using OnlineShopWebApp.Models.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
@@ -27,9 +26,10 @@ namespace OnlineShopWebApp.Models
             Email = email;
             Count++;
         }
-        public void AddOrder(Order order)
+        public void AddOrder(string comment, Cart cart)
         {
-            Orders.Add(order);
+            var userOrder = new Order(comment, cart);
+            Orders.Add(userOrder);
         }
     }
 }
