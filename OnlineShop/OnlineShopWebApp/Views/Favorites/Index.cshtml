@@ -1,12 +1,18 @@
-﻿@model Compare
+﻿@model Favorites
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="display-4">Товары для сравнения</h1>
+<h1 class="display-4">Избранные товары</h1>
 @if (Model == null || Model.Items.Count == 0)
 {
-    <h2>Список для сравнения пуст</h2>
+    <h2>Добавьте товар в избранное</h2>
+    <p>
+        В этом списке будут храниться товары, которые Вас заинтересовали.<br />
+        Можете добавить сюда недавно просмотренные товары.<br />Внимание!
+        Чтобы сохранить список и иметь доступ к нему с различных устройств,
+        необходимо авторизоваться или зарегистрироваться.
+    </p>
     <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
 }
 else
@@ -21,24 +27,19 @@ else
                         <a href="/Product/Index/@product.Id">@product.Name</a>
                         <p>@product.Cost руб</p>
                         <p>@product.Description</p>
-
                     </div>
                 </div>
                 <div>
                     <a class="btn btn-success" href="/cart/add?id=@product.Id" role="button">Добавить в корзину</a>
-                    <a class="btn btn-danger" href="/Compare/Delete?id=@product.Id" role="button">Удалить товар</a>
+                    <a class="btn btn-danger" href="/Favorites/Delete?id=@product.Id" role="button">Удалить товар</a>
                 </div>
             </div>
         }
     </div>
     <div>
-        <a class="btn btn-link" asp-controller="Compare" asp-action="Clear" role="button">Очистить список сравнения</a>
+        <a class="btn btn-link" asp-controller="Favorites" asp-action="Clear" role="button">Очистить список избранных товаров</a>
     </div>
     <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a></div>
 }
-
-
-
-
 
 

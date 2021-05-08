@@ -3,37 +3,37 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class CompareController : Controller
+    public class FavoritesController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly ICompareRepository compareRepository;
+        private readonly IFavoritesRepository favoritesRepository;
 
-        public CompareController(IProductsRepository productsRepository,  ICompareRepository compareRepository)
+        public FavoritesController(IProductsRepository productsRepository, IFavoritesRepository favoritesRepository)
         {
             this.productsRepository = productsRepository;
-            this.compareRepository = compareRepository;
+            this.favoritesRepository = favoritesRepository;
         }
         public IActionResult Index()
         {
-            var cart = compareRepository.TryGetByUserId(Constants.UserId);
+            var cart = favoritesRepository.TryGetByUserId(Constants.UserId);
             return View(cart);
         }
 
         public IActionResult Add(int id)
         {
             var product = productsRepository.GetProductById(id);
-            compareRepository.Add(product, Constants.UserId);
+            favoritesRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear()
         {
-            compareRepository.Clear(Constants.UserId);
+            favoritesRepository.Clear(Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
             var product = productsRepository.GetProductById(id);
-            compareRepository.DeleteItem(product, Constants.UserId);
+            favoritesRepository.DeleteItem(product, Constants.UserId);
             return RedirectToAction("Index");
         }
     }
