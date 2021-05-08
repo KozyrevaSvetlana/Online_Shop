@@ -7,7 +7,7 @@
 @if (Model == null || Model.Items.Count == 0)
 {
     <h2>Список для сравнения пуст</h2>
-    <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
+    <div><a class="btn btn-info" href="Home/Index" role="button">Вернуться на главную страницу</a></div>
 }
 else
 {
@@ -32,9 +32,9 @@ else
         }
     </div>
     <div>
-        <a class="btn btn-link" asp-controller="Compare" asp-action="Clear" role="button">Очистить список сравнения</a>
+        <a class="btn btn-link" href="/Compare/Clear" role="button">Очистить список сравнения</a>
     </div>
-    <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a></div>
+    <div><a class="btn btn-info" href="/Home/Index" role="button">Продолжить покупки</a></div>
 }
 
 

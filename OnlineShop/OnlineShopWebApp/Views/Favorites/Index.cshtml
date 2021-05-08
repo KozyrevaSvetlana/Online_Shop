@@ -13,7 +13,7 @@
         Чтобы сохранить список и иметь доступ к нему с различных устройств,
         необходимо авторизоваться или зарегистрироваться.
     </p>
-    <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
+    <div><a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a></div>
 }
 else
 {
@@ -37,9 +37,9 @@ else
         }
     </div>
     <div>
-        <a class="btn btn-link" asp-controller="Favorites" asp-action="Clear" role="button">Очистить список избранных товаров</a>
+        <a class="btn btn-link" href="/Favorites/Clear" role="button">Очистить список избранных товаров</a>
     </div>
-    <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a></div>
+    <div><a class="btn btn-info" href="/Home/Index" role="button">Продолжить покупки</a></div>
 }
 
 

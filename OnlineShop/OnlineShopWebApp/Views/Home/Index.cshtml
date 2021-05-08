@@ -10,11 +10,10 @@
         <div class="col-3 card shadow">
             <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
             <div class="card-body">
-                <p>@product.Id</p>
                 <a href="/Product/Index/@product.Id">@product.Name</a>
                 <p>@product.Cost руб</p>
                 <a class="btn btn-success" href="/cart/add?id=@product.Id" role="button">Добавить в корзину</a>
-                <a class="btn btn-success" href="/Favorites/Add?id=@product.Id" role="button">Добавить в избранное</a>
+                <a class="btn btn-light" href="/Favorites/Add?id=@product.Id" role="button">Добавить в избранное</a>
                 <a class="btn btn-link" href="/Compare/Add?id=@product.Id" role="button">Сравнить</a>
             </div>
         </div>
