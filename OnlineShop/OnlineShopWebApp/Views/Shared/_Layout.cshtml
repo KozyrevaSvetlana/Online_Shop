@@ -11,14 +11,19 @@
     <link rel="icon" href="~/img/iconBear.jpg" type="image/x-icon" />
 </head>
 <body>
-    <header>
+    <header class="popover-header">
         <nav>
             <a href="/Home/Index"><img src="/img/bearIcon.png" alt="Главная страница"></a>
             <span><input placeholder="Поиск" type="text" name="seach" value="" /></span>
-            <a href="/Cart/Index"><img src="/img/icon_Cart.png" alt="Корзина"></a>
+            <a href="/Cart/Index"><img src="/img/Cart.png" alt="Корзина"></a>
+            <a asp-controller="Cart" asp-action="Index">Корзина</a>
+            <a href="/Compare/Index"><img src="/img/Compare.png" alt="Сравнить"></a>
             <a asp-controller="Compare" asp-action="Index">Сравнить</a>
+            <a href="/Favorites/Index"><img src="/img/Favorites.png" alt="Избранное"></a>
             <a asp-controller="Favorites" asp-action="Index">Избранное</a>
+            <a href="#"><img src="/img/Delivery.png" alt="Доставка"></a>
             <a asp-controller="Home" asp-action="Index">Доставка</a>
+            <a href="#"><img src="/img/Profile.png" alt="Войти"></a>
             <a asp-controller="Home" asp-action="Index">Войти</a>
         </nav>
     </header>
@@ -28,9 +33,18 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            <p>2021 - Интернет-магазин детcких товаров</p>
+    <footer class="popover-header">
+        <div class="row">
+            <div class="col-4">
+                <div><a asp-controller="Home" asp-action="Index">Покупателям</a></div>
+                <div><a asp-controller="Home" asp-action="Index">Как сделать заказ</a></div>
+            </div>
+            <div class="col-4">
+                <a asp-controller="Home" asp-action="Index">Компания</a>
+            </div>
+            <div class="col-4">
+                <a asp-controller="Home" asp-action="Index">Статьи</a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
