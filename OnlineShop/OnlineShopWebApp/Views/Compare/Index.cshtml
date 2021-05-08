@@ -1,22 +1,23 @@
-﻿@model IEnumerable<Product>
+﻿@model List<Product>
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="display-4">Все товары</h1>
+<h1 class="display-4">Товаря для сравнения</h1>
 <div class="row">
     @foreach (var product in Model)
     {
         <div class="col-3 card shadow">
             <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
             <div class="card-body">
-                <p>@product.Id</p>
                 <a href="/Product/Index/@product.Id">@product.Name</a>
                 <p>@product.Cost руб</p>
+                <p>@product.Description</p>
                 <a class="btn btn-success" href="/cart/add?id=@product.Id" role="button">Добавить в корзину</a>
-                <a class="btn btn-link" href="/Compare/Add?id=@product.Id" role="button">Сравнить</a>
+                <a class="btn btn-danger" href="/Compare/Delete?id=@product.Id" role="button">Удалить товар</a>
+                <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
             </div>
         </div>
     }
 </div>
-
+<a class="btn btn-danger" asp-controller="Compare" asp-action="Clear" role="button">Очистить список сравнения</a>
