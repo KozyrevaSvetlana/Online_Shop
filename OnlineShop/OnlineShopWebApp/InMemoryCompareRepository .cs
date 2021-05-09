@@ -1,4 +1,5 @@
 ﻿using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,15 @@ namespace OnlineShopWebApp
     public class InMemoryCompareRepository : ICompareRepository
     {
         private List<Compare> compareList = new List<Compare>();
-        public IEnumerable<Compare> AllCompare
+        public IEnumerable<BaseProductsList> AllProducts
         {
             get
             {
                 return compareList;
             }
         }
-        public Compare TryGetByUserId(string userId)
+
+        public BaseProductsList TryGetByUserId(string userId)
         {
             return compareList.FirstOrDefault(x => x.UserId == userId);
         }

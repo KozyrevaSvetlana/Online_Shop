@@ -8,14 +8,14 @@ namespace OnlineShopWebApp
     public class InMemoryFavoritesRepository : IFavoritesRepository
     {
         private List<Favorites> favoritesList = new List<Favorites>();
-        public IEnumerable<Favorites> AllFavoritesList
+        public IEnumerable<BaseProductsList> AllProducts
         {
             get
             {
                 return favoritesList;
             }
         }
-        public Favorites TryGetByUserId(string userId)
+        public BaseProductsList TryGetByUserId(string userId)
         {
             return favoritesList.FirstOrDefault(x => x.UserId == userId);
         }

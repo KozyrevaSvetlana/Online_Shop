@@ -11,24 +11,23 @@
     <link rel="icon" href="~/img/iconBear.jpg" type="image/x-icon" />
 </head>
 <body>
-    <header class="popover-header">
-            <div class="container-fluid">
-                <a href="/Home/Index"><img src="/img/bearIcon.png" alt="Главная страница"></a>
-                <span><input placeholder="Поиск" type="text" name="seach" value="" /></span>
-                <a href="/Cart/Index"><img src="/img/Cart.png" alt="Корзина">Корзина</a>
-                <a href="/Compare/Index"><img src="/img/Compare.png" alt="Сравнить">Сравнить</a>
-                <a href="/Favorites/Index"><img src="/img/Favorites.png" alt="Избранное">Избранное</a>
-                <a href="#"><img src="/img/Delivery.png" alt="Доставка">Доставка</a>
-                <a href="#"><img src="/img/Profile.png" alt="Войти">Войти</a>
-            </div>
+
+    <header>
+        <nav>
+            <a href="/Home/Index"><img src="/img/bearIcon.png" alt="Главная страница"></a>
+            <a href="/Cart/Index"><img src="/img/Cart.png" alt="Корзина">Корзина</a>
+            <a href="/Compare/Index"><img src="/img/Compare.png" alt="Сравнить">Сравнить</a>
+            <a href="/Favorites/Index"><img src="/img/Favorites.png" alt="Избранное">Избранное</a>
+            <a href="#"><img src="/img/Delivery.png" alt="Доставка">Доставка</a>
+            <a href="#"><img src="/img/Profile.png" alt="Войти">Войти</a>
+        </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="popover-header">
+    <footer>
         <div class="row">
             <div class="col-4">
                 <div><a asp-controller="Home" asp-action="Index">Покупателям</a></div>

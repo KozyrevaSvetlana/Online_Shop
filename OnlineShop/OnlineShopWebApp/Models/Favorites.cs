@@ -3,10 +3,7 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
-    public class Favorites
+    public class Favorites: BaseProductsList
     {
-        public Guid Id { get; set; }
-        public string UserId { get; set; }
-        public List<Product> Items { get; set; }
     }
 }

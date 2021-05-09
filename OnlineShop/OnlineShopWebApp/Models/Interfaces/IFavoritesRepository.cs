@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp
 {
-    public interface ICompareRepository: IBaseProductList
+    public interface IFavoritesRepository: IBaseProductList
     {
     }
 }
