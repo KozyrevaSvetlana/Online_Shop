@@ -6,17 +6,13 @@ namespace OnlineShopWebApp.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly IProductsRepository productsRepository;
         private readonly ICartsRepository cartsRepository;
-        private readonly IUsersRepository usersRepository;
-        private readonly IOrdersWithoutUserRepository ordersWithoutUserRepository;
+        private readonly IOrdersRepository ordersRepository;
 
-        public OrderController(IProductsRepository productsRepository, ICartsRepository cartsRepository, IUsersRepository usersRepository, IOrdersWithoutUserRepository ordersWithoutUserRepository)
+        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersWithoutUserRepository)
         {
-            this.productsRepository = productsRepository;
             this.cartsRepository = cartsRepository;
-            this.usersRepository = usersRepository;
-            this.ordersWithoutUserRepository = ordersWithoutUserRepository;
+            this.ordersRepository = ordersWithoutUserRepository;
         }
         public IActionResult Index()
         {
@@ -24,16 +20,18 @@ namespace OnlineShopWebApp.Controllers
             return View(cart);
         }
         [HttpPost]
-        public IActionResult Accept(OrderWithoutUser orderWithoutUser)
+        public IActionResult Accept(Order order, UserContact user)
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-            ordersWithoutUserRepository.AddOrder(orderWithoutUser, cart, Constants.UserId);
+            order.AddContacts(Constants.UserId, user);
+            order.AddCart(cart);
+            ordersRepository.AddOrder(order);
             return RedirectToAction("Result");
         }
 
         public IActionResult Result()
         {
-            var order = ordersWithoutUserRepository.GetLastOrder(Constants.UserId);
+            var order = ordersRepository.GetLastOrder(Constants.UserId);
             return View(order);
         }
     }

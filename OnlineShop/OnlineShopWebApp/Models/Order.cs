@@ -1,26 +1,24 @@
-﻿using System;
-
-namespace OnlineShopWebApp.Models
+﻿namespace OnlineShopWebApp.Models
 {
     public class Order
     {
-        private static int number = 1;
-        public int Id { get; set; }
-
-        public string Сomment { get; set; }
-
+        public static int Count = 0;
+        public int Number { get; set; }
+        public string Comment { get; set; }
+        public string UserId { get; set; }
         public Cart Cart { get; set; }
-        public Order (string comment, Cart cart)
-        {
-            Сomment = comment;
-            Cart = cart;
-            Id = number;
-            number++;
-        }
+        public UserContact User { get; set; }
 
-        public int GetOrderNumber()
+        public void AddContacts(string userId, UserContact user)
         {
-            return Id;
+            Count++;
+            Number = Count;
+            UserId = userId;
+            User = user;
+        }
+        public void AddCart(Cart cart)
+        {
+            Cart = cart;
         }
     }
 }

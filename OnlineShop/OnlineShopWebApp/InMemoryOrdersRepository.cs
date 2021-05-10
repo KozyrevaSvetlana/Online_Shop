@@ -3,21 +3,20 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp
 {
-    public class InMemoryOrdersRepository : IOrdersWithoutUserRepository
+    public class InMemoryOrdersRepository : IOrdersRepository
     {
-        private List<OrderWithoutUser> orders = new List<OrderWithoutUser>();
-        public void AddOrder(OrderWithoutUser order, Cart cart, string userId)
+        private List<Order> orders = new List<Order>();
+        public void AddOrder(Order order)
         {
-            order.AddCart(cart, userId);
             orders.Add(order);
         }
 
-        public OrderWithoutUser GetLastOrder(string userId)
+        public Order GetLastOrder(string userId)
         {
             return orders.FindLast(x => x.UserId == userId);
         }
 
-        public IEnumerable<OrderWithoutUser> AllUsers
+        public IEnumerable<Order> AllUsers
         {
             get
             {

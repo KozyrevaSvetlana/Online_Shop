@@ -1,4 +1,5 @@
-﻿@model OrderWithoutUser
-<h5 class="card-title">Спасибо, @Model.Name,</h5>
+﻿@model Order
+<h5 class="card-title">Спасибо, @Model.User.Name,</h5>
 <p class="card-text">Ваш заказ №@Model.Number на сумму @Model.Cart.Cost руб. принят</p>
 <a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a>
+
