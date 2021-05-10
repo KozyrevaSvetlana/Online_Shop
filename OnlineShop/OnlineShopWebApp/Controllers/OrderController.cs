@@ -9,12 +9,14 @@ namespace OnlineShopWebApp.Controllers
         private readonly IProductsRepository productsRepository;
         private readonly ICartsRepository cartsRepository;
         private readonly IUsersRepository usersRepository;
+        private readonly IOrdersWithoutUserRepository ordersWithoutUserRepository;
 
-        public OrderController(IProductsRepository productsRepository, ICartsRepository cartsRepository, IUsersRepository usersRepository)
+        public OrderController(IProductsRepository productsRepository, ICartsRepository cartsRepository, IUsersRepository usersRepository, IOrdersWithoutUserRepository ordersWithoutUserRepository)
         {
             this.productsRepository = productsRepository;
             this.cartsRepository = cartsRepository;
             this.usersRepository = usersRepository;
+            this.ordersWithoutUserRepository = ordersWithoutUserRepository;
         }
         public IActionResult Index()
         {
@@ -22,11 +24,11 @@ namespace OnlineShopWebApp.Controllers
             ViewBag.CartItemsCount = cartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
-        public IActionResult Accept(string name, string surname, string adress, string phone, string email, string comment)
+        [HttpPost]
+        public IActionResult Accept(OrderWithoutUser orderWithoutUser)
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-            usersRepository.AddUser(name, surname, adress, phone, email, comment, cart);
-            cartsRepository.ClearCart(Constants.UserId);
+            ordersWithoutUserRepository.AddOrder(orderWithoutUser, cart);
             return RedirectToAction("Result");
         }
 
