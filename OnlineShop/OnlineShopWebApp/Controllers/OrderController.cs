@@ -21,7 +21,6 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-            ViewBag.CartItemsCount = cartsRepository.GetAllAmounts(Constants.UserId);
             return View(cart);
         }
         [HttpPost]

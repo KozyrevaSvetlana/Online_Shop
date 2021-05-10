@@ -11,77 +11,13 @@
     <link rel="icon" href="~/img/iconBear.jpg" type="image/x-icon" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Главная страница</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a href="/Cart/Index"><img src="/img/Cart.png" alt="Корзина">Корзина</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Favorites/Index"><img src="/img/Favorites.png" alt="Избранное">Избранное</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Compare/Index"><img src="/img/Compare.png" alt="Избранное">Сравнить</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#"><img src="/img/Delivery.png" alt="Доставка">Доставка</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#"><img src="/img/Profile.png" alt="Войти">Войти</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Поиск">
-                    <button class="btn btn-outline-success" type="submit">Поиск</button>
-                </form>
-            </div>
-        </nav>
-    </header>
+    @await Html.PartialAsync("Header")
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-    <footer>
-        <nav class="navbar navbar-light bg-light">
-            <div class="row">
-                <div class="col-4">
-                    <div><a href="#">Покупателям</a></div>
-                    <div><a href="#">Как сделать заказ</a></div>
-                    <div><a href="#">Способы оплаты</a></div>
-                    <div><a href="#">Доставка</a></div>
-                    <div><a href="#">Возврат товара</a></div>
-                    <div><a href="#">Вопросы ответы</a></div>
-                </div>
-                <div class="col-4">
-                    <div><a href="#">Компания</a></div>
-                    <div><a href="#">О нас</a></div>
-                    <div><a href="#">Контакты</a></div>
-                    <div><a href="#">Реквизиты</a></div>
-                    <div><a href="#">Вакансии</a></div>
-                </div>
-                <div class="col-4">
-                    <div><a href="#">Статьи</a></div>
-                    <div><a href="#">Как выбрать товар</a></div>
-                    <div><a href="#">Советы по использованию</a></div>
-                </div>
-            </div>
-        </nav>
-        <div class="container">
-            <p>2021 - Интернет-магазин детcких товаров</p>
-        </div>
-    </footer>
+    @await Html.PartialAsync("Footer")
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

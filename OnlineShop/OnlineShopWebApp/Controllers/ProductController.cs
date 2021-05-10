@@ -18,9 +18,8 @@ namespace OnlineShopWebApp.Controllers
         // GET: ProductController
         public ActionResult Index(int id)
         {
-                var result = products.GetProductById(id);
-                ViewBag.CartItemsCount = cartsRepository.GetAllAmounts(Constants.UserId);
-                return View(result);
+            var result = products.GetProductById(id);
+            return View(result);
         }
     }
 }

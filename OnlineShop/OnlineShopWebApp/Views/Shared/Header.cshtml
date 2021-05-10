@@ -1,0 +1,37 @@
+﻿<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Главная страница</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                            <a href="/Cart/Index"><img src="/img/Cart.png" alt="Корзина">Корзина @await Component.InvokeAsync("Cart")</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Favorites/Index"><img src="/img/Favorites.png" alt="Избранное">Избранное</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Compare/Index"><img src="/img/Compare.png" alt="Избранное">Сравнить</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><img src="/img/Delivery.png" alt="Доставка">Доставка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><img src="/img/Profile.png" alt="Войти">Войти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Поиск">
+                <button class="btn btn-outline-success" type="submit">Поиск</button>
+            </form>
+        </div>
+    </nav>
+</header>
