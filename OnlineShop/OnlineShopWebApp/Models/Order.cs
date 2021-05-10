@@ -1,4 +1,7 @@
-﻿namespace OnlineShopWebApp.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace OnlineShopWebApp.Models
 {
     public class Order
     {
@@ -6,7 +9,7 @@
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }
-        public Cart Cart { get; set; }
+        public List<CartItem> products { get; set; }
         public UserContact User { get; set; }
 
         public void AddContacts(string userId, UserContact user)
@@ -18,7 +21,14 @@
         }
         public void AddCart(Cart cart)
         {
-            Cart = cart;
+            products = cart.Items;
+        }
+        public decimal Cost
+        {
+            get
+            {
+                return products.Sum(x => x.Cost * x.Amount);
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Result()
         {
+            //cartsRepository.ClearCart(Constants.UserId);
             var order = ordersRepository.GetLastOrder(Constants.UserId);
             return View(order);
         }

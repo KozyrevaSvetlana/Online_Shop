@@ -9,7 +9,7 @@ namespace OnlineShopWebApp
     public class InMemoryCompareRepository : ICompareRepository
     {
         private List<Compare> compareList = new List<Compare>();
-        public IEnumerable<BaseProductsList> AllProducts
+        public IEnumerable<BaseProductList> AllProducts
         {
             get
             {
@@ -17,7 +17,7 @@ namespace OnlineShopWebApp
             }
         }
 
-        public BaseProductsList TryGetByUserId(string userId)
+        public BaseProductList TryGetByUserId(string userId)
         {
             return compareList.FirstOrDefault(x => x.UserId == userId);
         }
@@ -59,6 +59,11 @@ namespace OnlineShopWebApp
             };
             newCart.Items.Add(product);
             compareList.Add(newCart);
+        }
+
+        BaseList IBaseProductList.TryGetByUserId(string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

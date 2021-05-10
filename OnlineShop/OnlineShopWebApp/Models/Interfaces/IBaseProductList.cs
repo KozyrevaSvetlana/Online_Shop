@@ -7,10 +7,10 @@ namespace OnlineShopWebApp.Models.Interfaces
 {
     public interface IBaseProductList
     {
-        IEnumerable<BaseProductsList> AllProducts { get; }
+        IEnumerable<BaseProductList> AllProducts { get; }
 
         void Clear(string userId);
-        BaseProductsList TryGetByUserId(string userId);
+        BaseList TryGetByUserId(string userId);
         public void Add(Product product, string userId);
         public void DeleteItem(int id, string userId);
     }

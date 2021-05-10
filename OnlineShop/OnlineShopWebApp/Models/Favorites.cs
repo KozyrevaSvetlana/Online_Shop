@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
-    public class Favorites: BaseProductsList
+    public class Favorites: BaseProductList
     {
     }
 }

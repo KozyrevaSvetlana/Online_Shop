@@ -1,4 +1,5 @@
 ﻿using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,15 @@ namespace OnlineShopWebApp
     public class InMemoryFavoritesRepository : IFavoritesRepository
     {
         private List<Favorites> favoritesList = new List<Favorites>();
-        public IEnumerable<BaseProductsList> AllProducts
+        public IEnumerable<BaseProductList> AllProducts
         {
             get
             {
                 return favoritesList;
             }
         }
-        public BaseProductsList TryGetByUserId(string userId)
+
+        public BaseProductList TryGetByUserId(string userId)
         {
             return favoritesList.FirstOrDefault(x => x.UserId == userId);
         }
@@ -57,6 +59,11 @@ namespace OnlineShopWebApp
             };
             newFavorites.Items.Add(product);
             favoritesList.Add(newFavorites);
+        }
+
+        BaseList IBaseProductList.TryGetByUserId(string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
