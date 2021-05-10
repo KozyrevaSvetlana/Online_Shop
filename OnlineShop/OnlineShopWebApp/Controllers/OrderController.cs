@@ -28,13 +28,14 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Accept(OrderWithoutUser orderWithoutUser)
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-            ordersWithoutUserRepository.AddOrder(orderWithoutUser, cart);
+            ordersWithoutUserRepository.AddOrder(orderWithoutUser, cart, Constants.UserId);
             return RedirectToAction("Result");
         }
 
         public IActionResult Result()
         {
-            return View();
+            var order = ordersWithoutUserRepository.GetLastOrder(Constants.UserId);
+            return View(order);
         }
     }
 }

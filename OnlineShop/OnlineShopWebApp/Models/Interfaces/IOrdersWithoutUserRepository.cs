@@ -7,6 +7,7 @@ namespace OnlineShopWebApp
     {
         IEnumerable<OrderWithoutUser> AllUsers { get; }
 
-        void AddOrder(OrderWithoutUser order, Cart cart);
+        void AddOrder(OrderWithoutUser order, Cart cart, string userId);
+        OrderWithoutUser GetLastOrder(string userId);
     }
 }

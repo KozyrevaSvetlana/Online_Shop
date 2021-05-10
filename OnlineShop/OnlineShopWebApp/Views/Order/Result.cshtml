@@ -1,2 +1,3 @@
-﻿<h1>Спасибо, Ваш заказ принят</h1>
+﻿@model OrderWithoutUser
+<h1>Спасибо, Ваш заказ №@Model.Number на сумму @Model.Cart.Cost руб. принят</h1>
 <a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a>
