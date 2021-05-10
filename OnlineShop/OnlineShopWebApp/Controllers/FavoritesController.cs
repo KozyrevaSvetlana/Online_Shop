@@ -32,8 +32,7 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Delete(int id)
         {
-            var product = productsRepository.GetProductById(id);
-            favoritesRepository.DeleteItem(product, Constants.UserId);
+            favoritesRepository.DeleteItem(id, Constants.UserId);
             return RedirectToAction("Index");
         }
     }

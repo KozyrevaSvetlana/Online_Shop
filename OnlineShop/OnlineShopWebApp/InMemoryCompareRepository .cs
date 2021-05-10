@@ -22,10 +22,10 @@ namespace OnlineShopWebApp
             return compareList.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void DeleteItem(Product product, string userId)
+        public void DeleteItem(int id, string userId)
         {
             var userCompareList = TryGetByUserId(userId);
-            userCompareList.Items.RemoveAll(x => x.Id == product.Id);
+            userCompareList.Items.RemoveAll(x => x.Id == id);
         }
 
         public void Clear(string userId)

@@ -20,10 +20,10 @@ namespace OnlineShopWebApp
             return favoritesList.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void DeleteItem(Product product, string userId)
+        public void DeleteItem(int id, string userId)
         {
             var userFavoritesList = TryGetByUserId(userId);
-            userFavoritesList.Items.RemoveAll(x => x.Id == product.Id);
+            userFavoritesList.Items.RemoveAll(x => x.Id == id);
         }
 
         public void Clear(string userId)

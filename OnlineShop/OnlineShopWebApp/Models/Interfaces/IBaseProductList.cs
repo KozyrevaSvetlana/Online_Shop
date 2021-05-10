@@ -12,6 +12,6 @@ namespace OnlineShopWebApp.Models.Interfaces
         void Clear(string userId);
         BaseProductsList TryGetByUserId(string userId);
         public void Add(Product product, string userId);
-        public void DeleteItem(Product product, string userId);
+        public void DeleteItem(int id, string userId);
     }
 }
