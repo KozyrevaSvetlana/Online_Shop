@@ -24,14 +24,13 @@ namespace OnlineShopWebApp.Controllers
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
             order.AddContacts(Constants.UserId, user);
-            order.AddCart(cart);
-            ordersRepository.AddOrder(order);
+            ordersRepository.AddOrder(order, cart);
+            cartsRepository.ClearCart(Constants.UserId);
             return RedirectToAction("Result");
         }
 
         public IActionResult Result()
         {
-            //cartsRepository.ClearCart(Constants.UserId);
             var order = ordersRepository.GetLastOrder(Constants.UserId);
             return View(order);
         }

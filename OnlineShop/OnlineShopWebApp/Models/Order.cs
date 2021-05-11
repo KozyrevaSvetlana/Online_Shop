@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OnlineShopWebApp.Models
@@ -19,15 +20,12 @@ namespace OnlineShopWebApp.Models
             UserId = userId;
             User = user;
         }
-        public void AddCart(Cart cart)
-        {
-            Products = cart.Items;
-        }
+
         public decimal Cost
         {
             get
             {
-                return Products.Sum(x => x.Cost * x.Amount);
+                return Products?.Sum(x => x.Cost) ?? 0;
             }
         }
     }

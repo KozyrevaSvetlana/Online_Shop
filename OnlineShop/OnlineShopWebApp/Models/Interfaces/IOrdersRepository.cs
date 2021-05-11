@@ -5,9 +5,10 @@ namespace OnlineShopWebApp
 {
     public interface IOrdersRepository
     {
-        IEnumerable<Order> AllUsers { get; }
+        IEnumerable<Order> AllOrders { get; }
 
-        void AddOrder(Order order);
-        Order GetLastOrder(string userId);
+        public void AddOrder(Order order, Cart cart);
+        public Order GetLastOrder(string userId);
+        public Order TryGetByUserId(string userId);
     }
 }
