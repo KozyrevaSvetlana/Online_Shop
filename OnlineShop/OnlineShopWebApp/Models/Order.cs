@@ -6,7 +6,7 @@ namespace OnlineShopWebApp.Models
 {
     public class Order
     {
-        public static int Count = 0;
+        private static int count = 0;
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }
@@ -15,8 +15,8 @@ namespace OnlineShopWebApp.Models
 
         public void AddContacts(string userId, UserContact user)
         {
-            Count++;
-            Number = Count;
+            count++;
+            Number = count;
             UserId = userId;
             User = user;
         }
