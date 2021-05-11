@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Models
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }
-        public List<CartItem> products { get; set; }
+        public List<CartItem> Products { get; set; }
         public UserContact User { get; set; }
 
         public void AddContacts(string userId, UserContact user)
@@ -21,13 +21,13 @@ namespace OnlineShopWebApp.Models
         }
         public void AddCart(Cart cart)
         {
-            products = cart.Items;
+            Products = cart.Items;
         }
         public decimal Cost
         {
             get
             {
-                return products.Sum(x => x.Cost * x.Amount);
+                return Products.Sum(x => x.Cost * x.Amount);
             }
         }
     }
