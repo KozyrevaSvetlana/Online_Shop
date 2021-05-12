@@ -5,12 +5,6 @@ namespace OnlineShopWebApp.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IUsersRepository usersRepository;
-
-        public LoginController(IUsersRepository usersRepository)
-        {
-            this.usersRepository = usersRepository;
-        }
 
         public IActionResult Index()
         {
@@ -20,19 +14,15 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult CheckIn(User user)
         {
-            if (user.RememberMe)
-            {
-                usersRepository.AddUser(user);
-            }
             return RedirectToAction("Result");
         }
         public IActionResult Result()
         {
             return View();
         }
-        public IActionResult Registration(User user)
+        [HttpPost]
+        public IActionResult Registration(NewUser user)
         {
-            usersRepository.AddUser(user);
             return RedirectToAction("Result");
         }
         public IActionResult Create()
