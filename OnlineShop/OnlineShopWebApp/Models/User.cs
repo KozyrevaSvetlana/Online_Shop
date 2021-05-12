@@ -7,6 +7,7 @@ namespace OnlineShopWebApp.Models
     {
         public string Name { get; set; }
         public string Password { get; set; }
+
         public UserContact Contacts { get; set; }
         public List<Order> Orders { get; set; }
         public bool RememberMe { get; set; }

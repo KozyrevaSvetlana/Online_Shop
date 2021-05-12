@@ -1,0 +1,22 @@
+﻿<div>
+    <h1>Регистрация</h1>
+    <form method="post" class="form-group">
+        <div>
+            <label>Логин</label>
+            <input type="text" class="form-control" name="Name" tabindex="1">
+            <small class="form-text text-muted">Введите логин</small>
+        </div>
+        <div>
+            <label>Пароль</label>
+            <input type="password" class="form-control" name="FirstPassword" tabindex="2">
+            <small class="form-text text-muted">Введите пароль</small>
+        </div>
+        <div>
+            <label>Пароль</label>
+            <input type="password" class="form-control" name="CheckPassword" tabindex="3">
+            <small class="form-text text-muted">Подтвердите пароль</small>
+        </div>
+        <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="Registration" tabindex="4">Регистрация</button>
+    </form>
+    <div></div>
+</div>

@@ -30,5 +30,14 @@ namespace OnlineShopWebApp.Controllers
         {
             return View();
         }
+        public IActionResult Registration(User user)
+        {
+            usersRepository.AddUser(user);
+            return RedirectToAction("Result");
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
