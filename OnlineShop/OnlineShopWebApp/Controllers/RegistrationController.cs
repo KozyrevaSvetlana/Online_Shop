@@ -3,16 +3,14 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class LoginController : Controller
+    public class RegistrationController : Controller
     {
-
         public IActionResult Index()
         {
             return View();
         }
-
         [HttpPost]
-        public IActionResult CheckIn(User user)
+        public IActionResult Create(NewUser user)
         {
             return RedirectToAction("Result");
         }
