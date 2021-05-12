@@ -1,1 +1,21 @@
-﻿<h1>Вход</h1>
+﻿<div>
+    <h1>Вход</h1>
+    <form method="post">
+        <div>
+            <input type="text" class="form-control" name="Name" placeholder="Логин" tabindex="1">
+        </div>
+        <div>
+            <input type="password" class="form-control" name="Password" placeholder="Пароль" tabindex="2">
+        </div>
+        <div>
+            <input type="checkbox" class="form-check-input" name="rememberMe">
+            <label class="form-check-label" for="dropdownCheck">
+                Запомнить меня?
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="CheckIn" tabindex="3">Войти</button>
+    </form>
+    <div></div>
+    <a class="dropdown-item" href="#">Регистрация нового пользователя</a>
+    <a class="dropdown-item" href="#">Забыли пароль?</a>
+</div>

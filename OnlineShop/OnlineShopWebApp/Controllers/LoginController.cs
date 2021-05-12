@@ -18,9 +18,9 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckIn(User user, bool rememberMe)
+        public IActionResult CheckIn(User user)
         {
-            if (rememberMe)
+            if (user.RememberMe)
             {
                 usersRepository.AddUser(user);
             }
