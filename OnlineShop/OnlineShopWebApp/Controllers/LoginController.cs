@@ -26,9 +26,9 @@ namespace OnlineShopWebApp.Controllers
             }
             return RedirectToAction("Result");
         }
-        public string Result()
+        public IActionResult Result()
         {
-            return "удачно";
+            return View();
         }
     }
 }
