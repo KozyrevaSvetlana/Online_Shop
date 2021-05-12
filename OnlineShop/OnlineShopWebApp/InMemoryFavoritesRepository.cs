@@ -60,10 +60,5 @@ namespace OnlineShopWebApp
             newFavorites.Items.Add(product);
             favoritesList.Add(newFavorites);
         }
-
-        BaseList IBaseProductList.TryGetByUserId(string userId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

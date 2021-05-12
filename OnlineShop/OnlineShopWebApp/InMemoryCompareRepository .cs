@@ -60,10 +60,5 @@ namespace OnlineShopWebApp
             newCart.Items.Add(product);
             compareList.Add(newCart);
         }
-
-        BaseList IBaseProductList.TryGetByUserId(string userId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
