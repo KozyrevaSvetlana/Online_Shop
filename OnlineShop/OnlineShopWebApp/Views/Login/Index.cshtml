@@ -1,11 +1,15 @@
 ﻿<div>
     <h1>Вход</h1>
-    <form method="post">
+    <form method="post" class="form-group">
         <div>
-            <input type="text" class="form-control" name="Name" placeholder="Логин" tabindex="1">
+            <label>Логин</label>
+            <input type="text" class="form-control" name="Name" tabindex="1">
+            <small class="form-text text-muted">Введите логин</small>
         </div>
         <div>
-            <input type="password" class="form-control" name="Password" placeholder="Пароль" tabindex="2">
+            <label>Пароль</label>
+            <input type="password" class="form-control" name="Password" tabindex="2">
+            <small class="form-text text-muted">Введите пароль</small>
         </div>
         <div>
             <input type="checkbox" class="form-check-input" name="rememberMe" value="true">
