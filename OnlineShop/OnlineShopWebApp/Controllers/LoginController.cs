@@ -10,6 +10,10 @@ namespace OnlineShopWebApp.Controllers
         {
             return View();
         }
+        public IActionResult RegIndex()
+        {
+            return View();
+        }
 
         [HttpPost]
         public IActionResult CheckIn(User user)
@@ -20,5 +24,11 @@ namespace OnlineShopWebApp.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Create(NewUser user)
+        {
+            return RedirectToAction("Result");
+        }
+
     }
 }
