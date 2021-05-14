@@ -2,7 +2,6 @@
 
 @if (Model != null)
 {
-
     <h1>Продукты</h1>
     <br />
     <table class="table">
@@ -19,32 +18,32 @@
             @{ int i = 1;}
             @foreach (var product in Model)
             {
-            <tr>
-                <th scope="row">@i</th>
-                <td>@product.Id</td>
-                <td>@product.Name</td>
-                <td>@product.Cost</td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Подробнее
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="/Product/Index/@product.Id">Описание</a>
-                                <a class="dropdown-item" href="/Product/EditForm/@product.Id">Редактировать</a>
-                                <a class="dropdown-item" href="/Product/DeleteProduct/@product.Id">Удалить</a>
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Cost</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Подробнее
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="/Product/Index/@product.Id">Описание</a>
+                                    <a class="dropdown-item" href="/Product/EditForm/@product.Id">Редактировать</a>
+                                    <a class="dropdown-item" href="/Product/DeleteProduct/@product.Id">Удалить</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-                @{i++;}
-            </tr>
+                    </td>
+                    @{i++;}
+                </tr>
             }
         </tbody>
     </table>
 }
-            else
-            {
-<p class="alert-danger">Нет ни одного продукта</p>
-            }
+else
+{
+    <p class="alert-danger">Нет ни одного продукта</p>
+}

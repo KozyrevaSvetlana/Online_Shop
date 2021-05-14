@@ -8,5 +8,6 @@ namespace OnlineShopWebApp.Models
         Product GetProductById(int id);
         public void DeleteItem(int id);
         public void Edit(EditProduct editProduct);
+        public int GetCount();
     }
 }

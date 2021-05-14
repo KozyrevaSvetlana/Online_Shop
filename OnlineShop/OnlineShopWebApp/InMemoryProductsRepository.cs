@@ -38,5 +38,9 @@ namespace OnlineShopWebApp.Models
             product.Cost = editProduct.Cost;
             product.Description = editProduct.Description;
         }
+        public int GetCount()
+        {
+            return products.Count;
+        }
     }
 }
