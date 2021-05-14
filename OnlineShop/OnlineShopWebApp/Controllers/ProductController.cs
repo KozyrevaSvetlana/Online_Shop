@@ -26,6 +26,11 @@ namespace OnlineShopWebApp.Controllers
             var result = products.GetProductById(id);
             return View(result);
         }
-
+        [HttpPost]
+        public ActionResult EditProduct(EditProduct product)
+        {
+            products.Edit(product);
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }

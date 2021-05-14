@@ -31,5 +31,12 @@ namespace OnlineShopWebApp.Models
         {
             products.RemoveAll(x => x.Id == id);
         }
+        public void Edit(EditProduct editProduct)
+        {
+            var product = AllProducts.FirstOrDefault(p => p.Id == editProduct.Id);
+            product.Name = editProduct.Name;
+            product.Cost = editProduct.Cost;
+            product.Description = editProduct.Description;
+        }
     }
 }

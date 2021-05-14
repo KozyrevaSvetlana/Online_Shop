@@ -5,12 +5,16 @@
     <p class="text-body">@Model.Name</p>
     <form method="post" class="form-group">
         <div>
+            <label>Id</label>
+            <input type="text" class="form-control" name="id"  value="@Model.Id" readonly>
+        </div>
+        <div>
             <label>Имя</label>
             <input type="text" class="form-control" name="name" tabindex="1" value="@Model.Name">
         </div>
         <div>
             <label>Цена</label>
-            <input type="number" class="form-control" name="cost" tabindex="2" value="@Model.Cost">
+            <input type="number" class="form-control" name="cost" tabindex="2" value="@Model.Cost" min="1">
         </div>
         <div>
             <label>Описание</label>
