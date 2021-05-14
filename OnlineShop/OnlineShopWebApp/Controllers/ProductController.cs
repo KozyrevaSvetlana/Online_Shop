@@ -32,5 +32,10 @@ namespace OnlineShopWebApp.Controllers
             products.Edit(product);
             return RedirectToAction("Index", "Admin");
         }
+        public ActionResult DeleteProduct(int id)
+        {
+            products.DeleteItem(id);
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }
