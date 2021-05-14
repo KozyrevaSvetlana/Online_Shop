@@ -1,0 +1,27 @@
+﻿@model Product
+
+<div class="container">
+    <h1>Редактирование</h1>
+    <p class="text-body">@Model.Name</p>
+    <form method="post" class="form-group">
+        <div>
+            <label>Имя</label>
+            <input type="text" class="form-control" name="name" tabindex="1" value="@Model.Name">
+        </div>
+        <div>
+            <label>Цена</label>
+            <input type="number" class="form-control" name="cost" tabindex="2" value="@Model.Cost">
+        </div>
+        <div>
+            <label>Описание</label>
+            <textarea class="form-control" type="text" name="description" cols="30" rows="10" tabindex="3" value="">@Model.Description</textarea>
+        </div>
+        <br />
+        <div>
+            <span>
+                <button type="submit" class="btn btn-primary" asp-controller="Product" asp-action="EditProduct" tabindex="5">Изменить</button>
+                <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>
+            </span>
+        </div>
+    </form>
+</div>

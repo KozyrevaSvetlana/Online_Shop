@@ -6,5 +6,6 @@ namespace OnlineShopWebApp.Models
     {
         IEnumerable<Product> AllProducts { get; }
         Product GetProductById(int id);
+        public void DeleteItem(int id);
     }
 }

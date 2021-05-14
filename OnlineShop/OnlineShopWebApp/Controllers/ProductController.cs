@@ -21,5 +21,11 @@ namespace OnlineShopWebApp.Controllers
             var result = products.GetProductById(id);
             return View(result);
         }
+        public ActionResult EditForm(int id)
+        {
+            var result = products.GetProductById(id);
+            return View(result);
+        }
+
     }
 }

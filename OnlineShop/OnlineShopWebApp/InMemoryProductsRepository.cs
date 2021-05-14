@@ -26,5 +26,10 @@ namespace OnlineShopWebApp.Models
         {
             return AllProducts.FirstOrDefault(p => p.Id == id);
         }
+
+        public void DeleteItem(int id)
+        {
+            products.RemoveAll(x => x.Id == id);
+        }
     }
 }
