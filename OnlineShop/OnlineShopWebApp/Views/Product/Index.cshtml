@@ -15,18 +15,36 @@
     }
     else
     {
-        <div class="col-6 card shadow">
-            <img class="card-img-top" href="@Model.Image" src="@Model.Image" alt="@Model.Name" />
-            <div class="card-body">
+<div class="row">
+    <div class="col-6">
+        <img class="card-img-top" href="@Model.Image" src="@Model.Image" alt="@Model.Name" />
+    </div>
+    <div class="col-6">
+
+
+        <div class="row">
+            <div class="text-left">
                 <p>@Model.Name</p>
                 <p>@Model.Cost руб</p>
                 <p>@Model.Description</p>
-                <a class="btn btn-success" href="/cart/add?id=@Model.Id" role="button">Добавить в корзину</a>
-                <a class="btn btn-success" href="/Favorites/Add?id=@Model.Id" role="button">Добавить в избранное</a>
-                <a class="btn btn-link" href="/Compare/Add?id=@Model.Id" role="button">Сравнить</a>
-
             </div>
         </div>
+        <div class="text-left">
+            <div>
+                <a class="btn btn-success" href="/cart/add?id=@Model.Id" role="button">Добавить в корзину</a>
+            </div>
+            <br />
+            <div>
+                <a class="btn btn-warning" href="/Favorites/Add?id=@Model.Id" role="button">Добавить в избранное</a>
+            </div>
+            <br />
+            <div>
+                <a class="btn btn-info" href="/Compare/Add?id=@Model.Id" role="button">Сравнить</a>
+            </div>
+            <br />
+        </div>
+    </div>
+    </div>
         <a class="btn btn-info" href="/Home/Index" role="button">Продолжить покупки</a>
     }
 
