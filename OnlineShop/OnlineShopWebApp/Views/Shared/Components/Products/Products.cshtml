@@ -1,16 +1,21 @@
 ﻿@model IEnumerable<Product>
 
-<div>
-    <a class="btn btn-primary" href="/Admin/AddProductForm" role="button">Добавить новый продукт</a>
-</div>
-<br />
+
 @if (Model == null || Model.Count() == 0)
 {
     <p class="alert-danger">Продуктов нет</p>
+    <div>
+        <a class="btn btn-primary" href="/Admin/AddProductForm" role="button">Добавить новый продукт</a>
+    </div>
+    <br />
 }
 else
 {
     <h1>Продукты</h1>
+    <br />
+    <div>
+        <a class="btn btn-primary" href="/Admin/AddProductForm" role="button">Добавить новый продукт</a>
+    </div>
     <br />
     <table class="table">
         <thead>
