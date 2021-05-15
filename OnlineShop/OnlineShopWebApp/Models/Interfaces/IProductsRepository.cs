@@ -7,7 +7,8 @@ namespace OnlineShopWebApp.Models
         IEnumerable<Product> AllProducts { get; }
         Product GetProductById(int id);
         public void DeleteItem(int id);
-        public void Edit(EditProduct editProduct);
+        public void Edit(Product editProduct);
         public int GetCount();
+        public void Add(Product newProduct);
     }
 }

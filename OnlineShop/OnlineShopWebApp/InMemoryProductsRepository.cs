@@ -31,7 +31,7 @@ namespace OnlineShopWebApp.Models
         {
             products.RemoveAll(x => x.Id == id);
         }
-        public void Edit(EditProduct editProduct)
+        public void Edit(Product editProduct)
         {
             var product = AllProducts.FirstOrDefault(p => p.Id == editProduct.Id);
             product.Name = editProduct.Name;
@@ -41,6 +41,11 @@ namespace OnlineShopWebApp.Models
         public int GetCount()
         {
             return products.Count;
+        }
+        public void Add(Product newProduct)
+        {
+            var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif");
+            products.Add(product);
         }
     }
 }

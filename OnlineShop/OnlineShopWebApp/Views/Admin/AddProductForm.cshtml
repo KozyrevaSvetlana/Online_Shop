@@ -1,0 +1,25 @@
+﻿<div class="container">
+    <h1>Редактирование</h1>
+    <p class="text-body">Добавить новый продукт</p>
+    <form method="post" class="form-group">
+        <div>
+            <label>Название</label>
+            <input type="text" class="form-control" name="name" tabindex="1">
+        </div>
+        <div>
+            <label>Цена</label>
+            <input type="number" class="form-control" name="cost" tabindex="2" min="1">
+        </div>
+        <div>
+            <label>Описание</label>
+            <textarea class="form-control" type="text" name="description" cols="30" rows="10" tabindex="3" value=""></textarea>
+        </div>
+        <br />
+        <div>
+            <span>
+                <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="AddProduct" tabindex="5">Добавить</button>
+                <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>
+            </span>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,14 @@
 ﻿@model IEnumerable<Product>
 
-@if (Model != null)
+<div>
+    <a class="btn btn-primary" href="/Admin/AddProductForm" role="button">Добавить новый продукт</a>
+</div>
+<br />
+@if (Model == null || Model.Count() == 0)
+{
+    <p class="alert-danger">Продуктов нет</p>
+}
+else
 {
     <h1>Продукты</h1>
     <br />
@@ -30,9 +38,9 @@
                                     Подробнее
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="/Product/Index/@product.Id">Описание</a>
-                                    <a class="dropdown-item" href="/Product/EditForm/@product.Id">Редактировать</a>
-                                    <a class="dropdown-item" href="/Product/DeleteProduct/@product.Id">Удалить</a>
+                                    <a class="dropdown-item" href="/Admin/Description/@product.Id">Описание</a>
+                                    <a class="dropdown-item" href="/Admin/EditForm/@product.Id">Редактировать</a>
+                                    <a class="dropdown-item" href="/Admin/DeleteProduct/@product.Id">Удалить</a>
                                 </div>
                             </div>
                         </div>
@@ -42,8 +50,4 @@
             }
         </tbody>
     </table>
-}
-else
-{
-    <p class="alert-danger">Нет ни одного продукта</p>
 }
