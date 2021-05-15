@@ -1,1 +1,47 @@
-﻿Здесь будут заказы
+﻿@model IEnumerable<Order>
+
+
+@if (Model == null || Model.Count() == 0)
+{
+    <p>Заказов нет</p>
+}
+else
+{
+    <h1>Заказы</h1>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Номер заказа</th>
+                <th scope="col">Сумма</th>
+                <th scope="col">Статус</th>
+                <th scope="col">email пользователя</th>
+                <th scope="col">телефон</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Время</th>
+                <th scope="col">Комментарий</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1;
+                string status;}
+            @foreach (var order in Model)
+            {
+            <tr>
+                @{status = order.GetStatus(order.StatusOrder);}
+                <th scope="row">@i</th>
+                <td>@order.Number</td>
+                <td>@order.Cost</td>
+                <td>@status</td>
+                <td>@order.User.Email</td>
+                <td>@order.User.Phone</td>
+                <td>@order.Data.Date</td>
+                <td>@order.Data.TimeOfDay;</td>
+                <td>@order.Comment</td>
+                @{i++;}
+            </tr>
+            }
+        </tbody>
+    </table>
+}

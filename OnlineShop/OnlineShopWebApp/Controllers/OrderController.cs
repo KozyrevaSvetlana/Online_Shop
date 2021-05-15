@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.Interfaces;
+using System;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -23,7 +24,8 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Accept(Order order, UserContact user)
         {
             var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-            order.AddContacts(Constants.UserId, user);
+            var dataTime = DateTime.Now;
+            order.AddContacts(Constants.UserId, user, dataTime);
             ordersRepository.AddOrder(order, cart);
             cartsRepository.ClearCart(Constants.UserId);
             return RedirectToAction("Result");

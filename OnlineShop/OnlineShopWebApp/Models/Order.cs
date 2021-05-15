@@ -13,6 +13,7 @@ namespace OnlineShopWebApp.Models
         public List<CartItem> Products { get; set; }
         public UserContact User { get; set; }
         public Status StatusOrder { get; set; }
+        public DateTime Data { get; set; }
         public enum Status
         {
             Created,
@@ -22,13 +23,14 @@ namespace OnlineShopWebApp.Models
             Done
         }
 
-        public void AddContacts(string userId, UserContact user)
+        public void AddContacts(string userId, UserContact user, DateTime dateTime)
         {
             count++;
             Number = count;
             UserId = userId;
             User = user;
             StatusOrder = Status.Created;
+            Data = dateTime;
         }
 
         public decimal Cost
