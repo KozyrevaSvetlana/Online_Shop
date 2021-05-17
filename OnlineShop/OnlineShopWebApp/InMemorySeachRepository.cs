@@ -4,26 +4,32 @@ using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
-    public class InMemorySeachRepository 
+    public class InMemorySeachRepository : ISeachRepository
     {
         private List<Seach> seachResultProducts = new List<Seach>();
         public Seach TryGetByUserId(string userId)
         {
             return seachResultProducts.FirstOrDefault(x => x.UserId == userId);
         }
-        public void Add(Product product, string userId)
+        public void Add(List<Product> products, string userId)
         {
             var userseachResultProducts = TryGetByUserId(userId);
-            if (userseachResultProducts == null)
+            if (products != null)
             {
-                AddNewSeachResult(product, userId);
-            }
-            else
-            {
-                var userCartItem = userseachResultProducts.Items.FirstOrDefault(x => x.Id == product.Id);
-                if (userCartItem == null)
+                foreach (var product in products)
                 {
-                    userseachResultProducts.Items.Add(product);
+                    if (userseachResultProducts == null)
+                    {
+                        AddNewSeachResult(product, userId);
+                    }
+                    else
+                    {
+                        var userCartItem = userseachResultProducts.Items.FirstOrDefault(x => x.Id == product.Id);
+                        if (userCartItem == null)
+                        {
+                            userseachResultProducts.Items.Add(product);
+                        }
+                    }
                 }
             }
         }
@@ -42,6 +48,13 @@ namespace OnlineShopWebApp.Models
             };
             newCart.Items.Add(product);
             seachResultProducts.Add(newCart);
+        }
+        public IEnumerable<Seach> seachProducts
+        {
+            get
+            {
+                return seachResultProducts;
+            }
         }
     }
 }

@@ -48,11 +48,15 @@ namespace OnlineShopWebApp.Models
             products.Add(product);
         }
 
-        public List<Product> SeachProduct(string seachWord)
+        public List<Product> SeachProduct(string[] seachResults)
         {
             var resultList = new List<Product>();
-            resultList = products.Where(x => x.Name.Contains(seachWord)).ToList();
-            return resultList;
+
+            foreach (var word in seachResults)
+            {
+            resultList = products.Where(x => x.Name.Contains(word)).ToList();
+            }
+            return resultList.Distinct().ToList();
         }
     }
 }

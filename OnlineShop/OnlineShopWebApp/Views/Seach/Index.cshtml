@@ -1,7 +1,19 @@
-﻿<h1>Результаты поиска</h1>
+﻿@model IEnumerable<Seach>
+
+<h1>Результаты поиска</h1>
 <br />
 <h5>Вы искали:</h5>
-    @foreach (var result in TempData["Result"] as string)
-        {@result;}
+@foreach (var result in TempData["Result"] as string)
+{@result;
+}
 <br />
-    <p>Результаты поиска</p>
+<p>Результаты поиска:</p>
+
+@if (Model == null || Model.Count() == 0)
+{
+    <p>Товары не найдены</p>
+}
+else
+{
+    <p>Товары найдены</p>
+}
