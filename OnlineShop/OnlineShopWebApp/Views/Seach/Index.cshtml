@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Seach>
+﻿@model Seach
 
 <h1>Результаты поиска</h1>
 <br />
@@ -9,11 +9,30 @@
 <br />
 <p>Результаты поиска:</p>
 
-@if (Model == null || Model.Count() == 0)
+@if (Model == null)
 {
     <p>Товары не найдены</p>
 }
 else
 {
-    <p>Товары найдены</p>
+    @foreach (var product in Model.Items)
+    {
+        <div class="col-4 card shadow">
+            <div>
+                <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
+                <div class="card-body">
+                    <a href="/Product/Index/@product.Id">@product.Name</a>
+                    <p>@product.Cost руб</p>
+                    <p>@product.Description</p>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-success" href="/cart/add?id=@Model.Id" role="button">Добавить в корзину</a>
+                <a class="btn btn-warning" href="/Favorites/Add?id=@Model.Id" role="button">Добавить в избранное</a>
+                <a class="btn btn-info" href="/Compare/Add?id=@Model.Id" role="button">Сравнить</a>
+            </div>
+            }
+        </div>
+    }
 }
+    <a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a>

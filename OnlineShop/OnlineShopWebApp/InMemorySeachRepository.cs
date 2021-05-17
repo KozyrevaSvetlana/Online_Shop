@@ -7,7 +7,15 @@ namespace OnlineShopWebApp.Models
     public class InMemorySeachRepository : ISeachRepository
     {
         private List<Seach> seachResultProducts = new List<Seach>();
-        public Seach TryGetByUserId(string userId)
+        public IEnumerable<BaseProductList> AllProducts
+        {
+            get
+            {
+                return seachResultProducts;
+            }
+        }
+
+        public BaseProductList TryGetByUserId(string userId)
         {
             return seachResultProducts.FirstOrDefault(x => x.UserId == userId);
         }
@@ -49,12 +57,16 @@ namespace OnlineShopWebApp.Models
             newCart.Items.Add(product);
             seachResultProducts.Add(newCart);
         }
-        public IEnumerable<Seach> seachProducts
+
+        public void Add(Product product, string userId)
         {
-            get
-            {
-                return seachResultProducts;
-            }
+            throw new NotImplementedException();
+        }
+
+        public void DeleteItem(int id, string userId)
+        {
+            var userFavoritesList = TryGetByUserId(userId);
+            userFavoritesList.Items.RemoveAll(x => x.Id == id);
         }
     }
 }

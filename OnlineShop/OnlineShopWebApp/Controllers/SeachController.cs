@@ -15,7 +15,8 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Index()
         {
-            return View(seachRepository.seachProducts);
+            var seach = seachRepository.TryGetByUserId(Constants.UserId);
+            return View(seach);
         }
 
         [HttpPost]
