@@ -10,5 +10,6 @@ namespace OnlineShopWebApp.Models
         public void Edit(Product editProduct);
         public int GetCount();
         public void Add(Product newProduct);
+        public List<Product> SeachProduct(string seachWord);
     }
 }

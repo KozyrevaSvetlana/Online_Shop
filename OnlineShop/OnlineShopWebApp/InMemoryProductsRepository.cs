@@ -47,5 +47,12 @@ namespace OnlineShopWebApp.Models
             var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif");
             products.Add(product);
         }
+
+        public List<Product> SeachProduct(string seachWord)
+        {
+            var resultList = new List<Product>();
+            resultList = products.Where(x => x.Name.Contains(seachWord)).ToList();
+            return resultList;
+        }
     }
 }
