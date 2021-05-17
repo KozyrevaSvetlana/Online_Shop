@@ -23,10 +23,8 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Accept(Order order, UserContact user)
         {
-            var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-            var dataTime = DateTime.Now;
-            order.AddContacts(Constants.UserId, user, dataTime);
-            ordersRepository.AddOrder(order, cart);
+            order.AddContacts(Constants.UserId, user, new InfoStatusOrder(DateTime.Now));
+            ordersRepository.AddOrder(order, cartsRepository.TryGetByUserId(Constants.UserId));
             cartsRepository.ClearCart(Constants.UserId);
             return RedirectToAction("Result");
         }

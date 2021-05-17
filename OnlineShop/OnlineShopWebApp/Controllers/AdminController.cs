@@ -5,11 +5,11 @@ namespace OnlineShopWebApp.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IProductsRepository products;
+        private readonly IProductsRepository productsRepository;
 
         public AdminController(IProductsRepository products)
         {
-            this.products = products;
+            this.productsRepository = products;
         }
 
         public IActionResult Index()
@@ -18,23 +18,23 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Description(int id)
         {
-            var result = products.GetProductById(id);
+            var result = productsRepository.GetProductById(id);
             return View(result);
         }
         public ActionResult EditForm(int id)
         {
-            var result = products.GetProductById(id);
+            var result = productsRepository.GetProductById(id);
             return View(result);
         }
         [HttpPost]
         public ActionResult EditProduct(Product editProduct)
         {
-            products.Edit(editProduct);
+            productsRepository.Edit(editProduct);
             return RedirectToAction("Index", "Admin");
         }
         public ActionResult DeleteProduct(int id)
         {
-            products.DeleteItem(id);
+            productsRepository.DeleteItem(id);
             return RedirectToAction("Index", "Admin");
         }
         public ActionResult AddProductForm()
@@ -44,7 +44,7 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public ActionResult AddProduct(Product newProduct)
         {
-            products.Add(newProduct);
+            productsRepository.Add(newProduct);
             return RedirectToAction("Index", "Admin");
         }
 

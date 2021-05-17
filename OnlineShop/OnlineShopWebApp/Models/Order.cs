@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static OnlineShopWebApp.Models.InfoStatusOrder;
 
 namespace OnlineShopWebApp.Models
 {
-    public partial class Order
+    public class Order
     {
         private static int count = 0;
         public int Number { get; set; }
@@ -12,25 +13,15 @@ namespace OnlineShopWebApp.Models
         public string UserId { get; set; }
         public List<CartItem> Products { get; set; }
         public UserContact User { get; set; }
-        public Status StatusOrder { get; set; }
-        public DateTime Data { get; set; }
-        public enum Status
-        {
-            Created,
-            InProcessing,
-            Delivering,
-            OnPost,
-            Done
-        }
+        public InfoStatusOrder InfoStatus { get; set; }
 
-        public void AddContacts(string userId, UserContact user, DateTime dateTime)
+        public void AddContacts(string userId, UserContact user, InfoStatusOrder infoStatus)
         {
             count++;
             Number = count;
             UserId = userId;
             User = user;
-            StatusOrder = Status.Created;
-            Data = dateTime;
+            InfoStatus= infoStatus;
         }
 
         public decimal Cost
@@ -40,23 +31,6 @@ namespace OnlineShopWebApp.Models
                 return Products?.Sum(x => x.Cost) ?? 0;
             }
         }
-        public string GetStatus(Status StatusOrder)
-        {
-            switch (StatusOrder)
-            {
-                case Status.Created:
-                    return "Создан";
-                case Status.InProcessing:
-                    return "В работе";
-                case Status.Delivering:
-                    return "В пути";
-                case Status.OnPost:
-                    return "Готов к выдаче";
-                case Status.Done:
-                    return "Выполнен";
-                default:
-                    return "Ошибка";
-            }
-        }
+
     }
 }

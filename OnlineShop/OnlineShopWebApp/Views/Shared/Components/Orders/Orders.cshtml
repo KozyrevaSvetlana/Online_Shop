@@ -29,15 +29,15 @@ else
             @foreach (var order in Model)
             {
             <tr>
-                @{status = order.GetStatus(order.StatusOrder);}
+                @{status = order.InfoStatus.GetStatus(order.InfoStatus.StatusOrder);}
                 <th scope="row">@i</th>
                 <td>@order.Number</td>
                 <td>@order.Cost</td>
                 <td>@status</td>
                 <td>@order.User.Email</td>
                 <td>@order.User.Phone</td>
-                <td>@order.Data.Date</td>
-                <td>@order.Data.TimeOfDay;</td>
+                <td>@order.InfoStatus.Data.ToShortDateString()</td>
+                <td>@order.InfoStatus.Data.ToLongTimeString()</td>
                 <td>@order.Comment</td>
                 @{i++;}
             </tr>
