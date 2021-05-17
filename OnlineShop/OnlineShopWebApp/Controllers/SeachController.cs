@@ -22,6 +22,7 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Accept(string result)
         {
+            seachRepository.Clear(Constants.UserId);
             TempData["Result"] = result;
             seachRepository.Add(productsRepository.SeachProduct(result.Split()), Constants.UserId);
             return RedirectToAction("Index");

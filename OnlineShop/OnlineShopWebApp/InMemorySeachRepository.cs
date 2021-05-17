@@ -44,7 +44,10 @@ namespace OnlineShopWebApp.Models
         public void Clear(string userId)
         {
             var userseachResultProducts = TryGetByUserId(userId);
-            userseachResultProducts.Items.Clear();
+            if (userseachResultProducts != null)
+            {
+                userseachResultProducts.Items.Clear();
+            }
         }
         private void AddNewSeachResult(Product product, string userId)
         {
@@ -60,13 +63,25 @@ namespace OnlineShopWebApp.Models
 
         public void Add(Product product, string userId)
         {
-            throw new NotImplementedException();
+            var userseachResultProducts = TryGetByUserId(userId);
+            if (userseachResultProducts == null)
+            {
+                AddNewSeachResult(product, userId);
+            }
+            else
+            {
+                var userCartItem = userseachResultProducts.Items.FirstOrDefault(x => x.Id == product.Id);
+                if (userCartItem == null)
+                {
+                    userseachResultProducts.Items.Add(product);
+                }
+            }
         }
 
         public void DeleteItem(int id, string userId)
         {
-            var userFavoritesList = TryGetByUserId(userId);
-            userFavoritesList.Items.RemoveAll(x => x.Id == id);
+            var userSeachList = TryGetByUserId(userId);
+            userSeachList.Items.RemoveAll(x => x.Id == id);
         }
     }
 }
