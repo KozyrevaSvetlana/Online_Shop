@@ -6,5 +6,7 @@ namespace OnlineShopWebApp
 {
     public interface IFavoritesRepository: IBaseProductList
     {
+        public void Add(Product product, string userId);
+        public void DeleteItem(int id, string userId);
     }
 }

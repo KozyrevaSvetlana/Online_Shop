@@ -2,37 +2,39 @@
 
 <h1>Результаты поиска</h1>
 <br />
-<h5>Вы искали:</h5>
-@foreach (var result in TempData["Result"] as string)
-{@result;
-}
-<br />
-<p>Результаты поиска:</p>
 
 @if (Model == null)
 {
-    <p>Товары не найдены</p>
+    <p>По вашему запросу ничего не найдено.<br />Попробуйте снова</p>
 }
 else
 {
-    @foreach (var product in Model.Items)
-    {
-        <div class="col-4 card shadow">
-            <div>
-                <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
-                <div class="card-body">
-                    <a href="/Product/Index/@product.Id">@product.Name</a>
-                    <p>@product.Cost руб</p>
-                    <p>@product.Description</p>
+    <h5>Вы искали:</h5>
+    @foreach (var result in TempData["Result"] as string)
+    {@result;
+}
+<br />
+    <h4>Результаты поиска:</h4>
+    <br />
+    <div class="row">
+        @foreach (var product in Model.Items)
+        {
+            <div class="col-4 card shadow">
+                <div>
+                    <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
+                    <div class="card-body">
+                        <a href="/Product/Index/@product.Id">@product.Name</a>
+                        <p>@product.Cost руб</p>
+                        <p>@product.Description</p>
+                    </div>
+                </div>
+                <div>
+                    <a class="btn btn-success" href="/cart/add?id=@Model.Id" role="button">Добавить в корзину</a>
+                    <a class="btn btn-warning" href="/Favorites/Add?id=@Model.Id" role="button">Добавить в избранное</a>
+                    <a class="btn btn-info" href="/Compare/Add?id=@Model.Id" role="button">Сравнить</a>
                 </div>
             </div>
-            <div>
-                <a class="btn btn-success" href="/cart/add?id=@Model.Id" role="button">Добавить в корзину</a>
-                <a class="btn btn-warning" href="/Favorites/Add?id=@Model.Id" role="button">Добавить в избранное</a>
-                <a class="btn btn-info" href="/Compare/Add?id=@Model.Id" role="button">Сравнить</a>
-            </div>
-            }
-        </div>
-    }
+        }
+    </div>
 }
-    <a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a>
+<a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a>

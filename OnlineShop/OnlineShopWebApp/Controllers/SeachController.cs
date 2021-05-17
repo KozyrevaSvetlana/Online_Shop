@@ -23,8 +23,11 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Accept(string result)
         {
             seachRepository.Clear(Constants.UserId);
-            TempData["Result"] = result;
-            seachRepository.Add(productsRepository.SeachProduct(result.Split()), Constants.UserId);
+            if (result !=null && result.Length<3)
+            {
+                TempData["Result"] = result;
+                seachRepository.Add(productsRepository.SeachProduct(result.Split()), Constants.UserId);
+            }
             return RedirectToAction("Index");
         }
     }

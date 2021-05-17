@@ -54,7 +54,7 @@ namespace OnlineShopWebApp.Models
 
             foreach (var word in seachResults)
             {
-            resultList = products.Where(x => x.Name.Contains(word)).ToList();
+            resultList = products.Where(x => x.Name.ToLower().Contains(word.ToLower())).ToList();
             }
             return resultList.Distinct().ToList();
         }

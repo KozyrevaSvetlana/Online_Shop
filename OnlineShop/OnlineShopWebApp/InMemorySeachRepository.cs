@@ -60,28 +60,5 @@ namespace OnlineShopWebApp.Models
             newCart.Items.Add(product);
             seachResultProducts.Add(newCart);
         }
-
-        public void Add(Product product, string userId)
-        {
-            var userseachResultProducts = TryGetByUserId(userId);
-            if (userseachResultProducts == null)
-            {
-                AddNewSeachResult(product, userId);
-            }
-            else
-            {
-                var userCartItem = userseachResultProducts.Items.FirstOrDefault(x => x.Id == product.Id);
-                if (userCartItem == null)
-                {
-                    userseachResultProducts.Items.Add(product);
-                }
-            }
-        }
-
-        public void DeleteItem(int id, string userId)
-        {
-            var userSeachList = TryGetByUserId(userId);
-            userSeachList.Items.RemoveAll(x => x.Id == id);
-        }
     }
 }
