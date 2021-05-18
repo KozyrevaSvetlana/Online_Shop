@@ -21,5 +21,17 @@ namespace OnlineShopWebApp.Controllers
             var result = products.GetProductById(id);
             return View(result);
         }
+
+        [HttpPost]
+        public IActionResult Find(string result)
+        {
+            if (result != null)
+            {
+                TempData["Result"] = result;
+                var searchResult = products.SeachProduct(result.Split());
+                return View(searchResult);
+            }
+            return View();
+        }
     }
 }

@@ -58,5 +58,6 @@ namespace OnlineShopWebApp.Models
             }
             return resultList.Distinct().ToList();
         }
+
     }
 }

@@ -1,9 +1,9 @@
-﻿@model Search
+﻿@model List<Product>
 
 <h1>Результаты поиска</h1>
 <br />
 
-@if (Model == null || Model.Items.Count==0)
+@if (Model == null || Model.Count==0)
 {
     <p>По вашему запросу ничего не найдено.<br />Попробуйте снова</p>
 }
@@ -17,7 +17,7 @@ else
     <h4>Результаты поиска:</h4>
     <br />
     <div class="row">
-        @foreach (var product in Model.Items)
+        @foreach (var product in Model)
         {
             <div class="col-4 card shadow">
                 <div>
@@ -29,9 +29,9 @@ else
                     </div>
                 </div>
                 <div>
-                    <a class="btn btn-success" href="/cart/add?id=@Model.Id" role="button">Добавить в корзину</a>
-                    <a class="btn btn-warning" href="/Favorites/Add?id=@Model.Id" role="button">Добавить в избранное</a>
-                    <a class="btn btn-info" href="/Compare/Add?id=@Model.Id" role="button">Сравнить</a>
+                    <a class="btn btn-success" href="/cart/add?id=@product.Id" role="button">Добавить в корзину</a>
+                    <a class="btn btn-warning" href="/Favorites/Add?id=@product.Id" role="button">Добавить в избранное</a>
+                    <a class="btn btn-info" href="/Compare/Add?id=@product.Id" role="button">Сравнить</a>
                 </div>
             </div>
         }
