@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
-    public class InMemorySeachRepository : ISeachRepository
+    public class InMemorySearchRepository : ISearchRepository
     {
-        private List<Seach> seachResultProducts = new List<Seach>();
+        private List<Search> seachResultProducts = new List<Search>();
         public IEnumerable<BaseProductList> AllProducts
         {
             get
@@ -51,7 +51,7 @@ namespace OnlineShopWebApp.Models
         }
         private void AddNewSeachResult(Product product, string userId)
         {
-            var newCart = new Seach
+            var newCart = new Search
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,

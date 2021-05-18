@@ -3,12 +3,12 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class SeachController : Controller
+    public class SearchController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly ISeachRepository seachRepository;
+        private readonly ISearchRepository seachRepository;
 
-        public SeachController(IProductsRepository productsRepository, ISeachRepository seachRepository)
+        public SearchController(IProductsRepository productsRepository, ISearchRepository seachRepository)
         {
             this.productsRepository = productsRepository;
             this.seachRepository = seachRepository;
@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Accept(string result)
         {
             seachRepository.Clear(Constants.UserId);
-            if (result !=null && result.Length<3)
+            if (result!=null && result.Length>2)
             {
                 TempData["Result"] = result;
                 seachRepository.Add(productsRepository.SeachProduct(result.Split()), Constants.UserId);

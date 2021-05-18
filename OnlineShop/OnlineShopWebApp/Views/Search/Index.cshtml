@@ -1,9 +1,9 @@
-﻿@model Seach
+﻿@model Search
 
 <h1>Результаты поиска</h1>
 <br />
 
-@if (Model == null)
+@if (Model == null || Model.Items.Count==0)
 {
     <p>По вашему запросу ничего не найдено.<br />Попробуйте снова</p>
 }

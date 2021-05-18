@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Models
 {
-    public class Seach : BaseProductList
+    public class Search : BaseProductList
     {
     }
 }

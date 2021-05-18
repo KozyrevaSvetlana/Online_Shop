@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
-    public interface ISeachRepository : IBaseProductList
+    public interface ISearchRepository : IBaseProductList
     {
         public void Add(List<Product> product, string userId);
     }
