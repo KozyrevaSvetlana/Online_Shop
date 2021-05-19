@@ -8,12 +8,12 @@ namespace OnlineShopWebApp.Models
         private List<Product> products = new List<Product>()
         {
                     new Product("Плюшевый мишка", 300, "Плюшевый мишка – символ нежности, трогательной заботы, " +
-        "тепла. Многим он знаком с первых лет жизни.", "/img/Products/1.jpg"),
-                    new Product("Конструктор", 1000, "Любознательным малышам придется по душе конструктор.", "/img/Products/2.jpg"),
+        "тепла. Многим он знаком с первых лет жизни.", "/img/Products/1.jpg","Мягкие игрушки"),
+                    new Product("Конструктор", 1000, "Любознательным малышам придется по душе конструктор.", "/img/Products/2.jpg", "Конструкторы"),
                     new Product("Пирамидка стаканчики", 200, "Пирамидка собирается из стаканчиков разного размера. " +
-                "Только соблюдая четкую последовательность от большего стаканчика к меньшему у малыша получится башенка", "/img/Products/3.jpg"),
-                    new Product("Водный пистолет", 150, "Длагодаря водному пистолету можно весело играть в друзьями летом на лужайке", "/img/Products/4.jpg"),
-                    new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе", "/img/Products/5.jpg")
+                "Только соблюдая четкую последовательность от большего стаканчика к меньшему у малыша получится башенка", "/img/Products/3.jpg", "Пирамидки"),
+                    new Product("Водный пистолет", 150, "Длагодаря водному пистолету можно весело играть в друзьями летом на лужайке", "/img/Products/4.jpg", "Игрушечное оружие"),
+                    new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе", "/img/Products/5.jpg", "Мячи")
                 };
         public IEnumerable<Product> AllProducts
         {
@@ -44,7 +44,7 @@ namespace OnlineShopWebApp.Models
         }
         public void Add(Product newProduct)
         {
-            var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif");
+            var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif", newProduct.Category);
             products.Add(product);
         }
 

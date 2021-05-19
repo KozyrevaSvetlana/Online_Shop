@@ -7,7 +7,7 @@ namespace OnlineShopWebApp.Models
     {
         private List<Category> categories = new List<Category>()
         {
-            new Category("Игрушки", new List<string>() {"Конструкторы", "Куклы", "Мягкие игрушки","Транспорт"}),
+            new Category("Игрушки", new List<string>() {"Конструкторы", "Куклы", "Мягкие игрушки","Транспорт", "Пирамидки", "Игрушечное оружие", "Мячи"}),
             new Category("Гигиена", new List<string>() {"Косметика", "Подгузники","Бытовая химия" }),
             new Category("Одежда", new List<string>() {"Для девочек","Для мальчиков","Обувь","Белье","Акссесуары" })
         };
