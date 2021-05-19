@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
-    public class InMemoryCategoriesRepository
+    public class InMemoryCategoriesRepository : ICategoriesRepository
     {
         private List<Category> categories = new List<Category>()
         {
@@ -44,7 +44,7 @@ namespace OnlineShopWebApp.Models
             {
                 foreach (var item in items)
                 {
-                    if (categoryItem!= item)
+                    if (categoryItem != item)
                     {
                         category.Items.Add(item);
                     }

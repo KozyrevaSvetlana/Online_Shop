@@ -1,0 +1,9 @@
+﻿@model Category
+
+
+<h1>@TempData["Category"]</h1>
+<br />
+@foreach (var item in Model.Items)
+{
+    <a class="btn btn-link" href="/Product/ShowCategoryItem?name=@item" role="button">@item</a>
+}

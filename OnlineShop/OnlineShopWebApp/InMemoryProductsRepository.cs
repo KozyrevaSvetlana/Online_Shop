@@ -44,7 +44,7 @@ namespace OnlineShopWebApp.Models
         }
         public void Add(Product newProduct)
         {
-            var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif", newProduct.Category);
+            var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif", newProduct.CategoryItem);
             products.Add(product);
         }
 
@@ -57,6 +57,10 @@ namespace OnlineShopWebApp.Models
             resultList = products.Where(x => x.Name.ToLower().Contains(word.ToLower())).ToList();
             }
             return resultList.Distinct().ToList();
+        }
+        public List<Product> SeachCategory(string categoryItem)
+        {
+            return products.Where(x => x.CategoryItem == categoryItem).ToList();
         }
 
     }

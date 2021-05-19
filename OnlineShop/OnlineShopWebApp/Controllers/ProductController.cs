@@ -7,12 +7,12 @@ namespace OnlineShopWebApp.Controllers
     public class ProductController : Controller
     {
         private readonly IProductsRepository products;
-        private readonly ICartsRepository cartsRepository;
+        private readonly ICategoriesRepository categoriesRepository;
 
-        public ProductController(IProductsRepository products, ICartsRepository cartsRepository)
+        public ProductController(IProductsRepository products, ICategoriesRepository categoriesRepository)
         {
             this.products = products;
-            this.cartsRepository = cartsRepository;
+            this.categoriesRepository = categoriesRepository;
         }
 
         // GET: ProductController
@@ -33,5 +33,18 @@ namespace OnlineShopWebApp.Controllers
             }
             return View();
         }
+        public ActionResult ShowCategory(string categoryItem, int id)
+        {
+            var categoryName = categoriesRepository.GetCategoryById(id);
+            TempData["Category"] = categoryName.Name;
+            return View(categoryName);
+        }
+
+        public ActionResult ShowCategoryItem(string name)
+        {
+            TempData["Category"] = name;
+            return View(products.SeachCategory(name));
+        }
+        
     }
 }

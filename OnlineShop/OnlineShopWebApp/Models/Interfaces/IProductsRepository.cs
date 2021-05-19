@@ -11,5 +11,6 @@ namespace OnlineShopWebApp.Models
         public int GetCount();
         public void Add(Product newProduct);
         public List<Product> SeachProduct(string[] seachResults);
+        public List<Product> SeachCategory(string categoryItem);
     }
 }

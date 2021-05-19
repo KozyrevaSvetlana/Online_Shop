@@ -13,14 +13,7 @@ namespace OnlineShopWebApp.Models
             Id = Counter;
             Name = name;
             Counter++;
-            AddItem(items);
-        }
-        private void AddItem(List<string> items)
-        {
-            foreach (var item in items)
-            {
-                Items.Add(item);
-            }
+            Items = items;
         }
     }
 }
