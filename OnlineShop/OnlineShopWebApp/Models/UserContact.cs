@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models
 {
@@ -27,5 +28,50 @@ namespace OnlineShopWebApp.Models
         [Required(ErrorMessage = "Не указан email")]
         [EmailAddress(ErrorMessage = "Укажите верный email")]
         public string Email { get; set; }
+
+        public List<string> IsValid()
+        {
+            var errors = new List<string>();
+            if (Name== Surname)
+            {
+                errors.Add("Имя и Фамилия не должны совпадать");
+            }
+            if (Name == Adress)
+            {
+                errors.Add("Имя и адрес не должны совпадать");
+            }
+            if (Name == Email)
+            {
+                errors.Add("Имя и емейл не должны совпадать");
+            }
+            if (!IsLetter(Name))
+            {
+                errors.Add("Имя должно состоять только из букв");
+            }
+            if (!IsLetter(Surname))
+            {
+                errors.Add("Фамилия должна состоять только из букв");
+            }
+            for (int i = 0; i < Phone.Length; i++)
+            {
+                if(!char.IsDigit(Phone[i]))
+                {
+                    errors.Add("Номер телефона должен быть числом");
+                    break;
+                }
+            }
+            return errors;
+        }
+        private bool IsLetter(string name)
+        {
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (!char.IsLetter(name[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
