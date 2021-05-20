@@ -6,10 +6,12 @@ namespace OnlineShopWebApp.Controllers
     public class AdminController : Controller
     {
         private readonly IProductsRepository productsRepository;
+        private readonly ICategoriesRepository categoriesRepository;
 
-        public AdminController(IProductsRepository products)
+        public AdminController(IProductsRepository products, ICategoriesRepository categoriesRepository)
         {
             this.productsRepository = products;
+            this.categoriesRepository = categoriesRepository;
         }
 
         public IActionResult Index()
@@ -24,6 +26,7 @@ namespace OnlineShopWebApp.Controllers
         public ActionResult EditForm(int id)
         {
             var result = productsRepository.GetProductById(id);
+            ViewBag.Categories = categoriesRepository.AllCategories;
             return View(result);
         }
         [HttpPost]

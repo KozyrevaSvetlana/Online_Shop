@@ -22,7 +22,10 @@ namespace OnlineShopWebApp.Models
         {
             return AllCategories.FirstOrDefault(p => p.Id == id);
         }
-
+        public Category GetCategoryByName(string name)
+        {
+            return AllCategories.FirstOrDefault(p => p.Name == name);
+        }
         public void Delete(int id)
         {
             categories.RemoveAll(x => x.Id == id);
@@ -50,6 +53,10 @@ namespace OnlineShopWebApp.Models
                     }
                 }
             }
+        }
+        public List<string> GetCategoryItemsByName(string name)
+        {
+            return AllCategories.FirstOrDefault(p => p.Name == name).Items;
         }
     }
 }
