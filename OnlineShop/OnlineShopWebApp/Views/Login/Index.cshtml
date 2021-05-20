@@ -1,15 +1,24 @@
-﻿<div class="row">
-    <div class="col-5">
+﻿@model User
+
+<div class="row">
+    <div class="col-10">
         <h1>Вход</h1>
         <form method="post" class="form-group">
+            <div class="validatoin" asp-validation-summary="ModelOnly"></div>
             <div>
-                <label>Логин</label>
-                <input type="text" class="form-control" name="Name" tabindex="1" required minlength="2" maxlength="44">
+                <label asp-for="Name">Логин</label>
+                <div>
+                    <input asp-for="Name" type="text" name="Name" tabindex="1" size="45">
+                    <span asp-validation-for="Name"></span>
+                </div>
                 <small class="form-text text-muted">Введите логин</small>
             </div>
             <div>
-                <label>Пароль</label>
-                <input type="password" class="form-control" name="Password" tabindex="2" required minlength="4" maxlength="35">
+                <label asp-for="Password">Пароль</label>
+                <div>
+                    <input asp-for="Password" type="password" name="Password" tabindex="2" size="45">
+                    <span asp-validation-for="Password"></span>
+                </div>
                 <small class="form-text text-muted">Введите пароль</small>
             </div>
             <div>

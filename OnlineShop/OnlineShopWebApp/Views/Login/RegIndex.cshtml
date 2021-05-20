@@ -1,23 +1,34 @@
-﻿<h1>Регистрация</h1>
+﻿@model NewUser
+<h1>Регистрация</h1>
 <div class="row">
     <div class="col-auto">
         <form method="post">
-            <div>
-                <label>Логин</label>
-                <input class="form-control" type="text" name="Name" tabindex="1" required minlength="2" maxlength="44" size="44">
-                <small class="form-text text-muted">Введите логин</small>
-            </div>
-            <div>
-                <label>Пароль</label>
-                <input class="form-control" type="password" name="FirstPassword" tabindex="2" required minlength="8" maxlength="35" size="35">
-                <small class="form-text text-muted">Введите пароль</small>
-            </div>
-            <div>
-                <label>Подтверждение пароля</label>
-                <input class="form-control" type="password" name="CheckPassword" tabindex="3" required minlength="8" maxlength="35" size="35">
-                <small class="form-text text-muted">Подтвердите пароль</small>
-            </div>
-            <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="Create" tabindex="4">Регистрация</button>
+            <div class="validatoin" asp-validation-summary="ModelOnly"></div>
+                <div>
+                    <div>
+                        <label asp-for="Name">Логин</label>
+                    </div>
+                    <input asp-for="Name" type="text" name="Name" tabindex="1" size="45">
+                    <span asp-validation-for="Name"></span>
+                    <small class="form-text text-muted">Введите логин</small>
+                </div>
+                <div>
+                    <div>
+                        <label asp-for="FirstPassword">Пароль</label>
+                    </div>
+                    <input asp-for="FirstPassword" type="password" name="FirstPassword" tabindex="2" size="45">
+                    <span asp-validation-for="FirstPassword"></span>
+                    <small class="form-text text-muted">Введите пароль</small>
+                </div>
+                <div>
+                    <div>
+                        <label asp-for="CheckPassword">Подтверждение пароля</label>
+                    </div>
+                    <input asp-for="CheckPassword" type="password" name="CheckPassword" tabindex="3" size="45">
+                    <span asp-validation-for="CheckPassword"></span>
+                    <small class="form-text text-muted">Подтвердите пароль</small>
+                </div>
+                <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="Create" tabindex="4">Регистрация</button>
         </form>
     </div>
 </div>

@@ -18,7 +18,16 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult CheckIn(User user)
         {
-            return RedirectToAction("Result");
+            if (user.Name==user.Password)
+            {
+                ModelState.AddModelError("", "Имя и пароль не должны совпадать");
+            }
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Result");
+            }
+            return View("Index");
+
         }
         public IActionResult Result()
         {
@@ -27,8 +36,23 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Create(NewUser user)
         {
-            return RedirectToAction("Result");
+            if (user.Name == user.FirstPassword)
+            {
+                ModelState.AddModelError("", "Имя и пароль не должны совпадать");
+            }
+            if (user.Name == user.CheckPassword)
+            {
+                ModelState.AddModelError("", "Имя и подтверждение пароля не должны совпадать");
+            }
+            if (user.FirstPassword!=user.CheckPassword)
+            {
+                ModelState.AddModelError("", "Пароли не совпадают");
+            }
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Result");
+            }
+            return View("RegIndex");
         }
-
     }
 }
