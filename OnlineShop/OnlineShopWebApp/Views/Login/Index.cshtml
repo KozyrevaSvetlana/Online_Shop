@@ -1,25 +1,30 @@
-﻿<div>
-    <h1>Вход</h1>
-    <form method="post" class="form-group">
+﻿<div class="row">
+    <div class="col-5">
+        <h1>Вход</h1>
+        <form method="post" class="form-group">
+            <div>
+                <label>Логин</label>
+                <input type="text" class="form-control" name="Name" tabindex="1" required minlength="2" maxlength="44">
+                <small class="form-text text-muted">Введите логин</small>
+            </div>
+            <div>
+                <label>Пароль</label>
+                <input type="password" class="form-control" name="Password" tabindex="2" required minlength="4" maxlength="35">
+                <small class="form-text text-muted">Введите пароль</small>
+            </div>
+            <div>
+                <input checked type="checkbox" class="form-check-input" name="rememberMe" value="true">
+                <label class="form-check-label" for="dropdownCheck">
+                    Запомнить меня?
+                </label>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="CheckIn" tabindex="3">Войти</button>
+            </div>
+        </form>
         <div>
-            <label>Логин</label>
-            <input type="text" class="form-control" name="Name" tabindex="1" required minlength="2" maxlength="44">
-            <small class="form-text text-muted">Введите логин</small>
+            <a class="dropdown-item" href="/Login/RegIndex">Регистрация нового пользователя</a>
+            <a class="dropdown-item" href="#">Забыли пароль?</a>
         </div>
-        <div>
-            <label>Пароль</label>
-            <input type="password" class="form-control" name="Password" tabindex="2" required minlength="4" maxlength="35">
-            <small class="form-text text-muted">Введите пароль</small>
-        </div>
-        <div>
-            <input checked type="checkbox" class="form-check-input" name="rememberMe" value="true">
-            <label class="form-check-label" for="dropdownCheck">
-                Запомнить меня?
-            </label>
-        </div>
-        <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="CheckIn" tabindex="3">Войти</button>
-    </form>
-    <div></div>
-    <a class="dropdown-item" href="#">Регистрация нового пользователя</a>
-    <a class="dropdown-item" href="#">Забыли пароль?</a>
+    </div>
 </div>
