@@ -33,7 +33,19 @@ namespace OnlineShopWebApp.Controllers
         public ActionResult EditProduct(Product editProduct)
         {
             string category = categoriesRepository.GetCategoryItem(editProduct.CategoryItem);
+            if (category==null)
+            {
+                ModelState.AddModelError("", "Выберите верную подкатегорию товара");
+            }
             editProduct.Category = category;
+            var validResult = editProduct.IsValid();
+            if (validResult != null)
+            {
+                foreach (var errors in validResult)
+                {
+                    ModelState.AddModelError("", errors);
+                }
+            }
             productsRepository.Edit(editProduct);
             return RedirectToAction("Index", "Admin");
         }
