@@ -22,27 +22,21 @@
             <textarea asp-for="Description" class="form-control" type="text" name="Description" cols="30" rows="10" tabindex="3" value="">@Model.Description</textarea>
             <span class="badge badge-danger" asp-validation-for="Description"></span>
         </div>
-
         <div>
-            <label asp-for="CategoryItem">Подкатегория</label>
-            <select value="Категории">
+            <label>Подкатегория</label>
+            <select name="CategoryItem" value="Категории">
                 @foreach (Category category in ViewBag.Categories)
                 {
                     @foreach (string item in category.Items)
                     {
-                        <option value="@category">@category.Name: @item </option>
+                        <option name="CategoryItem" value="@item">@category.Name: @item </option>
                     }
-
                 }
             </select>
-            <span class="badge badge-danger" asp-validation-for="CategoryItem"></span>
         </div>
-
-
-
-
         <br />
         <div>
+            <input type="hidden" name="Image" value="@Model.Image" />
             <span>
                 <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="EditProduct" tabindex="5">Изменить</button>
                 <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>

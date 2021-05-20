@@ -32,6 +32,8 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public ActionResult EditProduct(Product editProduct)
         {
+            string category = categoriesRepository.GetCategoryItem(editProduct.CategoryItem);
+            editProduct.Category = category;
             productsRepository.Edit(editProduct);
             return RedirectToAction("Index", "Admin");
         }

@@ -22,9 +22,6 @@ namespace OnlineShopWebApp.Models
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 50 символов")]
       
         public string CategoryItem { get; set; }
-
-        [Required(ErrorMessage = "Не указана категория товара")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 50 символов")]
        
         public string Category { get; set; }
 

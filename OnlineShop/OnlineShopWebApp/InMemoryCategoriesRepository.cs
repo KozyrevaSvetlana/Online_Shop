@@ -26,6 +26,23 @@ namespace OnlineShopWebApp.Models
         {
             return AllCategories.FirstOrDefault(p => p.Name == name);
         }
+        public string GetCategoryItem(string name)
+        {
+            string result=null;
+            foreach (Category category in categories)
+            {
+                var items = category.Items;
+                var nameOfCategory = category.Name;
+                foreach (var item in items)
+                {
+                    if (name== item)
+                    {
+                        result = nameOfCategory;
+                    }
+                }
+            }
+            return result;
+        }
         public void Delete(int id)
         {
             categories.RemoveAll(x => x.Id == id);

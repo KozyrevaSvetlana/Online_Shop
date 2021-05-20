@@ -11,5 +11,6 @@ namespace OnlineShopWebApp.Models
         void Delete(int id);
         void Edit(int id, string name);
         Category GetCategoryById(int id);
+        public string GetCategoryItem(string item);
     }
 }
