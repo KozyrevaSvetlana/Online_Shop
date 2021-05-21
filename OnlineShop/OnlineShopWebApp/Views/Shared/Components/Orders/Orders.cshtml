@@ -41,7 +41,7 @@ else
                 <td>@order.InfoStatus.Data.ToLongTimeString()</td>
                 <td>@order.Comment</td>
                 <td>
-                    <a class="btn btn-primary" href="/Admin/OrderForm" tabindex="6">Подробнее</a>
+                    <a class="btn btn-primary" href="/Admin/OrderForm?number=@order.Number" tabindex="6">Подробнее</a>
                 </td>
                 @{i++;}
             </tr>

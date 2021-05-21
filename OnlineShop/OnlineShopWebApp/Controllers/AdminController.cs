@@ -54,5 +54,9 @@ namespace OnlineShopWebApp.Controllers
             ordersRepository.Edit(number, status);
             return RedirectToAction("Index", "Admin");
         }
+        public ActionResult OrderForm(int number)
+        {
+            return View(ordersRepository.GetOrderByNumber(number));
+        }
     }
 }

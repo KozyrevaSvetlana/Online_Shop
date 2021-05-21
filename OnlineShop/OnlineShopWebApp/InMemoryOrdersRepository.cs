@@ -43,5 +43,9 @@ namespace OnlineShopWebApp
             var order = orders.FirstOrDefault(p => p.Number == number);
             order.InfoStatus.ChangeStatus(status);
         }
+        public Order GetOrderByNumber(int number)
+        {
+            return orders.FindLast(x => x.Number == number);
+        }
     }
 }

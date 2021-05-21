@@ -11,5 +11,6 @@ namespace OnlineShopWebApp
         public Order GetLastOrder(string userId);
         public Order TryGetByUserId(string userId);
         public void Edit(int number, string status);
+        public Order GetOrderByNumber(int number);
     }
 }
