@@ -33,11 +33,9 @@ namespace OnlineShopWebApp.Controllers
             }
             return View();
         }
-        public ActionResult ShowCategory(string categoryItem, int id)
+        public ActionResult ShowCategory(int id)
         {
-            var categoryName = categoriesRepository.GetCategoryById(id);
-            TempData["Category"] = categoryName.Name;
-            return View(categoryName);
+            return View(categoriesRepository.GetCategoryById(id));
         }
 
         public ActionResult ShowCategoryItem(string name)

@@ -16,7 +16,7 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckIn(User user)
+        public IActionResult CheckIn(Login user)
         {
             if (user.Name==user.Password)
             {
@@ -34,7 +34,7 @@ namespace OnlineShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(NewUser user)
+        public IActionResult Create(Register user)
         {
             if (user.Name == user.FirstPassword)
             {
