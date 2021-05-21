@@ -44,10 +44,6 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Имя и подтверждение пароля не должны совпадать");
             }
-            if (user.FirstPassword!=user.CheckPassword)
-            {
-                ModelState.AddModelError("", "Пароли не совпадают");
-            }
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Result");
