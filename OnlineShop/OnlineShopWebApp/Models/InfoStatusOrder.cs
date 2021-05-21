@@ -37,5 +37,26 @@ namespace OnlineShopWebApp.Models
                     return "Ошибка";
             }
         }
+        public void ChangeStatus(string newstatus)
+        {
+            switch (newstatus)
+            {
+                case "Создан":
+                    StatusOrder = Status.Created;
+                    break;
+                case "В работе":
+                    StatusOrder = Status.InProcessing;
+                    break;
+                case "В пути":
+                    StatusOrder = Status.Delivering;
+                    break;
+                case "Готов к выдаче":
+                    StatusOrder = Status.OnPost;
+                    break;
+                case "Выполнен":
+                    StatusOrder = Status.Done;
+                    break;
+            }
+        }
     }
 }

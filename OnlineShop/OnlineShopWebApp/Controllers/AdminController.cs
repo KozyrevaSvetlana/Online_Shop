@@ -6,10 +6,12 @@ namespace OnlineShopWebApp.Controllers
     public class AdminController : Controller
     {
         private readonly IProductsRepository productsRepository;
+        private readonly IOrdersRepository ordersRepository;
 
-        public AdminController(IProductsRepository products)
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository)
         {
             this.productsRepository = products;
+            this.ordersRepository = ordersRepository;
         }
 
         public IActionResult Index()
@@ -47,6 +49,10 @@ namespace OnlineShopWebApp.Controllers
             productsRepository.Add(newProduct);
             return RedirectToAction("Index", "Admin");
         }
-
+        public ActionResult EditOrder(int number, string status)
+        {
+            ordersRepository.Edit(number, status);
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }

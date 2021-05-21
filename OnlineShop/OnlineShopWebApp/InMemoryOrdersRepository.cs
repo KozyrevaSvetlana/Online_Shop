@@ -38,5 +38,10 @@ namespace OnlineShopWebApp
             }
             return result;
         }
+        public void Edit(int number, string status)
+        {
+            var order = orders.FirstOrDefault(p => p.Number == number);
+            order.InfoStatus.ChangeStatus(status);
+        }
     }
 }
