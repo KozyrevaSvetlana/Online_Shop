@@ -1,6 +1,7 @@
 ﻿@model Cart
 
 <form action="#" method="post" enctype="multipart/form-data">
+    <div class="validatoin" asp-validation-summary="ModelOnly"></div>
     <div class="row">
         <div class="col-sm-6">
             <div class="card">
@@ -32,7 +33,7 @@
                         <textarea tabindex="6" name="comment" cols="30" rows="10"></textarea>
                     </div>
                     <br />
-                        <button class="btn btn-success" type="submit" asp-controller="Order" asp-action="Accept" tabindex="7">Оформить заказ</button>
+                    <button class="btn btn-success" type="submit" asp-controller="Order" asp-action="Accept" tabindex="7">Оформить заказ</button>
                 </div>
             </div>
         </div>
