@@ -5,11 +5,15 @@ namespace OnlineShopWebApp.Models
     public interface ICategoriesRepository
     {
         IEnumerable<Category> AllCategories { get; }
-
-        void Add(Category newCategory, List<string> items);
-        void AddItems(int id, List<string> items);
+        Category GetCategoryById(int id);
         void Delete(int id);
         void Edit(int id, string name);
-        Category GetCategoryById(int id);
+        void Add(Category newCategory, List<Subcategory> items);
+        void AddItems(int id, List<Subcategory> items);
+        public Subcategory GetSubcategoryById(int id, int idSubcategory);
+
+
+
+
     }
 }

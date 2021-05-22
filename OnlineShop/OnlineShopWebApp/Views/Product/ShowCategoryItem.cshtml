@@ -1,6 +1,6 @@
 ﻿@model List<Product>
 
-@{string category = Model.FirstOrDefault(x => x.CategoryItem != null).CategoryItem.ToString(); }
+@{string category = Model.FirstOrDefault(x => x.Subcategory != null).ToString(); }
 <h1>@category</h1>
 <br />
 <div class="row">

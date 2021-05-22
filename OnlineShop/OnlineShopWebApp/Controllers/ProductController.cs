@@ -38,10 +38,11 @@ namespace OnlineShopWebApp.Controllers
             return View(categoriesRepository.GetCategoryById(id));
         }
 
-        public ActionResult ShowCategoryItem(string name)
+        public ActionResult ShowCategoryItem(int id, int idSubcategory)
         {
-            TempData["Category"] = name;
-            return View(products.SeachCategory(name));
+            var subcategory = categoriesRepository.GetSubcategoryById(id, idSubcategory);
+            var result = products.SeachProductBySubcategory(subcategory);
+            return View(result);
         }
         
     }

@@ -2,19 +2,17 @@
 
 namespace OnlineShopWebApp.Models
 {
-    public class Category
+    public class Subcategory
     {
         public static int Counter = 1;
         public int Id { get; }
         public string Name { get; set; }
-        public List<Subcategory> Subcategory { get; set; }
-
-        public Category (string name, List<Subcategory> subcategory)
+        public List<Product> Product { get; set; }
+        public Subcategory(string name)
         {
             Id = Counter;
             Name = name;
             Counter++;
-            Subcategory = subcategory;
         }
     }
 }
