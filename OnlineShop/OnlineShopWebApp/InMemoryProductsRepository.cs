@@ -6,7 +6,7 @@ namespace OnlineShopWebApp.Models
 {
     public class InMemoryProductsRepository : IProductsRepository
     {
-        private readonly ICategoriesRepository categoriesRepository;
+        private static readonly ICategoriesRepository categoriesRepository;
 
         private List<Product> products = new List<Product>()
         {
@@ -23,11 +23,6 @@ namespace OnlineShopWebApp.Models
                         "/img/Products/5.jpg", GetCategory("Игрушки"), GetSubcategory("Мячи", "Игрушки"))
                 };
 
-        public InMemoryProductsRepository(ICategoriesRepository categoriesRepository)
-        {
-            this.categoriesRepository = categoriesRepository;
-        }
-
         public IEnumerable<Product> AllProducts
         {
             get
@@ -35,6 +30,8 @@ namespace OnlineShopWebApp.Models
                 return products;
             }
         }
+        public static ICategoriesRepository CategoriesRepository1 => categoriesRepository;
+
         public Product GetProductById(int id)
         {
             return AllProducts.FirstOrDefault(p => p.Id == id);
@@ -75,13 +72,13 @@ namespace OnlineShopWebApp.Models
         {
             return AllProducts.Where(x => x.Subcategory == subcategory).ToList();
         }
-        public Category GetCategory(string nameCategory)
+        public static Category GetCategory(string nameCategory)
         {
-            return categoriesRepository.GetCategoryByName(nameCategory);
+            return CategoriesRepository1.GetCategoryByName(nameCategory);
         }
-        public Subcategory GetSubcategory(string nameSubcategory, string nameCategory)
+        public static Subcategory GetSubcategory(string nameSubcategory, string nameCategory)
         {
-            return categoriesRepository.GetSubcategoryByName(nameSubcategory, nameCategory);
+            return CategoriesRepository1.GetSubcategoryByName(nameSubcategory, nameCategory);
         }
     }
 }
