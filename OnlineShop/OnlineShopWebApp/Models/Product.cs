@@ -9,12 +9,13 @@ namespace OnlineShopWebApp.Models
         public string Name { get; set; }
         public decimal Cost { get; set; }
         public string Description { get; set; }
+        public Category Category { get; set; }
         public Subcategory Subcategory { get; set; }
         public string Image { get; set; }
         public Product()
         {
         }
-        public Product(string name, decimal cost, string description, string image)
+        public Product(string name, decimal cost, string description, string image, Category category, Subcategory subcategory)
         {
             counter++;
             Id = counter;
@@ -22,6 +23,8 @@ namespace OnlineShopWebApp.Models
             Cost = cost;
             Description = description;
             Image = image;
+            Category = category;
+            Subcategory = subcategory;
         }
     }
 }

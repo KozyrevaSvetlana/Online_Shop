@@ -11,9 +11,7 @@ namespace OnlineShopWebApp.Models
         void Add(Category newCategory, List<Subcategory> items);
         void AddItems(int id, List<Subcategory> items);
         public Subcategory GetSubcategoryById(int id, int idSubcategory);
-
-
-
-
+        public Subcategory GetSubcategoryByName(string nameSubcategory, string nameCategory);
+        public Category GetCategoryByName(string name);
     }
 }

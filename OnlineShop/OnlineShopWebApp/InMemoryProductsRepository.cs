@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
     public class InMemoryProductsRepository : IProductsRepository
     {
+        private readonly ICategoriesRepository categoriesRepository;
+
         private List<Product> products = new List<Product>()
         {
                     new Product("Плюшевый мишка", 300, "Плюшевый мишка – символ нежности, трогательной заботы, тепла. " +
-                        "Многим он знаком с первых лет жизни.", "/img/Products/1.jpg"),
+                        "Многим он знаком с первых лет жизни.", "/img/Products/1.jpg",),
                     new Product("Конструктор", 1000, "Любознательным малышам придется по душе конструктор.",
                         "/img/Products/2.jpg"),
                     new Product("Пирамидка стаканчики", 200, "Пирамидка собирается из стаканчиков разного размера." +
@@ -17,6 +20,12 @@ namespace OnlineShopWebApp.Models
                     new Product("Водный пистолет", 150, "Длагодаря водному пистолету можно весело играть в друзьями летом на лужайке", "/img/Products/4.jpg"),
                     new Product("Мяч детский", 170, "Мяч выполнен из прочного ПВХ и подходит для активных игр как дома, так и на воздухе", "/img/Products/5.jpg")
                 };
+
+        public InMemoryProductsRepository(ICategoriesRepository categoriesRepository)
+        {
+            this.categoriesRepository = categoriesRepository;
+        }
+
         public IEnumerable<Product> AllProducts
         {
             get
@@ -46,7 +55,7 @@ namespace OnlineShopWebApp.Models
         }
         public void Add(Product newProduct)
         {
-            var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif");
+            var product = new Product(newProduct.Name, newProduct.Cost, newProduct.Description, "/img/Products/empty.gif", newProduct.Category, newProduct.Subcategory);
             products.Add(product);
         }
 
@@ -63,6 +72,14 @@ namespace OnlineShopWebApp.Models
         public List<Product> SeachProductBySubcategory(Subcategory subcategory)
         {
             return AllProducts.Where(x => x.Subcategory == subcategory).ToList();
+        }
+        public Category GetCategory(string nameCategory)
+        {
+            return categoriesRepository.GetCategoryByName(nameCategory);
+        }
+        public Subcategory GetSubcategory(string nameSubcategory, string nameCategory)
+        {
+            return categoriesRepository.GetSubcategoryByName(nameSubcategory, nameCategory);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace OnlineShopWebApp.Models
             new Category("Одежда", new List<Subcategory>() { new Subcategory("Для девочек"), new Subcategory("Для мальчиков"), new Subcategory("Обувь"),
                 new Subcategory("Белье"), new Subcategory("Акссесуары")})
         };
+
         public IEnumerable<Category> AllCategories
         {
             get
@@ -57,6 +58,36 @@ namespace OnlineShopWebApp.Models
         public Subcategory GetSubcategoryById(int id, int idSubcategory)
         {
             return GetCategoryById(id).Subcategory.FirstOrDefault(x=>x.Id== idSubcategory);
+        }
+        public Subcategory GetSubcategoryByName(string nameSubcategory, string nameCategory)
+        {
+            var result = categories.FirstOrDefault(x => x != null).Subcategory.FirstOrDefault(x => x.Name == nameSubcategory);
+            if (result ==null)
+            {
+                var categoryResult = categories.FirstOrDefault(x => x.Name == nameCategory);
+                if (categoryResult == null)
+                {
+                    categories.Add(new Category(nameCategory, new List<Subcategory>() { new Subcategory(nameSubcategory) }));
+                }
+                else
+                {
+                    categoryResult.Subcategory.Add(new Subcategory(nameSubcategory));
+                }
+            }
+            return categories.FirstOrDefault(x => x != null).Subcategory.FirstOrDefault(x => x.Name == nameSubcategory);
+        }
+        public Category GetCategoryByName(string name)
+        {
+            var result = categories.FirstOrDefault(x => x.Name== name);
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                categories.Add(new Category(name, new List<Subcategory>()));
+                return categories.FirstOrDefault(x => x.Name == name);
+            }
         }
     }
 }
