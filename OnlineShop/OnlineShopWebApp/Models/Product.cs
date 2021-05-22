@@ -25,12 +25,9 @@ namespace OnlineShopWebApp.Models
             Description = description;
             Image = image;
         }
-        public void AddCategory(Category category)
+        public void AddCategorySubcategory(Category category, Subcategory subcategory)
         {
             Category = category;
-        }
-        public void AddSubcategory(Subcategory subcategory)
-        {
             Subcategory = subcategory;
         }
     }
