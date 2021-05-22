@@ -4,6 +4,7 @@ namespace OnlineShopWebApp.Models
 {
     public class Product
     {
+
         private static int counter;
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +16,7 @@ namespace OnlineShopWebApp.Models
         public Product()
         {
         }
-        public Product(string name, decimal cost, string description, string image, Category category, Subcategory subcategory)
+        public Product(string name, decimal cost, string description, string image)
         {
             counter++;
             Id = counter;
@@ -23,7 +24,13 @@ namespace OnlineShopWebApp.Models
             Cost = cost;
             Description = description;
             Image = image;
+        }
+        public void AddCategory(Category category)
+        {
             Category = category;
+        }
+        public void AddSubcategory(Subcategory subcategory)
+        {
             Subcategory = subcategory;
         }
     }

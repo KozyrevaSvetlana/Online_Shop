@@ -22,6 +22,7 @@ namespace OnlineShopWebApp.Models
                 return categories;
             }
         }
+
         public Category GetCategoryById(int id)
         {
             return AllCategories.FirstOrDefault(p => p.Id == id);
