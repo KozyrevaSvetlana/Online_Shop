@@ -74,7 +74,7 @@ namespace OnlineShopWebApp.Controllers
             }
             else
             {
-                var categoryResult = categoriesRepository.GetCategoryById(idCategoryItem);
+                var categoryResult = categoriesRepository.GetCategoryBySubcategoryId(idCategoryItem);
                 var subcategoryResult = categoriesRepository.GetSubcategoryById(idCategoryItem);
                 newProduct.Category = categoryResult;
                 newProduct.Subcategory = subcategoryResult;

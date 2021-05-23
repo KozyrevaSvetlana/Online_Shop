@@ -1,8 +1,7 @@
 ﻿@model Product
 
 <div class="container">
-    <h1>Редактирование</h1>
-    <p class="text-body">Добавить новый продукт</p>
+    <h1>Добавление нового продукта</h1>
     <div class="validatoin text-danger" asp-validation-summary="ModelOnly"></div>
     <form method="post" class="form-group">
         <div>
@@ -36,7 +35,7 @@
         <div>
             <input type="hidden" name="Image" value="/img/Products/empty.gif" />
             <span>
-                <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="AddNewProduct" tabindex="5">Изменить</button>
+                <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="AddNewProduct" tabindex="5">Добавить</button>
                 <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>
             </span>
         </div>
