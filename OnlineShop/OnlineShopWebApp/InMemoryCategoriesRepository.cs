@@ -54,9 +54,15 @@ namespace OnlineShopWebApp.Models
             var category = AllCategories.FirstOrDefault(p => p.Id == id);
             category.Name = name;
         }
-        public Subcategory GetSubcategoryById(int id, int idSubcategory)
+        public Subcategory GetSubcategoryById(int idSubcategory)
         {
-            return GetCategoryById(id).Subcategory.FirstOrDefault(x => x.Id == idSubcategory);
+            return categories.FirstOrDefault(x => x.Id != 0).Subcategory.FirstOrDefault(x => x.Id == idSubcategory);
+        }
+        public Category GetCategoryBySubcategoryId(int idSubcategory)
+        {
+            int idResult = categories.Where(x => x.Subcategory.Where(x => x.Id == idSubcategory).Select(x => x != null).Any()).First().Id;
+
+            return GetCategoryById(idResult);
         }
         public Subcategory GetSubcategoryByName(string nameSubcategory, string nameCategory)
         {

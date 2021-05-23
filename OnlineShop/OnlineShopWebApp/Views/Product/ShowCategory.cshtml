@@ -5,5 +5,5 @@
 <br />
 @foreach (var item in Model.Subcategory)
 {
-    <a class="btn btn-link" href="/Product/ShowCategoryItem?id=@item.Id&idSubcategory=@Model.Id" role="button">@item.Name</a>
+    <a class="btn btn-link" href="/Product/ShowCategoryItem?idSubcategory=@item.Id" role="button">@item.Name</a>
 }

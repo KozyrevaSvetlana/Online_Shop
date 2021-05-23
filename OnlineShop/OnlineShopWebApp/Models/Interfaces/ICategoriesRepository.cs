@@ -11,8 +11,9 @@ namespace OnlineShopWebApp.Models
         void Delete(int id);
         void Edit(int id, string name);
         Category GetCategoryById(int id);
-        Subcategory GetSubcategoryById(int id, int idSubcategory);
+        public Subcategory GetSubcategoryById(int idSubcategory);
         Subcategory GetSubcategoryByName(string nameSubcategory, string nameCategory);
         public Category GetCategoryByName(string name);
+        public Category GetCategoryBySubcategoryId(int idSubcategory);
     }
 }

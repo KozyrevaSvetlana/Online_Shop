@@ -26,20 +26,20 @@
 
         <div>
             <label>Категория</label>
-            <select name="idCategory" value="Категории">
+            <select name="idCategoryItem" value="Категории">
                 @foreach (Category category in ViewBag.Categories)
                 {
-                    <option name="idCategory" value="@category.Id">@category.Name</option>
+                    @foreach (Subcategory subcategory in category.Subcategory)
+                    {
+                        <option name="idCategoryItem" value="@subcategory.Id">@category.Name: @subcategory.Name </option>
+                    }
                 }
             </select>
         </div>
         <div>
             <label>Подкатегория</label>
             <select name="categoryItem" value="Подкатегории">
-                @foreach (Subcategory subcategory in ViewBag.Subcategories)
-                {
-                    <option name="CategoryItem" value="@subcategory.Id">@subcategory.Name </option>
-                }
+
             </select>
         </div>
 

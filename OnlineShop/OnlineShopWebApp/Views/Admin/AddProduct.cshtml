@@ -22,10 +22,13 @@
         </div>
         <div>
             <label>Подкатегория</label>
-            <select name="CategoryItem" value="Категории">
-                @foreach (Subcategory category in ViewBag.Categories)
+            <select name="idCategoryItem" value="Категории">
+                @foreach (Category category in ViewBag.Categories)
                 {
-                    <option name="CategoryItem" value="@category.Id">@category.Name </option>
+                    foreach (Subcategory subcategory in category.Subcategory)
+                    {
+                        <option name="idCategoryItem" value="@subcategory.Id">@category.Name: @subcategory.Name</option>
+                    }
                 }
             </select>
         </div>

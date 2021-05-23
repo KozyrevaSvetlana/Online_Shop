@@ -27,15 +27,14 @@ namespace OnlineShopWebApp.Controllers
         {
             var result = productsRepository.GetProductById(id);
             ViewBag.Categories = categoriesRepository.AllCategories;
-            ViewBag.Subcategories = result.Subcategory;
             return View(result);
         }
         [HttpPost]
-        public ActionResult EditProduct(Product editProduct, int idCategory, int idCategoryItem)
+        public ActionResult EditProduct(Product editProduct, int idCategoryItem)
         {
-            var categoryResult = categoriesRepository.GetCategoryById(idCategory);
-            var categoryItemResult = categoriesRepository.GetSubcategoryById(categoryResult.Id,idCategoryItem);
-            if (categoryResult == null || idCategory==0)
+            var categoryResult = categoriesRepository.GetCategoryBySubcategoryId(idCategoryItem);
+            var categoryItemResult = categoriesRepository.GetSubcategoryById(idCategoryItem);
+            if (categoryResult == null)
             {
                 ModelState.AddModelError("", "Выберите верную категорию товара");
             }
@@ -67,7 +66,7 @@ namespace OnlineShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNewProduct(Product newProduct, int idCategory, int idCategoryItem)
+        public ActionResult AddNewProduct(Product newProduct, int idCategoryItem)
         {
             if (newProduct.Name == newProduct.Description)
             {
@@ -76,7 +75,7 @@ namespace OnlineShopWebApp.Controllers
             else
             {
                 var categoryResult = categoriesRepository.GetCategoryById(idCategoryItem);
-                var subcategoryResult = categoriesRepository.GetSubcategoryById(idCategory, idCategoryItem);
+                var subcategoryResult = categoriesRepository.GetSubcategoryById(idCategoryItem);
                 newProduct.Category = categoryResult;
                 newProduct.Subcategory = subcategoryResult;
                 productsRepository.Add(newProduct);

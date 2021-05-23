@@ -38,9 +38,9 @@ namespace OnlineShopWebApp.Controllers
             return View(categoriesRepository.GetCategoryById(id));
         }
 
-        public ActionResult ShowCategoryItem(int id, int idSubcategory)
+        public ActionResult ShowCategoryItem(int idSubcategory)
         {
-            var subcategory = categoriesRepository.GetSubcategoryById(id, idSubcategory);
+            var subcategory = categoriesRepository.GetSubcategoryById(idSubcategory);
             var result = products.SeachProductBySubcategory(subcategory);
             return View(result);
         }
