@@ -2,8 +2,10 @@
 
 <div class="container">
     <h1>Добавление нового продукта</h1>
-    <div class="validatoin text-danger" asp-validation-summary="ModelOnly"></div>
     <form method="post" class="form-group">
+        <br />
+        <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
+        <br />
         <div>
             <label asp-for="Name">Название</label>
             <input asp-for="Name" type="text" class="form-control" name="Name" tabindex="1">
@@ -39,6 +41,5 @@
                 <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>
             </span>
         </div>
-        <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
     </form>
 </div>

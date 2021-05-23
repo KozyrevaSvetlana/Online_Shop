@@ -13,6 +13,7 @@ namespace OnlineShopWebApp.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Цена не указана")]
+        [Range(1,1000000, ErrorMessage = "Цена должна быть в пределах от 1 до 1 000 000 руб.")]
         public decimal Cost { get; set; }
 
         [Required(ErrorMessage = "Не указано описание")]
@@ -46,6 +47,18 @@ namespace OnlineShopWebApp.Models
         public List<string> IsValid()
         {
             var errors = new List<string>();
+            if (Name == Description)
+            {
+                errors.Add("Название и опасание товара не должны совпадать");
+            }
+            if (Name == Cost.ToString())
+            {
+                errors.Add("Название и цена не должны совпадать");
+            }
+            if (Description == Cost.ToString())
+            {
+                errors.Add("Описание и цена не должны совпадать");
+            }
             if (!IsLetterOrDigit(Name))
             {
                 errors.Add("Имя должно состоять только из букв и/или цифр");

@@ -68,11 +68,17 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public ActionResult AddNewProduct(Product newProduct, int idCategoryItem)
         {
-            if (newProduct.Name == newProduct.Description)
+            var errorsResult = newProduct.IsValid();
+            if (errorsResult.Count!=0)
             {
-                ModelState.AddModelError("", "Название и опасание товара не должны совпадать");
+                foreach (var error in errorsResult)
+                {
+                    ModelState.AddModelError("", error);
+                }
+                ViewBag.Categories = categoriesRepository.AllCategories;
+                return View("AddProduct", newProduct);
             }
-            else
+            if (ModelState.IsValid)
             {
                 var categoryResult = categoriesRepository.GetCategoryBySubcategoryId(idCategoryItem);
                 var subcategoryResult = categoriesRepository.GetSubcategoryById(idCategoryItem);
@@ -81,8 +87,7 @@ namespace OnlineShopWebApp.Controllers
                 productsRepository.Add(newProduct);
                 return RedirectToAction("Index", "Admin");
             }
-            return RedirectToAction("AddProduct", "Admin");
+            return RedirectToAction("Index", "Admin");
         }
-
     }
 }
