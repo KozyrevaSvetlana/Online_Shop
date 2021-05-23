@@ -47,5 +47,9 @@ namespace OnlineShopWebApp
         {
             return orders.FindLast(x => x.Number == number);
         }
+        public void Delete(int number)
+        {
+            orders.Remove(orders.FirstOrDefault(x => x.Number == number));
+        }
     }
 }

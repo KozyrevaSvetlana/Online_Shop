@@ -100,5 +100,10 @@ namespace OnlineShopWebApp.Controllers
             order.InfoStatus.ChangeStatus(status);
             return RedirectToAction("Index", "Admin");
         }
+        public ActionResult DeleteOrder(int number)
+        {
+            ordersRepository.Delete(number);
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }
