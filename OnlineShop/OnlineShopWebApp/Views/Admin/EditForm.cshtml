@@ -2,6 +2,8 @@
 
 <div class="container">
     <h1>Редактирование</h1>
+    <br />
+    <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
     <form method="post" class="form-group">
         <div>
             <label>Id</label>
@@ -36,15 +38,6 @@
                 }
             </select>
         </div>
-        <div>
-            <label>Подкатегория</label>
-            <select name="categoryItem" value="Подкатегории">
-
-            </select>
-        </div>
-
-
-
         <br />
         <div>
             <input type="hidden" name="Image" value="@Model.Image" />
@@ -53,6 +46,5 @@
                 <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>
             </span>
         </div>
-        <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
     </form>
 </div>

@@ -42,18 +42,23 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Выберите верную подкатегорию товара");
             }
-            editProduct.Category = categoryResult;
-            editProduct.Subcategory = categoryItemResult;
             var validResult = editProduct.IsValid();
-            if (validResult != null)
+            if (validResult.Count != 0)
             {
                 foreach (var errors in validResult)
                 {
                     ModelState.AddModelError("", errors);
                 }
             }
-            productsRepository.Edit(editProduct);
-            return RedirectToAction("Index", "Admin");
+            if (ModelState.IsValid)
+            {
+                editProduct.Category = categoryResult;
+                editProduct.Subcategory = categoryItemResult;
+                productsRepository.Edit(editProduct);
+                return RedirectToAction("Index", "Admin");
+            }
+            ViewBag.Categories = categoriesRepository.AllCategories;
+            return View("EditForm", editProduct);
         }
         public ActionResult DeleteProduct(int id)
         {

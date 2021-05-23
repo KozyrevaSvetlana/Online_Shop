@@ -49,7 +49,7 @@ namespace OnlineShopWebApp.Models
             var errors = new List<string>();
             if (Name == Description)
             {
-                errors.Add("Название и опасание товара не должны совпадать");
+                errors.Add("Название и описание товара не должны совпадать");
             }
             if (Name == Cost.ToString())
             {
