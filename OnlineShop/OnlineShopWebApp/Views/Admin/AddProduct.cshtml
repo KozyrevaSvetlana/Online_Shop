@@ -1,5 +1,5 @@
 ﻿@model Product
-  
+
 <div class="container">
     <h1>Редактирование</h1>
     <p class="text-body">Добавить новый продукт</p>
@@ -23,12 +23,9 @@
         <div>
             <label>Подкатегория</label>
             <select name="CategoryItem" value="Категории">
-                @foreach (Category category in ViewBag.Categories)
+                @foreach (Subcategory category in ViewBag.Categories)
                 {
-                    @foreach (string item in category.Items)
-                    {
-                        <option name="CategoryItem" value="@item">@category.Name: @item </option>
-                    }
+                    <option name="CategoryItem" value="@category.Id">@category.Name </option>
                 }
             </select>
         </div>

@@ -14,7 +14,6 @@ namespace OnlineShopWebApp.Models
             new Category("Одежда", new List<Subcategory>() { new Subcategory("Для девочек"), new Subcategory("Для мальчиков"), new Subcategory("Обувь"),
                 new Subcategory("Белье"), new Subcategory("Акссесуары")})
         };
-
         public IEnumerable<Category> AllCategories
         {
             get
@@ -23,40 +22,6 @@ namespace OnlineShopWebApp.Models
             }
         }
 
-        public Category GetCategoryById(int id)
-        {
-            return AllCategories.FirstOrDefault(p => p.Id == id);
-        }
-        public Category GetCategoryByName(string name)
-        {
-            return AllCategories.FirstOrDefault(p => p.Name == name);
-        }
-        public string GetCategoryItem(string name)
-        {
-            string result=null;
-            foreach (Category category in categories)
-            {
-                var items = category.Items;
-                var nameOfCategory = category.Name;
-                foreach (var item in items)
-                {
-                    if (name== item)
-                    {
-                        result = nameOfCategory;
-                    }
-                }
-            }
-            return result;
-        }
-        public void Delete(int id)
-        {
-            categories.RemoveAll(x => x.Id == id);
-        }
-        public void Edit(int id, string name)
-        {
-            var category = AllCategories.FirstOrDefault(p => p.Id == id);
-            category.Name = name;
-        }
         public void Add(Category newCategory, List<Subcategory> items)
         {
             var category = new Category(newCategory.Name, items);
@@ -76,14 +41,27 @@ namespace OnlineShopWebApp.Models
                 }
             }
         }
+        public Category GetCategoryById(int id)
+        {
+            return AllCategories.FirstOrDefault(p => p.Id == id);
+        }
+        public void Delete(int id)
+        {
+            categories.RemoveAll(x => x.Id == id);
+        }
+        public void Edit(int id, string name)
+        {
+            var category = AllCategories.FirstOrDefault(p => p.Id == id);
+            category.Name = name;
+        }
         public Subcategory GetSubcategoryById(int id, int idSubcategory)
         {
-            return GetCategoryById(id).Subcategory.FirstOrDefault(x=>x.Id== idSubcategory);
+            return GetCategoryById(id).Subcategory.FirstOrDefault(x => x.Id == idSubcategory);
         }
         public Subcategory GetSubcategoryByName(string nameSubcategory, string nameCategory)
         {
             var result = categories.FirstOrDefault(x => x != null).Subcategory.FirstOrDefault(x => x.Name == nameSubcategory);
-            if (result ==null)
+            if (result == null)
             {
                 var categoryResult = categories.FirstOrDefault(x => x.Name == nameCategory);
                 if (categoryResult == null)
@@ -99,7 +77,7 @@ namespace OnlineShopWebApp.Models
         }
         public Category GetCategoryByName(string name)
         {
-            var result = categories.FirstOrDefault(x => x.Name== name);
+            var result = categories.FirstOrDefault(x => x.Name == name);
             if (result != null)
             {
                 return result;
@@ -109,10 +87,6 @@ namespace OnlineShopWebApp.Models
                 categories.Add(new Category(name, new List<Subcategory>()));
                 return categories.FirstOrDefault(x => x.Name == name);
             }
-        }
-        public List<string> GetCategoryItemsByName(string name)
-        {
-            return AllCategories.FirstOrDefault(p => p.Name == name).Items;
         }
     }
 }

@@ -6,11 +6,13 @@ namespace OnlineShopWebApp.Models
     {
         IEnumerable<Category> AllCategories { get; }
 
-        void Add(Category newCategory, List<string> items);
-        void AddItems(int id, List<string> items);
+        void Add(Category newCategory, List<Subcategory> items);
+        public void AddItems(int id, List<Subcategory> items);
         void Delete(int id);
         void Edit(int id, string name);
         Category GetCategoryById(int id);
-        public string GetCategoryItem(string item);
+        Subcategory GetSubcategoryById(int id, int idSubcategory);
+        Subcategory GetSubcategoryByName(string nameSubcategory, string nameCategory);
+        public Category GetCategoryByName(string name);
     }
 }

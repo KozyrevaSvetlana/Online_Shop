@@ -5,7 +5,6 @@ namespace OnlineShopWebApp.Models
 {
     public class Product
     {
-
         private static int counter;
         public int Id { get; set; }
 
@@ -22,13 +21,6 @@ namespace OnlineShopWebApp.Models
         public Category Category { get; set; }
         public Subcategory Subcategory { get; set; }
 
-        [Required(ErrorMessage = "Не указана подкатегория товара")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 50 символов")]
-      
-        public string CategoryItem { get; set; }
-       
-        public string Category { get; set; }
-
         [Required(ErrorMessage = "Не указан путь изображению товара")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Путь к изображению товара должен быть не менее 2 символов и не более 100 символов")]
         public string Image { get; set; }
@@ -44,36 +36,23 @@ namespace OnlineShopWebApp.Models
             Cost = cost;
             Description = description;
             Image = image;
-            CategoryItem = categoryItem;
+        }
+        public void AddCategorySubcategory(Category category, Subcategory subcategory)
+        {
             Category = category;
+            Subcategory = subcategory;
         }
 
         public List<string> IsValid()
         {
             var errors = new List<string>();
-            if (Name == CategoryItem)
-            {
-                errors.Add("Имя и Подкатегория не должны совпадать");
-            }
-            if (Name == Category)
-            {
-                errors.Add("Имя и Категория не должны совпадать");
-            }
-            if (CategoryItem == Category)
-            {
-                errors.Add("Категория и Подкатегория не должны совпадать");
-            }
             if (!IsLetterOrDigit(Name))
             {
                 errors.Add("Имя должно состоять только из букв и/или цифр");
             }
-            if (!IsLetterOrDigit(Category))
+            if (!IsLetterOrDigit(Description))
             {
-                errors.Add("Категория должна состоять только из букв");
-            }
-            if (!IsLetterOrDigit(CategoryItem))
-            {
-                errors.Add("Подкатегория должна состоять только из букв");
+                errors.Add("Описание должно состоять только из букв и/или цифр");
             }
             return errors;
         }

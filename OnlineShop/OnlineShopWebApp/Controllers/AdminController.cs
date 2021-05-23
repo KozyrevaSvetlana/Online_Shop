@@ -27,17 +27,24 @@ namespace OnlineShopWebApp.Controllers
         {
             var result = productsRepository.GetProductById(id);
             ViewBag.Categories = categoriesRepository.AllCategories;
+            ViewBag.Subcategories = result.Subcategory;
             return View(result);
         }
         [HttpPost]
-        public ActionResult EditProduct(Product editProduct)
+        public ActionResult EditProduct(Product editProduct, int idCategory, int idCategoryItem)
         {
-            string category = categoriesRepository.GetCategoryItem(editProduct.CategoryItem);
-            if (category==null)
+            var categoryResult = categoriesRepository.GetCategoryById(idCategory);
+            var categoryItemResult = categoriesRepository.GetSubcategoryById(categoryResult.Id,idCategoryItem);
+            if (categoryResult == null || idCategory==0)
+            {
+                ModelState.AddModelError("", "Выберите верную категорию товара");
+            }
+            if (categoryItemResult == null|| idCategoryItem==0)
             {
                 ModelState.AddModelError("", "Выберите верную подкатегорию товара");
             }
-            editProduct.Category = category;
+            editProduct.Category = categoryResult;
+            editProduct.Subcategory = categoryItemResult;
             var validResult = editProduct.IsValid();
             if (validResult != null)
             {
@@ -60,7 +67,7 @@ namespace OnlineShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNewProduct(Product newProduct, string CategoryItem)
+        public ActionResult AddNewProduct(Product newProduct, int idCategory, int idCategoryItem)
         {
             if (newProduct.Name == newProduct.Description)
             {
@@ -68,9 +75,10 @@ namespace OnlineShopWebApp.Controllers
             }
             else
             {
-                var category = categoriesRepository.GetCategoryItem(CategoryItem);
-                newProduct.Category = category;
-                newProduct.CategoryItem = CategoryItem;
+                var categoryResult = categoriesRepository.GetCategoryById(idCategoryItem);
+                var subcategoryResult = categoriesRepository.GetSubcategoryById(idCategory, idCategoryItem);
+                newProduct.Category = categoryResult;
+                newProduct.Subcategory = subcategoryResult;
                 productsRepository.Add(newProduct);
                 return RedirectToAction("Index", "Admin");
             }
