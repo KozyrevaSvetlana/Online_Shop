@@ -9,11 +9,13 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsRepository products;
         private readonly ICategoriesRepository categoriesRepository;
+        private readonly IOrdersRepository ordersRepository;
 
-        public HomeController(IProductsRepository products, ICartsRepository cartsRepository, ICategoriesRepository categoriesRepository)
+        public HomeController(IProductsRepository products, ICartsRepository cartsRepository, ICategoriesRepository categoriesRepository, IOrdersRepository ordersRepository)
         {
             this.products = products;
             this.categoriesRepository = categoriesRepository;
+            this.ordersRepository = ordersRepository;
         }
 
         public IActionResult Index()

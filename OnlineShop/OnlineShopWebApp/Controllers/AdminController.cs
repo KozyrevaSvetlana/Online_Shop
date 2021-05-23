@@ -90,5 +90,15 @@ namespace OnlineShopWebApp.Controllers
             }
             return RedirectToAction("Index", "Admin");
         }
+        public IActionResult OrderForm(int number)
+        {
+            return View(ordersRepository.GetOrderByNumber(number));
+        }
+        public IActionResult EditOrder(int number, string status)
+        {
+            var order = ordersRepository.GetOrderByNumber(number);
+            order.InfoStatus.ChangeStatus(status);
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }
