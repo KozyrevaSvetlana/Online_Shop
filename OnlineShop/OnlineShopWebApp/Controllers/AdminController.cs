@@ -54,15 +54,27 @@ namespace OnlineShopWebApp.Controllers
             productsRepository.DeleteItem(id);
             return RedirectToAction("Index", "Admin");
         }
-        public ActionResult AddProductForm()
+        public ActionResult AddProduct()
         {
+            ViewBag.Categories = categoriesRepository.AllCategories;
             return View();
         }
         [HttpPost]
-        public ActionResult AddProduct(Product newProduct)
+        public ActionResult AddNewProduct(Product newProduct, string CategoryItem)
         {
-            productsRepository.Add(newProduct);
-            return RedirectToAction("Index", "Admin");
+            if (newProduct.Name == newProduct.Description)
+            {
+                ModelState.AddModelError("", "Название и опасание товара не должны совпадать");
+            }
+            else
+            {
+                var category = categoriesRepository.GetCategoryItem(CategoryItem);
+                newProduct.Category = category;
+                newProduct.CategoryItem = CategoryItem;
+                productsRepository.Add(newProduct);
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("AddProduct", "Admin");
         }
 
     }
