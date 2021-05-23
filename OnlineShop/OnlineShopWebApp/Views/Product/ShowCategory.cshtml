@@ -3,7 +3,7 @@
 
 <h1>@Model.Name</h1>
 <br />
-@foreach (var item in Model.Items)
+@foreach (var item in Model.Subcategory)
 {
-    <a class="btn btn-link" href="/Product/ShowCategoryItem?name=@item" role="button">@item</a>
+    <a class="btn btn-link" href="/Product/ShowCategoryItem?id=@item.Id&idSubcategory=@Model.Id" role="button">@item.Name</a>
 }

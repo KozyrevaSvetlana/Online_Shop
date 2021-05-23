@@ -5,6 +5,7 @@ namespace OnlineShopWebApp.Models
 {
     public class Product
     {
+
         private static int counter;
         public int Id { get; set; }
 
@@ -18,6 +19,8 @@ namespace OnlineShopWebApp.Models
         [Required(ErrorMessage = "Не указано описание")]
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 300 символов")]
         public string Description { get; set; }
+        public Category Category { get; set; }
+        public Subcategory Subcategory { get; set; }
 
         [Required(ErrorMessage = "Не указана подкатегория товара")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 50 символов")]
@@ -33,7 +36,7 @@ namespace OnlineShopWebApp.Models
         public Product()
         {
         }
-        public Product(string name, decimal cost, string description, string image, string categoryItem, string category)
+        public Product(string name, decimal cost, string description, string image)
         {
             counter++;
             Id = counter;
