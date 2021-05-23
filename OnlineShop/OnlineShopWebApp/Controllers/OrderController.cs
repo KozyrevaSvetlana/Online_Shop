@@ -17,16 +17,27 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Index()
         {
-            var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-            return View(cart);
+            return View();
         }
         [HttpPost]
         public IActionResult Accept(Order order, UserContact user)
         {
-            order.AddContacts(Constants.UserId, user, new InfoStatusOrder(DateTime.Now));
-            ordersRepository.AddOrder(order, cartsRepository.TryGetByUserId(Constants.UserId));
-            cartsRepository.ClearCart(Constants.UserId);
-            return RedirectToAction("Result");
+            var errorsResult = user.IsValid();
+            if (errorsResult != null)
+            {
+                foreach (var error in errorsResult)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                order.AddContacts(Constants.UserId, user, new InfoStatusOrder(DateTime.Now));
+                ordersRepository.AddOrder(order, cartsRepository.TryGetByUserId(Constants.UserId));
+                cartsRepository.ClearCart(Constants.UserId);
+                return RedirectToAction("Result");
+            }
+            return View("Index");
         }
 
         public IActionResult Result()
