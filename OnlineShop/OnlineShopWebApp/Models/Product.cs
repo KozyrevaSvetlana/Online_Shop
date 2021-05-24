@@ -10,8 +10,6 @@ namespace OnlineShopWebApp.Models
         public string Name { get; set; }
         public decimal Cost { get; set; }
         public string Description { get; set; }
-        public Category Category { get; set; }
-        public Subcategory Subcategory { get; set; }
         public string Image { get; set; }
         public Product()
         {
@@ -24,11 +22,6 @@ namespace OnlineShopWebApp.Models
             Cost = cost;
             Description = description;
             Image = image;
-        }
-        public void AddCategorySubcategory(Category category, Subcategory subcategory)
-        {
-            Category = category;
-            Subcategory = subcategory;
         }
     }
 }

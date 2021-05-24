@@ -61,9 +61,5 @@ namespace OnlineShopWebApp.Models
             }
             return resultList.Distinct().ToList();
         }
-        public List<Product> SeachProductBySubcategory(Subcategory subcategory)
-        {
-            return AllProducts.Where(x => x.Subcategory == subcategory).ToList();
-        }
     }
 }
