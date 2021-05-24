@@ -2,26 +2,30 @@
 
 <div class="container">
     <h1>Редактирование</h1>
-    <p class="text-body">@Model.Name</p>
+    <br />
+    <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
     <form method="post" class="form-group">
         <div>
             <label>Id</label>
-            <input type="text" class="form-control" name="id"  value="@Model.Id" readonly>
+            <input type="text" class="form-control" name="id" value="@Model.Id" readonly>
         </div>
         <div>
-            <label>Имя</label>
-            <input type="text" class="form-control" name="name" tabindex="1" value="@Model.Name">
+            <label asp-for="Name">Имя</label>
+            <input asp-for="Name" type="text" class="form-control" name="Name" tabindex="1" value="@Model.Name">
+            <span class="badge badge-danger" asp-validation-for="Name"></span>
         </div>
         <div>
-            <label>Цена</label>
-            <input type="number" class="form-control" name="cost" tabindex="2" value="@Model.Cost" min="1">
+            <label asp-for="Cost">Цена</label>
+            <input asp-for="Cost" type="number" class="form-control" name="Cost" tabindex="2" value="@Model.Cost" min="1">
+            <span class="badge badge-danger" asp-validation-for="Cost"></span>
         </div>
         <div>
-            <label>Описание</label>
-            <textarea class="form-control" type="text" name="description" cols="30" rows="10" tabindex="3" value="">@Model.Description</textarea>
+            <label asp-for="Description">Описание</label>
+            <textarea asp-for="Description" class="form-control" type="text" name="Description" cols="30" rows="10" tabindex="3" value="">@Model.Description</textarea>
+            <span class="badge badge-danger" asp-validation-for="Description"></span>
         </div>
-        <br />
         <div>
+            <input type="hidden" name="Image" value="@Model.Image" />
             <span>
                 <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="EditProduct" tabindex="5">Изменить</button>
                 <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>

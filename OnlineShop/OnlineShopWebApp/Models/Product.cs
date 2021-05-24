@@ -1,16 +1,29 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models
 {
     public class Product
     {
-
         private static int counter;
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Не указано имя")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Имя должно быть не менее 2 символов и не более 100 символов")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Цена не указана")]
+        [Range(1,1000000, ErrorMessage = "Цена должна быть в пределах от 1 до 1 000 000 руб.")]
         public decimal Cost { get; set; }
+
+        [Required(ErrorMessage = "Не указано описание")]
+        [StringLength(300, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 300 символов")]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "Не указан путь изображению товара")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Путь к изображению товара должен быть не менее 2 символов и не более 100 символов")]
         public string Image { get; set; }
+
         public Product()
         {
         }
@@ -22,6 +35,43 @@ namespace OnlineShopWebApp.Models
             Cost = cost;
             Description = description;
             Image = image;
+        }
+
+        public List<string> IsValid()
+        {
+            var errors = new List<string>();
+            if (Name == Description)
+            {
+                errors.Add("Название и описание товара не должны совпадать");
+            }
+            if (Name == Cost.ToString())
+            {
+                errors.Add("Название и цена не должны совпадать");
+            }
+            if (Description == Cost.ToString())
+            {
+                errors.Add("Описание и цена не должны совпадать");
+            }
+            if (!IsLetterOrDigit(Name))
+            {
+                errors.Add("Имя должно состоять только из букв и/или цифр");
+            }
+            if (!IsLetterOrDigit(Description))
+            {
+                errors.Add("Описание должно состоять только из букв и/или цифр");
+            }
+            return errors;
+        }
+        private bool IsLetterOrDigit(string name)
+        {
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (!char.IsLetterOrDigit(name[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

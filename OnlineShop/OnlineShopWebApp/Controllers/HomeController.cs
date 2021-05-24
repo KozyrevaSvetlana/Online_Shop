@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsRepository products;
 
-        public HomeController(IProductsRepository products, ICartsRepository cartsRepository)
+        public HomeController(IProductsRepository products)
         {
             this.products = products;
         }

@@ -27,26 +27,50 @@ namespace OnlineShopWebApp.Controllers
             return View(result);
         }
         [HttpPost]
-        public ActionResult EditProduct(Product editProduct)
+        public ActionResult EditProduct(Product editProduct, int idCategoryItem)
         {
-            productsRepository.Edit(editProduct);
-            return RedirectToAction("Index", "Admin");
+            var validResult = editProduct.IsValid();
+            if (validResult.Count != 0)
+            {
+                foreach (var errors in validResult)
+                {
+                    ModelState.AddModelError("", errors);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                productsRepository.Edit(editProduct);
+                return RedirectToAction("Index", "Admin");
+            }
+            return View("EditForm", editProduct);
         }
         public ActionResult DeleteProduct(int id)
         {
             productsRepository.DeleteItem(id);
             return RedirectToAction("Index", "Admin");
         }
-        public ActionResult AddProductForm()
+        public ActionResult AddProduct()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult AddProduct(Product newProduct)
+        public ActionResult AddNewProduct(Product newProduct, int idCategoryItem)
         {
-            productsRepository.Add(newProduct);
+            var errorsResult = newProduct.IsValid();
+            if (errorsResult.Count!=0)
+            {
+                foreach (var error in errorsResult)
+                {
+                    ModelState.AddModelError("", error);
+                }
+                return View("AddProduct", newProduct);
+            }
+            if (ModelState.IsValid)
+            {
+                productsRepository.Add(newProduct);
+                return RedirectToAction("Index", "Admin");
+            }
             return RedirectToAction("Index", "Admin");
         }
-
     }
 }
