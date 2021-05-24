@@ -1,9 +1,0 @@
-﻿@model Category
-
-
-<h1>@Model.Name</h1>
-<br />
-@foreach (var item in Model.Subcategory)
-{
-    <a class="btn btn-link" href="/Product/ShowCategoryItem?idSubcategory=@item.Id" role="button">@item.Name</a>
-}

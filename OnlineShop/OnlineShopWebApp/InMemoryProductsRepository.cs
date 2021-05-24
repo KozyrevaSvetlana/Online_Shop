@@ -41,7 +41,6 @@ namespace OnlineShopWebApp.Models
             product.Name = editProduct.Name;
             product.Cost = editProduct.Cost;
             product.Description = editProduct.Description;
-            product.Category = editProduct.Category;
         }
         public int GetCount()
         {
@@ -61,10 +60,6 @@ namespace OnlineShopWebApp.Models
                 resultList = products.Where(x => x.Name.ToLower().Contains(word.ToLower())).ToList();
             }
             return resultList.Distinct().ToList();
-        }
-        public List<Product> SeachProductBySubcategory(Subcategory subcategory)
-        {
-            return AllProducts.Where(x => x.Subcategory == subcategory).ToList();
         }
     }
 }

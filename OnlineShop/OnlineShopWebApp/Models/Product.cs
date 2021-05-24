@@ -19,8 +19,6 @@ namespace OnlineShopWebApp.Models
         [Required(ErrorMessage = "Не указано описание")]
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 300 символов")]
         public string Description { get; set; }
-        public Category Category { get; set; }
-        public Subcategory Subcategory { get; set; }
 
         [Required(ErrorMessage = "Не указан путь изображению товара")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Путь к изображению товара должен быть не менее 2 символов и не более 100 символов")]
@@ -37,11 +35,6 @@ namespace OnlineShopWebApp.Models
             Cost = cost;
             Description = description;
             Image = image;
-        }
-        public void AddCategorySubcategory(Category category, Subcategory subcategory)
-        {
-            Category = category;
-            Subcategory = subcategory;
         }
 
         public List<string> IsValid()

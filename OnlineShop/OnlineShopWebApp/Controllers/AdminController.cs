@@ -6,12 +6,10 @@ namespace OnlineShopWebApp.Controllers
     public class AdminController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly ICategoriesRepository categoriesRepository;
 
-        public AdminController(IProductsRepository products, ICategoriesRepository categoriesRepository)
+        public AdminController(IProductsRepository products)
         {
             this.productsRepository = products;
-            this.categoriesRepository = categoriesRepository;
         }
 
         public IActionResult Index()
@@ -26,22 +24,11 @@ namespace OnlineShopWebApp.Controllers
         public ActionResult EditForm(int id)
         {
             var result = productsRepository.GetProductById(id);
-            ViewBag.Categories = categoriesRepository.AllCategories;
             return View(result);
         }
         [HttpPost]
         public ActionResult EditProduct(Product editProduct, int idCategoryItem)
         {
-            var categoryResult = categoriesRepository.GetCategoryBySubcategoryId(idCategoryItem);
-            var categoryItemResult = categoriesRepository.GetSubcategoryById(idCategoryItem);
-            if (categoryResult == null)
-            {
-                ModelState.AddModelError("", "Выберите верную категорию товара");
-            }
-            if (categoryItemResult == null|| idCategoryItem==0)
-            {
-                ModelState.AddModelError("", "Выберите верную подкатегорию товара");
-            }
             var validResult = editProduct.IsValid();
             if (validResult.Count != 0)
             {
@@ -52,12 +39,9 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                editProduct.Category = categoryResult;
-                editProduct.Subcategory = categoryItemResult;
                 productsRepository.Edit(editProduct);
                 return RedirectToAction("Index", "Admin");
             }
-            ViewBag.Categories = categoriesRepository.AllCategories;
             return View("EditForm", editProduct);
         }
         public ActionResult DeleteProduct(int id)
@@ -67,7 +51,6 @@ namespace OnlineShopWebApp.Controllers
         }
         public ActionResult AddProduct()
         {
-            ViewBag.Categories = categoriesRepository.AllCategories;
             return View();
         }
         [HttpPost]
@@ -80,15 +63,10 @@ namespace OnlineShopWebApp.Controllers
                 {
                     ModelState.AddModelError("", error);
                 }
-                ViewBag.Categories = categoriesRepository.AllCategories;
                 return View("AddProduct", newProduct);
             }
             if (ModelState.IsValid)
             {
-                var categoryResult = categoriesRepository.GetCategoryBySubcategoryId(idCategoryItem);
-                var subcategoryResult = categoriesRepository.GetSubcategoryById(idCategoryItem);
-                newProduct.Category = categoryResult;
-                newProduct.Subcategory = subcategoryResult;
                 productsRepository.Add(newProduct);
                 return RedirectToAction("Index", "Admin");
             }
