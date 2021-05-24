@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
@@ -57,6 +58,11 @@ namespace OnlineShopWebApp.Models
                     StatusOrder = Status.Done;
                     break;
             }
+        }
+        public List<string> GetAllStatuses()
+        {
+            var result = new List<string>() { "Создан", "В работе", "В пути", "Готов к выдаче", "Выполнен" };
+            return result;
         }
     }
 }

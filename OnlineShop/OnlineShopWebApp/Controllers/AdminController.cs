@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -92,7 +93,9 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult OrderForm(int number)
         {
-            return View(ordersRepository.GetOrderByNumber(number));
+            var order = ordersRepository.GetOrderByNumber(number);
+            ViewData["Statuses"] = order.InfoStatus.GetAllStatuses();
+            return View(order);
         }
         public IActionResult EditOrder(int number, string status)
         {

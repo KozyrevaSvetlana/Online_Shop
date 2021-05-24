@@ -34,11 +34,17 @@
                         <th scope="col">Статус заказа</th>
                         <th scope="col">
                             <select name="status" value="">
-                                <option name="status" value="Создан">Создан</option>
-                                <option name="status" value="В работе">В работе</option>
-                                <option name="status" value="В пути">В пути</option>
-                                <option name="status" value="Готов к выдаче">Готов к выдаче</option>
-                                <option name="status" value="Выполнен">Выполнен</option>
+                                @foreach (var status in ViewData["Statuses"] as List<string>)
+                                {
+                                    if (status == Model.InfoStatus.GetStatus(Model.InfoStatus.StatusOrder))
+                                    {
+                                        <option selected name="status" value="@status">@status</option>
+                                    }
+                                    else
+                                    {
+                                        <option name="status" value="@status">@status</option>
+                                    }
+                                }
                             </select>
                         </th>
                     </tr>
@@ -47,11 +53,11 @@
                         <th scope="col">
                             <input type="hidden" name="number" value="@Model.Number" />
                             <button class="btn btn-success" type="submit" asp-controller="Admin" asp-action="EditOrder" tabindex="7">Изменить</button>
-                            <button class="btn btn-danger" type="submit" asp-controller="Admin" asp-action="DeleteOrder" name="number" value="@Model.Number"tabindex="8">Удалить</button>
+                            <button class="btn btn-danger" type="submit" asp-controller="Admin" asp-action="DeleteOrder" name="number" value="@Model.Number" tabindex="8">Удалить</button>
                         </th>
                     </tr>
                 </tbody>
             </table>
-            </div>
+        </div>
     </form>
 </div>
