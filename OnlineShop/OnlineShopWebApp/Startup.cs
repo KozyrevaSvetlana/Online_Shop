@@ -23,6 +23,7 @@ namespace OnlineShopWebApp
             services.AddSingleton<ICompareRepository, InMemoryCompareRepository>();
             services.AddSingleton<IFavoritesRepository, InMemoryFavoritesRepository>();
             services.AddSingleton<IOrdersRepository, InMemoryOrdersRepository>();
+            services.AddSingleton<IRolesRepository, InMemoryRolesRepository>();
             services.AddControllersWithViews();
         }
 
