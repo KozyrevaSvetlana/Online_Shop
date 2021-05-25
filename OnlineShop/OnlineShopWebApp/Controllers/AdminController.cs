@@ -7,12 +7,10 @@ namespace OnlineShopWebApp.Controllers
     public class AdminController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly ICategoriesRepository categoriesRepository;
         private readonly IOrdersRepository ordersRepository;
-        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, ICategoriesRepository categoriesRepository)
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository)
         {
             this.productsRepository = products;
-            this.categoriesRepository = categoriesRepository;
             this.ordersRepository = ordersRepository;
         }
 
