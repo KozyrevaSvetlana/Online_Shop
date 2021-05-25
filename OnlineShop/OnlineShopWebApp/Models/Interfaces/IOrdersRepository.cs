@@ -10,5 +10,8 @@ namespace OnlineShopWebApp
         public void AddOrder(Order order, Cart cart);
         public Order GetLastOrder(string userId);
         public Order TryGetByUserId(string userId);
+        public void Edit(int number, string status);
+        public Order GetOrderByNumber(int number);
+        public void Delete(int number);
     }
 }

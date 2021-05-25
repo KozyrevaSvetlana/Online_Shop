@@ -21,6 +21,7 @@ else
                 <th scope="col">Дата</th>
                 <th scope="col">Время</th>
                 <th scope="col">Комментарий</th>
+                <th scope="col">Подробнее</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,9 @@ else
                 <td>@order.InfoStatus.Data.ToShortDateString()</td>
                 <td>@order.InfoStatus.Data.ToLongTimeString()</td>
                 <td>@order.Comment</td>
+                <td>
+                    <a class="btn btn-primary" href="/Admin/OrderForm?number=@order.Number" tabindex="6">Подробнее</a>
+                </td>
                 @{i++;}
             </tr>
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
@@ -36,6 +37,32 @@ namespace OnlineShopWebApp.Models
                 default:
                     return "Ошибка";
             }
+        }
+        public void ChangeStatus(string newstatus)
+        {
+            switch (newstatus)
+            {
+                case "Создан":
+                    StatusOrder = Status.Created;
+                    break;
+                case "В работе":
+                    StatusOrder = Status.InProcessing;
+                    break;
+                case "В пути":
+                    StatusOrder = Status.Delivering;
+                    break;
+                case "Готов к выдаче":
+                    StatusOrder = Status.OnPost;
+                    break;
+                case "Выполнен":
+                    StatusOrder = Status.Done;
+                    break;
+            }
+        }
+        public List<string> GetAllStatuses()
+        {
+            var result = new List<string>() { "Создан", "В работе", "В пути", "Готов к выдаче", "Выполнен" };
+            return result;
         }
     }
 }

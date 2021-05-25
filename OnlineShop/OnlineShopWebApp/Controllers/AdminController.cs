@@ -1,15 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class AdminController : Controller
     {
         private readonly IProductsRepository productsRepository;
-
-        public AdminController(IProductsRepository products)
+        private readonly ICategoriesRepository categoriesRepository;
+        private readonly IOrdersRepository ordersRepository;
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, ICategoriesRepository categoriesRepository)
         {
             this.productsRepository = products;
+            this.categoriesRepository = categoriesRepository;
+            this.ordersRepository = ordersRepository;
         }
 
         public IActionResult Index()
@@ -70,6 +74,23 @@ namespace OnlineShopWebApp.Controllers
                 productsRepository.Add(newProduct);
                 return RedirectToAction("Index", "Admin");
             }
+            return RedirectToAction("Index", "Admin");
+        }
+        public IActionResult OrderForm(int number)
+        {
+            var order = ordersRepository.GetOrderByNumber(number);
+            ViewData["Statuses"] = order.InfoStatus.GetAllStatuses();
+            return View(order);
+        }
+        public IActionResult EditOrder(int number, string status)
+        {
+            var order = ordersRepository.GetOrderByNumber(number);
+            order.InfoStatus.ChangeStatus(status);
+            return RedirectToAction("Index", "Admin");
+        }
+        public ActionResult DeleteOrder(int number)
+        {
+            ordersRepository.Delete(number);
             return RedirectToAction("Index", "Admin");
         }
     }

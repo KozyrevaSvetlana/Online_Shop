@@ -38,5 +38,18 @@ namespace OnlineShopWebApp
             }
             return result;
         }
+        public void Edit(int number, string status)
+        {
+            var order = orders.FirstOrDefault(p => p.Number == number);
+            order.InfoStatus.ChangeStatus(status);
+        }
+        public Order GetOrderByNumber(int number)
+        {
+            return orders.FindLast(x => x.Number == number);
+        }
+        public void Delete(int number)
+        {
+            orders.Remove(orders.FirstOrDefault(x => x.Number == number));
+        }
     }
 }
