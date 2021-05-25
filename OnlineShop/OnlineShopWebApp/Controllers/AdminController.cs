@@ -144,12 +144,6 @@ namespace OnlineShopWebApp.Controllers
                 return RedirectToAction("Index", "Admin");
             }
             return RedirectToAction("Index", "Admin");
-
-
-
-
-
-
         }
     }
 }
