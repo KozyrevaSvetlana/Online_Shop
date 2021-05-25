@@ -14,7 +14,7 @@ namespace OnlineShopWebApp.Models
             }
         }
 
-        public Role GetProductByName(string name)
+        public Role GetRoleByName(string name)
         {
             return roles.FirstOrDefault(p => p.Name == name);
         }
@@ -23,25 +23,35 @@ namespace OnlineShopWebApp.Models
         {
             roles.RemoveAll(x => x.Name == name);
         }
-        public void Edit(Role editRole)
+        public void Edit(string newName, string name)
         {
-            var role = AllRoles.FirstOrDefault(p => p.Name == editRole.Name);
-            role.Name = editRole.Name;
+            var role = AllRoles.FirstOrDefault(p => p.Name == name);
+            role.Name = newName;
         }
-        public void Add(Role newRole)
+        public void Add(string name)
         {
-            roles.Add(newRole);
+            roles.Add(new Role(name));
         }
-        public bool IsValid(Role newRole)
+        public List<string> IsValid(string name)
         {
+            var result = new List<string>();
             foreach (var role in roles)
             {
-                if (role.Name == newRole.Name)
+                if (role.Name == name)
                 {
-                    return false;
+                    result.Add("Такое название уже существует");
+                    break;
                 }
             }
-            return true;
+            for (int i = 0; i < name.Length; i++)
+            {
+                if(!char.IsLetterOrDigit(name[i]))
+                {
+                    result.Add("Yазвание должно содержать только буквы и/или цифры");
+                    break;
+                }
+            }
+            return result;
         }
     }
 }

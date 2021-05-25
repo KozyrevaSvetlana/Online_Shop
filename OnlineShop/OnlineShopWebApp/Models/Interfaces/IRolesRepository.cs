@@ -6,10 +6,10 @@ namespace OnlineShopWebApp.Models
     {
         IEnumerable<Role> AllRoles { get; }
 
-        void Add(Role newRole);
+        void Add(string name);
         void DeleteRole(string name);
-        void Edit(Role editRole);
-        Role GetProductByName(string name);
-        bool IsValid(Role newRole);
+        public void Edit(string newName, string name);
+        Role GetRoleByName(string name);
+        List<string> IsValid(string name);
     }
 }

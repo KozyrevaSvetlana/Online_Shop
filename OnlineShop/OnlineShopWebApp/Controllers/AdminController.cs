@@ -8,10 +8,13 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsRepository productsRepository;
         private readonly IOrdersRepository ordersRepository;
-        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository)
+        private readonly IRolesRepository rolesRepository;
+
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository)
         {
             this.productsRepository = products;
             this.ordersRepository = ordersRepository;
+            this.rolesRepository = rolesRepository;
         }
 
         public IActionResult Index()
@@ -29,7 +32,7 @@ namespace OnlineShopWebApp.Controllers
             return View(result);
         }
         [HttpPost]
-        public ActionResult EditProduct(Product editProduct, int idCategoryItem)
+        public ActionResult EditProduct(Product editProduct)
         {
             var validResult = editProduct.IsValid();
             if (validResult.Count != 0)
@@ -56,10 +59,10 @@ namespace OnlineShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNewProduct(Product newProduct, int idCategoryItem)
+        public ActionResult AddNewProduct(Product newProduct)
         {
             var errorsResult = newProduct.IsValid();
-            if (errorsResult.Count!=0)
+            if (errorsResult.Count != 0)
             {
                 foreach (var error in errorsResult)
                 {
@@ -90,6 +93,63 @@ namespace OnlineShopWebApp.Controllers
         {
             ordersRepository.Delete(number);
             return RedirectToAction("Index", "Admin");
+        }
+        public ActionResult AddRole()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddNewRole(Role newRole)
+        {
+            var resultErrors = rolesRepository.IsValid(newRole.Name);
+            if (resultErrors.Count != 0)
+            {
+                foreach (var error in resultErrors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                rolesRepository.Add(newRole.Name);
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+        public ActionResult DeleteRole(string name)
+        {
+            rolesRepository.DeleteRole(name);
+            return RedirectToAction("Index", "Admin");
+        }
+
+        public ActionResult EditRole(string name)
+        {
+            return View(rolesRepository.GetRoleByName(name));
+        }
+
+
+        public IActionResult ChangeRole(string ChangedName, string oldName)
+        {
+            var resultErrors = rolesRepository.IsValid(ChangedName);
+            if (resultErrors.Count != 0)
+            {
+                foreach (var error in resultErrors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                rolesRepository.Edit(ChangedName, oldName);
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+
+
+
+
+
+
         }
     }
 }

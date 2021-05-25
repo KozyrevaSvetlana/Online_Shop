@@ -12,5 +12,8 @@ namespace OnlineShopWebApp.Models
         {
             Name = name;
         }
+        public Role()
+        {
+        }
     }
 }

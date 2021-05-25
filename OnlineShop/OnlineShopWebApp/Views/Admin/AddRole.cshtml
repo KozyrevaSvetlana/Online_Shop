@@ -1,0 +1,20 @@
+﻿@model Role
+
+<h1>Добавление новой роли</h1>
+<form method="post" class="form-group">
+    <br />
+    <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
+    <br />
+    <div>
+        <label asp-for="Name">Название</label>
+        <input asp-for="Name" type="text" class="form-control" name="Name" tabindex="1">
+        <span class="badge badge-danger" asp-validation-for="Name"></span>
+    </div>
+    <br />
+    <div>
+        <span>
+            <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="AddNewRole" tabindex="2">Добавить</button>
+            <a class="btn btn-danger" href="/Admin/Index" tabindex="6">Отменить</a>
+        </span>
+    </div>
+</form>
