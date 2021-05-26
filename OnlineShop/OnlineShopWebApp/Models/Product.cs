@@ -52,26 +52,7 @@ namespace OnlineShopWebApp.Models
             {
                 errors.Add("Описание и цена не должны совпадать");
             }
-            if (!IsLetterOrDigit(Name))
-            {
-                errors.Add("Имя должно состоять только из букв и/или цифр");
-            }
-            if (!IsLetterOrDigit(Description))
-            {
-                errors.Add("Описание должно состоять только из букв и/или цифр");
-            }
             return errors;
-        }
-        private bool IsLetterOrDigit(string name)
-        {
-            for (int i = 0; i < name.Length; i++)
-            {
-                if (!char.IsLetterOrDigit(name[i]))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }
