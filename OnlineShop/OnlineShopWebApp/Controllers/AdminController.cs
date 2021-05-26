@@ -108,6 +108,7 @@ namespace OnlineShopWebApp.Controllers
                 {
                     ModelState.AddModelError("", error);
                 }
+                return View("AddRole", newRole);
             }
             if (ModelState.IsValid)
             {
@@ -128,19 +129,20 @@ namespace OnlineShopWebApp.Controllers
         }
 
 
-        public IActionResult ChangeRole(string ChangedName, string oldName)
+        public IActionResult ChangeRole(Role newRole, string oldName)
         {
-            var resultErrors = rolesRepository.IsValid(ChangedName);
+            var resultErrors = rolesRepository.IsValid(newRole.Name);
             if (resultErrors.Count != 0)
             {
                 foreach (var error in resultErrors)
                 {
                     ModelState.AddModelError("", error);
                 }
+                return View("EditRole", newRole);
             }
             if (ModelState.IsValid)
             {
-                rolesRepository.Edit(ChangedName, oldName);
+                rolesRepository.Edit(newRole.Name, oldName);
                 return RedirectToAction("Index", "Admin");
             }
             return RedirectToAction("Index", "Admin");

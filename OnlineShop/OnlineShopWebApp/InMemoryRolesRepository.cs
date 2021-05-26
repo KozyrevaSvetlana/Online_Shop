@@ -47,7 +47,7 @@ namespace OnlineShopWebApp.Models
             {
                 if(!char.IsLetterOrDigit(name[i]))
                 {
-                    result.Add("Yазвание должно содержать только буквы и/или цифры");
+                    result.Add("Название должно содержать только буквы и/или цифры");
                     break;
                 }
             }
