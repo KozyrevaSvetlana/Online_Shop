@@ -31,7 +31,7 @@ else
                 </div>
                 <div>
                     <a class="btn btn-success" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в корзину</a>
-                    <a class="btn btn-danger" asp-controller="Compare" asp-action="Delete" asp-route-id="@product.Id" role="button">Удалить товар</a>
+                    <a class="btn btn-danger" asp-controller="Favorites" asp-action="Delete" asp-route-id="@product.Id" role="button">Удалить товар</a>
                 </div>
             </div>
         }
