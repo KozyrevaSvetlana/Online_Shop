@@ -4,7 +4,7 @@
 {
     <div>
         <p>Упс, корзина пуста</p>
-        <a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a>
+        <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
     </div>
 }
 else
@@ -30,11 +30,11 @@ else
                         <th>@item.Product.Name</th>
                         <th>@item.Product.Cost</th>
                         <th>
-                            <a type="button" class="btn btn-info" href="/cart/ChangeAmount?id=@item.Product.Id&sign=1">+</a>
+                            <a type="button" class="btn btn-info" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="1">+</a>
                         </th>
                         <th>@item.Amount</th>
                         <th>
-                            <a type="button" class="btn btn-info" href="/cart/ChangeAmount?id=@item.Product.Id&sign=-1">-</a>
+                            <a type="button" class="btn btn-info" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
                         </th>
                         <th>@item.Cost</th>
                         @{i++;}
@@ -47,11 +47,11 @@ else
             </div>
         </div>
     </div>
-    <a class="btn btn-info" href="/Home/Index" role="button">Продолжить покупки</a>
-    <a class="btn btn-success" href="/Order/Index" role="button">Оформить заказ</a>
+    <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+    <a class="btn btn-success" asp-controller="Order" asp-action="Index" role="button">Оформить заказ</a>
     <br />
     <div>
-        <a class="btn btn-danger" href="/Cart/Clear" role="button">Очистить корзину</a>
+        <a class="btn btn-danger" asp-controller="cart" asp-action="Clear" role="button">Очистить корзину</a>
     </div>
 
 }

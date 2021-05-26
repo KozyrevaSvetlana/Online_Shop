@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
-using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Area("Admin")]
     public class AdminController : Controller
     {
         private readonly IProductsRepository productsRepository;
@@ -16,7 +16,6 @@ namespace OnlineShopWebApp.Controllers
             this.ordersRepository = ordersRepository;
             this.rolesRepository = rolesRepository;
         }
-
         public IActionResult Home()
         {
             return View();
@@ -65,6 +64,7 @@ namespace OnlineShopWebApp.Controllers
             }
             return View("EditForm", editProduct);
         }
+        [Area("Admin")]
         public ActionResult DeleteProduct(int id)
         {
             productsRepository.DeleteItem(id);
@@ -138,13 +138,10 @@ namespace OnlineShopWebApp.Controllers
             rolesRepository.DeleteRole(name);
             return RedirectToAction("Roles", "Admin");
         }
-
         public ActionResult EditRole(string name)
         {
             return View(rolesRepository.GetRoleByName(name));
         }
-
-
         public IActionResult ChangeRole(Role newRole, string oldName)
         {
             var resultErrors = rolesRepository.IsValid(newRole.Name);

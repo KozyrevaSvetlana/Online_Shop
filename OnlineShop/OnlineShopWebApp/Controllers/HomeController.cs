@@ -22,11 +22,6 @@ namespace OnlineShopWebApp.Controllers
             return View(allProducts);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

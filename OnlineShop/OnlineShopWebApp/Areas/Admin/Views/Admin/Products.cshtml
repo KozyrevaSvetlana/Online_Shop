@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Role>
+﻿@model IEnumerable<Product>
+
 
 <div class="row">
     <div class="col-2">
@@ -8,33 +9,39 @@
         <div class="row">
             <div class="col">
                 <div class="list-group d-flex align-items-center py-5">
-                    <h2>Роли</h2>
+                    <h2>Продукты</h2>
                     @if (Model == null || Model.Count() == 0)
                     {
-                        <p>Ролей нет</p>
+                        <p>Продуктов нет</p>
                         <div>
-                            <a class="btn btn-primary" href="/Admin/AddRole" role="button">Добавить новую роль</a>
+                            <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="AddProduct" role="button">Добавить новый продукт</a>
                         </div>
-                        <br />
                     }
                     else
                     {
                         <div>
-                            <a class="btn btn-primary" href="/Admin/AddRole" role="button">Добавить новую роль</a>
+                            <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="AddProduct" role="button">Добавить новый продукт</a>
                         </div>
+                        <br />
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="auto">Список ролей</th>
+                                    <th scope="col">№</th>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Название продукта</th>
+                                    <th scope="col">Цена</th>
+                                    <th scope="col">Действия</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{ int i = 1;}
-                                @foreach (var role in Model)
+                                @foreach (var product in Model)
                                 {
                                     <tr>
                                         <th scope="row">@i</th>
-                                        <td>@role.Name</td>
+                                        <td>@product.Id</td>
+                                        <td>@product.Name</td>
+                                        <td>@product.Cost</td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                                 <div class="btn-group" role="group">
@@ -42,8 +49,9 @@
                                                         Подробнее
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" href="/Admin/EditRole?name=@role.Name">Редактировать</a>
-                                                        <a class="dropdown-item" href="/Admin/DeleteRole?name=@role.Name">Удалить</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="Description" asp-route-Id="@product.Id">Описание</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="EditForm" asp-route-Id="@product.Id">Редактировать</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="DeleteProduct" asp-route-Id="@product.Id">Удалить</a>
                                                     </div>
                                                 </div>
                                             </div>
