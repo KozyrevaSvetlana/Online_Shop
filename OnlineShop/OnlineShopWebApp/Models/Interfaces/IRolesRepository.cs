@@ -8,7 +8,7 @@ namespace OnlineShopWebApp.Models
 
         void Add(string name);
         void DeleteRole(string name);
-        public void Edit(string newName, string name);
+        void Edit(string newName, string name);
         Role GetRoleByName(string name);
         List<string> IsValid(string name);
     }

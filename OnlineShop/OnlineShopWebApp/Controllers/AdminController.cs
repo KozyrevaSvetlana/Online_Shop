@@ -17,9 +17,25 @@ namespace OnlineShopWebApp.Controllers
             this.rolesRepository = rolesRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Home()
         {
             return View();
+        }
+        public IActionResult Orders()
+        {
+            return View(ordersRepository.AllOrders);
+        }
+        public IActionResult Users()
+        {
+            return View();
+        }
+        public IActionResult Products()
+        {
+            return View(productsRepository.AllProducts);
+        }
+        public IActionResult Roles()
+        {
+            return View(rolesRepository.AllRoles);
         }
         public IActionResult Description(int id)
         {
@@ -45,14 +61,14 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 productsRepository.Edit(editProduct);
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Products", "Admin");
             }
             return View("EditForm", editProduct);
         }
         public ActionResult DeleteProduct(int id)
         {
             productsRepository.DeleteItem(id);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Products", "Admin");
         }
         public ActionResult AddProduct()
         {
@@ -73,9 +89,9 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 productsRepository.Add(newProduct);
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Products", "Admin");
             }
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Products", "Admin");
         }
         public IActionResult OrderForm(int number)
         {
@@ -87,12 +103,12 @@ namespace OnlineShopWebApp.Controllers
         {
             var order = ordersRepository.GetOrderByNumber(number);
             order.InfoStatus.ChangeStatus(status);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Orders", "Admin");
         }
         public ActionResult DeleteOrder(int number)
         {
             ordersRepository.Delete(number);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Orders", "Admin");
         }
         public ActionResult AddRole()
         {
@@ -108,18 +124,19 @@ namespace OnlineShopWebApp.Controllers
                 {
                     ModelState.AddModelError("", error);
                 }
+                return View("AddRole", newRole);
             }
             if (ModelState.IsValid)
             {
                 rolesRepository.Add(newRole.Name);
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Roles", "Admin");
             }
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Roles", "Admin");
         }
         public ActionResult DeleteRole(string name)
         {
             rolesRepository.DeleteRole(name);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Roles", "Admin");
         }
 
         public ActionResult EditRole(string name)
@@ -128,22 +145,23 @@ namespace OnlineShopWebApp.Controllers
         }
 
 
-        public IActionResult ChangeRole(string ChangedName, string oldName)
+        public IActionResult ChangeRole(Role newRole, string oldName)
         {
-            var resultErrors = rolesRepository.IsValid(ChangedName);
+            var resultErrors = rolesRepository.IsValid(newRole.Name);
             if (resultErrors.Count != 0)
             {
                 foreach (var error in resultErrors)
                 {
                     ModelState.AddModelError("", error);
                 }
+                return View("EditRole", newRole);
             }
             if (ModelState.IsValid)
             {
-                rolesRepository.Edit(ChangedName, oldName);
-                return RedirectToAction("Index", "Admin");
+                rolesRepository.Edit(newRole.Name, oldName);
+                return RedirectToAction("Roles", "Admin");
             }
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Roles", "Admin");
         }
     }
 }

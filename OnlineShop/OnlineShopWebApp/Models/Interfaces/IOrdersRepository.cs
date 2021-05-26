@@ -7,11 +7,12 @@ namespace OnlineShopWebApp
     {
         IEnumerable<Order> AllOrders { get; }
 
-        public void AddOrder(Order order, Cart cart);
-        public Order GetLastOrder(string userId);
-        public Order TryGetByUserId(string userId);
-        public void Edit(int number, string status);
-        public Order GetOrderByNumber(int number);
-        public void Delete(int number);
+        void AddOrder(Order order, Cart cart);
+        Order GetLastOrder(string userId);
+        Order TryGetByUserId(string userId);
+        void Edit(int number, string status);
+        Order GetOrderByNumber(int number);
+        void Delete(int number);
+        void CreateOrders();
     }
 }

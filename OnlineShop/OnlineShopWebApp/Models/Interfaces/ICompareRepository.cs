@@ -6,7 +6,7 @@ namespace OnlineShopWebApp
 {
     public interface ICompareRepository: IBaseProductList
     {
-        public void Add(Product product, string userId);
-        public void DeleteItem(int id, string userId);
+        void Add(Product product, string userId);
+        void DeleteItem(int id, string userId);
     }
 }
