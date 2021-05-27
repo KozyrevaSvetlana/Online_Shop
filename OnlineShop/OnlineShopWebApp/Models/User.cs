@@ -20,14 +20,6 @@ namespace OnlineShopWebApp.Models
         {
             Orders.Add(order);
         }
-        public void AddEmail(string email)
-        {
-            Contacts.Email = email;
-        }
-        public void AddPhone(string phone)
-        {
-            Contacts.Phone = phone;
-        }
         public User() { }
         public void AddContacts(UserContact contacts)
         {

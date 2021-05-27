@@ -5,7 +5,7 @@ namespace OnlineShopWebApp.Models
 {
     public class InMemorUsersRepository : IUsersRepository
     {
-        private List<User> users = new List<User>() { new User(new Login() { Name = "Света", Password = "123", RememberMe = false }) };
+        private List<User> users = new List<User>() { new User(new Login() { Name = "Света", Password = "1234", RememberMe = false }) };
         public IEnumerable<User> AllUsers
         {
             get
@@ -19,11 +19,11 @@ namespace OnlineShopWebApp.Models
         }
         public User GetUserByEmail(string email)
         {
-            return users.FirstOrDefault(x => x.Email == email);
+            return users.FirstOrDefault(x => x.Contacts.Email == email);
         }
         public User GetUserByPhone(string phone)
         {
-            return users.FirstOrDefault(x => x.Phone == phone);
+            return users.FirstOrDefault(x => x.Contacts.Phone == phone);
         }
 
         public void DeleteUser(User user)
@@ -33,9 +33,9 @@ namespace OnlineShopWebApp.Models
         public void EditUser(User editUser)
         {
             var user = users.FirstOrDefault(p => p.Id == editUser.Id);
-            user.Email = editUser.Email;
+            user.Contacts.Email = editUser.Contacts.Email;
             user.Login = editUser.Login;
-            user.Phone = editUser.Phone;
+            user.Contacts.Phone = editUser.Contacts.Phone;
         }
         public void AddUser(User user)
         {
