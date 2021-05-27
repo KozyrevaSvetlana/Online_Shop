@@ -52,19 +52,5 @@ namespace OnlineShopWebApp
         {
             orders.Remove(orders.FirstOrDefault(x => x.Number == number));
         }
-
-        public void CreateOrders()
-        {
-            var order1 = new Order();
-            order1.AddContacts(Constants.UserId, new UserContact()
-            { Name = "Иван", Surname = "Иванов", Adress = "Москва", Email = "ivanov@mail.ru", Phone = "9261111111" },
-            new InfoStatusOrder(DateTime.Now));
-            orders.Add(order1);
-            var order2 = new Order();
-            order2.AddContacts(Constants.UserId, new UserContact()
-            { Name = "Петр", Surname = "Петров", Adress = "Красногорск", Email = "petrov@mail.ru", Phone = "9261111111" },
-            new InfoStatusOrder(DateTime.Now));
-            orders.Add(order2);
-        }
     }
 }
