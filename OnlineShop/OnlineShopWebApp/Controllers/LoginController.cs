@@ -6,10 +6,12 @@ namespace OnlineShopWebApp.Controllers
     public class LoginController : Controller
     {
         private readonly IUsersRepository usersRepository;
+        private readonly IRolesRepository rolesRepository;
 
-        public LoginController(IUsersRepository usersRepository)
+        public LoginController(IUsersRepository usersRepository, IRolesRepository rolesRepository)
         {
             this.usersRepository = usersRepository;
+            this.rolesRepository = rolesRepository;
         }
 
         public IActionResult Index()
@@ -68,18 +70,20 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                var newUser=CreateNewUser(user);
+                var role = rolesRepository.GetRoleByName("Пользователь");
+                var newUser=CreateNewUser(user, role);
                 return View("Result", newUser);
             }
             return View("RegIndex");
         }
 
-        private User CreateNewUser(Register user)
+        private User CreateNewUser(Register user, Role role)
         {
             var userLogin = new Login();
             userLogin.Name = user.Name;
             userLogin.Password = user.FirstPassword;
             var newUser = new User(userLogin);
+            newUser.AddRole(role);
             usersRepository.AddUser(newUser);
             return newUser;
         }
