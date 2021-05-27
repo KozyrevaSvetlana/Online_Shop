@@ -1,0 +1,48 @@
+﻿@model UserContact
+<div class="row">
+    <div class="col-auto">
+        <form method="post">
+            <h5 class="card-title">Контактные данные</h5>
+            <div class="validatoin" asp-validation-summary="ModelOnly"></div>
+            <p class="card-text">Введите Ваши данные</p>
+            <div>
+                <div>
+                    <label asp-for="Name">Имя</label>
+                </div>
+                <input asp-for="Name" tabindex="1" type="text" name="Name">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Surname">Фамилия</label>
+                </div>
+                <input asp-for="Surname" tabindex="2" type="text" name="Surname">
+                <span asp-validation-for="Surname"></span>
+            </div>
+            <div>
+                <label asp-for="Adress">Адрес</label>
+            </div>
+            <div>
+                <input asp-for="Adress" tabindex="3" type="text" name="Adress">
+                <span asp-validation-for="Adress"></span>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Phone">Телефон</label>
+                </div>
+                <input asp-for="Phone" tabindex="4" type="tel" name="Phone">
+                <span asp-validation-for="Phone"></span>
+            </div>
+            <div>
+                <div>
+                    <label asp-for="Email">Электронная почта</label>
+                </div>
+                <input asp-for="Email" tabindex="5" type="text" name="Email">
+                <span asp-validation-for="Email"></span>
+            </div>
+            <br />
+            <input type="hidden" name="userName" value="@ViewData["Name"]" />
+            <button class="btn btn-success" type="submit" asp-area="" asp-controller="Profile" asp-action="AcceptContacts" tabindex="6">Добавить контакты</button>
+        </form>
+    </div>
+</div>

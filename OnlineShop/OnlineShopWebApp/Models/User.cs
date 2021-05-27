@@ -11,6 +11,8 @@ namespace OnlineShopWebApp.Models
         public string Email { get; set; }
 
         public string Phone { get; set; }
+
+        public UserContact Contacts { get; set; }
         public User(Login login)
         {
             Login = login;
@@ -27,6 +29,11 @@ namespace OnlineShopWebApp.Models
         public void AddPhone(string phone)
         {
             Phone = phone;
-        }public User() { }
+        }
+        public User() { }
+        public void AddContacts(UserContact contacts)
+        {
+            Contacts = contacts;
+        }
     }
 }
