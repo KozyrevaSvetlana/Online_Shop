@@ -8,11 +8,8 @@ namespace OnlineShopWebApp.Models
         public Guid Id { get; set; }
         public Login Login { get; set; }
         public List<Order> Orders { get; set; }
-        public string Email { get; set; }
-
-        public string Phone { get; set; }
-
         public UserContact Contacts { get; set; }
+        public Role Role { get; set; }
         public User(Login login)
         {
             Id = new Guid();
@@ -25,16 +22,20 @@ namespace OnlineShopWebApp.Models
         }
         public void AddEmail(string email)
         {
-            Email = email;
+            Contacts.Email = email;
         }
         public void AddPhone(string phone)
         {
-            Phone = phone;
+            Contacts.Phone = phone;
         }
         public User() { }
         public void AddContacts(UserContact contacts)
         {
             Contacts = contacts;
+        }
+        public void AddRole(Role role)
+        {
+            Role = role;
         }
     }
 }
