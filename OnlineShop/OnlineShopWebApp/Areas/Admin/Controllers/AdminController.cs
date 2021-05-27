@@ -9,12 +9,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         private readonly IProductsRepository productsRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IRolesRepository rolesRepository;
+        private readonly IUsersRepository usersRepository;
 
-        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository)
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository)
         {
             this.productsRepository = products;
             this.ordersRepository = ordersRepository;
             this.rolesRepository = rolesRepository;
+            this.usersRepository = usersRepository;
         }
         public IActionResult Home()
         {
@@ -26,7 +28,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Users()
         {
-            return View();
+            return View(usersRepository.AllUsers);
         }
         public IActionResult Products()
         {
@@ -158,6 +160,41 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                 return RedirectToAction("Roles", "Admin");
             }
             return RedirectToAction("Roles", "Admin");
+        }
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+        public ActionResult UserInfo(string name)
+        {
+            return View(usersRepository.GetUserByName(name));
+        }
+
+        public ActionResult ChangePassword(string name)
+        {
+            return View(usersRepository.GetUserByName(name));
+        }
+
+        [HttpPost]
+        public ActionResult AddNewPassword(string FirstPassword, string SecondPassword, User user)
+        {
+            if (FirstPassword!= SecondPassword)
+            {
+                ModelState.AddModelError("", "Пароли не совпадают");
+                return View("ChangePassword", user);
+            }
+            if (ModelState.IsValid)
+            {
+                user.Login.Password = FirstPassword;
+                return View("Users");
+            }
+            return View("ChangePassword", user);
+        }
+        public ActionResult DeleteUser(string name)
+        {
+            var user = usersRepository.GetUserByName(name);
+            usersRepository.DeleteUser(user);
+            return View("Users");
         }
     }
 }

@@ -15,6 +15,7 @@ namespace OnlineShopWebApp.Models
             Id = new Guid();
             Login = login;
             Orders = new List<Order>();
+            Contacts = new UserContact() { Name="Неизвестно", Surname= "Неизвестно", Email= "Неизвестно", Phone= "Неизвестно", Adress= "Неизвестно" };
         }
         public void AddOrder(Order order)
         {
@@ -23,7 +24,11 @@ namespace OnlineShopWebApp.Models
         public User() { }
         public void AddContacts(UserContact contacts)
         {
-            Contacts = contacts;
+            Contacts.Name = contacts.Name;
+            Contacts.Surname = contacts.Surname;
+            Contacts.Email = contacts.Email;
+            Contacts.Phone = contacts.Phone;
+            Contacts.Adress = contacts.Adress;
         }
         public void AddRole(Role role)
         {

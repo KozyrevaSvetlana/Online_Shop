@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Models
 
         public void DeleteUser(User user)
         {
-            users.RemoveAll(x => x.Id == user.Id);
+            users.RemoveAll(x => x.Login.Name == user.Login.Name);
         }
         public void EditUser(User editUser)
         {
