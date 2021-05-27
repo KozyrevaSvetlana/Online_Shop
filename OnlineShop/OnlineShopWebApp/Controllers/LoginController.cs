@@ -18,22 +18,34 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult RegIndex()
         {
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult CheckIn(Login user)
+        public IActionResult CheckIn(Login login)
         {
-            if (user.Name==user.Password)
+            if (login.Name== login.Password)
             {
                 ModelState.AddModelError("", "Имя и пароль не должны совпадать");
             }
-            if (ModelState.IsValid)
+            if (usersRepository.Contains(login.Name))
             {
-                return RedirectToAction("Result");
+                var user = usersRepository.GetUserByName(login.Name);
+                if (login.Password != user.Login.Password)
+                {
+                    ModelState.AddModelError("", "Вы ввели неверный пароль");
+                }
+                else
+                {
+                    return View("Result", user);
+                }
             }
-            return View("Index");
-
+            else
+            {
+                ModelState.AddModelError("", "Вы ввели неверное имя");
+            }
+            return View("Index", login);
         }
         public IActionResult Result(User user)
         {
@@ -50,7 +62,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Имя и подтверждение пароля не должны совпадать");
             }
-            if(!usersRepository.IsValid(user.Name))
+            if(!usersRepository.IsUnique(user.Name))
             {
                 ModelState.AddModelError("", "Такой пользователь уже существует");
             }

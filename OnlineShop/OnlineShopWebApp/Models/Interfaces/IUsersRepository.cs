@@ -11,7 +11,8 @@ namespace OnlineShopWebApp.Models
         void EditUser(User editUser);
         User GetUserByEmail(string email);
         User GetUserByPhone(string phone);
-        bool IsValid(string name);
+        bool IsUnique(string name);
         User GetUserByName(string name);
+        bool Contains(string name);
     }
 }

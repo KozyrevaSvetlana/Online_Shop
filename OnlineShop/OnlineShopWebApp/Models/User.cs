@@ -15,6 +15,7 @@ namespace OnlineShopWebApp.Models
         public UserContact Contacts { get; set; }
         public User(Login login)
         {
+            Id = new Guid();
             Login = login;
             Orders = new List<Order>();
         }

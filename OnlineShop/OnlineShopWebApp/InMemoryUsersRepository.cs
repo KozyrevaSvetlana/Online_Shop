@@ -41,10 +41,15 @@ namespace OnlineShopWebApp.Models
         {
             users.Add(user);
         }
-        public bool IsValid(string name)
+        public bool IsUnique(string name)
         {
             var result = users.FirstOrDefault(x => x.Login.Name == name);
             return result == null ? true : false;
+        }
+        public bool Contains(string name)
+        {
+            var result = users.FirstOrDefault(x => x.Login.Name == name);
+            return result != null ? true : false;
         }
     }
 }
