@@ -13,7 +13,7 @@
         Чтобы сохранить список и иметь доступ к нему с различных устройств,
         необходимо авторизоваться или зарегистрироваться.
     </p>
-    <div><a class="btn btn-info" href="/Home/Index" role="button">Вернуться на главную страницу</a></div>
+    <div><a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
 }
 else
 {
@@ -24,22 +24,22 @@ else
                 <div>
                     <img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" />
                     <div class="card-body">
-                        <a href="/Product/Index/@product.Id">@product.Name</a>
+                        <a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="product.Id">@product.Name</a>
                         <p>@product.Cost руб</p>
                         <p>@product.Description</p>
                     </div>
                 </div>
                 <div>
-                    <a class="btn btn-success" href="/cart/add?id=@product.Id" role="button">Добавить в корзину</a>
-                    <a class="btn btn-danger" href="/Favorites/Delete?id=@product.Id" role="button">Удалить товар</a>
+                    <a class="btn btn-success" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в корзину</a>
+                    <a class="btn btn-danger" asp-area="" asp-controller="Favorites" asp-action="Delete" asp-route-id="@product.Id" role="button">Удалить товар</a>
                 </div>
             </div>
         }
     </div>
     <div>
-        <a class="btn btn-link" href="/Favorites/Clear" role="button">Очистить список избранных товаров</a>
+        <a class="btn btn-link" asp-area="" asp-controller="Favorites" asp-action="Clear" role="button">Очистить список избранных товаров</a>
     </div>
-    <div><a class="btn btn-info" href="/Home/Index" role="button">Продолжить покупки</a></div>
+    <div><a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a></div>
 }
 
 

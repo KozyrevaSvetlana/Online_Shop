@@ -14,13 +14,13 @@
                     {
                         <p>Продуктов нет</p>
                         <div>
-                            <a class="btn btn-primary" href="/Admin/AddProduct" role="button">Добавить новый продукт</a>
+                            <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="AddProduct" role="button">Добавить новый продукт</a>
                         </div>
                     }
                     else
                     {
                         <div>
-                            <a class="btn btn-primary" href="/Admin/AddProduct" role="button">Добавить новый продукт</a>
+                            <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="AddProduct" role="button">Добавить новый продукт</a>
                         </div>
                         <br />
                         <table class="table">
@@ -49,9 +49,9 @@
                                                         Подробнее
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" href="/Admin/Description/@product.Id">Описание</a>
-                                                        <a class="dropdown-item" href="/Admin/EditForm/@product.Id">Редактировать</a>
-                                                        <a class="dropdown-item" href="/Admin/DeleteProduct/@product.Id">Удалить</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="Description" asp-route-Id="@product.Id">Описание</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="EditForm" asp-route-Id="@product.Id">Редактировать</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="DeleteProduct" asp-route-Id="@product.Id">Удалить</a>
                                                     </div>
                                                 </div>
                                             </div>

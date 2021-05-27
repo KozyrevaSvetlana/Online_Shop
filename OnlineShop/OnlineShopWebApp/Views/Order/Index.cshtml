@@ -20,33 +20,32 @@
                 <span asp-validation-for="Surname"></span>
             </div>
             <div>
+                <label asp-for="Adress">Адрес</label>
+            </div>
+            <div>
+                <input asp-for="Adress" tabindex="3" type="text" name="Adress">
+                <span asp-validation-for="Adress"></span>
+            </div>
+            <div>
                 <div>
-                    <label asp-for="Adress">Адрес</label>
+                    <label asp-for="Phone">Телефон</label>
                 </div>
+                <input asp-for="Phone" tabindex="4" type="tel" name="Phone">
+                <span asp-validation-for="Phone"></span>
+            </div>
+            <div>
                 <div>
-                    <input asp-for="Adress" tabindex="3" type="text" name="Adress">
-                    <span asp-validation-for="Adress"></span>
+                    <label asp-for="Email">Электронная почта</label>
                 </div>
-                <div>
-                    <div>
-                        <label asp-for="Phone">Телефон</label>
-                    </div>
-                    <input asp-for="Phone" tabindex="4" type="tel" name="Phone">
-                    <span asp-validation-for="Phone"></span>
-                </div>
-                <div>
-                    <div>
-                        <label asp-for="Email">Электронная почта</label>
-                    </div>
-                    <input asp-for="Email" tabindex="5" type="text" name="Email">
-                    <span asp-validation-for="Email"></span>
-                </div>
-                <div>
-                    <p>Комментарий к заказу</p>
-                    <textarea tabindex="6" name="Comment" cols="30" rows="10"></textarea>
-                </div>
-                <br />
-                <button class="btn btn-success" type="submit" asp-controller="Order" asp-action="Accept" tabindex="7">Оформить заказ</button>
+                <input asp-for="Email" tabindex="5" type="text" name="Email">
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div>
+                <p>Комментарий к заказу</p>
+                <textarea tabindex="6" name="Comment" cols="30" rows="10"></textarea>
+            </div>
+            <br />
+            <button class="btn btn-success" type="submit" asp-area="" asp-controller="Order" asp-action="Accept" tabindex="7">Оформить заказ</button>
         </form>
     </div>
 </div>
