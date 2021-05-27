@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
 
-namespace OnlineShopWebApp.Controllers
+namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AdminController : Controller
@@ -64,7 +64,6 @@ namespace OnlineShopWebApp.Controllers
             }
             return View("EditForm", editProduct);
         }
-        [Area("Admin")]
         public ActionResult DeleteProduct(int id)
         {
             productsRepository.DeleteItem(id);

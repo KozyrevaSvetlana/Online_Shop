@@ -29,12 +29,12 @@ else
                     </div>
                 </div>
                 <div>
-                    <a class="btn btn-success" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в корзину</a>
-                    <a class="btn btn-warning" asp-controller="Favorites" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в избранное</a>
-                    <a class="btn btn-info" asp-controller="Compare" asp-action="Add" asp-route-id="@product.Id" role="button">Сравнить</a>
+                    <a class="btn btn-success" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в корзину</a>
+                    <a class="btn btn-warning" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в избранное</a>
+                    <a class="btn btn-info" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@product.Id" role="button">Сравнить</a>
                 </div>
             </div>
         }
     </div>
 }
-<a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
+<a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>

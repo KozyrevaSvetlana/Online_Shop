@@ -1,5 +1,5 @@
 ﻿@model Order
 <h5 class="card-title">Спасибо, @Model.User.Name,</h5>
 <p class="card-text">Ваш заказ №@Model.Number на сумму @Model.Cost руб. принят</p>
-<a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
+<a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
 

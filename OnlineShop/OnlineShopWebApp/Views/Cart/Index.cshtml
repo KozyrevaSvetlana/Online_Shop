@@ -4,7 +4,7 @@
 {
     <div>
         <p>Упс, корзина пуста</p>
-        <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
+        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
     </div>
 }
 else
@@ -30,11 +30,11 @@ else
                         <th>@item.Product.Name</th>
                         <th>@item.Product.Cost</th>
                         <th>
-                            <a type="button" class="btn btn-info" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="1">+</a>
+                            <a type="button" class="btn btn-info" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="1">+</a>
                         </th>
                         <th>@item.Amount</th>
                         <th>
-                            <a type="button" class="btn btn-info" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
+                            <a type="button" class="btn btn-info" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
                         </th>
                         <th>@item.Cost</th>
                         @{i++;}

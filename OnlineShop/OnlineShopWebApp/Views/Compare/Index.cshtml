@@ -7,7 +7,7 @@
 @if (Model == null || Model.Items.Count == 0)
 {
     <h2>Список для сравнения пуст</h2>
-    <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
+    <div><a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
 }
 else
 {
@@ -25,16 +25,16 @@ else
                     </div>
                 </div>
                 <div>
-                    <a class="btn btn-success" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в корзину</a>
-                    <a class="btn btn-danger" asp-controller="Compare" asp-action="Delete" asp-route-id="@product.Id" role="button">Удалить товар</a>
+                    <a class="btn btn-success" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" role="button">Добавить в корзину</a>
+                    <a class="btn btn-danger" asp-area="" asp-controller="Compare" asp-action="Delete" asp-route-id="@product.Id" role="button">Удалить товар</a>
                 </div>
             </div>
         }
     </div>
     <div>
-        <a class="btn btn-link" asp-controller="Compare" asp-action="Clear" role="button">Очистить список сравнения</a>
+        <a class="btn btn-link" asp-area="" asp-controller="Compare" asp-action="Clear" role="button">Очистить список сравнения</a>
     </div>
-    <div><a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a></div>
+    <div><a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a></div>
 }
 
 
