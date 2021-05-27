@@ -5,6 +5,12 @@ namespace OnlineShopWebApp.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly IUsersRepository usersRepository;
+
+        public LoginController(IUsersRepository usersRepository)
+        {
+            this.usersRepository = usersRepository;
+        }
 
         public IActionResult Index()
         {
@@ -44,11 +50,25 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Имя и подтверждение пароля не должны совпадать");
             }
+            if(!usersRepository.IsValid(user.Name))
+            {
+                ModelState.AddModelError("", "Такой пользователь уже существует");
+            }
             if (ModelState.IsValid)
             {
+                CreateNewUser(user);
                 return RedirectToAction("Result");
             }
             return View("RegIndex");
+        }
+
+        private void CreateNewUser(Register user)
+        {
+            var userLogin = new Login();
+            userLogin.Name = user.Name;
+            userLogin.Password = user.FirstPassword;
+            var newUser = new User(userLogin);
+            usersRepository.AddUser(newUser);
         }
     }
 }
