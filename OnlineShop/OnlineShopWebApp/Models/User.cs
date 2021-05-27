@@ -27,6 +27,6 @@ namespace OnlineShopWebApp.Models
         public void AddPhone(string phone)
         {
             Phone = phone;
-        }
+        }public User() { }
     }
 }

@@ -1,1 +1,11 @@
-﻿<h1>Вы удачно вошли в личный кабинет/зарегистрировались</h1>
+﻿@model User
+<div class="row">
+    <div class="col my-5">
+        <h4>Вы зарегистрировались</h4>
+        <div>
+            <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+            <a class="btn btn-success" asp-area="" asp-controller="Profile" asp-action="Index" asp-route-name="@Model.Login.Name" role="button">Личный кабинет</a>
+        </div>
+    </div>
+</div>
+

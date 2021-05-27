@@ -35,9 +35,9 @@ namespace OnlineShopWebApp.Controllers
             return View("Index");
 
         }
-        public IActionResult Result()
+        public IActionResult Result(User user)
         {
-            return View();
+            return View(user);
         }
         [HttpPost]
         public IActionResult Create(Register user)
@@ -56,19 +56,20 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                CreateNewUser(user);
-                return RedirectToAction("Result");
+                var newUser=CreateNewUser(user);
+                return View("Result", newUser);
             }
             return View("RegIndex");
         }
 
-        private void CreateNewUser(Register user)
+        private User CreateNewUser(Register user)
         {
             var userLogin = new Login();
             userLogin.Name = user.Name;
             userLogin.Password = user.FirstPassword;
             var newUser = new User(userLogin);
             usersRepository.AddUser(newUser);
+            return newUser;
         }
     }
 }

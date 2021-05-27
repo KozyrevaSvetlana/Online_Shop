@@ -14,6 +14,10 @@ namespace OnlineShopWebApp.Models
             }
         }
 
+        public User GetUserByName(string name)
+        {
+            return users.FirstOrDefault(x => x.Login.Name == name);
+        }
         public User GetUserByEmail(string email)
         {
             return users.FirstOrDefault(x => x.Email == email);

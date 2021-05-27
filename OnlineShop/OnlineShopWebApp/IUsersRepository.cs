@@ -12,5 +12,6 @@ namespace OnlineShopWebApp.Models
         User GetUserByEmail(string email);
         User GetUserByPhone(string phone);
         bool IsValid(string name);
+        User GetUserByName(string name);
     }
 }
