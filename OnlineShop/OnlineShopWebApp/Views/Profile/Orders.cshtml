@@ -1,12 +1,7 @@
 ﻿@model User
 <div class="row">
     <div class="col-2">
-        <div class="list-group">
-            <a class="list-group-item" asp-area="" asp-controller="Profile" asp-action="Orders" asp-route-name="@Model.Login.Name">Мои заказы</a>
-            <a class="list-group-item" asp-area="" asp-controller="Profile" asp-action="Favorites" asp-route-name="@Model.Login.Name">Избранное</a>
-            <a class="list-group-item" asp-area="" asp-controller="Profile" asp-action="Contacts" asp-route-name="@Model.Login.Name">Личные данные</a>
-            <a class="list-group-item" asp-area="" asp-controller="Profile" asp-action="Logout" asp-route-name="@Model.Login.Name">Выйти</a>
-        </div>
+        @await Html.PartialAsync("ProfileLeftMenu")
     </div>
     <div class="col-10">
 
@@ -14,6 +9,43 @@
             <div class="col">
                 <div class="list-group d-flex align-items-center py-5">
                     <h4>Мои заказы</h4>
+                    @if (Model.Orders == null || Model.Orders.Count == 0)
+                    {
+                        <p>Заказов нет</p>
+                    }
+                    else
+                    {
+                        <br />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">№</th>
+                                    <th scope="col">Номер заказа</th>
+                                    <th scope="col">Сумма</th>
+                                    <th scope="col">Дата</th>
+                                    <th scope="col">Время</th>
+                                    <th scope="col">Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int i = 1;
+                                    string status;}
+                                @foreach (var order in Model.Orders)
+                                {
+                                <tr>
+                                    @{status = order.InfoStatus.GetStatus(order.InfoStatus.StatusOrder);}
+                                    <th scope="row">@i</th>
+                                    <td>@order.Number</td>
+                                    <td>@order.Cost</td>
+                                    <td>@order.InfoStatus.Data.ToShortDateString()</td>
+                                    <td>@order.InfoStatus.Data.ToLongTimeString()</td>
+                                    <td>@status</td>
+                                    @{i++;}
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
             </div>
         </div>

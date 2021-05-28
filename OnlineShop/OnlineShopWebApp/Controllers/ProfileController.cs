@@ -6,10 +6,12 @@ namespace OnlineShopWebApp.Controllers
     public class ProfileController : Controller
     {
         private readonly IUsersRepository usersRepository;
+        private readonly IFavoritesRepository favoritesRepository;
 
-        public ProfileController(IUsersRepository usersRepository)
+        public ProfileController(IUsersRepository usersRepository, IFavoritesRepository favoritesRepository)
         {
             this.usersRepository = usersRepository;
+            this.favoritesRepository = favoritesRepository;
         }
         public IActionResult Index(string name)
         {
@@ -51,6 +53,12 @@ namespace OnlineShopWebApp.Controllers
                 return View("Contacts", user);
             }
             return View("Contacts");
+        }
+        public IActionResult Favorites(string name)
+        {
+            var user = usersRepository.GetUserByName(name);
+            ViewBag.Favorites = favoritesRepository.TryGetByUserId(Constants.UserId);
+            return View(user);
         }
     }
 }

@@ -66,5 +66,17 @@ namespace OnlineShopWebApp
             new InfoStatusOrder(DateTime.Now));
             orders.Add(order2);
         }
+        public List<Order> GetOrdersByUserId(string userId)
+        {
+            var result = new List<Order>();
+            foreach (var order in orders)
+            {
+                if(order.UserId== userId)
+                {
+                    result.Add(order);
+                }
+            }
+            return result;
+        }
     }
 }

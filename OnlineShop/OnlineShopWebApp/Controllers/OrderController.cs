@@ -9,20 +9,22 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly ICartsRepository cartsRepository;
         private readonly IOrdersRepository ordersRepository;
+        private readonly IUsersRepository usersRepository;
 
-        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersWithoutUserRepository)
+        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersWithoutUserRepository,IUsersRepository usersRepository)
         {
             this.cartsRepository = cartsRepository;
             this.ordersRepository = ordersWithoutUserRepository;
+            this.usersRepository = usersRepository;
         }
         public IActionResult Index()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Accept(Order order, UserContact user)
+        public IActionResult Accept(Order order, UserContact userContacts)
         {
-            var errorsResult = user.IsValid();
+            var errorsResult = userContacts.IsValid();
             if (errorsResult != null)
             {
                 foreach (var error in errorsResult)
@@ -32,9 +34,11 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                order.AddContacts(Constants.UserId, user, new InfoStatusOrder(DateTime.Now));
+                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrder(DateTime.Now));
                 ordersRepository.AddOrder(order, cartsRepository.TryGetByUserId(Constants.UserId));
                 cartsRepository.ClearCart(Constants.UserId);
+                var user = usersRepository.GetUserByName(Constants.UserId);
+                user.Orders.Add(order);
                 return RedirectToAction("Result");
             }
             return View("Index");

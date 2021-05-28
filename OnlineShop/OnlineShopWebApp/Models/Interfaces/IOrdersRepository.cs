@@ -14,5 +14,6 @@ namespace OnlineShopWebApp
         Order GetOrderByNumber(int number);
         void Delete(int number);
         void CreateOrders();
+        List<Order> GetOrdersByUserId(string userId);
     }
 }

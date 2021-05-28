@@ -20,14 +20,13 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult RegIndex()
         {
-
             return View();
         }
 
         [HttpPost]
         public IActionResult CheckIn(Login login)
         {
-            if (login.Name== login.Password)
+            if (login.Name == login.Password)
             {
                 ModelState.AddModelError("", "Имя и пароль не должны совпадать");
             }
@@ -40,6 +39,7 @@ namespace OnlineShopWebApp.Controllers
                 }
                 else
                 {
+                    Constants.UserId = login.Name;
                     return View("Result", user);
                 }
             }
@@ -64,14 +64,14 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Имя и подтверждение пароля не должны совпадать");
             }
-            if(!usersRepository.IsUnique(user.Name))
+            if (!usersRepository.IsUnique(user.Name))
             {
                 ModelState.AddModelError("", "Такой пользователь уже существует");
             }
             if (ModelState.IsValid)
             {
                 var role = rolesRepository.GetRoleByName("Пользователь");
-                var newUser=CreateNewUser(user, role);
+                var newUser = CreateNewUser(user, role);
                 return View("Result", newUser);
             }
             return View("RegIndex");
