@@ -20,7 +20,6 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult RegIndex()
         {
-
             return View();
         }
 
@@ -40,6 +39,7 @@ namespace OnlineShopWebApp.Controllers
                 }
                 else
                 {
+                    Constants.UserId = login.Name;
                     return View("Result", user);
                 }
             }

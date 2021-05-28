@@ -27,5 +27,11 @@ namespace OnlineShopWebApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult Logout()
+        {
+            Constants.UserId = "UserId";
+            return RedirectToAction("Index");
+        }
+        
     }
 }
