@@ -172,23 +172,29 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
         public ActionResult ChangePassword(string name)
         {
-            return View(usersRepository.GetUserByName(name));
+            var user = usersRepository.GetUserByName(name);
+            return View(user.Login);
         }
 
         [HttpPost]
-        public ActionResult AddNewPassword(string FirstPassword, string SecondPassword, User user)
+        public ActionResult AddNewPassword(Login login, string CheckPassword, string userName)
         {
-            if (FirstPassword!= SecondPassword)
+            var user = usersRepository.GetUserByName(userName);
+            if (login.Password != CheckPassword)
             {
                 ModelState.AddModelError("", "Пароли не совпадают");
-                return View("ChangePassword", user);
+                return View("ChangePassword", user.Login);
+            }
+            if (login.Password == user.Login.Password)
+            {
+                ModelState.AddModelError("", "Старый и новый пароли совпадают");
+                return View("ChangePassword", user.Login);
             }
             if (ModelState.IsValid)
             {
-                user.Login.Password = FirstPassword;
-                return View("Users");
+                user.Login.Password = login.Password;
             }
-            return View("ChangePassword", user);
+            return RedirectToAction("Users");
         }
         public ActionResult DeleteUser(string name)
         {
