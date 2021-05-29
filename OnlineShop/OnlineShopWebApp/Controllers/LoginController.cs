@@ -72,6 +72,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 var role = rolesRepository.GetRoleByName("Пользователь");
                 var newUser = CreateNewUser(user, role);
+                Constants.UserId = user.Name;
                 return View("Result", newUser);
             }
             return View("RegIndex");

@@ -13,30 +13,28 @@ namespace OnlineShopWebApp.Controllers
             this.usersRepository = usersRepository;
             this.favoritesRepository = favoritesRepository;
         }
-        public IActionResult Index(string name)
+        public IActionResult Index()
         {
-            return View(usersRepository.GetUserByName(name));
+            return View(usersRepository.GetUserByName(Constants.UserId));
         }
-        public IActionResult Orders(string name)
+        public IActionResult Orders()
         {
-            var user = usersRepository.GetUserByName(name);
-
+            var user = usersRepository.GetUserByName(Constants.UserId);
             return View(user);
         }
-        public IActionResult Contacts(string name)
+        public IActionResult Contacts()
         {
-            var user = usersRepository.GetUserByName(name);
-
+            var user = usersRepository.GetUserByName(Constants.UserId);
             return View(user);
         }
-        public IActionResult AddContacts(string userName)
+        public IActionResult AddContacts()
         {
-            ViewData["Name"] = userName;
+            ViewData["Name"] = Constants.UserId;
             return View();
         }
 
         [HttpPost]
-        public IActionResult AcceptContacts(UserContact userContacts, string userName)
+        public IActionResult AcceptContacts(UserContact userContacts)
         {
             var errorsResult = userContacts.IsValid();
             if (errorsResult != null)
@@ -48,15 +46,15 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                var user = usersRepository.GetUserByName(userName);
+                var user = usersRepository.GetUserByName(Constants.UserId);
                 user.AddContacts(userContacts);
                 return View("Contacts", user);
             }
             return View("Contacts");
         }
-        public IActionResult Favorites(string name)
+        public IActionResult Favorites()
         {
-            var user = usersRepository.GetUserByName(name);
+            var user = usersRepository.GetUserByName(Constants.UserId);
             ViewBag.Favorites = favoritesRepository.TryGetByUserId(Constants.UserId);
             return View(user);
         }
