@@ -12,10 +12,12 @@ namespace OnlineShopWebApp.Models
         public Role Role { get; set; }
         public User(Login login)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Login = login;
             Orders = new List<Order>();
-            Contacts = new UserContact() { Name="Неизвестно", Surname= "Неизвестно", Email= "Неизвестно", Phone= "Неизвестно", Adress= "Неизвестно" };
+            Contacts = new UserContact() { Name="", Surname= "", Email= "", Phone= "", Adress= "" };
+            Role = new Role();
+            Role.Name = "";
         }
         public void AddOrder(Order order)
         {
@@ -33,6 +35,17 @@ namespace OnlineShopWebApp.Models
         public void AddRole(Role role)
         {
             Role = role;
+        }
+        public void UpdateUser(User newUser)
+        {
+            Login.Name = newUser.Login.Name;
+            Login.Password = newUser.Login.Password;
+            Contacts.Name = newUser.Contacts.Name;
+            Contacts.Surname = newUser.Contacts.Surname;
+            Contacts.Email = newUser.Contacts.Email;
+            Contacts.Adress = newUser.Contacts.Adress;
+            Contacts.Phone = newUser.Contacts.Phone;
+            Role.Name = newUser.Role.Name;
         }
     }
 }

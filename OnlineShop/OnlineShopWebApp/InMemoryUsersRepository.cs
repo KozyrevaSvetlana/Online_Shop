@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OnlineShopWebApp.Models
@@ -16,6 +17,10 @@ namespace OnlineShopWebApp.Models
         public User GetUserByName(string name)
         {
             return users.FirstOrDefault(x => x.Login.Name == name);
+        }
+        public User GetUserById(string id)
+        {
+            return users.FirstOrDefault(x => x.Id.ToString() == id);
         }
         public User GetUserByEmail(string email)
         {

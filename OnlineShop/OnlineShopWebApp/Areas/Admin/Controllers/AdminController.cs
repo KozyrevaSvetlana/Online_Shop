@@ -209,10 +209,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return View(user);
         }
         [HttpPost]
-        public ActionResult EditUser(User editUser, string name, string role)
+        public ActionResult EditUserInfo(User editUser, string id)
         {
-            var user = usersRepository.GetUserByName(name);
-            return View(user);
+            var user = usersRepository.GetUserById(id);
+            user.UpdateUser(editUser);
+            return RedirectToAction("Users", "Admin");
         }
     }
 }
