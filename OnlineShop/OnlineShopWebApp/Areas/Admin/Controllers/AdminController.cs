@@ -202,5 +202,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             usersRepository.DeleteUser(user);
             return View("Users");
         }
+        public ActionResult EditUser(string name)
+        {
+            var user = usersRepository.GetUserByName(name);
+            ViewData["Roles"] = rolesRepository.AllRoles;
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult EditUser(User editUser, string name, string role)
+        {
+            var user = usersRepository.GetUserByName(name);
+            return View(user);
+        }
     }
 }
