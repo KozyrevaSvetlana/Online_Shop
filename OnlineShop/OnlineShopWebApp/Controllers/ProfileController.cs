@@ -25,6 +25,11 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Contacts()
         {
             var user = usersRepository.GetUserByName(Constants.UserId);
+            var emptyContacts = user.GetEmptyContacts();
+            if (emptyContacts.Count!=0)
+            {
+                ViewBag.Empty = emptyContacts;
+            }
             return View(user);
         }
         public IActionResult AddContacts()

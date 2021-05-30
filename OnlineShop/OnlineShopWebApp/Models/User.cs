@@ -47,5 +47,30 @@ namespace OnlineShopWebApp.Models
             Contacts.Phone = newUser.Contacts.Phone;
             Role.Name = newUser.Role.Name;
         }
+        public List<string> GetEmptyContacts()
+        {
+            var result = new List<string>();
+            if (Contacts.Name=="")
+            {
+                result.Add("Имя не заполнено");
+            }
+            if (Contacts.Surname == "")
+            {
+                result.Add("Фамилия не заполнена");
+            }
+            if (Contacts.Adress == "")
+            {
+                result.Add("Адрес не заполнен");
+            }
+            if (Contacts.Phone == "")
+            {
+                result.Add("Телефон не заполнен");
+            }
+            if (Contacts.Email == "")
+            {
+                result.Add("Email не заполнен");
+            }
+            return result;
+        }
     }
 }
