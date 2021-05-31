@@ -8,7 +8,7 @@ namespace OnlineShopWebApp
     public class InMemoryOrdersRepository : IOrdersRepository
     {
         private List<Order> orders = new List<Order>();
-        public void AddOrder(Order order, Cart cart)
+        public void AddOrder(Order order, CartViewModel cart)
         {
             order.Products = AddItems(cart.Items);
             orders.Add(order);
@@ -30,9 +30,9 @@ namespace OnlineShopWebApp
         {
             return orders.FirstOrDefault(x => x.UserId == userId);
         }
-        private List<CartItem> AddItems(List<CartItem> items)
+        private List<CartItemViewModel> AddItems(List<CartItemViewModel> items)
         {
-            var result = new List<CartItem>(items.Count);
+            var result = new List<CartItemViewModel>(items.Count);
             foreach (var item in items)
             {
                 result.Add(item);

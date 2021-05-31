@@ -1,27 +1,33 @@
-﻿using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Interfaces;
+﻿using OnlineShop.Db.Models;
+using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OnlineShopWebApp
+namespace OnlineShop.Db
 {
-    public class InMemoryCartsRepository : ICartsRepository
+    public class CartsDbRepository : ICartsRepository
     {
-        private List<Cart> carts = new List<Cart>();
+        private readonly DatabaseContext databaseContext;
+
+        public CartsDbRepository(DatabaseContext databaseContext)
+        {
+            this.databaseContext = databaseContext;
+        }
+
         public IEnumerable<Cart> AllCarts
         {
             get
             {
-                return carts;
+                return databaseContext.Carts;
             }
         }
         public Cart TryGetByUserId(string userId)
         {
-            return carts.FirstOrDefault(x => x.UserId == userId);
+            return databaseContext.Carts.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void Add(ProductViewModel product, string userId)
+        public void Add(Product product, string userId)
         {
             var userCart = TryGetByUserId(userId);
             if (userCart == null)
@@ -30,51 +36,50 @@ namespace OnlineShopWebApp
             }
             else
             {
-                var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+                var userCartItem = userCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
                 if (userCartItem != null)
                 {
                     userCartItem.Amount += 1;
                 }
                 else
                 {
-                    userCart.Items.Add(AddNewCartItem(product));
+                    userCart.CartItems.Add(AddNewCartItem(product));
                 }
             }
+            databaseContext.SaveChanges();
         }
         public int GetAllAmounts(string userId)
         {
             var userCart = TryGetByUserId(userId);
-            return userCart?.Items?.Sum(x => x.Amount) ?? 0;
+            return userCart?.CartItems?.Sum(x => x.Amount) ?? 0;
         }
-        private void AddNewCart(ProductViewModel product, string userId)
+        private void AddNewCart(Product product, string userId)
         {
             var newCart = new Cart
             {
-                Id = Guid.NewGuid(),
                 UserId = userId,
-                Items = new List<CartItem>
+                CartItems = new List<CartItem>
                     {
                         AddNewCartItem(product)
                     }
             };
-
-            carts.Add(newCart);
+            databaseContext.Carts.Add(newCart);
+            databaseContext.SaveChanges();
         }
 
-        private CartItem AddNewCartItem(ProductViewModel product)
+        private CartItem AddNewCartItem(Product product)
         {
             return new CartItem
             {
-                Id = Guid.NewGuid(),
                 Amount = 1,
                 Product = product,
             };
         }
 
-        public void ChangeAmount(ProductViewModel product, int sign, string userId)
+        public void ChangeAmount(Product product, int sign, string userId)
         {
             var userCart  = TryGetByUserId(userId);
-            var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+            var userCartItem = userCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
             switch(sign)
             {
                 case 1:
@@ -91,18 +96,21 @@ namespace OnlineShopWebApp
                     }
                     break;
             }
+            databaseContext.SaveChanges();
         }
 
         private void DeleteItem(CartItem cartItem, string userId)
         {
             var userCart = TryGetByUserId(userId);
-            userCart.Items.RemoveAll(x => x.Id == cartItem.Id);
+            userCart.CartItems.RemoveAll(x => x.Id == cartItem.Id);
+            databaseContext.SaveChanges();
         }
 
         public void ClearCart(string userId)
         {
             var userCart = TryGetByUserId(userId);
-            userCart.Items.Clear();
+            userCart.CartItems.Clear();
+            databaseContext.SaveChanges();
         }
     }
 }

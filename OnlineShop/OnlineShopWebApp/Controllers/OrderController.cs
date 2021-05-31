@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.Interfaces;
 using System;
@@ -35,7 +37,8 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrder(DateTime.Now));
-                ordersRepository.AddOrder(order, cartsRepository.TryGetByUserId(Constants.UserId));
+                var existingCartViewModel = Mapping.ToCartViewModel(cartsRepository.TryGetByUserId(Constants.UserId));
+                ordersRepository.AddOrder(order, existingCartViewModel);
                 cartsRepository.ClearCart(Constants.UserId);
                 var user = usersRepository.GetUserByName(Constants.UserId);
                 user.Orders.Add(order);

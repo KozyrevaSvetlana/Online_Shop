@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Products()
         {
-            return View(GetDataMapping(productsRepository.AllProducts));
+            return View(Mapping.ToProductViewModels(productsRepository.AllProducts));
         }
         public IActionResult Roles()
         {
@@ -45,12 +46,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Description(Guid id)
         {
             var result = productsRepository.GetProductById(id);
-            return View(result);
+            return View(Mapping.ToProductViewModel(result));
         }
         public ActionResult EditForm(Guid id)
         {
             var result = productsRepository.GetProductById(id);
-            return View(result);
+            return View(Mapping.ToProductViewModel(result));
         }
         [HttpPost]
         public ActionResult EditProduct(ProductViewModel editProduct)

@@ -7,7 +7,7 @@ namespace OnlineShopWebApp
     {
         IEnumerable<Order> AllOrders { get; }
 
-        void AddOrder(Order order, Cart cart);
+        void AddOrder(Order order, CartViewModel cart);
         Order GetLastOrder(string userId);
         Order TryGetByUserId(string userId);
         void Edit(int number, string status);
