@@ -3,6 +3,7 @@ using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
 using System;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -35,7 +36,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Products()
         {
-            return View(productsRepository.AllProducts);
+            return View(GetDataMapping(productsRepository.AllProducts));
         }
         public IActionResult Roles()
         {
@@ -231,6 +232,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var user = usersRepository.GetUserById(id);
             user.UpdateUser(editUser);
             return RedirectToAction("Users", "Admin");
+        }
+        private List<ProductViewModel> GetDataMapping(IEnumerable<Product> allProducts)
+        {
+            var productsViewModels = new List<ProductViewModel>();
+            foreach (var product in allProducts)
+            {
+                var productViewModels = new ProductViewModel
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Cost = product.Cost,
+                    Description = product.Description,
+                    Image = product.Image
+                };
+                productsViewModels.Add(productViewModels);
+            }
+            return productsViewModels;
         }
     }
 }
