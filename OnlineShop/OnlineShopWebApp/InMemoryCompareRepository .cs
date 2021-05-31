@@ -22,7 +22,7 @@ namespace OnlineShopWebApp
             return compareList.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void DeleteItem(int id, string userId)
+        public void DeleteItem(Guid id, string userId)
         {
             var userCompareList = TryGetByUserId(userId);
             userCompareList.Items.RemoveAll(x => x.Id == id);
@@ -33,7 +33,7 @@ namespace OnlineShopWebApp
             var userCompareList = TryGetByUserId(userId);
             userCompareList.Items.Clear();
         }
-        public void Add(Product product, string userId)
+        public void Add(ProductViewModel product, string userId)
         {
             var userCompareList = TryGetByUserId(userId);
             if (userCompareList == null)
@@ -49,13 +49,13 @@ namespace OnlineShopWebApp
                 }
             }
         }
-        private void AddNewCompare(Product product, string userId)
+        private void AddNewCompare(ProductViewModel product, string userId)
         {
             var newCart = new Compare
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
-                Items = new List<Product>()
+                Items = new List<ProductViewModel>()
             };
             newCart.Items.Add(product);
             compareList.Add(newCart);

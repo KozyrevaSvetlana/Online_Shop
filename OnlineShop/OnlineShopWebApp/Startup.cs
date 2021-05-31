@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineShop.Db;
+using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.Interfaces;
 using Serilog;
@@ -25,7 +26,7 @@ namespace OnlineShopWebApp
             services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlServer(connection));
 
-            services.AddSingleton<IProductsRepository, InMemoryProductsRepository>();
+            services.AddTransient<IProductsRepository, ProductsDbRepository>();
             services.AddSingleton<ICartsRepository, InMemoryCartsRepository>();
             services.AddSingleton<ICompareRepository, InMemoryCompareRepository>();
             services.AddSingleton<IFavoritesRepository, InMemoryFavoritesRepository>();

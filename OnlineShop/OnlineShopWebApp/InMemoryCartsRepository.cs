@@ -21,7 +21,7 @@ namespace OnlineShopWebApp
             return carts.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void Add(Product product, string userId)
+        public void Add(ProductViewModel product, string userId)
         {
             var userCart = TryGetByUserId(userId);
             if (userCart == null)
@@ -46,7 +46,7 @@ namespace OnlineShopWebApp
             var userCart = TryGetByUserId(userId);
             return userCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
-        private void AddNewCart(Product product, string userId)
+        private void AddNewCart(ProductViewModel product, string userId)
         {
             var newCart = new Cart
             {
@@ -61,7 +61,7 @@ namespace OnlineShopWebApp
             carts.Add(newCart);
         }
 
-        private CartItem AddNewCartItem(Product product)
+        private CartItem AddNewCartItem(ProductViewModel product)
         {
             return new CartItem
             {
@@ -71,7 +71,7 @@ namespace OnlineShopWebApp
             };
         }
 
-        public void ChangeAmount(Product product, int sign, string userId)
+        public void ChangeAmount(ProductViewModel product, int sign, string userId)
         {
             var userCart  = TryGetByUserId(userId);
             var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);

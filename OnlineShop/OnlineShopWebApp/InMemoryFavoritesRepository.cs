@@ -21,7 +21,7 @@ namespace OnlineShopWebApp
             return favoritesList.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void DeleteItem(int id, string userId)
+        public void DeleteItem(Guid id, string userId)
         {
             var userFavoritesList = TryGetByUserId(userId);
             userFavoritesList.Items.RemoveAll(x => x.Id == id);
@@ -32,7 +32,7 @@ namespace OnlineShopWebApp
             var userFavoritesList = TryGetByUserId(userId);
             userFavoritesList.Items.Clear();
         }
-        public void Add(Product product, string userId)
+        public void Add(ProductViewModel product, string userId)
         {
             var userFavoritesList = TryGetByUserId(userId);
             if (userFavoritesList == null)
@@ -48,13 +48,13 @@ namespace OnlineShopWebApp
                 }
             }
         }
-        private void AddNewFavorites(Product product, string userId)
+        private void AddNewFavorites(ProductViewModel product, string userId)
         {
             var newFavorites = new Favorites
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
-                Items = new List<Product>()
+                Items = new List<ProductViewModel>()
             };
             newFavorites.Items.Add(product);
             favoritesList.Add(newFavorites);

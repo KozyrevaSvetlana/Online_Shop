@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models
 {
-    public class Product
+    public class ProductViewModel
     {
-        private static int counter;
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Не указано имя")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Имя должно быть не менее 2 символов и не более 100 символов")]
@@ -23,20 +23,6 @@ namespace OnlineShopWebApp.Models
         [Required(ErrorMessage = "Не указан путь изображению товара")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Путь к изображению товара должен быть не менее 2 символов и не более 100 символов")]
         public string Image { get; set; }
-
-        public Product()
-        {
-        }
-        public Product(string name, decimal cost, string description, string image)
-        {
-            counter++;
-            Id = counter;
-            Name = name;
-            Cost = cost;
-            Description = description;
-            Image = image;
-        }
-
         public List<string> IsValid()
         {
             var errors = new List<string>();

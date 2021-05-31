@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models;
+using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
+using System;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -38,18 +41,18 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             return View(rolesRepository.AllRoles);
         }
-        public IActionResult Description(int id)
+        public IActionResult Description(Guid id)
         {
             var result = productsRepository.GetProductById(id);
             return View(result);
         }
-        public ActionResult EditForm(int id)
+        public ActionResult EditForm(Guid id)
         {
             var result = productsRepository.GetProductById(id);
             return View(result);
         }
         [HttpPost]
-        public ActionResult EditProduct(Product editProduct)
+        public ActionResult EditProduct(ProductViewModel editProduct)
         {
             var validResult = editProduct.IsValid();
             if (validResult.Count != 0)
@@ -61,12 +64,19 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                productsRepository.Edit(editProduct);
+                var productDb = new Product
+                {
+                    Name = editProduct.Name,
+                    Cost = editProduct.Cost,
+                    Description = editProduct.Description,
+                    Image = editProduct.Image
+                };
+                productsRepository.Edit(productDb);
                 return RedirectToAction("Products", "Admin");
             }
             return View("EditForm", editProduct);
         }
-        public ActionResult DeleteProduct(int id)
+        public ActionResult DeleteProduct(Guid id)
         {
             productsRepository.DeleteItem(id);
             return RedirectToAction("Products", "Admin");
@@ -76,7 +86,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNewProduct(Product newProduct)
+        public ActionResult AddNewProduct(ProductViewModel newProduct)
         {
             var errorsResult = newProduct.IsValid();
             if (errorsResult.Count != 0)
@@ -89,7 +99,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                productsRepository.Add(newProduct);
+                var productDb = new Product
+                {
+                    Name = newProduct.Name,
+                    Cost = newProduct.Cost,
+                    Description = newProduct.Description,
+                    Image = newProduct.Image
+                };
+                productsRepository.Add(productDb);
                 return RedirectToAction("Products", "Admin");
             }
             return RedirectToAction("Products", "Admin");
