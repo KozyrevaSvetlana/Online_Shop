@@ -9,12 +9,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         private readonly IProductsRepository productsRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IRolesRepository rolesRepository;
+        private readonly IUsersRepository usersRepository;
 
-        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository)
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository)
         {
             this.productsRepository = products;
             this.ordersRepository = ordersRepository;
             this.rolesRepository = rolesRepository;
+            this.usersRepository = usersRepository;
         }
         public IActionResult Home()
         {
@@ -26,7 +28,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Users()
         {
-            return View();
+            return View(usersRepository.AllUsers);
         }
         public IActionResult Products()
         {
@@ -158,6 +160,60 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                 return RedirectToAction("Roles", "Admin");
             }
             return RedirectToAction("Roles", "Admin");
+        }
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+        public ActionResult UserInfo(string name)
+        {
+            return View(usersRepository.GetUserByName(name));
+        }
+
+        public ActionResult ChangePassword(string name)
+        {
+            var user = usersRepository.GetUserByName(name);
+            return View(user.Login);
+        }
+
+        [HttpPost]
+        public ActionResult AddNewPassword(Login login, string CheckPassword, string userName)
+        {
+            var user = usersRepository.GetUserByName(userName);
+            if (login.Password != CheckPassword)
+            {
+                ModelState.AddModelError("", "Пароли не совпадают");
+                return View("ChangePassword", user.Login);
+            }
+            if (login.Password == user.Login.Password)
+            {
+                ModelState.AddModelError("", "Старый и новый пароли совпадают");
+                return View("ChangePassword", user.Login);
+            }
+            if (ModelState.IsValid)
+            {
+                user.Login.Password = login.Password;
+            }
+            return RedirectToAction("Users");
+        }
+        public ActionResult DeleteUser(string name)
+        {
+            var user = usersRepository.GetUserByName(name);
+            usersRepository.DeleteUser(user);
+            return View("Users");
+        }
+        public ActionResult EditUser(string name)
+        {
+            var user = usersRepository.GetUserByName(name);
+            ViewData["Roles"] = rolesRepository.AllRoles;
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult EditUserInfo(User editUser, string id)
+        {
+            var user = usersRepository.GetUserById(id);
+            user.UpdateUser(editUser);
+            return RedirectToAction("Users", "Admin");
         }
     }
 }

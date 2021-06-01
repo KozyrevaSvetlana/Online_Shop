@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
@@ -14,5 +15,6 @@ namespace OnlineShopWebApp.Models
         bool IsUnique(string name);
         User GetUserByName(string name);
         bool Contains(string name);
+        User GetUserById(string id);
     }
 }

@@ -1,0 +1,90 @@
+﻿@model User
+
+<div class="row">
+    <div class="col-2">
+        @await Html.PartialAsync("AdminLeftMenu")
+    </div>
+    <div class="col-10">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <h4>Редактирование</h4>
+                        <h5>@Model.Login.Name</h5>
+                        <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
+                        <form method="post" class="form-group">
+                            <div>
+                                <label asp-for="Login.Name">Логин</label>
+                                <input asp-for="Login.Name" type="text" class="form-control" name="Login.Name" tabindex="1" value="@Model.Login.Name">
+                                <span class="badge badge-danger" asp-validation-for="Login.Name"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Login.Password">Пароль</label>
+                                <input asp-for="Login.Password" type="text" class="form-control" name="Login.Password" tabindex="2" value="@Model.Login.Password">
+                                <span class="badge badge-danger" asp-validation-for="Login.Password"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Contacts.Name">Имя</label>
+                                <input asp-for="Contacts.Name" type="text" class="form-control" name="Contacts.Name" tabindex="3" value="@Model.Contacts.Name">
+                                <span class="badge badge-danger" asp-validation-for="Contacts.Name"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Contacts.Surname">Фамилия</label>
+                                <input asp-for="Contacts.Surname" type="text" class="form-control" name="Contacts.Surname" tabindex="4" value="@Model.Contacts.Surname">
+                                <span class="badge badge-danger" asp-validation-for="Contacts.Surname"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Contacts.Adress">Адрес</label>
+                                <input asp-for="Contacts.Adress" type="text" class="form-control" name="Contacts.Adress" tabindex="5" value="@Model.Contacts.Adress">
+                                <span class="badge badge-danger" asp-validation-for="Contacts.Adress"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Contacts.Phone">Телефон</label>
+                                <input asp-for="Contacts.Phone" type="text" class="form-control" name="Contacts.Phone" tabindex="6" value="@Model.Contacts.Phone">
+                                <span class="badge badge-danger" asp-validation-for="Contacts.Phone"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Contacts.Email">Email</label>
+                                <input asp-for="Contacts.Email" type="text" class="form-control" name="Contacts.Email" tabindex="7" value="@Model.Contacts.Email">
+                                <span class="badge badge-danger" asp-validation-for="Contacts.Email"></span>
+                            </div>
+                            <div>
+                                <div>
+                                    <label>Роль</label>
+                                </div>
+                                <select class="form-group" name="Role.Name" value="" tabindex="8">
+                                    @foreach (Role role in ViewData["Roles"] as List<Role>)
+                                    {
+                                        if (Model.Role != null)
+                                        {
+                                            if (role.Name != Model.Role.Name)
+                                            {
+                                                <option name="Role.Name" value="@role.Name" tabindex="8">@role.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option selected name="Role.Name" value="@role.Name" tabindex="8">@role.Name</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option class="form-check-input" name="Role.Name" value="@role.Name" tabindex="8">@role.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <br />
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <div>
+                                <span>
+                                    <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditUserInfo" tabindex="9">Изменить</button>
+                                    <a class="btn btn-danger" asp-area="Admin" asp-controller="Admin" asp-action="Users" tabindex="10">Отменить</a>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
