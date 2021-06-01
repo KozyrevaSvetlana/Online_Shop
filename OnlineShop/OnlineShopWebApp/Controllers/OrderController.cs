@@ -40,8 +40,11 @@ namespace OnlineShopWebApp.Controllers
                 var existingCartViewModel = Mapping.ToCartViewModel(cartsRepository.TryGetByUserId(Constants.UserId));
                 ordersRepository.AddOrder(order, existingCartViewModel);
                 cartsRepository.ClearCart(Constants.UserId);
-                var user = usersRepository.GetUserByName(Constants.UserId);
-                user.Orders.Add(order);
+                if (Constants.UserId != "UserId")
+                {
+                    var user = usersRepository.GetUserByName(Constants.UserId);
+                    user.Orders.Add(order);
+                }
                 return RedirectToAction("Result");
             }
             return View("Index");

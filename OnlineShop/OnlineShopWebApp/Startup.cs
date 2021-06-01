@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using OnlineShop.Db;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Interfaces;
 using Serilog;
 
 namespace OnlineShopWebApp
