@@ -43,13 +43,7 @@ namespace OnlineShop.Db
                 };
 
                 newCart.Items = new List<CartItem>
-                    {
-                        new CartItem
-                        {
-                            Amount = 1,
-                            Product = product,
-                            Cart = newCart
-                        }
+                    { AddNewCartItem(product, newCart)
                     };
                 databaseContext.Carts.Add(newCart);
             }
@@ -62,15 +56,20 @@ namespace OnlineShop.Db
                 }
                 else
                 {
-                    existingCart.Items.Add(new CartItem
-                    {
-                        Amount = 1,
-                        Product = product,
-                        Cart = existingCart
-                    });
+                    existingCart.Items.Add(AddNewCartItem(product, existingCart));
                 }
             }
             databaseContext.SaveChanges();
+        }
+
+        private static CartItem AddNewCartItem(Product product, Cart newCart)
+        {
+            return new CartItem
+            {
+                Amount = 1,
+                Product = product,
+                Cart = newCart
+            };
         }
 
         public void ChangeAmount(Product product, int sign, string userId)
