@@ -25,6 +25,7 @@ namespace OnlineShopWebApp
             services.AddSingleton<IFavoritesRepository, InMemoryFavoritesRepository>();
             services.AddSingleton<IOrdersRepository, InMemoryOrdersRepository>();
             services.AddSingleton<IRolesRepository, InMemoryRolesRepository>();
+            services.AddSingleton<IUsersRepository, InMemorUsersRepository>();
             services.AddControllersWithViews();
         }
 

@@ -13,5 +13,7 @@ namespace OnlineShopWebApp
         void Edit(int number, string status);
         Order GetOrderByNumber(int number);
         void Delete(int number);
+        void CreateOrders();
+        List<Order> GetOrdersByUserId(string userId);
     }
 }

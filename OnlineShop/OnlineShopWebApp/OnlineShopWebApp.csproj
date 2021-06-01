@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Shared\" />
+    <Compile Remove="Areas\Admin\Shared\**" />
+    <Content Remove="Areas\Admin\Shared\**" />
+    <EmbeddedResource Remove="Areas\Admin\Shared\**" />
+    <None Remove="Areas\Admin\Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

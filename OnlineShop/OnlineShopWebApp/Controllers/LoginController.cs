@@ -5,6 +5,14 @@ namespace OnlineShopWebApp.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly IUsersRepository usersRepository;
+        private readonly IRolesRepository rolesRepository;
+
+        public LoginController(IUsersRepository usersRepository, IRolesRepository rolesRepository)
+        {
+            this.usersRepository = usersRepository;
+            this.rolesRepository = rolesRepository;
+        }
 
         public IActionResult Index()
         {
@@ -16,22 +24,34 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckIn(Login user)
+        public IActionResult CheckIn(Login login)
         {
-            if (user.Name==user.Password)
+            if (login.Name == login.Password)
             {
                 ModelState.AddModelError("", "Имя и пароль не должны совпадать");
             }
-            if (ModelState.IsValid)
+            if (usersRepository.Contains(login.Name))
             {
-                return RedirectToAction("Result");
+                var user = usersRepository.GetUserByName(login.Name);
+                if (login.Password != user.Login.Password)
+                {
+                    ModelState.AddModelError("", "Вы ввели неверный пароль");
+                }
+                else
+                {
+                    Constants.UserId = login.Name;
+                    return View("Result", user);
+                }
             }
-            return View("Index");
-
+            else
+            {
+                ModelState.AddModelError("", "Вы ввели неверное имя");
+            }
+            return View("Index", login);
         }
-        public IActionResult Result()
+        public IActionResult Result(User user)
         {
-            return View();
+            return View(user);
         }
         [HttpPost]
         public IActionResult Create(Register user)
@@ -44,11 +64,29 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Имя и подтверждение пароля не должны совпадать");
             }
+            if (!usersRepository.IsUnique(user.Name))
+            {
+                ModelState.AddModelError("", "Такой пользователь уже существует");
+            }
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Result");
+                var role = rolesRepository.GetRoleByName("Пользователь");
+                var newUser = CreateNewUser(user, role);
+                Constants.UserId = user.Name;
+                return View("Result", newUser);
             }
             return View("RegIndex");
+        }
+
+        private User CreateNewUser(Register user, Role role)
+        {
+            var userLogin = new Login();
+            userLogin.Name = user.Name;
+            userLogin.Password = user.FirstPassword;
+            var newUser = new User(userLogin);
+            newUser.AddRole(role);
+            usersRepository.AddUser(newUser);
+            return newUser;
         }
     }
 }

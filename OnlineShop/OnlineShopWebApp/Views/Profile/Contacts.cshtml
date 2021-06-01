@@ -1,0 +1,51 @@
+﻿@model User
+<div class="row">
+    <div class="col-2">
+        @await Html.PartialAsync("ProfileLeftMenu")
+    </div>
+    <div class="col-10">
+        <div class="row">
+            <div class="col">
+                <div class="list-group d-flex align-items-center py-5">
+                    <h4>Контактные данные</h4>
+                    @if (Model.Contacts != null)
+                    {
+                        <div>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">Имя</th>
+                                        <th scope="col">@Model.Contacts.Name</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Фамилия</th>
+                                        <th scope="col">@Model.Contacts.Surname</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Электронная почта</th>
+                                        <th scope="col">@Model.Contacts.Email</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Телефон</th>
+                                        <th scope="col">@Model.Contacts.Phone</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Адрес</th>
+                                        <th scope="col">@Model.Contacts.Adress</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Вы не указали контактные данные</p>
+                        <div>
+                            <a class="btn btn-primary" asp-area="" asp-controller="Profile" asp-action="AddContacts" asp-route-userName="@Model.Login.Name">Добавить контактные данные</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,7 @@ namespace OnlineShopWebApp.Models
 {
     public class InMemoryRolesRepository : IRolesRepository
     {
-        private List<Role> roles = new List<Role>() { new Role("Администратор") };
+        private List<Role> roles = new List<Role>() { new Role("Администратор"), new Role("Пользователь") };
         public IEnumerable<Role> AllRoles
         {
             get
