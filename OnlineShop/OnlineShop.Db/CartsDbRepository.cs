@@ -1,4 +1,5 @@
-﻿using OnlineShop.Db.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -24,72 +25,68 @@ namespace OnlineShop.Db
         }
         public Cart TryGetByUserId(string userId)
         {
-            return databaseContext.Carts.FirstOrDefault(x => x.UserId == userId);
-        }
-
-        public void Add(Product product, string userId)
-        {
-            var userCart = TryGetByUserId(userId);
-            if (userCart == null)
-            {
-                AddNewCart(product, userId);
-            }
-            else
-            {
-                var userCartItem = userCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
-                if (userCartItem != null)
-                {
-                    userCartItem.Amount += 1;
-                }
-                else
-                {
-                    userCart.CartItems.Add(AddNewCartItem(product));
-                }
-            }
-            databaseContext.SaveChanges();
+            return databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product).FirstOrDefault(x => x.UserId == userId);
         }
         public int GetAllAmounts(string userId)
         {
             var userCart = TryGetByUserId(userId);
-            return userCart?.CartItems?.Sum(x => x.Amount) ?? 0;
+            return userCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
-        private void AddNewCart(Product product, string userId)
+        public void Add(Product product, string userId)
         {
-            var newCart = new Cart
+            var existingCart = TryGetByUserId(userId);
+            if (existingCart == null)
             {
-                UserId = userId,
-                CartItems = new List<CartItem>
-                    {
-                        AddNewCartItem(product)
-                    }
-            };
-            databaseContext.Carts.Add(newCart);
-            databaseContext.SaveChanges();
-        }
+                var newCart = new Cart
+                {
+                    UserId = userId
+                };
 
-        private CartItem AddNewCartItem(Product product)
-        {
-            return new CartItem
+                newCart.Items = new List<CartItem>
+                    {
+                        new CartItem
+                        {
+                            Amount = 1,
+                            Product = product,
+                            Cart = newCart
+                        }
+                    };
+                databaseContext.Carts.Add(newCart);
+            }
+            else
             {
-                Amount = 1,
-                Product = product,
-            };
+                var existingCartItem = existingCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+                if (existingCartItem != null)
+                {
+                    existingCartItem.Amount += 1;
+                }
+                else
+                {
+                    existingCart.Items.Add(new CartItem
+                    {
+                        Amount = 1,
+                        Product = product,
+                        Cart = existingCart
+                    });
+                }
+            }
+            databaseContext.SaveChanges();
         }
 
         public void ChangeAmount(Product product, int sign, string userId)
         {
-            var userCart  = TryGetByUserId(userId);
-            var userCartItem = userCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
-            switch(sign)
+            var userCart = TryGetByUserId(userId);
+            var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+            switch (sign)
             {
                 case 1:
-                    userCartItem.Amount ++;
+                    userCartItem.Amount++;
                     break;
                 case -1:
-                    if (userCartItem.Amount>1)
+                    if (userCartItem.Amount > 1)
                     {
                         userCartItem.Amount--;
-                    } 
+                    }
                     else
                     {
                         DeleteItem(userCartItem, userId);
@@ -102,14 +99,31 @@ namespace OnlineShop.Db
         private void DeleteItem(CartItem cartItem, string userId)
         {
             var userCart = TryGetByUserId(userId);
-            userCart.CartItems.RemoveAll(x => x.Id == cartItem.Id);
+            userCart.Items.RemoveAll(x => x.Id == cartItem.Id);
             databaseContext.SaveChanges();
         }
 
         public void ClearCart(string userId)
         {
             var userCart = TryGetByUserId(userId);
-            userCart.CartItems.Clear();
+            userCart.Items.Clear();
+            databaseContext.SaveChanges();
+        }
+        public void DecreaseAmount(Guid productId, string userId)
+        {
+            var existingCart = TryGetByUserId(userId);
+            var existingCartItem = existingCart?.Items?.FirstOrDefault(x => x.Product.Id == productId);
+            if (existingCartItem == null)
+            {
+                return;
+            }
+
+            existingCartItem.Amount -= 1;
+
+            if (existingCartItem.Amount == 0)
+            {
+                existingCart.Items.Remove(existingCartItem);
+            }
             databaseContext.SaveChanges();
         }
     }

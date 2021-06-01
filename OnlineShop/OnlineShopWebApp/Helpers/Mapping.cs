@@ -41,7 +41,7 @@ namespace OnlineShopWebApp.Helpers
             {
                 Id = cart.Id,
                 UserId = cart.UserId,
-                Items = ToCartItemViewModels(cart.CartItems)
+                Items = ToCartItemViewModels(cart.Items)
             };
         }
 
