@@ -77,8 +77,8 @@
                             <input type="hidden" name="id" value="@Model.Id" />
                             <div>
                                 <span>
-                                    <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="EditUserInfo" tabindex="9">Изменить</button>
-                                    <a class="btn btn-danger" asp-controller="Admin" asp-action="Users" tabindex="10">Отменить</a>
+                                    <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditUserInfo" tabindex="9">Изменить</button>
+                                    <a class="btn btn-danger" asp-area="Admin" asp-controller="Admin" asp-action="Users" tabindex="10">Отменить</a>
                                 </span>
                             </div>
                         </form>

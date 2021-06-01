@@ -34,8 +34,8 @@
                             <div>
                                 <input type="hidden" name="Image" value="@Model.Image" />
                                 <span>
-                                    <button type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="EditProduct" tabindex="5">Изменить</button>
-                                    <a class="btn btn-danger" href="/Admin/Home" tabindex="6">Отменить</a>
+                                    <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditProduct" tabindex="5">Изменить</button>
+                                    <a class="btn btn-danger" asp-area="Admin" asp-controller="Admin" asp-action="Home" tabindex="6">Отменить</a>
                                 </span>
                             </div>
                         </form>
