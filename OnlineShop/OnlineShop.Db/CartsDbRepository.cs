@@ -43,7 +43,13 @@ namespace OnlineShop.Db
                 };
 
                 newCart.Items = new List<CartItem>
-                    { AddNewCartItem(product, newCart)
+                    {
+                        new CartItem
+                        {
+                            Amount = 1,
+                            Product = product,
+                            Cart = newCart
+                        }
                     };
                 databaseContext.Carts.Add(newCart);
             }
@@ -56,20 +62,16 @@ namespace OnlineShop.Db
                 }
                 else
                 {
-                    existingCart.Items.Add(AddNewCartItem(product, existingCart));
+                    existingCart.Items.Add(new CartItem
+                    {
+                        Amount = 1,
+                        Product = product,
+                        Cart = existingCart
+                    });
                 }
             }
-            databaseContext.SaveChanges();
-        }
 
-        private static CartItem AddNewCartItem(Product product, Cart newCart)
-        {
-            return new CartItem
-            {
-                Amount = 1,
-                Product = product,
-                Cart = newCart
-            };
+            databaseContext.SaveChanges();
         }
 
         public void ChangeAmount(Product product, int sign, string userId)
@@ -105,24 +107,7 @@ namespace OnlineShop.Db
         public void ClearCart(string userId)
         {
             var userCart = TryGetByUserId(userId);
-            userCart.Items.Clear();
-            databaseContext.SaveChanges();
-        }
-        public void DecreaseAmount(Guid productId, string userId)
-        {
-            var existingCart = TryGetByUserId(userId);
-            var existingCartItem = existingCart?.Items?.FirstOrDefault(x => x.Product.Id == productId);
-            if (existingCartItem == null)
-            {
-                return;
-            }
-
-            existingCartItem.Amount -= 1;
-
-            if (existingCartItem.Amount == 0)
-            {
-                existingCart.Items.Remove(existingCartItem);
-            }
+            databaseContext.Carts.Remove(userCart);
             databaseContext.SaveChanges();
         }
     }
