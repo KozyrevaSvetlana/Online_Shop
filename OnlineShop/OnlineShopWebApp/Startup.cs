@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineShop.Db;
+using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Interfaces;
 using Serilog;
 
 namespace OnlineShopWebApp
@@ -19,8 +21,12 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IProductsRepository, InMemoryProductsRepository>();
-            services.AddSingleton<ICartsRepository, InMemoryCartsRepository>();
+            string connection = Configuration.GetConnectionString("online_shop_kozyreva");
+            services.AddDbContext<DatabaseContext>(options =>
+            options.UseSqlServer(connection));
+
+            services.AddTransient<IProductsRepository, ProductsDbRepository>();
+            services.AddTransient<ICartsRepository, CartsDbRepository>();
             services.AddSingleton<ICompareRepository, InMemoryCompareRepository>();
             services.AddSingleton<IFavoritesRepository, InMemoryFavoritesRepository>();
             services.AddSingleton<IOrdersRepository, InMemoryOrdersRepository>();

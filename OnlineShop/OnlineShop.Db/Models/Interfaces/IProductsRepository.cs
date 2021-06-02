@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace OnlineShopWebApp.Models
+namespace OnlineShop.Db.Models.Interfaces
 {
     public interface IProductsRepository
     {
         IEnumerable<Product> AllProducts { get; }
-        Product GetProductById(int id);
-        public void DeleteItem(int id);
+        Product GetProductById(Guid id);
+        public void DeleteItem(Guid id);
         public void Edit(Product editProduct);
         public int GetCount();
         public void Add(Product newProduct);

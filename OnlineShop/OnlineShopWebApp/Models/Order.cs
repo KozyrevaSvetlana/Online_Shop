@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Models
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }
-        public List<CartItem> Products { get; set; }
+        public List<CartItemViewModel> Products { get; set; }
         public UserContact User { get; set; }
         public InfoStatusOrder InfoStatus { get; set; }
 

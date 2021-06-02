@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models;
+using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
+using System;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -32,24 +37,24 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Products()
         {
-            return View(productsRepository.AllProducts);
+            return View(Mapping.ToProductViewModels(productsRepository.AllProducts));
         }
         public IActionResult Roles()
         {
             return View(rolesRepository.AllRoles);
         }
-        public IActionResult Description(int id)
+        public IActionResult Description(Guid id)
         {
             var result = productsRepository.GetProductById(id);
-            return View(result);
+            return View(Mapping.ToProductViewModel(result));
         }
-        public ActionResult EditForm(int id)
+        public ActionResult EditForm(Guid id)
         {
             var result = productsRepository.GetProductById(id);
-            return View(result);
+            return View(Mapping.ToProductViewModel(result));
         }
         [HttpPost]
-        public ActionResult EditProduct(Product editProduct)
+        public ActionResult EditProduct(ProductViewModel editProduct)
         {
             var validResult = editProduct.IsValid();
             if (validResult.Count != 0)
@@ -61,12 +66,19 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                productsRepository.Edit(editProduct);
+                var productDb = new Product
+                {
+                    Name = editProduct.Name,
+                    Cost = editProduct.Cost,
+                    Description = editProduct.Description,
+                    Image = editProduct.Image
+                };
+                productsRepository.Edit(productDb);
                 return RedirectToAction("Products", "Admin");
             }
             return View("EditForm", editProduct);
         }
-        public ActionResult DeleteProduct(int id)
+        public ActionResult DeleteProduct(Guid id)
         {
             productsRepository.DeleteItem(id);
             return RedirectToAction("Products", "Admin");
@@ -76,7 +88,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNewProduct(Product newProduct)
+        public ActionResult AddNewProduct(ProductViewModel newProduct)
         {
             var errorsResult = newProduct.IsValid();
             if (errorsResult.Count != 0)
@@ -89,7 +101,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                productsRepository.Add(newProduct);
+                var productDb = new Product
+                {
+                    Name = newProduct.Name,
+                    Cost = newProduct.Cost,
+                    Description = newProduct.Description,
+                    Image = newProduct.Image
+                };
+                productsRepository.Add(productDb);
                 return RedirectToAction("Products", "Admin");
             }
             return RedirectToAction("Products", "Admin");
@@ -214,6 +233,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var user = usersRepository.GetUserById(id);
             user.UpdateUser(editUser);
             return RedirectToAction("Users", "Admin");
+        }
+        private List<ProductViewModel> GetDataMapping(IEnumerable<Product> allProducts)
+        {
+            var productsViewModels = new List<ProductViewModel>();
+            foreach (var product in allProducts)
+            {
+                var productViewModels = new ProductViewModel
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Cost = product.Cost,
+                    Description = product.Description,
+                    Image = product.Image
+                };
+                productsViewModels.Add(productViewModels);
+            }
+            return productsViewModels;
         }
     }
 }

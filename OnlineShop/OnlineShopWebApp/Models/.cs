@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
-    public class Cart: BaseList
+    public class CartViewModel: BaseList
     {
-        public List<CartItem> Items { get; set; }
+        public List<CartItemViewModel> Items { get; set; }
         public decimal Cost
         {
             get

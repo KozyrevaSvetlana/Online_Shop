@@ -5,6 +5,6 @@ namespace OnlineShopWebApp.Models
 {
     public class BaseProductList: BaseList
     {
-        public List<Product> Items { get; set; }
+        public List<ProductViewModel> Items { get; set; }
     }
 }

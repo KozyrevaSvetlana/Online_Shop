@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace OnlineShopWebApp.Models.Interfaces
+namespace OnlineShop.Db.Models.Interfaces
 {
     public interface ICartsRepository
     {

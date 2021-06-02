@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace OnlineShopWebApp.Controllers
@@ -15,8 +18,8 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index()
         {
-            var allProducts = products.AllProducts;
-            return View(allProducts);
+            ordersRepository.CreateOrders();
+            return View(Mapping.ToProductViewModels(products.AllProducts));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

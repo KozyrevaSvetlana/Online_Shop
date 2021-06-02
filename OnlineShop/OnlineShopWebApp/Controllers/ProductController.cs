@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Interfaces;
+using OnlineShop.Db.Models.Interfaces;
+using System;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -14,7 +14,7 @@ namespace OnlineShopWebApp.Controllers
         }
 
         // GET: ProductController
-        public ActionResult Index(int id)
+        public ActionResult Index(Guid id)
         {
             var result = products.GetProductById(id);
             return View(result);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models;
+using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models.Interfaces;
+using System;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -22,10 +23,10 @@ namespace OnlineShopWebApp.Controllers
             return View(compareCart);
         }
 
-        public IActionResult Add(int id)
+        public IActionResult Add(Guid id)
         {
             var product = productsRepository.GetProductById(id);
-            compareRepository.Add(product, Constants.UserId);
+            //compareRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear()
@@ -33,7 +34,7 @@ namespace OnlineShopWebApp.Controllers
             compareRepository.Clear(Constants.UserId);
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             compareRepository.DeleteItem(id, Constants.UserId);
             return RedirectToAction("Index");
