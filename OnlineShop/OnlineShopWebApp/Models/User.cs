@@ -7,24 +7,24 @@ namespace OnlineShopWebApp.Models
     {
         public Guid Id { get; set; }
         public Login Login { get; set; }
-        public List<Order> Orders { get; set; }
-        public UserContact Contacts { get; set; }
+        public List<OrderViewModel> Orders { get; set; }
+        public UserContactViewModel Contacts { get; set; }
         public Role Role { get; set; }
         public User(Login login)
         {
             Id = Guid.NewGuid();
             Login = login;
-            Orders = new List<Order>();
-            Contacts = new UserContact() { Name="", Surname= "", Email= "", Phone= "", Adress= "" };
+            Orders = new List<OrderViewModel>();
+            Contacts = new UserContactViewModel() { Name="", Surname= "", Email= "", Phone= "", Adress= "" };
             Role = new Role();
             Role.Name = "";
         }
-        public void AddOrder(Order order)
+        public void AddOrder(OrderViewModel order)
         {
             Orders.Add(order);
         }
         public User() { }
-        public void AddContacts(UserContact contacts)
+        public void AddContacts(UserContactViewModel contacts)
         {
             Contacts.Name = contacts.Name;
             Contacts.Surname = contacts.Surname;

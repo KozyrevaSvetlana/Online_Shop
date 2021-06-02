@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models
 {
-    public class UserContact
+    public class UserContactViewModel
     {
         [Required(ErrorMessage = "Не указано имя")]
         [StringLength(44, MinimumLength = 2, ErrorMessage = "Имя должно быть не менее 2 и не более 44 символов")]

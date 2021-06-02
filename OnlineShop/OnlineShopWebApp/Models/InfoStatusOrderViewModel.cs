@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
-    public class InfoStatusOrder
+    public class InfoStatusOrderViewModel
     {
         public Status StatusOrder { get; set; }
         public DateTime Data { get; set; }
@@ -15,7 +15,7 @@ namespace OnlineShopWebApp.Models
             OnPost,
             Done
         }
-        public InfoStatusOrder(DateTime dateTime)
+        public InfoStatusOrderViewModel(DateTime dateTime)
         {
             StatusOrder = Status.Created;
             Data = dateTime;

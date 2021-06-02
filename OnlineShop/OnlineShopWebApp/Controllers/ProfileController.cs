@@ -39,7 +39,7 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult AcceptContacts(UserContact userContacts)
+        public IActionResult AcceptContacts(UserContactViewModel userContacts)
         {
             var errorsResult = userContacts.IsValid();
             if (errorsResult != null)

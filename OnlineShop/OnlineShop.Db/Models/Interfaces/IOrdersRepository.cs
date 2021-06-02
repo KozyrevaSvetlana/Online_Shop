@@ -1,19 +1,17 @@
-﻿using OnlineShopWebApp.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using static OnlineShop.Db.Models.InfoStatusOrder;
 
-namespace OnlineShopWebApp
+namespace OnlineShop.Db.Models.Interfaces
 {
     public interface IOrdersRepository
     {
         IEnumerable<Order> AllOrders { get; }
 
-        void AddOrder(Order order, CartViewModel cart);
-        Order GetLastOrder(string userId);
+        void AddOrder(Order order, Cart cart);
         Order TryGetByUserId(string userId);
-        void Edit(int number, string status);
+        void Edit(int number, Status status);
         Order GetOrderByNumber(int number);
         void Delete(int number);
-        void CreateOrders();
         List<Order> GetOrdersByUserId(string userId);
     }
 }

@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Accept(Order order, UserContact userContacts)
+        public IActionResult Accept(OrderViewModel order, UserContactViewModel userContacts)
         {
             var errorsResult = userContacts.IsValid();
             if (errorsResult != null)
@@ -36,7 +36,7 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrder(DateTime.Now));
+                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now));
                 var existingCartViewModel = Mapping.ToCartViewModel(cartsRepository.TryGetByUserId(Constants.UserId));
                 ordersRepository.AddOrder(order, existingCartViewModel);
                 cartsRepository.ClearCart(Constants.UserId);

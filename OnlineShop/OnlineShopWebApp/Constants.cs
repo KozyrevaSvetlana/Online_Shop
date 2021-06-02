@@ -7,6 +7,6 @@ namespace OnlineShopWebApp
     public class Constants
     {
         public static string UserId = "UserId";
-        public List<Order> Orders { get; set; }
+        public List<OrderViewModel> Orders { get; set; }
     }
 }
