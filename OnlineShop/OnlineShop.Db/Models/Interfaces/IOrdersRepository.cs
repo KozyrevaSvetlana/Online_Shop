@@ -13,5 +13,6 @@ namespace OnlineShop.Db.Models.Interfaces
         Order GetOrderByNumber(int number);
         void Delete(int number);
         List<Order> GetOrdersByUserId(string userId);
+        Order GetLastOrder(string UserId);
     }
 }

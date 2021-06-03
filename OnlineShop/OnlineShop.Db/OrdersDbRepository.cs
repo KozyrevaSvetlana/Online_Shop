@@ -21,8 +21,9 @@ namespace OnlineShop.Db
             {
                 newCart.Items.Add(cartItem);
             }
-            order.Products.Add(newCart);
-            databaseContext.Add(order);
+            order.Products = newCart;
+            databaseContext.Orders.Add(order);
+            databaseContext.Carts.Remove(cart);
             databaseContext.SaveChanges();
         }
 
@@ -40,7 +41,7 @@ namespace OnlineShop.Db
         public void Edit(int number, Status status)
         {
             var order = databaseContext.Orders.FirstOrDefault(p => p.Number == number);
-            order.InfoStatus.StatusOrder = status;
+            order.InfoStatus.StatusOrder = (int)status;
             databaseContext.SaveChanges();
         }
         public Order GetOrderByNumber(int number)
@@ -63,6 +64,10 @@ namespace OnlineShop.Db
                 }
             }
             return result;
+        }
+        public Order GetLastOrder(string UserId)
+        {
+            return databaseContext.Orders.Last(x => x.UserId == UserId);
         }
     }
 }

@@ -20,7 +20,6 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index()
         {
-            ordersRepository.CreateOrders();
             return View(Mapping.ToProductViewModels(products.AllProducts));
         }
 
