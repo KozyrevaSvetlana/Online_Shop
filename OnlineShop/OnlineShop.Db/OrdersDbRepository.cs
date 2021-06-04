@@ -3,7 +3,6 @@ using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static OnlineShop.Db.Models.InfoStatusOrder;
 
 namespace OnlineShop.Db
 {
@@ -21,7 +20,7 @@ namespace OnlineShop.Db
             {
                 newCart.Items.Add(cartItem);
             }
-            order.Products = newCart;
+            order.Cart = newCart;
             databaseContext.Orders.Add(order);
             databaseContext.Carts.Remove(cart);
             databaseContext.SaveChanges();
@@ -38,10 +37,10 @@ namespace OnlineShop.Db
         {
             return databaseContext.Orders.FirstOrDefault(x => x.UserId == userId);
         }
-        public void Edit(int number, Status status)
+        public void Edit(int number, int status)
         {
             var order = databaseContext.Orders.FirstOrDefault(p => p.Number == number);
-            order.InfoStatus.StatusOrder = (int)status;
+            order.InfoStatus.StatusOrder = status;
             databaseContext.SaveChanges();
         }
         public Order GetOrderByNumber(int number)

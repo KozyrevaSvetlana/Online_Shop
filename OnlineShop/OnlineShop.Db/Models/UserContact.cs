@@ -9,5 +9,6 @@ namespace OnlineShop.Db.Models
         public string Adress { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public Order Order { get; set; }
     }
 }

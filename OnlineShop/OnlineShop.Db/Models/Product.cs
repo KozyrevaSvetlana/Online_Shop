@@ -11,6 +11,7 @@ namespace OnlineShop.Db.Models
         public string Description { get; set; }
         public string Image { get; set; }
         public List<CartItem> CartItems { get; set; }
+        public List<Order> Orders { get; set; }
         public Product()
         {
             CartItems = new List<CartItem>();
