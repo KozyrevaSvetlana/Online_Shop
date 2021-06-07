@@ -1,4 +1,5 @@
-﻿using OnlineShop.Db.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace OnlineShop.Db
 
         public Compare TryGetByCompareId(string CompareId)
         {
-            return databaseContext.Compares.Find(CompareId);
+            return databaseContext.Compares.Include(x => x.Items).FirstOrDefault(x => x.CompareId == CompareId);
         }
         private void AddNewCompare(Product product, string CompareId)
         {
