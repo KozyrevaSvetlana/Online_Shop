@@ -7,7 +7,7 @@ namespace OnlineShopWebApp
 {
     public class InMemoryFavoritesRepository : IFavoritesRepository
     {
-        private List<Favorites> favoritesList = new List<Favorites>();
+        private List<FavoritesViewModel> favoritesList = new List<FavoritesViewModel>();
         public IEnumerable<BaseProductList> AllProducts
         {
             get
@@ -50,7 +50,7 @@ namespace OnlineShopWebApp
         }
         private void AddNewFavorites(ProductViewModel product, string userId)
         {
-            var newFavorites = new Favorites
+            var newFavorites = new FavoritesViewModel
             {
                 UserId = userId,
                 Items = new List<ProductViewModel>()

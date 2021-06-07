@@ -93,5 +93,27 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.InfoStatus.StatusOrder = (Status)orderDb.InfoStatus;
             return orderViewModels;
         }
+        public static CompareViewModel ToCompareViewModel(Compare compare)
+        {
+            if (compare == null)
+            {
+                return null;
+            }
+            return new CompareViewModel
+            {
+                Id = compare.Id,
+                UserId = compare.CompareId,
+                Items = ToProductViewModels(compare.Items)
+            };
+        }
+        public static List<ProductViewModel> ToProductViewModels(List<Product> products)
+        {
+            var productsViewModels = new List<ProductViewModel>();
+            foreach (var product in products)
+            {
+                productsViewModels.Add(ToProductViewModel(product));
+            }
+            return productsViewModels;
+        }
     }
 }
