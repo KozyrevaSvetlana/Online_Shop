@@ -14,5 +14,6 @@ namespace OnlineShop.Db
         {
             Database.EnsureCreated();   // создаем базу данных при первом обращении
         }
+
     }
 }

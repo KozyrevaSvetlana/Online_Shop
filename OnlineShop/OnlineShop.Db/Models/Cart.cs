@@ -10,7 +10,6 @@ namespace OnlineShop.Db.Models
         public int Id { get; set; }
         public string UserId { get; set; }
         public List<CartItem> Items { get; set; }
-        public int OrderId { get; set; }
         public Cart()
         {
             Items = new List<CartItem>();

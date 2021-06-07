@@ -20,7 +20,14 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            if (Constants.UserId != "UserId")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
         [HttpPost]
         public IActionResult Accept(OrderViewModel order, UserContactViewModel userContacts)
