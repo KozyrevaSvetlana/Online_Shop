@@ -15,12 +15,10 @@ namespace OnlineShop.Db
         }
         public void AddOrder(Order order, Cart cart)
         {
-            var newCart = new Cart();
             foreach (CartItem cartItem in cart.Items)
             {
-                newCart.Items.Add(cartItem);
+                order.Items.Add(cartItem);
             }
-            order.Cart = newCart;
             databaseContext.Orders.Add(order);
             databaseContext.Carts.Remove(cart);
             databaseContext.SaveChanges();
@@ -40,7 +38,7 @@ namespace OnlineShop.Db
         public void Edit(int number, int status)
         {
             var order = databaseContext.Orders.FirstOrDefault(p => p.Number == number);
-            order.InfoStatus.StatusOrder = status;
+            order.InfoStatus = status;
             databaseContext.SaveChanges();
         }
         public Order GetOrderByNumber(int number)

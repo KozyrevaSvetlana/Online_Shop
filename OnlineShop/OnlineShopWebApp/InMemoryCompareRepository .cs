@@ -53,9 +53,8 @@ namespace OnlineShopWebApp
         {
             var newCart = new Compare
             {
-                Id = Guid.NewGuid(),
                 UserId = userId,
-                Items = new List<ProductViewModel>()
+                Items = new List<ProductViewModel>(),
             };
             newCart.Items.Add(product);
             compareList.Add(newCart);

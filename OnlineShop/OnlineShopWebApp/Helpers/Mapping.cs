@@ -74,7 +74,7 @@ namespace OnlineShopWebApp.Helpers
             orderDb.User.Adress = order.User.Adress;
             orderDb.User.Phone = order.User.Phone;
             orderDb.User.Email = order.User.Email;
-            orderDb.InfoStatus.StatusOrder = (int)order.InfoStatus.StatusOrder;
+            orderDb.InfoStatus = (int)order.InfoStatus.StatusOrder;
             return orderDb;
         }
         public static OrderViewModel ToOrderViewModels(Order orderDb)
@@ -90,7 +90,7 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.User.Adress = orderDb.User.Adress;
             orderViewModels.User.Phone = orderDb.User.Phone;
             orderViewModels.User.Email = orderDb.User.Email;
-            orderViewModels.InfoStatus.StatusOrder = (Status)orderDb.InfoStatus.StatusOrder;
+            orderViewModels.InfoStatus.StatusOrder = (Status)orderDb.InfoStatus;
             return orderViewModels;
         }
     }

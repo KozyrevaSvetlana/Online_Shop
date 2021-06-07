@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static OnlineShop.Db.Models.InfoStatusOrder;
 
 namespace OnlineShop.Db.Models.Interfaces
 {

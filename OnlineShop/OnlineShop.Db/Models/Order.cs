@@ -9,15 +9,16 @@ namespace OnlineShop.Db.Models
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }
-        public int CartId { get; set; }
-        public Cart Cart { get; set; }
         public UserContact User { get; set; }
-        public List<Product> Items { get; set; }
-    public InfoStatusOrder InfoStatus { get; set; }
+        public List<CartItem> Items { get; set; }
+        public int InfoStatus { get; set; }
+        public DateTime Data { get; set; }
         public Order()
         {
-            Cart = new Cart();
             User = new UserContact();
+            Items = new List<CartItem>();
+            Data = DateTime.Now;
+            InfoStatus = 1;
         }
     }
 }

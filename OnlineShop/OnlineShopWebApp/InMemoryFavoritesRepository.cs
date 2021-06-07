@@ -52,7 +52,6 @@ namespace OnlineShopWebApp
         {
             var newFavorites = new Favorites
             {
-                Id = Guid.NewGuid(),
                 UserId = userId,
                 Items = new List<ProductViewModel>()
             };
