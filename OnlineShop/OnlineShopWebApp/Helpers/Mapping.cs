@@ -85,12 +85,12 @@ namespace OnlineShopWebApp.Helpers
                 Comment = orderDb.Comment,
                 UserId = orderDb.UserId,
             };
-            orderViewModels.User.Name = orderDb.User.Name;
-            orderViewModels.User.Surname = orderDb.User.Surname;
-            orderViewModels.User.Adress = orderDb.User.Adress;
-            orderViewModels.User.Phone = orderDb.User.Phone;
-            orderViewModels.User.Email = orderDb.User.Email;
-            orderViewModels.InfoStatus.StatusOrder = (Statuses)orderDb.InfoStatus;
+            //orderViewModels.User.Name = orderDb.User.Name;
+            //orderViewModels.User.Surname = orderDb.User.Surname;
+            //orderViewModels.User.Adress = orderDb.User.Adress;
+            //orderViewModels.User.Phone = orderDb.User.Phone;
+            //orderViewModels.User.Email = orderDb.User.Email;
+            //orderViewModels.InfoStatus.StatusOrder = (Statuses)orderDb.InfoStatus;
             return orderViewModels;
         }
     }
