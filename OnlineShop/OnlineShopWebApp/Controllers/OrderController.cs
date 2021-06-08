@@ -43,8 +43,8 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now));
-                ordersRepository.AddOrder(Mapping.ToOrder(order), cartsRepository.TryGetByUserId(Constants.UserId));
-                cartsRepository.ClearCart(Constants.UserId);
+                var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+                ordersRepository.AddOrder(Mapping.ToOrder(order), cart);
                 if (Constants.UserId != "UserId")
                 {
                     var user = usersRepository.GetUserByName(Constants.UserId);
