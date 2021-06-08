@@ -90,7 +90,7 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.User.Adress = orderDb.User.Adress;
             orderViewModels.User.Phone = orderDb.User.Phone;
             orderViewModels.User.Email = orderDb.User.Email;
-            orderViewModels.InfoStatus.StatusOrder = (Status)orderDb.InfoStatus;
+            orderViewModels.InfoStatus.StatusOrder = (Statuses)orderDb.InfoStatus;
             return orderViewModels;
         }
     }

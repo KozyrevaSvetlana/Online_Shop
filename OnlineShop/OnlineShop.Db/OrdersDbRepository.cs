@@ -63,7 +63,7 @@ namespace OnlineShop.Db
         }
         public Order GetLastOrder(string UserId)
         {
-            return databaseContext.Orders.Last(x => x.UserId == UserId);
+            return databaseContext.Orders.OrderByDescending(x => x.UserId == UserId).FirstOrDefault();
         }
     }
 }
