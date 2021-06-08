@@ -19,7 +19,7 @@ namespace OnlineShop.Db
         {
             get
             {
-                return databaseContext.Compares;
+                return databaseContext.Compares.ToList();
             }
         }
 
@@ -38,6 +38,7 @@ namespace OnlineShop.Db
                     userCompareList.Items.Add(product);
                 }
             }
+            databaseContext.SaveChanges();
         }
 
         public void Clear(string CompareId)
@@ -56,13 +57,13 @@ namespace OnlineShop.Db
 
         public Compare TryGetByCompareId(string CompareId)
         {
-            return databaseContext.Compares.Include(x => x.Items).FirstOrDefault(x => x.CompareId == CompareId);
+            return databaseContext.Compares.Include(x => x.Items).FirstOrDefault(x => x.UserId == CompareId);
         }
         private void AddNewCompare(Product product, string CompareId)
         {
             var newCart = new Compare
             {
-                CompareId = CompareId,
+                UserId = CompareId,
                 Items = new List<Product>(),
             };
             newCart.Items.Add(product);

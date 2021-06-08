@@ -102,7 +102,7 @@ namespace OnlineShopWebApp.Helpers
             return new CompareViewModel
             {
                 Id = compare.Id,
-                UserId = compare.CompareId,
+                UserId = compare.UserId,
                 Items = ToProductViewModels(compare.Items)
             };
         }
