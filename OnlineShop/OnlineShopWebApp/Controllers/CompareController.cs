@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
-using OnlineShopWebApp.Models.Interfaces;
 using System;
 
 namespace OnlineShopWebApp.Controllers
@@ -10,13 +9,11 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsRepository productsRepository;
         private readonly ICompareRepository compareRepository;
-        private readonly ICartsRepository cartsRepository;
 
-        public CompareController(IProductsRepository productsRepository,  ICompareRepository compareRepository, ICartsRepository cartsRepository)
+        public CompareController(IProductsRepository productsRepository,  ICompareRepository compareRepository)
         {
             this.productsRepository = productsRepository;
             this.compareRepository = compareRepository;
-            this.cartsRepository = cartsRepository;
         }
         public IActionResult Index()
         {

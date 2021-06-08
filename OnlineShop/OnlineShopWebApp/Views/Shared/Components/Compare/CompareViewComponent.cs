@@ -15,10 +15,10 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
 
         public IViewComponentResult Invoke()
         {
-            //var compare = compareRepository.TryGetByCompareId(Constants.UserId);
-            //var compareViewModel = Mapping.ToCompareViewModel(compare);
-            //var compareItemsCount = compareViewModel?.Items.Count ?? 0;
-            return View("Compare");
+            var compare = compareRepository.TryGetByCompareId(Constants.UserId);
+            var compareViewModel = Mapping.ToCompareViewModel(compare);
+            var compareItemsCount = compareViewModel?.Items.Count ?? 0;
+            return View("Compare", compareItemsCount);
         }
     }
 }

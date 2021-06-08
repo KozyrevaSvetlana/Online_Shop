@@ -16,6 +16,7 @@ namespace OnlineShop.Db.Models
         public Product()
         {
             CartItems = new List<CartItem>();
+            Compares = new List<Compare>();
         }
     }
 }

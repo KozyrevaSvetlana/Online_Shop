@@ -20,7 +20,6 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index()
         {
-            Constants.UserId = "UserId";
             return View(Mapping.ToProductViewModels(products.AllProducts));
         }
 

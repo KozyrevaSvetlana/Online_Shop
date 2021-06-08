@@ -23,12 +23,12 @@ namespace OnlineShop.Db
             }
         }
 
-        public void Add(Product product, string CompareId)
+        public void Add(Product product, string UserId)
         {
-            var userCompareList = TryGetByCompareId(CompareId);
+            var userCompareList = TryGetByCompareId(UserId);
             if (userCompareList == null)
             {
-                AddNewCompare(product, CompareId);
+                AddNewCompare(product, UserId);
             }
             else
             {
@@ -59,11 +59,11 @@ namespace OnlineShop.Db
         {
             return databaseContext.Compares.Include(x => x.Items).FirstOrDefault(x => x.UserId == CompareId);
         }
-        private void AddNewCompare(Product product, string CompareId)
+        private void AddNewCompare(Product product, string userId)
         {
             var newCart = new Compare
             {
-                UserId = CompareId,
+                UserId = userId,
                 Items = new List<Product>(),
             };
             newCart.Items.Add(product);
