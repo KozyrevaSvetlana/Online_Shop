@@ -58,7 +58,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Result()
         {
             var order = ordersRepository.GetLastOrder(Constants.UserId);
-            return View(order);
+            return View(Mapping.ToOrderViewModels(order));
         }
     }
 }

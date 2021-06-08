@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineShop.Db.Models
 {
@@ -13,6 +11,7 @@ namespace OnlineShop.Db.Models
         public string Adress { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public List<CartItem> Items { get; set; }
         public List<Order> Order { get; set; }
     }
 }
