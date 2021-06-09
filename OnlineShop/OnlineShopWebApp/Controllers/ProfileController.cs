@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
@@ -7,11 +9,13 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IUsersRepository usersRepository;
         private readonly IFavoritesRepository favoritesRepository;
+        private readonly IOrdersRepository ordersRepository;
 
-        public ProfileController(IUsersRepository usersRepository, IFavoritesRepository favoritesRepository)
+        public ProfileController(IUsersRepository usersRepository, IFavoritesRepository favoritesRepository, IOrdersRepository ordersRepository)
         {
             this.usersRepository = usersRepository;
             this.favoritesRepository = favoritesRepository;
+            this.ordersRepository = ordersRepository;
         }
         public IActionResult Index()
         {
@@ -20,6 +24,8 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Orders()
         {
             var user = usersRepository.GetUserByName(Constants.UserId);
+            var orders = ordersRepository.GetOrdersByUserId(user.Login.Name);
+            user.Orders=Mapping.ToOrdersViewModels(orders);
             return View(user);
         }
         public IActionResult Contacts()

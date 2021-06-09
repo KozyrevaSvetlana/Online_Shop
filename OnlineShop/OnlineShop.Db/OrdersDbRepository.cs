@@ -52,26 +52,23 @@ namespace OnlineShop.Db
         }
         public List<Order> GetOrdersByUserId(string userId)
         {
-            var result = new List<Order>();
-            foreach (var order in databaseContext.Orders)
+            var allOrders = databaseContext.Orders.Where(q => q.UserId == userId).Include(x => x.Items).ThenInclude(x => x.Product).ToList();
+            foreach (var order in allOrders)
             {
-                if(order.UserId== userId)
-                {
-                    result.Add(order);
-                }
+                order.UserContacts = databaseContext.UserContacts.FirstOrDefault(x => x.OrderId == order.Id);
             }
-            return result;
+            return allOrders;
         }
         public Order GetLastOrder(string UserId)
         {
-            var order = databaseContext.Orders.Where(q => q.UserId == UserId).Include(x=>x.Items).ThenInclude(x=>x.Product).OrderByDescending(q => q.Number).FirstOrDefault();
+            var order = databaseContext.Orders.Where(q => q.UserId == UserId).Include(x => x.Items).ThenInclude(x => x.Product).OrderByDescending(q => q.Number).FirstOrDefault();
             order.UserContacts = databaseContext.UserContacts.FirstOrDefault(x => x.OrderId == order.Id);
             return order;
         }
         public int CountOrders()
         {
             var result = databaseContext.Orders.Count();
-            return result+1;
+            return result + 1;
         }
     }
 }

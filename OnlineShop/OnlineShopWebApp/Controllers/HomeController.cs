@@ -20,6 +20,7 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index()
         {
+            Constants.UserId = "Света";
             return View(Mapping.ToProductViewModels(products.AllProducts));
         }
 

@@ -95,5 +95,16 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.Products = ToCartItemViewModels(orderDb.Items);
             return orderViewModels;
         }
+
+
+        public static List<OrderViewModel> ToOrdersViewModels(List<Order> ordersDb)
+        {
+            var ordersViewModel = new List<OrderViewModel>();
+            foreach (var orderDb in ordersDb)
+            {
+                ordersViewModel.Add(ToOrderViewModels(orderDb));
+            }
+            return ordersViewModel;
+        }
     }
 }
