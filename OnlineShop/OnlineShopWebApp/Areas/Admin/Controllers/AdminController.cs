@@ -29,7 +29,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Orders()
         {
-            return View(ordersRepository.AllOrders);
+            return View(Mapping.ToOrdersViewModels(ordersRepository.AllOrders));
         }
         public IActionResult Users()
         {

@@ -106,5 +106,15 @@ namespace OnlineShopWebApp.Helpers
             }
             return ordersViewModel;
         }
+
+        public static List<OrderViewModel> ToOrdersViewModels(IEnumerable<Order> orders)
+        {
+            var ordersViewModels = new List<OrderViewModel>();
+            foreach (var order in orders)
+            {
+                ordersViewModels.Add(ToOrderViewModels(order));
+            }
+            return ordersViewModels;
+        }
     }
 }

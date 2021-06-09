@@ -28,7 +28,12 @@ namespace OnlineShop.Db
         {
             get
             {
-                return databaseContext.Orders;
+                var allOrders = databaseContext.Orders.Where(q => q.UserId != null).Include(x => x.Items).ThenInclude(x => x.Product).ToList();
+                foreach (var order in allOrders)
+                {
+                    order.UserContacts = databaseContext.UserContacts.FirstOrDefault(x => x.OrderId == order.Id);
+                }
+                return allOrders;
             }
         }
         public Order TryGetByUserId(string userId)
