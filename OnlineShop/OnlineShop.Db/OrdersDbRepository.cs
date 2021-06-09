@@ -56,7 +56,11 @@ namespace OnlineShop.Db
         {
             var order = databaseContext.Orders.FirstOrDefault(x => x.Number == number);
             var contacts = databaseContext.UserContacts.FirstOrDefault(x => x.OrderId == order.Id);
-            var cartitems = databaseContext.CartItems.Where(q => q.Id == order.Id).Include(x => x.Items).ThenInclude(x => x.Product).ToList();
+            var cartItems = databaseContext.CartItems.Include(x => x.Order).FirstOrDefault(x => x.Order == order);
+            foreach (var cartItem in order.Items)
+            {
+                databaseContext.CartItems.Remove(cartItem);
+            }
             databaseContext.UserContacts.Remove(contacts);
             databaseContext.Orders.Remove(order);
             databaseContext.SaveChanges();
