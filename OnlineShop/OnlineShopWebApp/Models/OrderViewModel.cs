@@ -13,10 +13,14 @@ namespace OnlineShopWebApp.Models
         public UserContactViewModel User { get; set; }
         public InfoStatusOrderViewModel InfoStatus { get; set; }
 
-        public void AddContacts(string userId, UserContactViewModel user, InfoStatusOrderViewModel infoStatus)
+        public OrderViewModel()
         {
             count++;
             Number = count;
+        }
+
+        public void AddContacts(string userId, UserContactViewModel user, InfoStatusOrderViewModel infoStatus)
+        {
             UserId = userId;
             User = user;
             InfoStatus= infoStatus;

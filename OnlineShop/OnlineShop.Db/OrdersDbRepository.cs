@@ -1,4 +1,5 @@
-﻿using OnlineShop.Db.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace OnlineShop.Db
         }
         public Order GetLastOrder(string UserId)
         {
-            return databaseContext.Orders.Last(x => x.UserId == UserId);
+            return databaseContext.Orders.Include(x => x.User).ThenInclude(x => x.Items).OrderByDescending(x => x.UserId == UserId).FirstOrDefault();
         }
     }
 }
