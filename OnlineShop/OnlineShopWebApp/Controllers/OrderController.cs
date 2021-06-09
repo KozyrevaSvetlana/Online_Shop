@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
@@ -30,7 +31,7 @@ namespace OnlineShopWebApp.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Accept(OrderViewModel order, UserContactViewModel userContacts)
+        public IActionResult Accept(string Comment, UserContactViewModel userContacts)
         {
             var errorsResult = userContacts.IsValid();
             if (errorsResult != null)
@@ -42,8 +43,11 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now));
+                var order = new OrderViewModel();
+                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
                 var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+                order.Products = Mapping.ToCartItemViewModels(cart.Items);
+                order.Number = ordersRepository.CountOrders();
                 ordersRepository.AddOrder(Mapping.ToOrder(order), cart);
                 if (Constants.UserId != "UserId")
                 {

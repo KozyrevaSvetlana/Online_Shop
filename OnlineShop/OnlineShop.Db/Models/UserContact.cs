@@ -11,12 +11,7 @@ namespace OnlineShop.Db.Models
         public string Adress { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public List<CartItem> Items { get; set; }
-        public List<Order> Order { get; set; }
-        public UserContact()
-        {
-            Items = new List<CartItem>();
-            Order = new List<Order>();
-        }
+        public Order Order { get; set; }
+        public Guid OrderId { get; set; }
     }
 }

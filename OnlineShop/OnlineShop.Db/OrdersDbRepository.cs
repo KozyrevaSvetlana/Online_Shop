@@ -64,7 +64,14 @@ namespace OnlineShop.Db
         }
         public Order GetLastOrder(string UserId)
         {
-            return databaseContext.Orders.Include(x => x.User).ThenInclude(x => x.Items).OrderByDescending(x => x.UserId == UserId).FirstOrDefault();
+            var order = databaseContext.Orders.Where(q => q.UserId == UserId).Include(x=>x.Items).ThenInclude(x=>x.Product).OrderByDescending(q => q.Number).FirstOrDefault();
+            order.UserContacts = databaseContext.UserContacts.FirstOrDefault(x => x.OrderId == order.Id);
+            return order;
+        }
+        public int CountOrders()
+        {
+            var result = databaseContext.Orders.Count();
+            return result+1;
         }
     }
 }

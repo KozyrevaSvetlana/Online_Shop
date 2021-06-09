@@ -69,11 +69,11 @@ namespace OnlineShopWebApp.Helpers
                 Comment = order.Comment,
                 UserId = order.UserId,
             };
-            orderDb.User.Name = order.User.Name;
-            orderDb.User.Surname = order.User.Surname;
-            orderDb.User.Adress = order.User.Adress;
-            orderDb.User.Phone = order.User.Phone;
-            orderDb.User.Email = order.User.Email;
+            orderDb.UserContacts.Name = order.User.Name;
+            orderDb.UserContacts.Surname = order.User.Surname;
+            orderDb.UserContacts.Adress = order.User.Adress;
+            orderDb.UserContacts.Phone = order.User.Phone;
+            orderDb.UserContacts.Email = order.User.Email;
             orderDb.InfoStatus = (int)order.InfoStatus.StatusOrder;
             return orderDb;
         }
@@ -84,13 +84,15 @@ namespace OnlineShopWebApp.Helpers
                 Number = orderDb.Number,
                 Comment = orderDb.Comment,
                 UserId = orderDb.UserId,
+                User = new UserContactViewModel()
             };
-            //orderViewModels.User.Name = orderDb.User.Name;
-            //orderViewModels.User.Surname = orderDb.User.Surname;
-            //orderViewModels.User.Adress = orderDb.User.Adress;
-            //orderViewModels.User.Phone = orderDb.User.Phone;
-            //orderViewModels.User.Email = orderDb.User.Email;
-            //orderViewModels.InfoStatus.StatusOrder = (Statuses)orderDb.InfoStatus;
+            orderViewModels.User.Name = orderDb.UserContacts.Name;
+            orderViewModels.User.Surname = orderDb.UserContacts.Surname;
+            orderViewModels.User.Adress = orderDb.UserContacts.Adress;
+            orderViewModels.User.Phone = orderDb.UserContacts.Phone;
+            orderViewModels.User.Email = orderDb.UserContacts.Email;
+            orderViewModels.InfoStatus.StatusOrder = (Statuses)orderDb.InfoStatus;
+            orderViewModels.Products = ToCartItemViewModels(orderDb.Items);
             return orderViewModels;
         }
     }

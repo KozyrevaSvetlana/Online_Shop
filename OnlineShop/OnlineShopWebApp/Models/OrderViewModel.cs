@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
     public class OrderViewModel
     {
-        private static int count = 0;
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }
@@ -15,15 +15,17 @@ namespace OnlineShopWebApp.Models
 
         public OrderViewModel()
         {
-            count++;
-            Number = count;
+            Products = new List<CartItemViewModel>();
+            User = new UserContactViewModel();
+            InfoStatus = new InfoStatusOrderViewModel(DateTime.Now);
         }
 
-        public void AddContacts(string userId, UserContactViewModel user, InfoStatusOrderViewModel infoStatus)
+        public void AddContacts(string userId, UserContactViewModel user, InfoStatusOrderViewModel infoStatus, string comment)
         {
             UserId = userId;
             User = user;
             InfoStatus= infoStatus;
+            Comment = comment;
         }
 
         public decimal Cost

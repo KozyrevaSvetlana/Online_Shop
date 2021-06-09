@@ -14,5 +14,12 @@ namespace OnlineShop.Db
         {
             Database.EnsureCreated();   // создаем базу данных при первом обращении
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>()
+                .HasOne(b => b.UserContacts)
+                .WithOne(i => i.Order)
+                .HasForeignKey<UserContact>(b => b.OrderId);
+        }
     }
 }
