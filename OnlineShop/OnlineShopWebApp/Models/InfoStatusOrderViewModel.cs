@@ -35,34 +35,15 @@ namespace OnlineShopWebApp.Models
                     return "Готов к выдаче";
                 case Statuses.Done:
                     return "Выполнен";
+                case Statuses.Canceled:
+                    return "Отменен";
                 default:
                     return "Ошибка";
             }
         }
-        public void ChangeStatus(string newstatus)
-        {
-            switch (newstatus)
-            {
-                case "Создан":
-                    StatusOrder = Statuses.Created;
-                    break;
-                case "В работе":
-                    StatusOrder = Statuses.InProcessing;
-                    break;
-                case "В пути":
-                    StatusOrder = Statuses.Delivering;
-                    break;
-                case "Готов к выдаче":
-                    StatusOrder = Statuses.OnPost;
-                    break;
-                case "Выполнен":
-                    StatusOrder = Statuses.Done;
-                    break;
-            }
-        }
         public List<string> GetAllStatuses()
         {
-            var result = new List<string>() { "Создан", "В работе", "В пути", "Готов к выдаче", "Выполнен" };
+            var result = new List<string>() { "Создан", "В работе", "В пути", "Готов к выдаче", "Выполнен", "Отменен" };
             return result;
         }
     }

@@ -116,5 +116,26 @@ namespace OnlineShopWebApp.Helpers
             }
             return ordersViewModels;
         }
+        public static int ToIntStatus(string status)
+        {
+            switch (status)
+            {
+                case "Создан":
+                    return 1;
+                case "В работе":
+                    return 2;
+                case "В пути":
+                    return 3;
+                case "Готов к выдаче":
+                    return 4;
+                case "Выполнен":
+                    return 5;
+                case "Отменен":
+                    return 6;
+                case "Ошибка":
+                    return 0;
+            }
+            return 0;
+        }
     }
 }

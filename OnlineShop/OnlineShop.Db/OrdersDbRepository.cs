@@ -48,11 +48,17 @@ namespace OnlineShop.Db
         }
         public Order GetOrderByNumber(int number)
         {
-            return databaseContext.Orders.Where(x => x.Number == number).FirstOrDefault();
+            var order = databaseContext.Orders.Where(x => x.Number == number).Include(x => x.Items).ThenInclude(x => x.Product).FirstOrDefault();
+            order.UserContacts = databaseContext.UserContacts.FirstOrDefault(x => x.OrderId == order.Id);
+            return order;
         }
         public void Delete(int number)
         {
-            databaseContext.Orders.Remove(databaseContext.Orders.FirstOrDefault(x => x.Number == number));
+            var order = databaseContext.Orders.FirstOrDefault(x => x.Number == number);
+            var contacts = databaseContext.UserContacts.FirstOrDefault(x => x.OrderId == order.Id);
+            var cartitems = databaseContext.CartItems.Where(q => q.Id == order.Id).Include(x => x.Items).ThenInclude(x => x.Product).ToList();
+            databaseContext.UserContacts.Remove(contacts);
+            databaseContext.Orders.Remove(order);
             databaseContext.SaveChanges();
         }
         public List<Order> GetOrdersByUserId(string userId)

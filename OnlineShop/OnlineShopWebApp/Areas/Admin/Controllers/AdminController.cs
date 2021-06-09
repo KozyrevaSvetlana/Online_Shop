@@ -117,12 +117,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             var order = ordersRepository.GetOrderByNumber(number);
             ViewData["Statuses"] = Mapping.ToOrderViewModels(order).InfoStatus.GetAllStatuses();
-            return View(order);
+            return View(Mapping.ToOrderViewModels(order));
         }
         public IActionResult EditOrder(int number, string status)
         {
-            var order = ordersRepository.GetOrderByNumber(number);
-            Mapping.ToOrderViewModels(order).InfoStatus.ChangeStatus(status);
+            ordersRepository.Edit(number, Mapping.ToIntStatus(status));
             return RedirectToAction("Orders", "Admin");
         }
         public ActionResult DeleteOrder(int number)
