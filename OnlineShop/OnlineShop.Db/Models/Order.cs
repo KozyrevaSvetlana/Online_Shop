@@ -12,12 +12,12 @@ namespace OnlineShop.Db.Models
         public UserContact User { get; set; }
         public List<CartItem> Items { get; set; }
         public int InfoStatus { get; set; }
-        public DateTime Data { get; set; }
+        public DateTime Date { get; set; }
         public Order()
         {
             User = new UserContact();
             Items = new List<CartItem>();
-            Data = DateTime.Now;
+            Date = DateTime.Now;
             InfoStatus = 1;
         }
     }

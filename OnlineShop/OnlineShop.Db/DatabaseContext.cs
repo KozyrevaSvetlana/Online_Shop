@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Models;
-using System.Collections.Generic;
 
 namespace OnlineShop.Db
 {
@@ -11,6 +10,7 @@ namespace OnlineShop.Db
         public DbSet<Order> Orders { get; set; }
         public DbSet<UserContact> UserContacts { get; set; }
         public DbSet<Compare> Compares { get; set; }
+        public DbSet<Favorites> Favorites { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {

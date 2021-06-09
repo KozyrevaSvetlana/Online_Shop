@@ -115,5 +115,18 @@ namespace OnlineShopWebApp.Helpers
             }
             return productsViewModels;
         }
+        public static FavoritesViewModel ToFavoritesViewModel(Favorites favorite)
+        {
+            if (favorite == null)
+            {
+                return null;
+            }
+            return new FavoritesViewModel
+            {
+                Id = favorite.Id,
+                UserId = favorite.UserId,
+                Items = ToProductViewModels(favorite.Items)
+            };
+        }
     }
 }
