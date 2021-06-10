@@ -95,6 +95,41 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.Products = ToCartItemViewModels(orderDb.Items);
             return orderViewModels;
         }
+        public static CompareViewModel ToCompareViewModel(Compare compare)
+        {
+            if (compare == null)
+            {
+                return null;
+            }
+            return new CompareViewModel
+            {
+                Id = compare.Id,
+                UserId = compare.UserId,
+                Items = ToProductViewModels(compare.Items)
+            };
+        }
+        public static List<ProductViewModel> ToProductViewModels(List<Product> products)
+        {
+            var productsViewModels = new List<ProductViewModel>();
+            foreach (var product in products)
+            {
+                productsViewModels.Add(ToProductViewModel(product));
+            }
+            return productsViewModels;
+        }
+        public static FavoritesViewModel ToFavoritesViewModel(Favorites favorite)
+        {
+            if (favorite == null)
+            {
+                return null;
+            }
+            return new FavoritesViewModel
+            {
+                Id = favorite.Id,
+                UserId = favorite.UserId,
+                Items = ToProductViewModels(favorite.Items)
+            };
+        }
 
 
         public static List<OrderViewModel> ToOrdersViewModels(List<Order> ordersDb)

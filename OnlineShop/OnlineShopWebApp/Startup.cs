@@ -27,8 +27,8 @@ namespace OnlineShopWebApp
 
             services.AddTransient<IProductsRepository, ProductsDbRepository>();
             services.AddTransient<ICartsRepository, CartsDbRepository>();
-            services.AddSingleton<ICompareRepository, InMemoryCompareRepository>();
-            services.AddSingleton<IFavoritesRepository, InMemoryFavoritesRepository>();
+            services.AddTransient<ICompareRepository, ComparesDbRepository>();
+            services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
             services.AddSingleton<IRolesRepository, InMemoryRolesRepository>();
             services.AddSingleton<IUsersRepository, InMemorUsersRepository>();

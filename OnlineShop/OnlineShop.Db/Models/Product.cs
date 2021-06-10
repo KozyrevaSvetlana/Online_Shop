@@ -12,9 +12,13 @@ namespace OnlineShop.Db.Models
         public string Image { get; set; }
         public List<CartItem> CartItems { get; set; }
         public List<Order> Orders { get; set; }
+        public List<Compare> Compares { get; set; }
+        public List<Favorites> Favorites { get; set; }
         public Product()
         {
             CartItems = new List<CartItem>();
+            Compares = new List<Compare>();
+            Favorites = new List<Favorites>();
         }
     }
 }

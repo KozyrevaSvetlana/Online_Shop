@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OnlineShop.Db.Models
+﻿namespace OnlineShop.Db.Models
 {
     public class CartItem
     {
@@ -9,5 +7,6 @@ namespace OnlineShop.Db.Models
         public Cart Cart { get; set; }
         public int Amount { get; set; }
         public Order Order { get; set; }
+        public UserContact UserContact { get; set; }
     }
 }

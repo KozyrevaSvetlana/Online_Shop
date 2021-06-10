@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models.Interfaces;
-using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using System;
 
 namespace OnlineShopWebApp.Controllers
@@ -21,13 +20,13 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var cart = favoritesRepository.TryGetByUserId(Constants.UserId);
-            return View(cart);
+            return View(Mapping.ToFavoritesViewModel(cart));
         }
 
         public IActionResult Add(Guid id)
         {
             var product = productsRepository.GetProductById(id);
-            //favoritesRepository.Add(product, Constants.UserId);
+            favoritesRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear()

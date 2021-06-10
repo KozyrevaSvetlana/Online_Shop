@@ -13,11 +13,11 @@ namespace OnlineShop.Db.Models
         public UserContact UserContacts { get; set; }
         public List<CartItem> Items { get; set; }
         public int InfoStatus { get; set; }
-        public DateTime Data { get; set; }
+        public DateTime Date { get; set; }
         public Order()
         {
             Items = new List<CartItem>();
-            Data = DateTime.Now;
+            Date = DateTime.Now;
             InfoStatus = 1;
             UserContacts = new UserContact();
             Number = count;
