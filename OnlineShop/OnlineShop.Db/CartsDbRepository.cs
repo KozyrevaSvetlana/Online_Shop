@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -106,8 +105,8 @@ namespace OnlineShop.Db
 
         public void ClearCart(string userId)
         {
-            var userCart = TryGetByUserId(userId);
-            databaseContext.Carts.Remove(userCart);
+            var existingCart = TryGetByUserId(userId);
+            databaseContext.Carts.Remove(existingCart);
             databaseContext.SaveChanges();
         }
     }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Interfaces;
 using System;
 
 namespace OnlineShopWebApp.Controllers
@@ -21,10 +21,17 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            if (Constants.UserId != "UserId")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
         [HttpPost]
-        public IActionResult Accept(Order order, UserContact userContacts)
+        public IActionResult Accept(string Comment, UserContactViewModel userContacts)
         {
             var errorsResult = userContacts.IsValid();
             if (errorsResult != null)
@@ -36,10 +43,12 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrder(DateTime.Now));
-                var existingCartViewModel = Mapping.ToCartViewModel(cartsRepository.TryGetByUserId(Constants.UserId));
-                ordersRepository.AddOrder(order, existingCartViewModel);
-                cartsRepository.ClearCart(Constants.UserId);
+                var order = new OrderViewModel();
+                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
+                var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+                order.Products = Mapping.ToCartItemViewModels(cart.Items);
+                order.Number = ordersRepository.CountOrders();
+                ordersRepository.AddOrder(Mapping.ToOrder(order), cart);
                 if (Constants.UserId != "UserId")
                 {
                     var user = usersRepository.GetUserByName(Constants.UserId);
@@ -53,7 +62,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Result()
         {
             var order = ordersRepository.GetLastOrder(Constants.UserId);
-            return View(order);
+            return View(Mapping.ToOrderViewModels(order));
         }
     }
 }

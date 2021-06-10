@@ -29,7 +29,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Orders()
         {
-            return View(ordersRepository.AllOrders);
+            return View(Mapping.ToOrdersViewModels(ordersRepository.AllOrders));
         }
         public IActionResult Users()
         {
@@ -116,13 +116,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult OrderForm(int number)
         {
             var order = ordersRepository.GetOrderByNumber(number);
-            ViewData["Statuses"] = order.InfoStatus.GetAllStatuses();
-            return View(order);
+            ViewData["Statuses"] = Mapping.ToOrderViewModels(order).InfoStatus.GetAllStatuses();
+            return View(Mapping.ToOrderViewModels(order));
         }
         public IActionResult EditOrder(int number, string status)
         {
-            var order = ordersRepository.GetOrderByNumber(number);
-            order.InfoStatus.ChangeStatus(status);
+            ordersRepository.Edit(number, Mapping.ToIntStatus(status));
             return RedirectToAction("Orders", "Admin");
         }
         public ActionResult DeleteOrder(int number)
@@ -233,23 +232,6 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var user = usersRepository.GetUserById(id);
             user.UpdateUser(editUser);
             return RedirectToAction("Users", "Admin");
-        }
-        private List<ProductViewModel> GetDataMapping(IEnumerable<Product> allProducts)
-        {
-            var productsViewModels = new List<ProductViewModel>();
-            foreach (var product in allProducts)
-            {
-                var productViewModels = new ProductViewModel
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Cost = product.Cost,
-                    Description = product.Description,
-                    Image = product.Image
-                };
-                productsViewModels.Add(productViewModels);
-            }
-            return productsViewModels;
         }
     }
 }

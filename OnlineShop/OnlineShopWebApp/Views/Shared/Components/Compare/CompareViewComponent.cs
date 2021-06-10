@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 
 namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
 {
@@ -13,8 +15,9 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
 
         public IViewComponentResult Invoke()
         {
-            var compare = compareRepository.TryGetByUserId(Constants.UserId);
-            var compareItemsCount = compare?.Items.Count??0;
+            var compare = compareRepository.TryGetByCompareId(Constants.UserId);
+            var compareViewModel = Mapping.ToCompareViewModel(compare);
+            var compareItemsCount = compareViewModel?.Items.Count ?? 0;
             return View("Compare", compareItemsCount);
         }
     }
