@@ -17,9 +17,9 @@
                     <p class="font-weight-normal">@product.Cost ₽</p>
                 </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-secondary" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id">В корзину</button>
-                    <button type="button" class="btn btn-secondary" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@product.Id">В избранное</button>
-                    <button type="button" class="btn btn-secondary" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@product.Id">Сравнить</button>
+                    <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id">В корзину</a>
+                    <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@product.Id">В избранное</a>
+                    <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@product.Id">Сравнить</a>
                 </div>
             </div>
         </div>
