@@ -4,48 +4,41 @@
 }
 
 
-<div class="text-center">
+<div class="text-center py-5">
     <h1 class="display-4"></h1>
     @if (Model == null)
     {
         <div class="card-body">
             <p>Извините, товар не найден</p>
-            <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
         </div>
     }
     else
     {
-<div class="row">
-    <div class="col-6">
-        <img class="card-img-top" href="@Model.Image" src="@Model.Image" alt="@Model.Name" />
-    </div>
-    <div class="col-6">
+            <div class="row">
+                <div class="col-6">
+                    <img class="card-img-top" href="@Model.Image" src="@Model.Image" alt="@Model.Name" />
+                </div>
+                <div class="col-6 py-2">
+                    <div class="row">
+                        <div class="text-left">
+                            <h2>@Model.Name</h2>
+                            <p class="font-weight-light">@Model.Cost руб</p>
+                            <p class="font-italic">@Model.Description</p>
+                        </div>
+                    </div>
 
+                    <div class="text-left">
 
-        <div class="row">
-            <div class="text-left">
-                <p>@Model.Name</p>
-                <p>@Model.Cost руб</p>
-                <p>@Model.Description</p>
+                        <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">В корзину</a>
+                            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@Model.Id">В избранное</a>
+                            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@Model.Id">Сравнить</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="text-left">
-            <div>
-                <a class="btn btn-success" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id" role="button">Добавить в корзину</a>
-            </div>
-            <br />
-            <div>
-                <a class="btn btn-warning" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@Model.Id" role="button">Добавить в избранное</a>
-            </div>
-            <br />
-            <div>
-                <a class="btn btn-info" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@Model.Id" role="button">Сравнить</a>
-            </div>
-            <br />
-        </div>
-    </div>
-    </div>
-        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
     }
-
+</div>
+<div class="py-1">
+    <a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
 </div>

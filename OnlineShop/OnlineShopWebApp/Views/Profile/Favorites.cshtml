@@ -20,9 +20,11 @@
                                     <p>@item.Description</p>
                                 </div>
                             </div>
-                            <div>
-                                <a class="btn btn-success" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" role="button">Добавить в корзину</a>
-                                <a class="btn btn-danger" asp-area="" asp-controller="Favorites" asp-action="Delete" asp-route-id="@item.Id" role="button">Удалить товар</a>
+                            <div class="text-left">
+                                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">В корзину</button>
+                                    <button type="button" class="btn btn-secondary" asp-area="" asp-controller="Favorites" asp-action="Delete" asp-route-id="@item.Id">Удалить</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -34,7 +36,7 @@
                     <div class="col">
                         <div class="list-group d-flex align-items-center py-5">
                             <p>У Вас нет избранных товаров</p>
-                            <div><a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
+                            <div><a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
                         </div>
                     </div>
                 </div>
