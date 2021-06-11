@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using System;
 
 namespace OnlineShopWebApp.Controllers
@@ -17,7 +18,7 @@ namespace OnlineShopWebApp.Controllers
         public ActionResult Index(Guid id)
         {
             var result = products.GetProductById(id);
-            return View(result);
+            return View(Mapping.ToProductViewModel(result));
         }
 
         [HttpPost]
@@ -27,7 +28,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 TempData["Result"] = result;
                 var searchResult = products.SeachProduct(result.Split());
-                return View(searchResult);
+                return View(Mapping.ToProductViewModels(searchResult));
             }
             return View();
         }
