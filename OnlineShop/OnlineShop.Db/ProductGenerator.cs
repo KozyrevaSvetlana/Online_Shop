@@ -11,6 +11,7 @@ namespace OnlineShop.Db
         {
             var product = new Product()
             {
+                Id = Guid.NewGuid(),
                 Name = names[random.Next(0, 21)],
                 Cost = random.Next(1, 100001),
                 Description = descriptions[random.Next(0, 28)],

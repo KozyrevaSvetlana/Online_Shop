@@ -23,7 +23,11 @@ namespace OnlineShop.Db
                 .HasOne(b => b.UserContacts)
                 .WithOne(i => i.Order)
                 .HasForeignKey<UserContact>(b => b.OrderId);
-            modelBuilder.Entity<Product>().HasData(ProductGenerator.GeneradeRandomProduct());
+                for (int i = 0; i < 20; i++)
+            {
+                modelBuilder.Entity<Product>()
+                .HasData(ProductGenerator.GeneradeRandomProduct());
+            };
         }
     }
 }

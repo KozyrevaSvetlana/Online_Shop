@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Db;
 
 namespace OnlineShop.Db.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210611063412_SeedInicialData")]
+    partial class SeedInicialData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,163 +187,19 @@ namespace OnlineShop.Db.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a3f432a9-17a0-4307-984b-290611a248f5"),
-                            Cost = 11426m,
+                            Id = new Guid("b1b2d7fb-50b8-4a6d-b450-883c0bf40a0e"),
+                            Cost = 22005m,
                             Description = "Восторг",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Пистолетик"
-                        },
-                        new
-                        {
-                            Id = new Guid("755221a6-0f45-4e86-9948-6e9f85872734"),
-                            Cost = 82167m,
-                            Description = "Неплохо",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Ложка"
-                        },
-                        new
-                        {
-                            Id = new Guid("bb71353d-1a58-45a2-84da-9b4137bec6f6"),
-                            Cost = 6957m,
-                            Description = "Высший сорт",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Пирамидка"
-                        },
-                        new
-                        {
-                            Id = new Guid("0794a187-dfea-4807-9259-a7ff279455f2"),
-                            Cost = 94741m,
-                            Description = "Фантастика",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Кукла"
-                        },
-                        new
-                        {
-                            Id = new Guid("a1ffa88c-1316-42a8-8601-95d70a65d150"),
-                            Cost = 18346m,
-                            Description = "Фантастика",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Шапка"
-                        },
-                        new
-                        {
-                            Id = new Guid("fbb6b537-d539-47ee-95c6-386b5ac0679a"),
-                            Cost = 54643m,
-                            Description = "Потрясног",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Конструктор"
-                        },
-                        new
-                        {
-                            Id = new Guid("27baabe2-d81b-4c46-86e0-23b97d7637c8"),
-                            Cost = 4225m,
-                            Description = "Ништяк",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Ложка"
-                        },
-                        new
-                        {
-                            Id = new Guid("0cb8d9f0-c806-462c-a1b6-3f095b324761"),
-                            Cost = 12248m,
-                            Description = "Потрясног",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Соска"
-                        },
-                        new
-                        {
-                            Id = new Guid("615496eb-0537-4657-8237-f033266a3a57"),
-                            Cost = 76311m,
-                            Description = "Приятно",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Пистолетик"
-                        },
-                        new
-                        {
-                            Id = new Guid("e54fae4f-7d6c-4e34-aa1b-820cdc772653"),
-                            Cost = 51625m,
-                            Description = "Супер",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Ложка"
-                        },
-                        new
-                        {
-                            Id = new Guid("a76d1ebe-cc7d-4618-ac9f-3d1f4935fe57"),
-                            Cost = 66068m,
-                            Description = "Непонятно",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Чашка"
-                        },
-                        new
-                        {
-                            Id = new Guid("7a2227e4-4603-444f-ae2d-099079474ea0"),
-                            Cost = 73815m,
-                            Description = "Высший сорт",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Пистолетик"
-                        },
-                        new
-                        {
-                            Id = new Guid("8002540c-9944-4b42-ac8c-01ad787e81e6"),
-                            Cost = 59657m,
-                            Description = "Никуда не годится",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Трусы"
-                        },
-                        new
-                        {
-                            Id = new Guid("56db2983-947f-45d5-ba51-5d5cef5cf7a5"),
-                            Cost = 38020m,
-                            Description = "Высший сорт",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Пирамидка"
-                        },
-                        new
-                        {
-                            Id = new Guid("6e406ea4-2656-4c1f-a0d3-8acbc9265dd7"),
-                            Cost = 83000m,
-                            Description = "Неплохо",
                             Image = "/img/Products/empty.gif",
                             Name = "Мишка"
                         },
                         new
                         {
-                            Id = new Guid("fce4ebfe-1ae7-4e47-b29f-1d34916fc298"),
-                            Cost = 94608m,
-                            Description = "Отменно",
+                            Id = new Guid("aa45e09e-5e1c-4d6d-ae6b-312784420b02"),
+                            Cost = 64843m,
+                            Description = "Огонь!",
                             Image = "/img/Products/empty.gif",
-                            Name = "Пистолетик"
-                        },
-                        new
-                        {
-                            Id = new Guid("fe7524c9-a431-4b5b-83b2-9568c7f37bfa"),
-                            Cost = 10398m,
-                            Description = "Нет слов",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Конструктор"
-                        },
-                        new
-                        {
-                            Id = new Guid("c9f07f92-c9d5-4e8f-8093-5c242997ba82"),
-                            Cost = 97890m,
-                            Description = "Фантастика",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Шапка"
-                        },
-                        new
-                        {
-                            Id = new Guid("133788f9-139f-453e-b543-98b5876c4cb7"),
-                            Cost = 3822m,
-                            Description = "Приятно",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Чашка"
-                        },
-                        new
-                        {
-                            Id = new Guid("beb1332d-fbe9-4d6e-88f1-c2603bc7a80f"),
-                            Cost = 88268m,
-                            Description = "Восторг",
-                            Image = "/img/Products/empty.gif",
-                            Name = "Ползунки"
+                            Name = "Соска"
                         });
                 });
 
