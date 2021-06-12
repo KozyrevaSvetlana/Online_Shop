@@ -1,13 +1,16 @@
 ﻿@model User
-<div class="row">
+<div class="row py-5">
     <div class="col-2">
         @await Html.PartialAsync("ProfileLeftMenu")
     </div>
     <div class="col-10">
-        <div class="row">
-                <h4>Избранные товары</h4>
+        <div class="row py-3">
+
             @if (ViewBag.Favorites != null)
             {
+                <div class="col text-left">
+                    <h4>Избранные товары</h4>
+                </div>
                 @foreach (var item in ViewBag.Favorites.Items)
                 {
                     <div class="col-lg-4 col-md-6 mb-4">
@@ -32,11 +35,18 @@
             }
             else
             {
-                <div class="row">
-                    <div class="col">
-                        <div class="list-group d-flex align-items-center py-5">
-                            <p>У Вас нет избранных товаров</p>
-                            <div><a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a></div>
+                <div class="row py-3">
+                    <div class="col py-3">
+                        <div class="row">
+                            <h1 class="display-4">Избранные товары</h1>
+                        </div>
+                        <h2>Добавьте товар в избранное</h2>
+                        <p>
+                            В этом списке будут храниться товары, которые Вас заинтересовали.<br />
+                            Можете добавить сюда недавно просмотренные товары.
+                        </p>
+                        <div class="row">
+                            <a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
                         </div>
                     </div>
                 </div>
