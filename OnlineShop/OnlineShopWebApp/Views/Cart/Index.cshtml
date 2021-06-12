@@ -49,18 +49,11 @@ else
     </div>
     <div class="text-left">
         <div class="btn-group-vertical" role="group" aria-label="Basic example">
-            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">В корзину</a>
-            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@Model.Id">В избранное</a>
-            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@Model.Id">Сравнить</a>
+            <a class="btn btn-secondary" asp-controller="Order" asp-action="Index" role="button">Оформить заказ</a>
+            <a class="btn btn-dark" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+            <a class="btn btn-danger" asp-controller="cart" asp-action="Clear" role="button">Очистить корзину</a>
         </div>
     </div>
-    <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
-    <a class="btn btn-success" asp-controller="Order" asp-action="Index" role="button">Оформить заказ</a>
-    <br />
-    <div>
-        <a class="btn btn-danger" asp-controller="cart" asp-action="Clear" role="button">Очистить корзину</a>
-    </div>
-
 }
 
 

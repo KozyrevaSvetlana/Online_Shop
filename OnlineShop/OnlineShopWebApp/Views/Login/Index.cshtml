@@ -1,39 +1,41 @@
 ﻿@model Login
 
-<div class="row">
-    <div class="col-10">
+<div class="row py-3">
+    <div class="col-5">
         <h1>Вход</h1>
         <form method="post" class="form-group">
             <div class="validatoin" asp-validation-summary="ModelOnly"></div>
-            <div>
+            <div class="py-1">
                 <label asp-for="Name">Логин</label>
                 <div>
-                    <input asp-for="Name" type="text" name="Name" tabindex="1" size="45">
+                    <input class="container-fluid" asp-for="Name" type="text" name="Name" tabindex="1" >
                     <span asp-validation-for="Name"></span>
                 </div>
-                <small class="form-text text-muted">Введите логин</small>
             </div>
-            <div>
+            <div class="py-1">
                 <label asp-for="Password">Пароль</label>
                 <div>
-                    <input asp-for="Password" type="password" name="Password" tabindex="2" size="45">
+                    <input class="container-fluid" asp-for="Password" type="password" name="Password" tabindex="2">
                     <span asp-validation-for="Password"></span>
                 </div>
-                <small class="form-text text-muted">Введите пароль</small>
             </div>
             <div>
                 <input checked type="checkbox" class="form-check-input" name="rememberMe" value="true">
-                <label class="form-check-label" for="dropdownCheck">
+                <label class="form-check-label py-1" for="dropdownCheck">
                     Запомнить меня?
                 </label>
             </div>
             <div>
-                <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="CheckIn" tabindex="3">Войти</button>
+                <button type="submit" class="btn btn-dark container-fluid py-2" asp-controller="Login" asp-action="CheckIn" tabindex="3">Войти</button>
             </div>
         </form>
-        <div>
-            <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="RegIndex">Регистрация нового пользователя</a>
-            <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Забыли пароль?</a>
+        <div class="row container-fluid">
+            <div class="container-fluid py-2">
+                <div class="btn-group-vertical container-fluid" role="group" aria-label="Basic example">
+                    <a class="btn btn-outline-dark container-fluid" asp-area="" asp-controller="Login" asp-action="RegIndex">Регистрация нового пользователя</a>
+                    <a class="btn btn-outline-dark container-fluid" asp-area="" asp-controller="#" asp-action="#">Забыли пароль?</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
