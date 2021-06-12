@@ -30,11 +30,11 @@ else
                         <th>@item.Product.Name</th>
                         <th>@item.Product.Cost</th>
                         <th>
-                            <a type="button" class="btn btn-info" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="1">+</a>
+                            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="1">+</a>
                         </th>
                         <th>@item.Amount</th>
                         <th>
-                            <a type="button" class="btn btn-info" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
+                            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
                         </th>
                         <th>@item.Cost</th>
                         @{i++;}
@@ -45,6 +45,13 @@ else
                 <h3>Итого:</h3>
                 <h3>@Model.Cost</h3>
             </div>
+        </div>
+    </div>
+    <div class="text-left">
+        <div class="btn-group-vertical" role="group" aria-label="Basic example">
+            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">В корзину</a>
+            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@Model.Id">В избранное</a>
+            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@Model.Id">Сравнить</a>
         </div>
     </div>
     <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
