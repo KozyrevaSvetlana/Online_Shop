@@ -1,22 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IUsersRepository usersRepository;
-        private readonly IRolesRepository rolesRepository;
+        private readonly UserManager usersManager;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public LoginController(IUsersRepository usersRepository, IRolesRepository rolesRepository)
+        public AccountController(IUsersManager usersManager, UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            this.usersRepository = usersRepository;
-            this.rolesRepository = rolesRepository;
+            this.usersManager = usersManager;
+            userManager = userManager;
+            signInManager = signInManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string returnUrl)
         {
-            return View();
+            return View(new Login() {ReturnUrl= returnUrl });
         }
         public IActionResult RegIndex()
         {
@@ -26,28 +31,20 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult CheckIn(Login login)
         {
-            if (login.Name == login.Password)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Имя и пароль не должны совпадать");
-            }
-            if (usersRepository.Contains(login.Name))
-            {
-                var user = usersRepository.GetUserByName(login.Name);
-                if (login.Password != user.Login.Password)
+                var result = _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.RememberMe, false).Result;
+                if (result.Succeeded)
                 {
-                    ModelState.AddModelError("", "Вы ввели неверный пароль");
+                    return Redirect(login.ReturnUrl);
                 }
                 else
                 {
-                    Constants.UserId = login.Name;
-                    return View("Result", user);
+                    ModelState.AddModelError("", "Неправильный пароль");
                 }
             }
-            else
-            {
-                ModelState.AddModelError("", "Вы ввели неверное имя");
-            }
-            return View("Index", login);
+
+            return View(login);
         }
         public IActionResult Result(User user)
         {

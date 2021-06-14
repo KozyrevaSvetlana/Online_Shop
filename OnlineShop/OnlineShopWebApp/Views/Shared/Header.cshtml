@@ -9,24 +9,31 @@
                     <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Favorites" asp-action="Index">Избранное @await Component.InvokeAsync("Favorites")</a></li>
                     <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Compare" asp-action="Index">Сравнить @await Component.InvokeAsync("Compare")</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!">Доставка</a></li>
-                    @if (Constants.UserId == "UserId")
+
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Index">Войти</a>
+                            <a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Logout">Выйти</a>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Index">@Constants.UserId</a>
+                            <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Index">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Login" asp-action="RegIndex">Зарегистрироваться</a>
                         </li>
                     }
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Login" asp-action="RegIndex">Зарегистрироваться</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="Home">Панель администратора</a>
-                    </li>
+                    @if (User.IsInRole(Constants.AdminRoleName))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="Home">Панель администратора</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

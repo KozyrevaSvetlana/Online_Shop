@@ -1,5 +1,7 @@
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +9,7 @@ using OnlineShop.Db;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
 using Serilog;
+using System;
 
 namespace OnlineShopWebApp
 {
@@ -24,6 +27,21 @@ namespace OnlineShopWebApp
             string connection = Configuration.GetConnectionString("online_shop_kozyreva");
             services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlServer(connection));
+            services.AddDbContext<IdentityContext>(options =>
+            options.UseSqlServer(connection));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.LoginPath = "/Login/Index";
+                options.LogoutPath = "/Profile/Logout";
+                options.Cookie = new CookieBuilder
+                {
+                    IsEssential = true
+                };
+            });
 
             services.AddTransient<IProductsRepository, ProductsDbRepository>();
             services.AddTransient<ICartsRepository, CartsDbRepository>();
@@ -42,6 +60,8 @@ namespace OnlineShopWebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

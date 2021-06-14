@@ -4,6 +4,7 @@
     <div class="col-5">
         <h1>Вход</h1>
         <form method="post" class="form-group">
+            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl"/>
             <div class="validatoin" asp-validation-summary="ModelOnly"></div>
             <div class="py-1">
                 <label asp-for="Name">Логин</label>
