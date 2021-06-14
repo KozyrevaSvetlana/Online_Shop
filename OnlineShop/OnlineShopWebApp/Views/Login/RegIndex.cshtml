@@ -1,34 +1,35 @@
 ﻿@model Register
-<h1>Регистрация</h1>
-<div class="row">
-    <div class="col-auto">
-        <form method="post">
+<div class="row py-3">
+    <div class="col-5">
+        <div class="py-1">
+            <h1>Регистрация</h1>
+        </div>
+        <form method="post" class="form-group">
             <div class="validatoin" asp-validation-summary="ModelOnly"></div>
+            <div class="py-1">
                 <div>
-                    <div>
-                        <label asp-for="Name">Логин</label>
-                    </div>
-                    <input asp-for="Name" type="text" name="Name" tabindex="1" size="45">
-                    <span asp-validation-for="Name"></span>
-                    <small class="form-text text-muted">Введите логин</small>
+                    <label asp-for="Name">Логин</label>
                 </div>
+                <input class="container-fluid" asp-for="Name" type="text" name="Name" tabindex="1">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="py-1">
                 <div>
-                    <div>
-                        <label asp-for="FirstPassword">Пароль</label>
-                    </div>
-                    <input asp-for="FirstPassword" type="password" name="FirstPassword" tabindex="2" size="45">
-                    <span asp-validation-for="FirstPassword"></span>
-                    <small class="form-text text-muted">Введите пароль</small>
+                    <label asp-for="FirstPassword">Пароль</label>
                 </div>
+                <input class="container-fluid" asp-for="FirstPassword" type="password" name="FirstPassword" tabindex="2">
+                <span asp-validation-for="FirstPassword"></span>
+            </div>
+            <div class="py-1">
                 <div>
-                    <div>
-                        <label asp-for="CheckPassword">Подтверждение пароля</label>
-                    </div>
-                    <input asp-for="CheckPassword" type="password" name="CheckPassword" tabindex="3" size="45">
-                    <span asp-validation-for="CheckPassword"></span>
-                    <small class="form-text text-muted">Подтвердите пароль</small>
+                    <label asp-for="CheckPassword">Подтверждение пароля</label>
                 </div>
-                <button type="submit" class="btn btn-primary" asp-area="" asp-controller="Login" asp-action="Create" tabindex="4">Регистрация</button>
+                <input class="container-fluid" asp-for="CheckPassword" type="password" name="CheckPassword" tabindex="3">
+                <span asp-validation-for="CheckPassword"></span>
+            </div>
         </form>
+        <div class="py-3">
+            <button type="submit" class="btn btn-dark container-fluid" asp-area="" asp-controller="Login" asp-action="Create" tabindex="4">Регистрация</button>
+        </div>
     </div>
 </div>

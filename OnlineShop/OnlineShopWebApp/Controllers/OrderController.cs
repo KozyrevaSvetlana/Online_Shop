@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
@@ -23,6 +22,8 @@ namespace OnlineShopWebApp.Controllers
         {
             if (Constants.UserId != "UserId")
             {
+                var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+                ViewBag.Cart = Mapping.ToCartItemViewModels(cart.Items);
                 return View();
             }
             else

@@ -1,51 +1,84 @@
 ﻿@model UserContactViewModel
-<div class="row">
-    <div class="col-auto">
-        <form method="post">
-            <h5 class="card-title">Оформление заказа</h5>
-            <div class="validatoin" asp-validation-summary="ModelOnly"></div>
-            <p class="card-text">Введите Ваши данные</p>
-            <div>
-                <div>
-                    <label asp-for="Name">Имя</label>
+<div class="container py-3">
+    <div class="row py-1">
+        <div class="col-6">
+            <form method="post">
+                <div class="py-1">
+                    <h5 class="card-title">Оформление заказа</h5>
                 </div>
-                <input asp-for="Name" tabindex="1" type="text" name="Name">
-                <span asp-validation-for="Name"></span>
-            </div>
-            <div>
+                <div class="validatoin" asp-validation-summary="ModelOnly"></div>
+                <p class="card-text">Введите Ваши данные</p>
                 <div>
-                    <label asp-for="Surname">Фамилия</label>
+                    <div>
+                        <label asp-for="Name">Имя</label>
+                    </div>
+                    <input asp-for="Name" tabindex="1" type="text" name="Name">
+                    <span asp-validation-for="Name"></span>
                 </div>
-                <input asp-for="Surname" tabindex="2" type="text" name="Surname">
-                <span asp-validation-for="Surname"></span>
-            </div>
-            <div>
-                <label asp-for="Adress">Адрес</label>
-            </div>
-            <div>
-                <input asp-for="Adress" tabindex="3" type="text" name="Adress">
-                <span asp-validation-for="Adress"></span>
-            </div>
-            <div>
                 <div>
-                    <label asp-for="Phone">Телефон</label>
+                    <div>
+                        <label asp-for="Surname">Фамилия</label>
+                    </div>
+                    <input asp-for="Surname" tabindex="2" type="text" name="Surname">
+                    <span asp-validation-for="Surname"></span>
                 </div>
-                <input asp-for="Phone" tabindex="4" type="tel" name="Phone">
-                <span asp-validation-for="Phone"></span>
-            </div>
-            <div>
                 <div>
-                    <label asp-for="Email">Электронная почта</label>
+                    <label asp-for="Adress">Адрес</label>
                 </div>
-                <input asp-for="Email" tabindex="5" type="text" name="Email">
-                <span asp-validation-for="Email"></span>
+                <div>
+                    <input asp-for="Adress" tabindex="3" type="text" name="Adress">
+                    <span asp-validation-for="Adress"></span>
+                </div>
+                <div>
+                    <div>
+                        <label asp-for="Phone">Телефон</label>
+                    </div>
+                    <input asp-for="Phone" tabindex="4" type="tel" name="Phone">
+                    <span asp-validation-for="Phone"></span>
+                </div>
+                <div>
+                    <div>
+                        <label asp-for="Email">Электронная почта</label>
+                    </div>
+                    <input asp-for="Email" tabindex="5" type="text" name="Email">
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div>
+                    <p>Комментарий к заказу</p>
+                    <textarea tabindex="6" name="Comment" cols="30" rows="10"></textarea>
+                </div>
+                <br />
+                <button class="btn btn-dark" type="submit" asp-area="" asp-controller="Order" asp-action="Accept" tabindex="7">Оформить заказ</button>
+            </form>
+        </div>
+        <div class="col-6 py-1">
+            <div class="col">
+                <table class="table">
+                    <tr class="text-center">
+                        <th>Номер</th>
+                        <th>Название</th>
+                        <th>Цена, руб.</th>
+                        <th>Количество</th>
+                        <th>Стоимость</th>
+                    </tr>
+                    @{ int i = 1; decimal totalCost = 0;}
+                    @foreach (var item  in  ViewBag.Cart)
+                    {
+                        <tr class="text-center">
+                            <th>@i</th>
+                            <th>@item.Product.Name</th>
+                            <th>@item.Product.Cost</th>
+                            <th>@item.Amount</th>
+                            <th>@item.Cost</th>
+                            @{i++; totalCost += item.Cost;}
+                        </tr>
+                    }
+                </table>
+                <div class="text-right">
+                    <h3>Итого:</h3>
+                    <h3>@totalCost руб.</h3>
+                </div>
             </div>
-            <div>
-                <p>Комментарий к заказу</p>
-                <textarea tabindex="6" name="Comment" cols="30" rows="10"></textarea>
-            </div>
-            <br />
-            <button class="btn btn-success" type="submit" asp-area="" asp-controller="Order" asp-action="Accept" tabindex="7">Оформить заказ</button>
-        </form>
+        </div>
     </div>
 </div>

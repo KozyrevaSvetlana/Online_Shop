@@ -30,11 +30,11 @@ else
                         <th>@item.Product.Name</th>
                         <th>@item.Product.Cost</th>
                         <th>
-                            <a type="button" class="btn btn-info" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="1">+</a>
+                            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="1">+</a>
                         </th>
                         <th>@item.Amount</th>
                         <th>
-                            <a type="button" class="btn btn-info" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
+                            <a type="button" class="btn btn-secondary" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
                         </th>
                         <th>@item.Cost</th>
                         @{i++;}
@@ -47,13 +47,13 @@ else
             </div>
         </div>
     </div>
-    <a class="btn btn-info" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
-    <a class="btn btn-success" asp-controller="Order" asp-action="Index" role="button">Оформить заказ</a>
-    <br />
-    <div>
-        <a class="btn btn-danger" asp-controller="cart" asp-action="Clear" role="button">Очистить корзину</a>
+    <div class="text-left">
+        <div class="btn-group-vertical" role="group" aria-label="Basic example">
+            <a class="btn btn-secondary" asp-controller="Order" asp-action="Index" role="button">Оформить заказ</a>
+            <a class="btn btn-dark" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+            <a class="btn btn-danger" asp-controller="cart" asp-action="Clear" role="button">Очистить корзину</a>
+        </div>
     </div>
-
 }
 
 
