@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
+using Serilog;
 
 namespace OnlineShopWebApp
 {
@@ -29,6 +30,7 @@ namespace OnlineShopWebApp
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .UseSerilog();
     }
 }
