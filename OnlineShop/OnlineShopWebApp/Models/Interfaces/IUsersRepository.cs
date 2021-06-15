@@ -5,16 +5,16 @@ namespace OnlineShopWebApp.Models
 {
     public interface IUsersRepository
     {
-        IEnumerable<User> AllUsers { get; }
+        IEnumerable<UserViewModel> AllUsers { get; }
 
-        void AddUser(User user);
-        void DeleteUser(User user);
-        void EditUser(User editUser);
-        User GetUserByEmail(string email);
-        User GetUserByPhone(string phone);
+        void AddUser(UserViewModel user);
+        void DeleteUser(UserViewModel user);
+        void EditUser(UserViewModel editUser);
+        UserViewModel GetUserByEmail(string email);
+        UserViewModel GetUserByPhone(string phone);
         bool IsUnique(string name);
-        User GetUserByName(string name);
+        UserViewModel GetUserByName(string name);
         bool Contains(string name);
-        User GetUserById(string id);
+        UserViewModel GetUserById(string id);
     }
 }

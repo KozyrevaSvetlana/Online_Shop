@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
@@ -229,7 +229,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return View(user);
         }
         [HttpPost]
-        public ActionResult EditUserInfo(User editUser, string id)
+        public ActionResult EditUserInfo(UserViewModel editUser, string id)
         {
             var user = usersRepository.GetUserById(id);
             user.UpdateUser(editUser);

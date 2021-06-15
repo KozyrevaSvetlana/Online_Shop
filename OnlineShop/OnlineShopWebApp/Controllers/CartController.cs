@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using System;

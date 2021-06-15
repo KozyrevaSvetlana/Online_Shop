@@ -10,7 +10,7 @@ namespace OnlineShopWebApp.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Не указан пароль")]
         [StringLength(35, MinimumLength = 4, ErrorMessage = "Пароль должен быть минимум 4 символа, максимум 35 символов")]
-        public string FirstPassword { get; set; }
+        public string Password { get; set; }
         [Required(ErrorMessage = "Не указано подтверждение пароля")]
         [StringLength(35, MinimumLength = 4, ErrorMessage = "Пароль должен быть минимум 4 символа, максимум 35 символов")]
         [Compare("FirstPassword", ErrorMessage ="Пароли не совпадают")]

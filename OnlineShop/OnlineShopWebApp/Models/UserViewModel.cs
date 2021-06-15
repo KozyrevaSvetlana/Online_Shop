@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
-    public class User
+    public class UserViewModel
     {
         public Guid Id { get; set; }
         public Login Login { get; set; }
         public List<OrderViewModel> Orders { get; set; }
         public UserContactViewModel Contacts { get; set; }
         public Role Role { get; set; }
-        public User(Login login)
+        public UserViewModel(Login login)
         {
             Id = Guid.NewGuid();
             Login = login;
@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Models
         {
             Orders.Add(order);
         }
-        public User() { }
+        public UserViewModel() { }
         public void AddContacts(UserContactViewModel contacts)
         {
             Contacts.Name = contacts.Name;
@@ -36,7 +36,7 @@ namespace OnlineShopWebApp.Models
         {
             Role = role;
         }
-        public void UpdateUser(User newUser)
+        public void UpdateUser(UserViewModel newUser)
         {
             Login.Name = newUser.Login.Name;
             Login.Password = newUser.Login.Password;

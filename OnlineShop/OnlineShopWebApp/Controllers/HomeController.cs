@@ -17,9 +17,5 @@ namespace OnlineShopWebApp.Controllers
         {
             return View(Mapping.ToProductViewModels(products.AllProducts));
         }
-        public IActionResult Logout()
-        {
-            return RedirectToAction("Index");
-        }
     }
 }

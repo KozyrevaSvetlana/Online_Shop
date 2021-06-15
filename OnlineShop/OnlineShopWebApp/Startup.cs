@@ -1,11 +1,12 @@
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineShop.Db;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
 using Serilog;
@@ -30,13 +31,17 @@ namespace OnlineShopWebApp
             services.AddDbContext<IdentityContext>(options =>
             options.UseSqlServer(connection));
 
+            services.AddDbContext<IdentityContext>(options =>
+                            options.UseSqlServer(connection));
+
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>();
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromHours(8);
-                options.LoginPath = "/Login/Index";
-                options.LogoutPath = "/Profile/Logout";
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
                 options.Cookie = new CookieBuilder
                 {
                     IsEssential = true
@@ -49,7 +54,6 @@ namespace OnlineShopWebApp
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
             services.AddSingleton<IRolesRepository, InMemoryRolesRepository>();
-            services.AddSingleton<IUsersRepository, InMemorUsersRepository>();
             services.AddControllersWithViews();
         }
 
