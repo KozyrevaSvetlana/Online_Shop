@@ -51,11 +51,6 @@ namespace OnlineShopWebApp.Controllers
                 order.Products = Mapping.ToCartItemViewModels(cart.Items);
                 order.Number = ordersRepository.CountOrders();
                 ordersRepository.AddOrder(Mapping.ToOrder(order), cart);
-                //if (Constants.UserId != "UserId")
-                //{
-                //    var user = usersRepository.GetUserByName(Constants.UserId);
-                //    user.Orders.Add(order);
-                //}
                 return RedirectToAction("Result");
             }
             return View("Index");

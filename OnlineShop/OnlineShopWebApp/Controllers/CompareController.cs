@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
@@ -15,13 +14,11 @@ namespace OnlineShopWebApp.Controllers
         private readonly IProductsRepository productsRepository;
         private readonly ICompareRepository compareRepository;
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
 
-        public CompareController(IProductsRepository productsRepository,  ICompareRepository compareRepository, UserManager<User> userManager, SignInManager<User> signInManager)
+        public CompareController(IProductsRepository productsRepository, ICompareRepository compareRepository, UserManager<User> userManager)
         {
             this.productsRepository = productsRepository;
             this.compareRepository = compareRepository;
-            this.signInManager = signInManager;
             this.userManager = userManager;
         }
         public IActionResult Index()

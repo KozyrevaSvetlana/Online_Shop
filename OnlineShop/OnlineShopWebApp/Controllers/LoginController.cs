@@ -27,14 +27,13 @@ namespace OnlineShopWebApp.Controllers
             }
             return View();
         }
-        public IActionResult RegIndex()
+        public IActionResult RegIndex(string returnUrl)
         {
+            if (returnUrl != null)
+            {
+                return View(new Register() { ReturnUrl = returnUrl });
+            }
             return View();
-        }
-        [HttpPost]
-        public IActionResult RegIndex(Login login)
-        {
-            return View(new Register() { ReturnUrl = login.ReturnUrl });
         }
 
         [HttpPost]
@@ -50,28 +49,13 @@ namespace OnlineShopWebApp.Controllers
                         return RedirectToAction(nameof(HomeController.Index), "Home");
                     }
                     return Redirect(login.ReturnUrl);
-                    //if (login.ReturnUrl!="")
-                    //{
-                    //}
-                    //else
-                    //{
-                    //    var userDb = userManager.FindByNameAsync(login.Name).Result;
-                    //    var lastOrder = ordersRepository.GetLastOrder(userDb.UserName);
-                    //    var user = new UserViewModel() { Login = login, Id=userDb.Id, Orders=new lis };
-                    //    return RedirectToAction("Result");
-                    //}
                 }
                 else
                 {
                     ModelState.AddModelError("", "Неправильный пароль");
                 }
             }
-
             return View(login);
-        }
-        public IActionResult Result(User user)
-        {
-            return View(user);
         }
         [HttpPost]
         public IActionResult Create(Register register)
@@ -80,21 +64,18 @@ namespace OnlineShopWebApp.Controllers
             {
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать!");
             }
-
             if (ModelState.IsValid)
             {
                 User user = new User { UserName = register.Name };
-                // добавляем пользователя
                 var result = userManager.CreateAsync(user, register.Password).Result;
                 if (result.Succeeded)
                 {
-                    // установка куки
                     signInManager.SignInAsync(user, false).Wait();
                     if (register.ReturnUrl == null)
                     {
                         return RedirectToAction(nameof(HomeController.Index), "Home");
                     }
-                    return View(register.ReturnUrl);
+                    return Redirect(register.ReturnUrl);
                 }
                 else
                 {
@@ -104,9 +85,8 @@ namespace OnlineShopWebApp.Controllers
                         return View("RegIndex", register);
                     }
                 }
-
             }
-            return View(register);
+            return View("RegIndex", register);
         }
         public IActionResult Logout()
         {

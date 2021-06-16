@@ -169,5 +169,12 @@ namespace OnlineShopWebApp.Helpers
             }
             return 0;
         }
+        public static UserViewModel ToUserViewModel(this User userDb)
+        {
+            var userVM = new UserViewModel();
+            userVM.Id = userDb.Id;
+            userVM.Login.Name = userDb.UserName;
+            return userVM;
+        }
     }
 }

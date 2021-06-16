@@ -14,15 +14,13 @@ namespace OnlineShopWebApp.Controllers
         private readonly IProductsRepository productsRepository;
         private readonly ICartsRepository cartsRepository;
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
 
-        public CartController(IProductsRepository productsRepository, ICartsRepository cartsRepository, UserManager<User> userManager, SignInManager<User> signInManager)
+        public CartController(IProductsRepository productsRepository, ICartsRepository cartsRepository, UserManager<User> userManager)
         {
             this.productsRepository = productsRepository;
             this.cartsRepository = cartsRepository;
-            this.signInManager = signInManager;
             this.userManager = userManager;
-        } 
+        }
         public IActionResult Index()
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;

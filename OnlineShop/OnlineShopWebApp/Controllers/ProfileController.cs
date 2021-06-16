@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
@@ -8,32 +10,33 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly IUsersRepository usersRepository;
+        private readonly UserManager<User> userManager;
         private readonly IFavoritesRepository favoritesRepository;
         private readonly IOrdersRepository ordersRepository;
 
-        public ProfileController(IUsersRepository usersRepository, IFavoritesRepository favoritesRepository, IOrdersRepository ordersRepository)
+        public ProfileController(IUsersRepository usersRepository, IFavoritesRepository favoritesRepository, IOrdersRepository ordersRepository, UserManager<User> userManager)
         {
-            this.usersRepository = usersRepository;
             this.favoritesRepository = favoritesRepository;
             this.ordersRepository = ordersRepository;
+            this.userManager = userManager;
         }
         public IActionResult Index()
         {
-            return View(usersRepository.GetUserByName(Constants.UserId));
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            return View(user.ToUserViewModel());
         }
         public IActionResult Orders()
         {
-            var user = usersRepository.GetUserByName(Constants.UserId);
-            var orders = ordersRepository.GetOrdersByUserId(user.Login.Name);
-            user.Orders=Mapping.ToOrdersViewModels(orders);
-            return View(user);
+            var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+            var orders = ordersRepository.GetOrdersByUserId(userDb.UserName);
+            userDb.ToUserViewModel().Orders = Mapping.ToOrdersViewModels(orders);
+            return View(userDb);
         }
         public IActionResult Contacts()
         {
-            var user = usersRepository.GetUserByName(Constants.UserId);
-            var emptyContacts = user.GetEmptyContacts();
-            if (emptyContacts.Count!=0)
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var emptyContacts = user.ToUserViewModel().GetEmptyContacts();
+            if (emptyContacts.Count != 0)
             {
                 ViewBag.Empty = emptyContacts;
             }
@@ -41,7 +44,8 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult AddContacts()
         {
-            ViewData["Name"] = Constants.UserId;
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            ViewData["Name"] = user.UserName;
             return View();
         }
 
@@ -58,17 +62,17 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                var user = usersRepository.GetUserByName(Constants.UserId);
-                user.AddContacts(userContacts);
-                return View("Contacts", user);
+                var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+                //сделать метод добавления контактов к юзеру
+                return View("Contacts", userDb);
             }
             return View("Contacts");
         }
         public IActionResult Favorites()
         {
-            var user = usersRepository.GetUserByName(Constants.UserId);
-            ViewBag.Favorites = favoritesRepository.TryGetByUserId(Constants.UserId);
-            return View(user);
+            var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+            ViewBag.Favorites = favoritesRepository.TryGetByUserId(userDb.UserName);
+            return View(userDb.ToUserViewModel());
         }
     }
 }
