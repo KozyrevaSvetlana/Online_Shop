@@ -23,5 +23,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  "buildOptions": {
+    "preserveCompilationContext": true,
+    "emitEntryPoint": true
   }
 }

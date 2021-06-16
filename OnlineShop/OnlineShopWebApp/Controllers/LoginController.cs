@@ -1,30 +1,41 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models;
+using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
+using System;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IUsersRepository usersRepository;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IOrdersRepository ordersRepository;
 
-        public LoginController(IUsersRepository usersRepository, UserManager<User> userManager, SignInManager<User> signInManager)
+        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager, IOrdersRepository ordersRepository)
         {
-            this.usersRepository = usersRepository;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.ordersRepository = ordersRepository;
         }
 
         public IActionResult Index(string returnUrl)
         {
-            return View(new Login() {ReturnUrl= returnUrl });
+            if (returnUrl != null)
+            {
+                return View(new Login() { ReturnUrl = returnUrl });
+            }
+            return View();
         }
         public IActionResult RegIndex()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult RegIndex(Login login)
+        {
+            return View(new Register() { ReturnUrl = login.ReturnUrl });
         }
 
         [HttpPost]
@@ -35,7 +46,21 @@ namespace OnlineShopWebApp.Controllers
                 var result = signInManager.PasswordSignInAsync(login.Name, login.Password, login.RememberMe, false).Result;
                 if (result.Succeeded)
                 {
+                    if (login.ReturnUrl == null)
+                    {
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
                     return Redirect(login.ReturnUrl);
+                    //if (login.ReturnUrl!="")
+                    //{
+                    //}
+                    //else
+                    //{
+                    //    var userDb = userManager.FindByNameAsync(login.Name).Result;
+                    //    var lastOrder = ordersRepository.GetLastOrder(userDb.UserName);
+                    //    var user = new UserViewModel() { Login = login, Id=userDb.Id, Orders=new lis };
+                    //    return RedirectToAction("Result");
+                    //}
                 }
                 else
                 {
@@ -66,15 +91,21 @@ namespace OnlineShopWebApp.Controllers
                 {
                     // установка куки
                     signInManager.SignInAsync(user, false).Wait();
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    if (register.ReturnUrl == null)
+                    {
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
+                    return View(register.ReturnUrl);
                 }
                 else
                 {
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        ModelState.AddModelError("", error.Description);
+                        return View("RegIndex", register);
                     }
                 }
+
             }
             return View(register);
         }

@@ -26,7 +26,7 @@ namespace OnlineShopWebApp.Controllers
         {
             if (Constants.UserId != "UserId")
             {
-                Cart cart = cartsRepository.TryGetByUserId(Constants.UserId);
+                var cart = cartsRepository.TryGetByUserId(Constants.UserId);
                 ViewBag.Cart = Mapping.ToCartItemViewModels(cart.Items);
                 return View();
             }

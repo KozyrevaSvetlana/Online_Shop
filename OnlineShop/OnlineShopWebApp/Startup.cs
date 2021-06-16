@@ -40,8 +40,8 @@ namespace OnlineShopWebApp
             services.ConfigureApplicationCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromHours(8);
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
+                options.LoginPath = "/Login/Index";
+                options.LogoutPath = "/Login/Logout";
                 options.Cookie = new CookieBuilder
                 {
                     IsEssential = true
@@ -53,10 +53,17 @@ namespace OnlineShopWebApp
             services.AddTransient<ICompareRepository, ComparesDbRepository>();
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
-            services.AddSingleton<IRolesRepository, InMemoryRolesRepository>();
             services.AddControllersWithViews();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 4;
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
         }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();

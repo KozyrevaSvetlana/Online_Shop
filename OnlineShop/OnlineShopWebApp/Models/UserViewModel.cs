@@ -1,28 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Models
 {
     public class UserViewModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public Login Login { get; set; }
         public List<OrderViewModel> Orders { get; set; }
         public UserContactViewModel Contacts { get; set; }
         public Role Role { get; set; }
-        public UserViewModel(Login login)
-        {
-            Id = Guid.NewGuid();
-            Login = login;
-            Orders = new List<OrderViewModel>();
-            Contacts = new UserContactViewModel() { Name="", Surname= "", Email= "", Phone= "", Adress= "" };
-            Role = new Role();
-            Role.Name = "";
-        }
-        public void AddOrder(OrderViewModel order)
-        {
-            Orders.Add(order);
-        }
         public UserViewModel() { }
         public void AddContacts(UserContactViewModel contacts)
         {
@@ -31,21 +17,6 @@ namespace OnlineShopWebApp.Models
             Contacts.Email = contacts.Email;
             Contacts.Phone = contacts.Phone;
             Contacts.Adress = contacts.Adress;
-        }
-        public void AddRole(Role role)
-        {
-            Role = role;
-        }
-        public void UpdateUser(UserViewModel newUser)
-        {
-            Login.Name = newUser.Login.Name;
-            Login.Password = newUser.Login.Password;
-            Contacts.Name = newUser.Contacts.Name;
-            Contacts.Surname = newUser.Contacts.Surname;
-            Contacts.Email = newUser.Contacts.Email;
-            Contacts.Adress = newUser.Contacts.Adress;
-            Contacts.Phone = newUser.Contacts.Phone;
-            Role.Name = newUser.Role.Name;
         }
         public List<string> GetEmptyContacts()
         {

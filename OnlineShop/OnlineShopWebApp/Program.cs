@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using Serilog;
+using System.IO;
 
 namespace OnlineShopWebApp
 {
@@ -30,6 +31,7 @@ namespace OnlineShopWebApp
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
                 })
             .UseSerilog();
     }

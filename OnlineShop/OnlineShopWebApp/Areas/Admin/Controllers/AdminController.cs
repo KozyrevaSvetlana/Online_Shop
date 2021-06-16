@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
@@ -15,15 +16,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     {
         private readonly IProductsRepository productsRepository;
         private readonly IOrdersRepository ordersRepository;
-        private readonly IRolesRepository rolesRepository;
-        private readonly IUsersRepository usersRepository;
+        private readonly UserManager<User> userManager;
 
-        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository)
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository,
+            UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            this.productsRepository = products;
+            productsRepository = products;
             this.ordersRepository = ordersRepository;
-            this.rolesRepository = rolesRepository;
-            this.usersRepository = usersRepository;
+            this.userManager = userManager;
         }
         public IActionResult Home()
         {
@@ -35,7 +35,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Users()
         {
-            return View(usersRepository.AllUsers);
+            //usersRepository.AllUsers
+            return View();
         }
         public IActionResult Products()
         {
@@ -43,7 +44,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Roles()
         {
-            return View(rolesRepository.AllRoles);
+            //rolesRepository.AllRoles
+            return View();
         }
         public IActionResult Description(Guid id)
         {
@@ -138,47 +140,48 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddNewRole(Role newRole)
         {
-            var resultErrors = rolesRepository.IsValid(newRole.Name);
-            if (resultErrors.Count != 0)
-            {
-                foreach (var error in resultErrors)
-                {
-                    ModelState.AddModelError("", error);
-                }
-                return View("AddRole", newRole);
-            }
-            if (ModelState.IsValid)
-            {
-                rolesRepository.Add(newRole.Name);
-                return RedirectToAction("Roles", "Admin");
-            }
+            //var resultErrors = rolesRepository.IsValid(newRole.Name);
+            //if (resultErrors.Count != 0)
+            //{
+            //    foreach (var error in resultErrors)
+            //    {
+            //        ModelState.AddModelError("", error);
+            //    }
+            //    return View("AddRole", newRole);
+            //}
+            //if (ModelState.IsValid)
+            //{
+            //    //rolesRepository.Add(newRole.Name);
+            //    return RedirectToAction("Roles", "Admin");
+            //}
             return RedirectToAction("Roles", "Admin");
         }
         public ActionResult DeleteRole(string name)
         {
-            rolesRepository.DeleteRole(name);
+            //rolesRepository.DeleteRole(name);
             return RedirectToAction("Roles", "Admin");
         }
         public ActionResult EditRole(string name)
         {
-            return View(rolesRepository.GetRoleByName(name));
+            //rolesRepository.GetRoleByName(name)
+            return View();
         }
         public IActionResult ChangeRole(Role newRole, string oldName)
         {
-            var resultErrors = rolesRepository.IsValid(newRole.Name);
-            if (resultErrors.Count != 0)
-            {
-                foreach (var error in resultErrors)
-                {
-                    ModelState.AddModelError("", error);
-                }
-                return View("EditRole", newRole);
-            }
-            if (ModelState.IsValid)
-            {
-                rolesRepository.Edit(newRole.Name, oldName);
-                return RedirectToAction("Roles", "Admin");
-            }
+            //var resultErrors = rolesRepository.IsValid(newRole.Name);
+            //if (resultErrors.Count != 0)
+            //{
+            //    foreach (var error in resultErrors)
+            //    {
+            //        ModelState.AddModelError("", error);
+            //    }
+            //    return View("EditRole", newRole);
+            //}
+            //if (ModelState.IsValid)
+            //{
+            //    rolesRepository.Edit(newRole.Name, oldName);
+            //    return RedirectToAction("Roles", "Admin");
+            //}
             return RedirectToAction("Roles", "Admin");
         }
         public ActionResult AddUser()
@@ -187,52 +190,57 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public ActionResult UserInfo(string name)
         {
-            return View(usersRepository.GetUserByName(name));
+            var user = userManager.FindByNameAsync(name).Result;
+            //сделать маппинг и передать во вью
+            return View();
         }
 
         public ActionResult ChangePassword(string name)
         {
-            var user = usersRepository.GetUserByName(name);
-            return View(user.Login);
+            var user = userManager.FindByNameAsync(name).Result;
+            //сделать маппинг и передать во вью user.Login
+            return View();
         }
 
         [HttpPost]
         public ActionResult AddNewPassword(Login login, string CheckPassword, string userName)
         {
-            var user = usersRepository.GetUserByName(userName);
+            var user = userManager.FindByNameAsync(userName).Result;
             if (login.Password != CheckPassword)
             {
                 ModelState.AddModelError("", "Пароли не совпадают");
-                return View("ChangePassword", user.Login);
+                // наверное тут должен быть какой то специальный метод вместо user.Login
+                return View("ChangePassword");
             }
-            if (login.Password == user.Login.Password)
-            {
-                ModelState.AddModelError("", "Старый и новый пароли совпадают");
-                return View("ChangePassword", user.Login);
-            }
-            if (ModelState.IsValid)
-            {
-                user.Login.Password = login.Password;
-            }
+            //if (login.Password == user.Login.Password)
+            //{
+            //    ModelState.AddModelError("", "Старый и новый пароли совпадают");
+            //    return View("ChangePassword", user.Login);
+            //}
+            //if (ModelState.IsValid)
+            //{
+            //    user.Login.Password = login.Password;
+            //}
             return RedirectToAction("Users");
         }
         public ActionResult DeleteUser(string name)
         {
-            var user = usersRepository.GetUserByName(name);
-            usersRepository.DeleteUser(user);
+            var user = userManager.FindByNameAsync(name).Result;
+            // должен быть какой то метод удаления юзера или пометки что удален в userManager
+            //usersRepository.DeleteUser(user);
             return View("Users");
         }
         public ActionResult EditUser(string name)
         {
-            var user = usersRepository.GetUserByName(name);
-            ViewData["Roles"] = rolesRepository.AllRoles;
+            var user = userManager.FindByNameAsync(name).Result;
+            //ViewData["Roles"] = rolesRepository.AllRoles;
             return View(user);
         }
         [HttpPost]
         public ActionResult EditUserInfo(UserViewModel editUser, string id)
         {
-            var user = usersRepository.GetUserById(id);
-            user.UpdateUser(editUser);
+            //var user = usersRepository.GetUserById(id);
+            //user.UpdateUser(editUser);
             return RedirectToAction("Users", "Admin");
         }
     }
