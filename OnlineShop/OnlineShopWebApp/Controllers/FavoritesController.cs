@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using System;
@@ -12,34 +14,40 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsRepository productsRepository;
         private readonly IFavoritesRepository favoritesRepository;
-        private readonly ICartsRepository cartsRepository;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public FavoritesController(IProductsRepository productsRepository, IFavoritesRepository favoritesRepository, ICartsRepository cartsRepository)
+        public FavoritesController(IProductsRepository productsRepository, IFavoritesRepository favoritesRepository, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.productsRepository = productsRepository;
             this.favoritesRepository = favoritesRepository;
-            this.cartsRepository = cartsRepository;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
         }
         public IActionResult Index()
         {
-            var cart = favoritesRepository.TryGetByUserId(Constants.UserId);
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var cart = favoritesRepository.TryGetByUserId(user.UserName);
             return View(Mapping.ToFavoritesViewModel(cart));
         }
 
         public IActionResult Add(Guid id)
         {
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
             var product = productsRepository.GetProductById(id);
-            favoritesRepository.Add(product, Constants.UserId);
+            favoritesRepository.Add(product, user.UserName);
             return RedirectToAction("Index");
         }
         public IActionResult Clear()
         {
-            favoritesRepository.Clear(Constants.UserId);
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            favoritesRepository.Clear(user.UserName);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(Guid id)
         {
-            favoritesRepository.DeleteItem(id, Constants.UserId);
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            favoritesRepository.DeleteItem(id, user.UserName);
             return RedirectToAction("Index");
         }
     }

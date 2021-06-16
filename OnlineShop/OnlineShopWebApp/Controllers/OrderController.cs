@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
@@ -14,26 +15,22 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly ICartsRepository cartsRepository;
         private readonly IOrdersRepository ordersRepository;
-        private readonly IUsersRepository usersRepository;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersWithoutUserRepository,IUsersRepository usersRepository)
+        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersWithoutUserRepository, UserManager<User> userManager, SignInManager<User> signInManager)
         {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
             this.cartsRepository = cartsRepository;
-            this.ordersRepository = ordersWithoutUserRepository;
-            this.usersRepository = usersRepository;
+            ordersRepository = ordersWithoutUserRepository;
         }
         public IActionResult Index()
         {
-            if (Constants.UserId != "UserId")
-            {
-                var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-                ViewBag.Cart = Mapping.ToCartItemViewModels(cart.Items);
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var cart = cartsRepository.TryGetById(user.UserName);
+            ViewBag.Cart = Mapping.ToCartItemViewModels(cart.Items);
+            return View();
         }
         [HttpPost]
         public IActionResult Accept(string Comment, UserContactViewModel userContacts)
@@ -50,15 +47,15 @@ namespace OnlineShopWebApp.Controllers
             {
                 var order = new OrderViewModel();
                 order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
-                var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+                var cart = cartsRepository.TryGetById(Constants.UserId);
                 order.Products = Mapping.ToCartItemViewModels(cart.Items);
                 order.Number = ordersRepository.CountOrders();
                 ordersRepository.AddOrder(Mapping.ToOrder(order), cart);
-                if (Constants.UserId != "UserId")
-                {
-                    var user = usersRepository.GetUserByName(Constants.UserId);
-                    user.Orders.Add(order);
-                }
+                //if (Constants.UserId != "UserId")
+                //{
+                //    var user = usersRepository.GetUserByName(Constants.UserId);
+                //    user.Orders.Add(order);
+                //}
                 return RedirectToAction("Result");
             }
             return View("Index");
