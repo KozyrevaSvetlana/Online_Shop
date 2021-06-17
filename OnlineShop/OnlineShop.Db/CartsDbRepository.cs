@@ -22,18 +22,18 @@ namespace OnlineShop.Db
                 return databaseContext.Carts;
             }
         }
-        public Cart TryGetById(string userId)
+        public Cart TryGetByUserId(string userId)
         {
             return databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product).FirstOrDefault(x => x.UserId == userId);
         }
         public int GetAllAmounts(string userId)
         {
-            var userCart = TryGetById(userId);
+            var userCart = TryGetByUserId(userId);
             return userCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
         public void Add(Product product, string userId)
         {
-            var existingCart = TryGetById(userId);
+            var existingCart = TryGetByUserId(userId);
             if (existingCart == null)
             {
                 var newCart = new Cart
@@ -75,7 +75,7 @@ namespace OnlineShop.Db
 
         public void ChangeAmount(Product product, int sign, string userId)
         {
-            var userCart = TryGetById(userId);
+            var userCart = TryGetByUserId(userId);
             var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
             switch (sign)
             {
@@ -98,14 +98,14 @@ namespace OnlineShop.Db
 
         private void DeleteItem(CartItem cartItem, string userId)
         {
-            var userCart = TryGetById(userId);
+            var userCart = TryGetByUserId(userId);
             userCart.Items.RemoveAll(x => x.Id == cartItem.Id);
             databaseContext.SaveChanges();
         }
 
         public void ClearCart(string userId)
         {
-            var existingCart = TryGetById(userId);
+            var existingCart = TryGetByUserId(userId);
             databaseContext.Carts.Remove(existingCart);
             databaseContext.SaveChanges();
         }

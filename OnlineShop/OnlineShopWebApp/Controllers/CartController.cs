@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
-            var cart = cartsRepository.TryGetById(user.UserName);
+            var cart = cartsRepository.TryGetByUserId(user.UserName);
             return View(Mapping.ToCartViewModel(cart));
         }
 

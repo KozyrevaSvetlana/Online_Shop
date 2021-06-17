@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.CartCountViewComponents
             var user = userManager.GetUserAsync(HttpContext.User).Result;
             if (user != null)
             {
-                var cart = cartsRepository.TryGetById(user.UserName);
+                var cart = cartsRepository.TryGetByUserId(user.UserName);
                 var cartViewModel = Mapping.ToCartViewModel(cart);
                 productCounts = cartViewModel?.Amount ?? 0;
             }

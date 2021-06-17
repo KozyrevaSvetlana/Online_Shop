@@ -6,7 +6,7 @@ namespace OnlineShop.Db.Models.Interfaces
     public interface ICartsRepository
     {
         IEnumerable<Cart> AllCarts { get; }
-        Cart TryGetById(string userId);
+        Cart TryGetByUserId(string userId);
         void Add(Product product, string userId);
         int GetAllAmounts(string userId);
         void ChangeAmount(Product product, int sign, string userId);
