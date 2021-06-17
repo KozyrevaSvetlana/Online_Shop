@@ -14,16 +14,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class AdminController : Controller
     {
+        RoleManager<IdentityRole> roleManager;
         private readonly IProductsRepository productsRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly UserManager<User> userManager;
 
-        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, IRolesRepository rolesRepository, IUsersRepository usersRepository,
-            UserManager<User> userManager, SignInManager<User> signInManager)
+        public AdminController(IProductsRepository products, IOrdersRepository ordersRepository, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             productsRepository = products;
             this.ordersRepository = ordersRepository;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
         public IActionResult Home()
         {
@@ -35,8 +36,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Users()
         {
-            //usersRepository.AllUsers
-            return View();
+            var allusers = userManager.Users;
+            return View(allusers.ToListUserViewModels());
         }
         public IActionResult Products()
         {
@@ -44,8 +45,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Roles()
         {
-            //rolesRepository.AllRoles
-            return View();
+            return View(roleManager.Roles);
         }
         public IActionResult Description(Guid id)
         {
@@ -138,50 +138,58 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNewRole(Role newRole)
+        public ActionResult AddNewRole(IdentityRole newRole)
         {
-            //var resultErrors = rolesRepository.IsValid(newRole.Name);
-            //if (resultErrors.Count != 0)
-            //{
-            //    foreach (var error in resultErrors)
-            //    {
-            //        ModelState.AddModelError("", error);
-            //    }
-            //    return View("AddRole", newRole);
-            //}
-            //if (ModelState.IsValid)
-            //{
-            //    //rolesRepository.Add(newRole.Name);
-            //    return RedirectToAction("Roles", "Admin");
-            //}
+            if (ModelState.IsValid)
+            {
+                var role = new IdentityRole { Name = newRole.Name };
+                var result = roleManager.CreateAsync(role).Result;
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                        return View("AddRole", newRole);
+                    }
+                }
+            }
             return RedirectToAction("Roles", "Admin");
         }
-        public ActionResult DeleteRole(string name)
+        public ActionResult DeleteRole(string id)
         {
-            //rolesRepository.DeleteRole(name);
+            var role = roleManager.FindByIdAsync(id).Result;
+            var roles = roleManager.Roles;
+            bool removePossible = false;
+            foreach (var roleDb in roles)
+            {
+                removePossible = User.IsInRole(roleDb.Name);
+                if (removePossible == true)
+                {
+                    ModelState.AddModelError("", $"Роль невозможно удалить. Она используется");
+                    return RedirectToAction("Roles", "Admin", roleDb);
+                }
+            }
+            roleManager.DeleteAsync(role).Wait();
             return RedirectToAction("Roles", "Admin");
         }
-        public ActionResult EditRole(string name)
+        public ActionResult EditRole(string id)
         {
-            //rolesRepository.GetRoleByName(name)
-            return View();
+            var role = roleManager.FindByIdAsync(id).Result;
+            return View(role);
         }
-        public IActionResult ChangeRole(Role newRole, string oldName)
+        public IActionResult ChangeRole(IdentityRole newRole, string oldName)
         {
-            //var resultErrors = rolesRepository.IsValid(newRole.Name);
-            //if (resultErrors.Count != 0)
-            //{
-            //    foreach (var error in resultErrors)
-            //    {
-            //        ModelState.AddModelError("", error);
-            //    }
-            //    return View("EditRole", newRole);
-            //}
-            //if (ModelState.IsValid)
-            //{
-            //    rolesRepository.Edit(newRole.Name, oldName);
-            //    return RedirectToAction("Roles", "Admin");
-            //}
+            var role = roleManager.FindByNameAsync(oldName).Result;
+            role.Name = newRole.Name;
+            var result = roleManager.UpdateAsync(role).Result;
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                    return View("EditRole", newRole);
+                }
+            }
             return RedirectToAction("Roles", "Admin");
         }
         public ActionResult AddUser()

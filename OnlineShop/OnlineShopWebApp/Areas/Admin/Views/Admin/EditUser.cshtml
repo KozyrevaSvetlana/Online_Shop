@@ -53,7 +53,7 @@
                                     <label>Роль</label>
                                 </div>
                                 <select class="form-group" name="Role.Name" value="" tabindex="8">
-                                    @foreach (Role role in ViewData["Roles"] as List<Role>)
+                                    @foreach (RoleViewModel role in ViewData["Roles"] as List<RoleViewModel>)
                                     {
                                         if (Model.Role != null)
                                         {

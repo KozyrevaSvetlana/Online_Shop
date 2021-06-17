@@ -1,6 +1,8 @@
-﻿using OnlineShop.Db.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models;
 using System.Collections.Generic;
+using System.Linq;
 using static OnlineShopWebApp.Models.InfoStatusOrderViewModel;
 
 namespace OnlineShopWebApp.Helpers
@@ -171,10 +173,70 @@ namespace OnlineShopWebApp.Helpers
         }
         public static UserViewModel ToUserViewModel(this User userDb)
         {
-            var userVM = new UserViewModel();
+            var userVM = new UserViewModel()
+            {
+                Login = new Login(),
+                Orders = new List<OrderViewModel>(),
+                Contacts = new UserContactViewModel(),
+                Role = new RoleViewModel()
+            };
             userVM.Id = userDb.Id;
             userVM.Login.Name = userDb.UserName;
+            userVM.Contacts.Name = userDb.ContactsName ?? "";
+            userVM.Contacts.Surname = userDb.Surname ?? "";
+            userVM.Contacts.Adress = userDb.Adress ?? "";
+            userVM.Contacts.Email = userDb.Email ?? "";
+            userVM.Contacts.Phone = userDb.PhoneNumber ?? "";
             return userVM;
+        }
+        public static void AddUserContactToUserViewModel(UserContact userDb, UserContactViewModel user)
+        {
+            user.Name = userDb.Name;
+            user.Surname = userDb.Surname;
+            user.Adress = userDb.Adress;
+            user.Phone = userDb.Phone;
+            user.Email = userDb.Email;
+        }
+        public static void AddUserContactDb(UserContact userDb, UserContactViewModel user)
+        {
+            userDb.Name = user.Name;
+            userDb.Surname = user.Surname;
+            userDb.Adress = user.Adress;
+            userDb.Phone = user.Phone;
+            userDb.Email = user.Email;
+        }
+        public static List<UserViewModel> ToListUserViewModels(this IQueryable<User> usersDb)
+        {
+            var result = new List<UserViewModel>();
+            foreach (var userDb in usersDb)
+            {
+                result.Add(userDb.ToUserViewModel());
+            }
+            return result;
+        }
+        public static void ChangeContactsUser(this User userDb, UserContactViewModel contacts)
+        {
+            userDb.ContactsName = contacts.Name;
+            userDb.Surname = contacts.Surname;
+            userDb.Adress = contacts.Adress;
+            userDb.PhoneNumber = contacts.Phone;
+            userDb.Email = contacts.Email;
+        }
+        public static List<RoleViewModel> ToListRoleViewModel(this IQueryable<IdentityRole> rolesDb)
+        {
+            var result = new List<RoleViewModel>();
+            foreach (var roleDb in rolesDb)
+            {
+                result.Add(roleDb.ToRoleViewModel());
+            }
+            return result;
+        }
+        public static RoleViewModel ToRoleViewModel(this IdentityRole roleDb)
+        {
+            var role = new RoleViewModel();
+            role.Id = roleDb.Id;
+            role.Name = roleDb.Name ?? "Имя не указано";
+            return role;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Role>
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
 
 <div class="row">
     <div class="col-2">
@@ -42,8 +42,8 @@
                                                         Подробнее
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="EditRole" asp-route-name="@role.Name">Редактировать</a>
-                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="DeleteRole" asp-route-name="@role.Name">Удалить</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="EditRole" asp-route-id="@role.Id">Редактировать</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="DeleteRole" asp-route-id="@role.Id">Удалить</a>
                                                     </div>
                                                 </div>
                                             </div>

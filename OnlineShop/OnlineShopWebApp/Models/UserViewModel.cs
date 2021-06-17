@@ -8,7 +8,7 @@ namespace OnlineShopWebApp.Models
         public Login Login { get; set; }
         public List<OrderViewModel> Orders { get; set; }
         public UserContactViewModel Contacts { get; set; }
-        public Role Role { get; set; }
+        public RoleViewModel Role { get; set; }
         public UserViewModel() { }
         public void AddContacts(UserContactViewModel contacts)
         {
