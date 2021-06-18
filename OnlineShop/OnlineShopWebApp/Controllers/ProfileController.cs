@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
@@ -14,7 +13,7 @@ namespace OnlineShopWebApp.Controllers
         private readonly IFavoritesRepository favoritesRepository;
         private readonly IOrdersRepository ordersRepository;
 
-        public ProfileController(IUsersRepository usersRepository, IFavoritesRepository favoritesRepository, IOrdersRepository ordersRepository, UserManager<User> userManager)
+        public ProfileController(IFavoritesRepository favoritesRepository, IOrdersRepository ordersRepository, UserManager<User> userManager)
         {
             this.favoritesRepository = favoritesRepository;
             this.ordersRepository = ordersRepository;
@@ -22,15 +21,15 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Index()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
-            return View(user.ToUserViewModel());
+            return View();
         }
         public IActionResult Orders()
         {
             var userDb = userManager.GetUserAsync(HttpContext.User).Result;
             var orders = ordersRepository.GetOrdersByUserId(userDb.UserName);
-            userDb.ToUserViewModel().Orders = Mapping.ToOrdersViewModels(orders);
-            return View(userDb);
+            var userVM = userDb.ToUserViewModel();
+            userVM.Orders = orders.ToOrdersViewModels();
+            return View(userVM);
         }
         public IActionResult Contacts()
         {
@@ -40,19 +39,18 @@ namespace OnlineShopWebApp.Controllers
             {
                 ViewBag.Empty = emptyContacts;
             }
-            return View(user);
+            return View(user.ToUserViewModel());
         }
         public IActionResult AddContacts()
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
-            ViewData["Name"] = user.UserName;
-            return View();
+            return View(user.ToUserViewModel().Contacts);
         }
 
         [HttpPost]
-        public IActionResult AcceptContacts(UserContactViewModel userContacts)
+        public IActionResult AcceptContacts(UserContactViewModel contacts)
         {
-            var errorsResult = userContacts.IsValid();
+            var errorsResult = contacts.IsValid();
             if (errorsResult != null)
             {
                 foreach (var error in errorsResult)
@@ -63,10 +61,11 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 var userDb = userManager.GetUserAsync(HttpContext.User).Result;
-                //сделать метод добавления контактов к юзеру
-                return View("Contacts", userDb);
+                userDb.ChangeContactsUser(contacts);
+                userManager.UpdateAsync(userDb).Wait();
+                return View("Contacts", userDb.ToUserViewModel());
             }
-            return View("Contacts");
+            return View("AddContacts", contacts);
         }
         public IActionResult Favorites()
         {

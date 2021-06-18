@@ -129,9 +129,7 @@ namespace OnlineShopWebApp.Helpers
                 Items = ToProductViewModels(favorite.Items)
             };
         }
-
-
-        public static List<OrderViewModel> ToOrdersViewModels(List<Order> ordersDb)
+        public static List<OrderViewModel> ToOrdersViewModels(this List<Order> ordersDb)
         {
             var ordersViewModel = new List<OrderViewModel>();
             foreach (var orderDb in ordersDb)
@@ -140,8 +138,7 @@ namespace OnlineShopWebApp.Helpers
             }
             return ordersViewModel;
         }
-
-        public static List<OrderViewModel> ToOrdersViewModels(IEnumerable<Order> orders)
+        public static List<OrderViewModel> ToOrdersViewModels(this IEnumerable<Order> orders)
         {
             var ordersViewModels = new List<OrderViewModel>();
             foreach (var order in orders)
