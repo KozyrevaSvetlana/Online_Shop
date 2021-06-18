@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Helpers
 {
     public static class Mapping
     {
-        public static List<ProductViewModel> ToProductViewModels(IEnumerable<Product> products)
+        public static List<ProductViewModel> ToProductViewModels(this IEnumerable<Product> products)
         {
             var productsViewModels = new List<ProductViewModel>();
             foreach (var product in products)
@@ -19,7 +19,7 @@ namespace OnlineShopWebApp.Helpers
             return productsViewModels;
         }
 
-        public static ProductViewModel ToProductViewModel(Product product)
+        public static ProductViewModel ToProductViewModel(this Product product)
         {
             return new ProductViewModel
             {
@@ -31,7 +31,7 @@ namespace OnlineShopWebApp.Helpers
             };
         }
 
-        public static CartViewModel ToCartViewModel(Cart cart)
+        public static CartViewModel ToCartViewModel(this Cart cart)
         {
             if (cart == null)
             {
@@ -45,7 +45,7 @@ namespace OnlineShopWebApp.Helpers
             };
         }
 
-        public static List<CartItemViewModel> ToCartItemViewModels(List<CartItem> cartDbItems)
+        public static List<CartItemViewModel> ToCartItemViewModels(this List<CartItem> cartDbItems)
         {
             var cartItems = new List<CartItemViewModel>();
             foreach (var cartDbItem in cartDbItems)
@@ -60,7 +60,7 @@ namespace OnlineShopWebApp.Helpers
             }
             return cartItems;
         }
-        public static Order ToOrder(OrderViewModel order)
+        public static Order ToOrder(this OrderViewModel order)
         {
             var orderDb = new Order()
             {
@@ -76,7 +76,7 @@ namespace OnlineShopWebApp.Helpers
             orderDb.InfoStatus = (int)order.InfoStatus.StatusOrder;
             return orderDb;
         }
-        public static OrderViewModel ToOrderViewModels(Order orderDb)
+        public static OrderViewModel ToOrderViewModels(this Order orderDb)
         {
             var orderViewModels = new OrderViewModel()
             {
@@ -94,7 +94,7 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.Products = ToCartItemViewModels(orderDb.Items);
             return orderViewModels;
         }
-        public static CompareViewModel ToCompareViewModel(Compare compare)
+        public static CompareViewModel ToCompareViewModel(this Compare compare)
         {
             if (compare == null)
             {
@@ -107,7 +107,7 @@ namespace OnlineShopWebApp.Helpers
                 Items = ToProductViewModels(compare.Items)
             };
         }
-        public static List<ProductViewModel> ToProductViewModels(List<Product> products)
+        public static List<ProductViewModel> ToProductViewModels(this List<Product> products)
         {
             var productsViewModels = new List<ProductViewModel>();
             foreach (var product in products)
@@ -116,7 +116,7 @@ namespace OnlineShopWebApp.Helpers
             }
             return productsViewModels;
         }
-        public static FavoritesViewModel ToFavoritesViewModel(Favorites favorite)
+        public static FavoritesViewModel ToFavoritesViewModel(this Favorites favorite)
         {
             if (favorite == null)
             {
@@ -186,7 +186,7 @@ namespace OnlineShopWebApp.Helpers
             userVM.Contacts.Phone = userDb.PhoneNumber ?? "";
             return userVM;
         }
-        public static void AddUserContactToUserViewModel(UserContact userDb, UserContactViewModel user)
+        public static void AddUserContactToUserViewModel(this UserContact userDb, UserContactViewModel user)
         {
             user.Name = userDb.Name;
             user.Surname = userDb.Surname;
@@ -194,7 +194,7 @@ namespace OnlineShopWebApp.Helpers
             user.Phone = userDb.Phone;
             user.Email = userDb.Email;
         }
-        public static void AddUserContactDb(UserContact userDb, UserContactViewModel user)
+        public static void AddUserContactDb(this UserContact userDb, UserContactViewModel user)
         {
             userDb.Name = user.Name;
             userDb.Surname = user.Surname;

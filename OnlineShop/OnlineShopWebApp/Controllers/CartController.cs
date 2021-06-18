@@ -25,7 +25,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
             var cart = cartsRepository.TryGetByUserId(user.UserName);
-            return View(Mapping.ToCartViewModel(cart));
+            return View(cart.ToCartViewModel());
         }
 
         public IActionResult Add(Guid id)

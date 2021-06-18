@@ -25,7 +25,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
             var compareCart = compareRepository.TryGetByCompareId(user.UserName);
-            return View(Mapping.ToCompareViewModel(compareCart));
+            return View(compareCart.ToCompareViewModel());
         }
 
         public IActionResult Add(Guid id)

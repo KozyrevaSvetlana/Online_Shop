@@ -29,7 +29,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
             var cart = cartsRepository.TryGetByUserId(user.UserName);
-            ViewBag.Cart = Mapping.ToCartItemViewModels(cart.Items);
+            ViewBag.Cart = cart.Items.ToCartItemViewModels();
             return View();
         }
         [HttpPost]
@@ -48,9 +48,9 @@ namespace OnlineShopWebApp.Controllers
                 var order = new OrderViewModel();
                 order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
                 var cart = cartsRepository.TryGetByUserId(Constants.UserId);
-                order.Products = Mapping.ToCartItemViewModels(cart.Items);
+                order.Products =cart.Items.ToCartItemViewModels();
                 order.Number = ordersRepository.CountOrders();
-                ordersRepository.AddOrder(Mapping.ToOrder(order), cart);
+                ordersRepository.AddOrder(order.ToOrder(), cart);
                 return RedirectToAction("Result");
             }
             return View("Index");
@@ -59,7 +59,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Result()
         {
             var order = ordersRepository.GetLastOrder(Constants.UserId);
-            return View(Mapping.ToOrderViewModels(order));
+            return View(order.ToOrderViewModels());
         }
     }
 }

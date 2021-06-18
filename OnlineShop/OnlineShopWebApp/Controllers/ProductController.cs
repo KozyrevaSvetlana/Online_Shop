@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Controllers
         public ActionResult Index(Guid id)
         {
             var result = products.GetProductById(id);
-            return View(Mapping.ToProductViewModel(result));
+            return View(result.ToProductViewModel());
         }
 
         [HttpPost]
@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 TempData["Result"] = result;
                 var searchResult = products.SeachProduct(result.Split());
-                return View(Mapping.ToProductViewModels(searchResult));
+                return View(searchResult.ToProductViewModels());
             }
             return View();
         }

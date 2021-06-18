@@ -21,17 +21,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            return View(Mapping.ToProductViewModels(productsRepository.AllProducts));
+            return View(productsRepository.AllProducts.ToProductViewModels());
         }
         public IActionResult Description(Guid id)
         {
             var result = productsRepository.GetProductById(id);
-            return View(Mapping.ToProductViewModel(result));
+            return View(result.ToProductViewModel());
         }
         public ActionResult EditForm(Guid id)
         {
             var result = productsRepository.GetProductById(id);
-            return View(Mapping.ToProductViewModel(result));
+            return View(result.ToProductViewModel());
         }
         [HttpPost]
         public ActionResult EditProduct(ProductViewModel editProduct)

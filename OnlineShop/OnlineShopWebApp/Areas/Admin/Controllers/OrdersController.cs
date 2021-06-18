@@ -18,13 +18,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            return View(Mapping.ToOrdersViewModels(ordersRepository.AllOrders));
+            return View(ordersRepository.AllOrders.ToOrdersViewModels());
         }
         public IActionResult OrderForm(int number)
         {
             var order = ordersRepository.GetOrderByNumber(number);
-            ViewData["Statuses"] = Mapping.ToOrderViewModels(order).InfoStatus.GetAllStatuses();
-            return View(Mapping.ToOrderViewModels(order));
+            ViewData["Statuses"] = order.ToOrderViewModels().InfoStatus.GetAllStatuses();
+            return View(order.ToOrderViewModels());
         }
         public IActionResult EditOrder(int number, string status)
         {

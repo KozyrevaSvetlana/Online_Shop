@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
             if (user != null)
             {
                 var compare = compareRepository.TryGetByCompareId(user.UserName);
-                var compareViewModel = Mapping.ToCompareViewModel(compare);
+                var compareViewModel = compare.ToCompareViewModel();
                 compareItemsCount = compareViewModel?.Items.Count ?? 0;
             }
             return View("Compare", compareItemsCount);
