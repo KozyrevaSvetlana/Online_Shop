@@ -70,9 +70,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public ActionResult DeleteUser(string name)
         {
             var user = userManager.FindByNameAsync(name).Result;
-            // должен быть какой то метод удаления юзера или пометки что удален в userManager
-            //usersRepository.DeleteUser(user);
-            return View("Users");
+            var result = userManager.DeleteAsync(user).Result;
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                    return View("Index", name);
+                }
+            }
+            userManager.DeleteAsync(user).Wait();
+            return View("Index");
         }
         public ActionResult EditForm(string name)
         {
