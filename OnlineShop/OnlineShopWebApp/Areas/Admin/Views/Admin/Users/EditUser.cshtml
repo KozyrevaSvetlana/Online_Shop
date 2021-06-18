@@ -48,38 +48,14 @@
                                 <input asp-for="Contacts.Email" type="text" class="form-control" name="Contacts.Email" tabindex="7" value="@Model.Contacts.Email">
                                 <span class="badge badge-danger" asp-validation-for="Contacts.Email"></span>
                             </div>
-                            <div>
-                                <div>
-                                    <label>Роль</label>
-                                </div>
-                                <select class="form-group" name="Role.Name" value="" tabindex="8">
-                                    @foreach (RoleViewModel role in ViewData["Roles"] as List<RoleViewModel>)
-                                    {
-                                        if (Model.Role != null)
-                                        {
-                                            if (role.Name != Model.Role.Name)
-                                            {
-                                                <option name="Role.Name" value="@role.Name" tabindex="8">@role.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option selected name="Role.Name" value="@role.Name" tabindex="8">@role.Name</option>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <option class="form-check-input" name="Role.Name" value="@role.Name" tabindex="8">@role.Name</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                            <br />
                             <input type="hidden" name="id" value="@Model.Id" />
-                            <div>
-                                <span>
-                                    <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditUserInfo" tabindex="9">Изменить</button>
-                                    <a class="btn btn-danger" asp-area="Admin" asp-controller="Admin" asp-action="Users" tabindex="10">Отменить</a>
-                                </span>
+                            <div class="row">
+                                <div class="text-left">
+                                    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                                        <a class="btn btn-dark" type="submit" asp-area="Admin" asp-controller="Users" asp-action="EditUserInfo" tabindex="9">Изменить</a>
+                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="Home" asp-action="Index" tabindex="10">Отменить</a>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

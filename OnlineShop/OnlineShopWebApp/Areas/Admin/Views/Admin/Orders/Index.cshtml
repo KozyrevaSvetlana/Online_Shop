@@ -48,7 +48,7 @@
                                         <td>@order.InfoStatus.Data.ToLongTimeString()</td>
                                         <td>@order.Comment</td>
                                         <td>
-                                            <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="OrderForm" asp-route-number="@order.Number" tabindex="6">Подробнее</a>
+                                            <a class="btn btn-primary" asp-area="Admin" asp-controller="Orders" asp-action="OrderForm" asp-route-number="@order.Number" tabindex="6">Подробнее</a>
                                         </td>
                                         @{i++;}
                                     </tr>

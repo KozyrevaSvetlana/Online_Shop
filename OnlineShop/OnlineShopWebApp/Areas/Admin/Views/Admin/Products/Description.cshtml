@@ -14,7 +14,7 @@
                     {
                         <div class="card-body">
                             <p>Извините, товар не найден</p>
-                            <a class="btn btn-info" asp-area="Admin" asp-controller="Admin" asp-action="Home" role="button">Вернуться на главную страницу</a>
+                            <a class="btn btn-info" asp-area="Admin" asp-controller="Home" asp-action="Index" role="button">Вернуться на главную страницу</a>
                         </div>
                     }
                     else
@@ -35,17 +35,17 @@
                                 </div>
                                 <div class="text-left">
                                     <div>
-                                        <a class="btn btn-success" asp-area="Admin" asp-controller="Admin" asp-action="EditForm" asp-route-Id="@Model.Id" role="button">Изменить</a>
+                                        <a class="btn btn-success" asp-area="Admin" asp-controller="Products" asp-action="EditForm" asp-route-Id="@Model.Id" role="button">Изменить</a>
                                     </div>
                                     <br />
                                     <div>
-                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="Admin" asp-action="DeleteProduct" asp-route-Id="@Model.Id" role="button">Удалить</a>
+                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="Products" asp-action="DeleteProduct" asp-route-Id="@Model.Id" role="button">Удалить</a>
                                     </div>
                                     <br />
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-info" asp-area="Admin" asp-controller="Admin" asp-action="Home" role="button">Вернуться в панель администратора</a>
+                        <a class="btn btn-info" asp-area="Admin" asp-controller="Home" asp-action="Index" role="button">Вернуться в панель администратора</a>
                     }
 
                 </div>
