@@ -74,18 +74,28 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             //usersRepository.DeleteUser(user);
             return View("Users");
         }
-        public ActionResult EditUser(string name)
+        public ActionResult EditForm(string name)
         {
             var user = userManager.FindByNameAsync(name).Result;
-            return View(user.ToUserViewModel());
+            ViewBag.Id = user.Id;
+            return View(user.ToUserViewModel().Contacts);
         }
         [HttpPost]
-        public ActionResult EditUserInfo(UserViewModel editUser, string id)
+        public ActionResult ChangeContacts(UserContactViewModel editUser, string userId)
         {
-            var user = userManager.FindByIdAsync(id).Result;
-            user.ChangeContactsUser(editUser.Contacts);
+            var user = userManager.FindByIdAsync(userId).Result;
+            user.ChangeContactsUser(editUser);
+            var result = userManager.UpdateAsync(user).Result;
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                    return View("EditForm", editUser);
+                }
+            }
             userManager.UpdateAsync(user).Wait();
-            return RedirectToAction("Users", "Admin");
+            return RedirectToAction("Index");
         }
     }
 }
