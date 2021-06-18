@@ -56,7 +56,7 @@ namespace OnlineShopWebApp
             services.AddControllersWithViews();
             services.Configure<IdentityOptions>(options =>
             {
-                options.Password.RequireDigit = true;
+                options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 4;
                 options.Password.RequiredUniqueChars = 2;
                 options.Password.RequireLowercase = false;

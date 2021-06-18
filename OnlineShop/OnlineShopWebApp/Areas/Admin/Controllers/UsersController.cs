@@ -33,39 +33,39 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return View(user.ToUserViewModel());
         }
 
-        public ActionResult ChangePassword(string name)
+        public ActionResult ChangePassword(string userName)
         {
-            var user = userManager.FindByNameAsync(name).Result;
+            var user = userManager.FindByNameAsync(userName).Result;
             return View(user.ToUserViewModel().Login);
         }
 
         [HttpPost]
-        public ActionResult AddNewPassword(Login login, string CheckPassword, string userName)
+        public ActionResult AddNewPassword(Login login, string CheckPassword, string userName, string oldPassword)
         {
             var user = userManager.FindByNameAsync(userName).Result;
+            bool validPassword = userManager.CheckPasswordAsync(user, oldPassword).Result;
+            if (!validPassword)
+            {
+                ModelState.AddModelError("", "Старый пароль указан неверно");
+                return View("ChangePassword", login);
+            }
             if (login.Password != CheckPassword)
             {
                 ModelState.AddModelError("", "Пароли не совпадают");
-                return View("ChangePassword", userName);
+                return View("ChangePassword", login);
             }
-            if (userManager.CheckPasswordAsync(user, login.Password).Result)
+            var result = userManager.ChangePasswordAsync(user, oldPassword, login.Password).Result;
+            if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Старый и новый пароли совпадают");
-                return View("ChangePassword", userName);
-            }
-            if (ModelState.IsValid)
-            {
-                var result = userManager.ChangePasswordAsync(user, login.Password, CheckPassword).Result;
-                if (!result.Succeeded)
+                foreach (var error in result.Errors)
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                        return View("ChangePassword", userName);
-                    }
+                    ModelState.AddModelError("", error.Description);
+                    return View("ChangePassword", login);
                 }
             }
-            return RedirectToAction("Users");
+            userManager.ChangePasswordAsync(user, oldPassword, login.Password).Wait();
+            userManager.UpdateAsync(user).Wait();
+            return RedirectToAction("Index");
         }
         public ActionResult DeleteUser(string name)
         {
