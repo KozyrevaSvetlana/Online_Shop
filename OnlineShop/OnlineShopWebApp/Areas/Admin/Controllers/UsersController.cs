@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
+using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 
@@ -13,15 +14,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<User> userManager;
+        private readonly IOrdersRepository ordersRepository;
 
-        public UsersController(UserManager<User> userManager)
+        public UsersController(UserManager<User> userManager, IOrdersRepository ordersRepository)
         {
             this.userManager = userManager;
+            this.ordersRepository = ordersRepository;
         }
         public IActionResult Index()
         {
-            var allusers = userManager.Users;
-            return View(allusers.ToListUserViewModels());
+            var allUsers = userManager.Users;
+            return View(allUsers.ToListUserViewModels());
         }
         public ActionResult AddUser()
         {
@@ -70,17 +73,30 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public ActionResult DeleteUser(string name)
         {
             var user = userManager.FindByNameAsync(name).Result;
+            var orders = ordersRepository.GetOrdersByUserId(user.UserName);
+            if (orders != null)
+            {
+                string ordersNumbers = "";
+                foreach (var order in orders)
+                {
+                    ordersNumbers += $"{order.Number}, ";
+                }
+                ModelState.AddModelError("", $"Невозможно удалить пользователя {user.UserName}. " +
+                    $"У него есть заказы: {ordersNumbers.Substring(0, ordersNumbers.Length - 2)}.");
+                var allUsers = userManager.Users;
+                return View("Index", allUsers.ToListUserViewModels());
+            }
             var result = userManager.DeleteAsync(user).Result;
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
-                    return View("Index", name);
+                    return RedirectToAction("Index");
                 }
             }
             userManager.DeleteAsync(user).Wait();
-            return View("Index");
+            return RedirectToAction("Index");
         }
         public ActionResult EditForm(string name)
         {
