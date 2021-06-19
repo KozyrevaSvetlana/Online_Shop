@@ -9,7 +9,6 @@ using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -20,12 +19,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         private readonly UserManager<User> userManager;
         private readonly IOrdersRepository ordersRepository;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly SignInManager<User> signInManager;
 
-        public UsersController(UserManager<User> userManager, IOrdersRepository ordersRepository, RoleManager<IdentityRole> roleManager)
+        public UsersController(UserManager<User> userManager, IOrdersRepository ordersRepository, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.ordersRepository = ordersRepository;
+            this.signInManager = signInManager;
         }
         public IActionResult Index()
         {
@@ -35,6 +36,34 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public ActionResult AddUser()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult AddUser(Register register)
+        {
+            if (register.Name == register.Password)
+            {
+                ModelState.AddModelError("", "Логин и пароль не должны совпадать!");
+                return View("AddUser", register);
+            }
+            if (ModelState.IsValid)
+            {
+                User newUser = new User { UserName = register.Name };
+                var result = userManager.CreateAsync(newUser, register.Password).Result;
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                        return View("AddUser", register);
+                    }
+                }
+                var resultRole = userManager.AddToRoleAsync(newUser, "user").Result;
+                if (resultRole.Succeeded)
+                {
+                    userManager.AddToRoleAsync(newUser, "user").Wait();
+                }
+            }
+            return RedirectToAction("Index");
         }
         public ActionResult UserInfo(string name)
         {
@@ -133,15 +162,15 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var allRoles = roleManager.Roles;
             var model = new ChangeRoleViewModel();
             model.UserName = user.UserName;
-            model.AllRoles= allRoles.ToListRoleViewModel();
+            model.AllRoles = allRoles.ToListRoleViewModel();
             var userRoles = new List<RoleViewModel>();
             try
             {
                 var userRolesDb = userManager.GetRolesAsync(user).Result;
-                model.UserRoles = userRolesDb.Select(x=>new RoleViewModel { Name = x }).ToList();
+                model.UserRoles = userRolesDb.Select(x => new RoleViewModel { Name = x }).ToList();
 
             }
-            catch(Exception)
+            catch (Exception)
             {
                 userRoles = new List<RoleViewModel>();
             }
@@ -149,7 +178,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public ActionResult Edit(string userName, List<string> roles)
         {
-            if(roles.Count==0)
+            if (roles.Count == 0)
             {
                 ModelState.AddModelError("", "Вы не выбрали роль");
                 var model = new ChangeRoleViewModel();
