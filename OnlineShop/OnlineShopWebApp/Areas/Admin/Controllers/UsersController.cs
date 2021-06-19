@@ -80,7 +80,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             var user = userManager.FindByNameAsync(name).Result;
             var orders = ordersRepository.GetOrdersByUserId(user.UserName);
-            if (orders != null)
+            if (orders.Count > 0)
             {
                 string ordersNumbers = "";
                 foreach (var order in orders)

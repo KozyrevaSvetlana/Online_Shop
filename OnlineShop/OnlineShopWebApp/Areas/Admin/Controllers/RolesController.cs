@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
+using OnlineShopWebApp.Helpers;
+using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -11,10 +13,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> userManager;
 
-        public RolesController(RoleManager<IdentityRole> roleManager)
+        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -40,44 +44,56 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     }
                 }
             }
-            return RedirectToAction("Roles", "Admin");
+            return RedirectToAction("Index");
         }
         public ActionResult DeleteRole(string id)
         {
             var role = roleManager.FindByIdAsync(id).Result;
             var roles = roleManager.Roles;
-            bool removePossible = false;
-            foreach (var roleDb in roles)
+            var usersInRole = userManager.GetUsersInRoleAsync(role.Name).Result;
+            if (usersInRole.Count>0)
             {
-                removePossible = User.IsInRole(roleDb.Name);
-                if (removePossible == true)
+                string users = "";
+                foreach (var user in usersInRole)
                 {
-                    ModelState.AddModelError("", $"Роль невозможно удалить. Она используется");
-                    return RedirectToAction("Roles", "Admin", roleDb);
+                    users += $"{user.UserName}, ";
                 }
+                ModelState.AddModelError("", $"Роль невозможно удалить. Она используется {users.Substring(0, users.Length-2)}.");
+                return View("Index", roles);
             }
             roleManager.DeleteAsync(role).Wait();
-            return RedirectToAction("Roles", "Admin");
+            return RedirectToAction("Index");
         }
         public ActionResult EditRole(string id)
         {
             var role = roleManager.FindByIdAsync(id).Result;
-            return View(role);
+            return View(role.ToRoleViewModel());
         }
-        public IActionResult ChangeRole(IdentityRole newRole, string oldName)
+        [HttpPost]
+        public IActionResult ChangeRole(string newName, string roleId)
         {
-            var role = roleManager.FindByNameAsync(oldName).Result;
-            role.Name = newRole.Name;
+            var role = roleManager.FindByIdAsync(roleId).Result;
+            if (newName == null)
+            {
+                ModelState.AddModelError("", "Не заполнено новое имя");
+                return View("EditRole", role);
+            }
+            if (newName.Length < 2 || newName.Length > 50)
+            {
+                ModelState.AddModelError("", "Имя должно быть не менее 2 символов и не более 50 символов");
+                return View("EditRole", role);
+            }
+            role.Name = newName;
             var result = roleManager.UpdateAsync(role).Result;
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
-                    return View("EditRole", newRole);
+                    return View("EditRole", role);
                 }
             }
-            return RedirectToAction("Roles", "Admin");
+            return RedirectToAction("Index");
         }
     }
 }
