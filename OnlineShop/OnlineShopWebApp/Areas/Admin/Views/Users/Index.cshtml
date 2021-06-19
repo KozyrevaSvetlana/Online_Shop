@@ -53,6 +53,7 @@
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="ChangePassword" asp-route-userName="@user.Login.Name">Сменить пароль</a>
                                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="EditForm" asp-route-name="@user.Login.Name">Редактирование данных</a>
+                                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="Roles" asp-route-userName="@user.Login.Name">Права доступа</a>
                                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-name="@user.Login.Name">Удалить пользователя</a>
                                                 </div>
                                             </div>

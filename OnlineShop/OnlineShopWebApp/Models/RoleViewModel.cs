@@ -16,5 +16,10 @@ namespace OnlineShopWebApp.Models
         public RoleViewModel()
         {
         }
+        public override bool Equals(object obj)
+        {
+            var role = (RoleViewModel)obj;
+            return Name == role.Name;
+        }
     }
 }

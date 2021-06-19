@@ -6,6 +6,10 @@ using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -15,9 +19,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly IOrdersRepository ordersRepository;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public UsersController(UserManager<User> userManager, IOrdersRepository ordersRepository)
+        public UsersController(UserManager<User> userManager, IOrdersRepository ordersRepository, RoleManager<IdentityRole> roleManager)
         {
+            this.roleManager = roleManager;
             this.userManager = userManager;
             this.ordersRepository = ordersRepository;
         }
@@ -118,6 +124,47 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     return View("EditForm", editUser);
                 }
             }
+            userManager.UpdateAsync(user).Wait();
+            return RedirectToAction("Index");
+        }
+        public ActionResult Roles(string userName)
+        {
+            User user = userManager.FindByNameAsync(userName).Result;
+            var allRoles = roleManager.Roles;
+            var model = new ChangeRoleViewModel();
+            model.UserName = user.UserName;
+            model.AllRoles= allRoles.ToListRoleViewModel();
+            var userRoles = new List<RoleViewModel>();
+            try
+            {
+                var userRolesDb = userManager.GetRolesAsync(user).Result;
+                model.UserRoles = userRolesDb.Select(x=>new RoleViewModel { Name = x }).ToList();
+
+            }
+            catch(Exception)
+            {
+                userRoles = new List<RoleViewModel>();
+            }
+            return View(model);
+        }
+        public ActionResult Edit(string userName, List<string> roles)
+        {
+            if(roles.Count==0)
+            {
+                ModelState.AddModelError("", "Вы не выбрали роль");
+                var model = new ChangeRoleViewModel();
+                model.UserName = userName;
+                var allRoles = roleManager.Roles;
+                model.AllRoles = allRoles.ToListRoleViewModel();
+                return View("Roles", model);
+            }
+            var user = userManager.FindByNameAsync(userName).Result;
+            var userRoles = userManager.GetRolesAsync(user).Result;
+            //var allRoles = roleManager.Roles;
+            var addedRoles = roles.Except(userRoles);
+            var removedRoles = userRoles.Except(roles);
+            userManager.RemoveFromRolesAsync(user, removedRoles).Wait();
+            userManager.AddToRolesAsync(user, addedRoles).Wait();
             userManager.UpdateAsync(user).Wait();
             return RedirectToAction("Index");
         }
