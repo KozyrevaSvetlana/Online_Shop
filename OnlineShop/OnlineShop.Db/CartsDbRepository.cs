@@ -69,7 +69,6 @@ namespace OnlineShop.Db
                     });
                 }
             }
-
             databaseContext.SaveChanges();
         }
 

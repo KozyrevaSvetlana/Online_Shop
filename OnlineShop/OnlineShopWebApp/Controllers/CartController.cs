@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models;
@@ -8,18 +8,19 @@ using System;
 
 namespace OnlineShopWebApp.Controllers
 {
-    [Authorize]
     public class CartController : Controller
     {
         private readonly IProductsRepository productsRepository;
         private readonly ICartsRepository cartsRepository;
         private readonly UserManager<User> userManager;
+        private readonly INoGegisterUsersRepository noGegisterUsersRepository;
 
-        public CartController(IProductsRepository productsRepository, ICartsRepository cartsRepository, UserManager<User> userManager)
+        public CartController(IProductsRepository productsRepository, ICartsRepository cartsRepository, UserManager<User> userManager, INoGegisterUsersRepository noGegisterUsersRepository)
         {
             this.productsRepository = productsRepository;
             this.cartsRepository = cartsRepository;
             this.userManager = userManager;
+            this.noGegisterUsersRepository = noGegisterUsersRepository;
         }
         public IActionResult Index()
         {
@@ -32,7 +33,26 @@ namespace OnlineShopWebApp.Controllers
         {
             var product = productsRepository.GetProductById(id);
             var user = userManager.GetUserAsync(HttpContext.User).Result;
-            cartsRepository.Add(product, user.UserName);
+            if(user==null)
+            {
+                var cookieValue = Request.Cookies["id"];
+                if(cookieValue == null)
+                {
+                    var newUser = new NoGegisterUser();
+                    newUser.Id = Guid.NewGuid().ToString();
+                    newUser.CartLifeTime = DateTime.Now;
+                    noGegisterUsersRepository.AddUser(newUser);
+
+                    CookieOptions cookie = new CookieOptions();
+                    cookie.Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies.Append("id", newUser.Id.ToString(), cookie);
+                }
+                cartsRepository.Add(product, cookieValue);
+            }
+            else
+            {
+                cartsRepository.Add(product, user.UserName);
+            }
             return RedirectToAction("Index");
         }
         public IActionResult ChangeAmount(Guid id, int sign)
