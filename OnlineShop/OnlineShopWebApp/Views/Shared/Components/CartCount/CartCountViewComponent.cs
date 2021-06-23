@@ -22,12 +22,18 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.CartCountViewComponents
         {
             var productCounts = 0;
             var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var cart = new Cart();
             if (user != null)
             {
-                var cart = cartsRepository.TryGetByUserId(user.UserName);
-                var cartViewModel = cart.ToCartViewModel();
-                productCounts = cartViewModel?.Amount ?? 0;
+                cart = cartsRepository.TryGetByUserId(user.UserName);
             }
+            else
+            {
+                var userName = Request.Cookies["id"];
+                cart = cartsRepository.TryGetByUserId(userName);
+            }
+            var cartViewModel = cart.ToCartViewModel();
+            productCounts = cartViewModel?.Amount ?? 0;
             return View("CartCount", productCounts);
         }
     }

@@ -12,7 +12,7 @@ namespace OnlineShop.Db
         public DbSet<Compare> Compares { get; set; }
         public DbSet<Favorites> Favorites { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<NoGegisterUser>  NoGegisterUsers { get; set; }
+        public DbSet<NoGegisterUser> NoGegisterUsers { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
@@ -20,11 +20,16 @@ namespace OnlineShop.Db
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CartItem>()
+    .HasOne(p => p.Product)
+    .WithMany(t => t.CartItems)
+    .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Order>()
                 .HasOne(b => b.UserContacts)
                 .WithOne(i => i.Order)
                 .HasForeignKey<UserContact>(b => b.OrderId);
-                for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
             {
                 modelBuilder.Entity<Product>()
                 .HasData(ProductGenerator.GeneradeRandomProduct());

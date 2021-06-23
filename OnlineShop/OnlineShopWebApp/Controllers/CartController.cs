@@ -25,7 +25,16 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
-            var cart = cartsRepository.TryGetByUserId(user.UserName);
+            var cart = new Cart();
+            if (user == null)
+            {
+                var userName = Request.Cookies["id"];
+                cart = cartsRepository.TryGetByUserId(userName);
+            }
+            else
+            {
+                cart = cartsRepository.TryGetByUserId(user.UserName);
+            }
             return View(cart.ToCartViewModel());
         }
 
@@ -59,13 +68,30 @@ namespace OnlineShopWebApp.Controllers
         {
             var product = productsRepository.GetProductById(id);
             var user = userManager.GetUserAsync(HttpContext.User).Result;
-            cartsRepository.ChangeAmount(product, sign, user.UserName);
+            if (user==null)
+            {
+                var userName = Request.Cookies["id"];
+                cartsRepository.ChangeAmount(product, sign, userName);
+            }
+            else
+            {
+                cartsRepository.ChangeAmount(product, sign, user.UserName);
+            }
             return RedirectToAction("Index");
         }
         public IActionResult Clear()
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
-            cartsRepository.ClearCart(user.UserName);
+            if (user==null)
+            {
+                var userName = Request.Cookies["id"];
+                cartsRepository.ClearCart(userName);
+            }
+            else
+            {
+                cartsRepository.ClearCart(user.UserName);
+            }
+
             return RedirectToAction("Index");
         }
     }
