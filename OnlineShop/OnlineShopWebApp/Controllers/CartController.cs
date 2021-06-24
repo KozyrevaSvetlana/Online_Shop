@@ -55,6 +55,7 @@ namespace OnlineShopWebApp.Controllers
                     CookieOptions cookie = new CookieOptions();
                     cookie.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Append("id", newUser.Id.ToString(), cookie);
+                    cookieValue = newUser.Id;
                 }
                 cartsRepository.Add(product, cookieValue);
             }
