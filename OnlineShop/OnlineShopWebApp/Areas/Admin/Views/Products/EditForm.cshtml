@@ -11,7 +11,7 @@
                     <div class="list-group d-flex align-items-center py-5">
                         <h4>Редактирование</h4>
                         <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
-                        <form method="post" class="form-group">
+                        <form method="post" class="form-group" enctype="multipart/form-data">
                             <div>
                                 <label>Id</label>
                                 <input type="text" class="form-control" name="id" value="@Model.Id" readonly>
@@ -20,6 +20,10 @@
                                 <label asp-for="Name">Имя</label>
                                 <input asp-for="Name" type="text" class="form-control" name="Name" tabindex="1" value="@Model.Name">
                                 <span class="badge badge-danger" asp-validation-for="Name"></span>
+                            </div>
+                            <div>
+                                <label >Старая цена</label>
+                                <input type="text" class="form-control" name="oldCost" value="@Model.Cost" readonly>
                             </div>
                             <div>
                                 <label asp-for="Cost">Цена</label>
@@ -32,6 +36,13 @@
                                 <span class="badge badge-danger" asp-validation-for="Description"></span>
                             </div>
                             <div>
+                                <label asp-for="Image">Изображение</label>
+                                <img src="@Model.Image" />
+                            </div>
+                            <div>
+                                <label asp-for="Description">Добавить изображение</label>
+                                <input type="file" name="UploadedFile" class="form-control" />
+                                <input type="hidden" name="Id" value="@Model.Id" />
                                 <input type="hidden" name="Image" value="@Model.Image" />
                                 <span>
                                     <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Products" asp-action="EditProduct" tabindex="5">Изменить</button>
