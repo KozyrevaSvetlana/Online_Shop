@@ -53,7 +53,6 @@ namespace OnlineShopWebApp
             services.AddTransient<ICompareRepository, ComparesDbRepository>();
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
-            services.AddTransient<INoGegisterUsersRepository, NoGegisterUsersDbRepository>();
             services.AddControllersWithViews();
             services.Configure<IdentityOptions>(options =>
             {

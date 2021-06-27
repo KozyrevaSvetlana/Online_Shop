@@ -13,14 +13,12 @@ namespace OnlineShopWebApp.Controllers
         private readonly IProductsRepository productsRepository;
         private readonly ICartsRepository cartsRepository;
         private readonly UserManager<User> userManager;
-        private readonly INoGegisterUsersRepository noGegisterUsersRepository;
 
-        public CartController(IProductsRepository productsRepository, ICartsRepository cartsRepository, UserManager<User> userManager, INoGegisterUsersRepository noGegisterUsersRepository)
+        public CartController(IProductsRepository productsRepository, ICartsRepository cartsRepository, UserManager<User> userManager)
         {
             this.productsRepository = productsRepository;
             this.cartsRepository = cartsRepository;
             this.userManager = userManager;
-            this.noGegisterUsersRepository = noGegisterUsersRepository;
         }
         public IActionResult Index()
         {
@@ -47,15 +45,10 @@ namespace OnlineShopWebApp.Controllers
                 var cookieValue = Request.Cookies["id"];
                 if(cookieValue == null)
                 {
-                    var newUser = new NoGegisterUser();
-                    newUser.Id = Guid.NewGuid().ToString();
-                    newUser.CartLifeTime = DateTime.Now;
-                    noGegisterUsersRepository.AddUser(newUser);
-
+                    cookieValue = Guid.NewGuid().ToString()+DateTime.Now.ToString("d");
                     CookieOptions cookie = new CookieOptions();
                     cookie.Expires = DateTime.Now.AddDays(30);
-                    Response.Cookies.Append("id", newUser.Id.ToString(), cookie);
-                    cookieValue = newUser.Id;
+                    Response.Cookies.Append("id", cookieValue, cookie);
                 }
                 cartsRepository.Add(product, cookieValue);
             }
