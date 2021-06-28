@@ -9,6 +9,7 @@ namespace OnlineShopWebApp.Models
         public List<OrderViewModel> Orders { get; set; }
         public UserContactViewModel Contacts { get; set; }
         public RoleViewModel Role { get; set; }
+        public string Image { get; set; }
         public UserViewModel() { }
         public void AddContacts(UserContactViewModel contacts)
         {

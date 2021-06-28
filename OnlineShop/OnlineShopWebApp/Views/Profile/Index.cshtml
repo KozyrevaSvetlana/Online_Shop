@@ -1,6 +1,10 @@
 ﻿@model UserViewModel
 <div class="row py-5">
     <div class="col-2">
+        <div class="py-2 text-center">
+            <img src="@Model.Image" width="72" height="72" alt="@Model.Login.Name">
+            <a class="btn btn-secondary py-2" asp-area="" asp-controller="Profile" asp-action="ChangeProfileImage">Изменить фото</a>
+        </div>
         @await Html.PartialAsync("ProfileLeftMenu")
     </div>
     <div class="col-10">

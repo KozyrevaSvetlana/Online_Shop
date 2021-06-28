@@ -184,6 +184,7 @@ namespace OnlineShopWebApp.Helpers
             userVM.Contacts.Adress = userDb.Adress ?? "";
             userVM.Contacts.Email = userDb.Email ?? "";
             userVM.Contacts.Phone = userDb.PhoneNumber ?? "";
+            userVM.Image = userDb.Image ?? "/img/profile.webp";
             return userVM;
         }
         public static void AddUserContactToUserViewModel(this UserContact userDb, UserContactViewModel user)
