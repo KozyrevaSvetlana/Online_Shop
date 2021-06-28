@@ -253,10 +253,22 @@ namespace OnlineShopWebApp.Helpers
         {
             return new Product()
             {
+                Id= product.Id,
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description,
                 Images = imagesPaths.ToImages()
+            };
+        }
+        public static Product ToProduct(this ProductViewModel editProduct)
+        {
+            return new Product
+            {
+                Id = editProduct.Id,
+                Name = editProduct.Name,
+                Cost = editProduct.Cost,
+                Description = editProduct.Description,
+                Images = editProduct.Images.ToImages()
             };
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
@@ -7,8 +6,6 @@ using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
-using System.IO;
-using System.Linq;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -17,13 +14,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly IWebHostEnvironment appEnvironment;
         private readonly ImagesProvider imagesProvider;
 
-        public ProductsController(IProductsRepository products, IWebHostEnvironment appEnvironment, ImagesProvider imagesProvider)
+        public ProductsController(IProductsRepository productsRepository, ImagesProvider imagesProvider)
         {
-            productsRepository = products;
-            this.appEnvironment = appEnvironment;
+            this.productsRepository = productsRepository;
             this.imagesProvider = imagesProvider;
         }
         public IActionResult Index()
@@ -54,7 +49,6 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-
                 var imagesPaths = imagesProvider.SafeFiles(editProduct.UploadedFile, ImageFolders.Products);
                 productsRepository.Edit(editProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");

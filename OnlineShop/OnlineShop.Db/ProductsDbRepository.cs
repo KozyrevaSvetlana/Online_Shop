@@ -39,6 +39,7 @@ namespace OnlineShop.Db
             product.Name = editProduct.Name;
             product.Cost = editProduct.Cost;
             product.Description = editProduct.Description;
+            product.Images = editProduct.Images;
             databaseContext.SaveChanges();
         }
         public int GetCount()
