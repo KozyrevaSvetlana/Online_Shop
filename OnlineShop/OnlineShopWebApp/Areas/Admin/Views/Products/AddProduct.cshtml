@@ -9,8 +9,8 @@
             <div class="col">
                 <div class="list-group d-flex align-items-center py-5">
                     <h4>Добавление нового продукта</h4>
-                    <form method="post" class="form-group py-3">
-                        <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
+                    <form method="post" class="form-group py-3" enctype="multipart/form-data">
+                        <div class="validatoin badge badge-danger" asp-validation-summary="All"></div>
                         <div>
                             <label asp-for="Name">Название</label>
                             <input asp-for="Name" type="text" class="form-control" name="Name" tabindex="1">
@@ -28,10 +28,11 @@
                         </div>
                         <br />
                         <div>
-                            <input type="hidden" name="Image" value="/img/Products/empty.gif" />
+                            <label asp-for="Description">Добавить изображение</label>
+                            <input type="file" name="UploadedFile" class="form-control" />
                             <span>
                                 <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Products" asp-action="AddNewProduct" tabindex="5">Добавить</button>
-                                <a class="btn btn-danger"  asp-area="Admin" asp-controller="Home" asp-action="Index" tabindex="6">Отменить</a>
+                                <a class="btn btn-danger" asp-area="Admin" asp-controller="Home" asp-action="Index" tabindex="6">Отменить</a>
                             </span>
                         </div>
                     </form>

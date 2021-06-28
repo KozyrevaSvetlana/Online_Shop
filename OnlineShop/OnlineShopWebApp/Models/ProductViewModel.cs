@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,9 +21,8 @@ namespace OnlineShopWebApp.Models
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 300 символов")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Не указан путь изображению товара")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Путь к изображению товара должен быть не менее 2 символов и не более 100 символов")]
         public string Image { get; set; }
+        public IFormFile UploadedFile { get; set; }
         public List<string> IsValid()
         {
             var errors = new List<string>();
