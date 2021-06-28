@@ -1,4 +1,4 @@
-﻿@model ProductViewModel
+﻿@model AddProductViewModel
 
 <div class="row">
     <div class="col-2">
@@ -28,8 +28,8 @@
                         </div>
                         <br />
                         <div>
-                            <label asp-for="Description">Добавить изображение</label>
-                            <input type="file" name="UploadedFile" class="form-control" />
+                            <label asp-for="Description">Добавить изображения</label>
+                            <input type="file" name="UploadedFiles" class="form-control" multiple />
                             <span>
                                 <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Products" asp-action="AddNewProduct" tabindex="5">Добавить</button>
                                 <a class="btn btn-danger" asp-area="Admin" asp-controller="Home" asp-action="Index" tabindex="6">Отменить</a>

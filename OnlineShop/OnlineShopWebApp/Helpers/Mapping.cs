@@ -27,7 +27,7 @@ namespace OnlineShopWebApp.Helpers
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description,
-                Image = product.Image
+                Images = product.Images.Select(x => x.Url).ToList()
             };
         }
 
@@ -234,6 +234,42 @@ namespace OnlineShopWebApp.Helpers
             role.Id = roleDb.Id;
             role.Name = roleDb.Name ?? "Имя не указано";
             return role;
+        }
+        public static Product ToProduct (this AddProductViewModel addProductViewModel, List<string> imagesPaths)
+        {
+            return new Product()
+            {
+                Name = addProductViewModel.Name,
+                Cost = addProductViewModel.Cost,
+                Description = addProductViewModel.Description,
+                Images = imagesPaths.ToImages()
+            };
+        }
+        public static List<Image> ToImages(this List<string> paths)
+        {
+            return paths.Select(x => new Image { Url = x }).ToList();
+        }
+        public static Product ToProduct(this ProductViewModel product, List<string> imagesPaths)
+        {
+            return new Product()
+            {
+                Id= product.Id,
+                Name = product.Name,
+                Cost = product.Cost,
+                Description = product.Description,
+                Images = imagesPaths.ToImages()
+            };
+        }
+        public static Product ToProduct(this ProductViewModel editProduct)
+        {
+            return new Product
+            {
+                Id = editProduct.Id,
+                Name = editProduct.Name,
+                Cost = editProduct.Cost,
+                Description = editProduct.Description,
+                Images = editProduct.Images.ToImages()
+            };
         }
     }
 }

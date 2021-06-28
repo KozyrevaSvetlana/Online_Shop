@@ -17,11 +17,9 @@ namespace OnlineShopWebApp.Controllers
         private readonly ICartsRepository cartsRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
 
-        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersWithoutUserRepository, UserManager<User> userManager, SignInManager<User> signInManager)
+        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersWithoutUserRepository, UserManager<User> userManager)
         {
-            this.signInManager = signInManager;
             this.userManager = userManager;
             this.cartsRepository = cartsRepository;
             ordersRepository = ordersWithoutUserRepository;

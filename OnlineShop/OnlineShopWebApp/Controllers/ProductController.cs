@@ -14,7 +14,6 @@ namespace OnlineShopWebApp.Controllers
             this.products = products;
         }
 
-        // GET: ProductController
         public ActionResult Index(Guid id)
         {
             var result = products.GetProductById(id);

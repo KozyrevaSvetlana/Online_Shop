@@ -37,13 +37,19 @@
                             </div>
                             <div>
                                 <label asp-for="Image">Изображение</label>
-                                <img src="@Model.Image" />
+                                <label>Изображения</label><br />
+                                @foreach (var imagePath in Model.Images)
+                                {
+                                    <div style="padding:4px">
+                                        <img src="@imagePath" width="150" height="150" />
+                                    </div>
+                                }
                             </div>
                             <div>
-                                <label asp-for="Description">Добавить изображение</label>
-                                <input type="file" name="UploadedFile" class="form-control" />
+                                <label asp-for="Description">Добавить изображения</label>
+                                <input type="file" name="UploadedFile" class="form-control" multiple/>
                                 <input type="hidden" name="Id" value="@Model.Id" />
-                                <input type="hidden" name="Image" value="@Model.Image" />
+                                <input type="hidden" name="Images" value="@Model.Image" />
                                 <span>
                                     <button type="submit" class="btn btn-primary" asp-area="Admin" asp-controller="Products" asp-action="EditProduct" tabindex="5">Изменить</button>
                                     <a class="btn btn-danger" asp-area="Admin" asp-controller="Home" asp-action="Index" tabindex="6">Отменить</a>

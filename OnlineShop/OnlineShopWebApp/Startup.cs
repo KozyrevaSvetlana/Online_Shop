@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
-using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Helpers;
 using Serilog;
 using System;
 
@@ -54,6 +54,7 @@ namespace OnlineShopWebApp
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
             services.AddControllersWithViews();
+            services.AddTransient<ImagesProvider>();
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;

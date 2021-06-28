@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
@@ -7,8 +6,6 @@ using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
-using System.IO;
-using System.Linq;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -17,12 +14,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly IWebHostEnvironment appEnvironment;
+        private readonly ImagesProvider imagesProvider;
 
-        public ProductsController(IProductsRepository products, IWebHostEnvironment appEnvironment)
+        public ProductsController(IProductsRepository productsRepository, ImagesProvider imagesProvider)
         {
-            productsRepository = products;
-            this.appEnvironment = appEnvironment;
+            this.productsRepository = productsRepository;
+            this.imagesProvider = imagesProvider;
         }
         public IActionResult Index()
         {
@@ -52,25 +49,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                var productDb = new Product
-                {
-                    Id= editProduct.Id,
-                    Name = editProduct.Name,
-                    Cost = editProduct.Cost,
-                    Description = editProduct.Description,
-                    Image = editProduct.Image
-                };
-                if (editProduct.UploadedFile != null)
-                {
-                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/img/Products/");
-                    var fileName = Guid.NewGuid() + "." + editProduct.UploadedFile.FileName.Split('.').Last();
-                    using (var fileStream = new FileStream(productImagesPath + fileName, FileMode.Create))
-                    {
-                        editProduct.UploadedFile.CopyTo(fileStream);
-                    }
-                    productDb.Image = "/img/Products/" + fileName;
-                }
-                productsRepository.Edit(productDb);
+                var imagesPaths = imagesProvider.SafeFiles(editProduct.UploadedFile, ImageFolders.Products);
+                productsRepository.Edit(editProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");
             }
             return View("EditForm", editProduct);
@@ -86,7 +66,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddNewProduct(ProductViewModel newProduct)
+        public ActionResult AddNewProduct(AddProductViewModel newProduct)
         {
             var errorsResult = newProduct.IsValid();
             if (errorsResult.Count != 0)
@@ -99,29 +79,9 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                string fileName = "";
-                if (newProduct.UploadedFile != null)
-                {
-                    string productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/img/Products/");
-                    if (!Directory.Exists(productImagesPath))
-                    {
-                        Directory.CreateDirectory(productImagesPath);
-                    }
-
-                    fileName = Guid.NewGuid() + "." + newProduct.UploadedFile.FileName.Split('.').Last();
-                    using (var fileStream = new FileStream(productImagesPath + fileName, FileMode.Create))
-                    {
-                        newProduct.UploadedFile.CopyTo(fileStream);
-                    }
-                }
-                var productDb = new Product
-                {
-                    Name = newProduct.Name,
-                    Cost = newProduct.Cost,
-                    Description = newProduct.Description,
-                    Image = "/img/Products/" + fileName
-                };
-                productsRepository.Add(productDb);
+                var imagesPaths = imagesProvider.SafeFiles(newProduct.UploadedFiles, ImageFolders.Products);
+               
+                productsRepository.Add(newProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");
             }
             return View("AddProduct", newProduct);
