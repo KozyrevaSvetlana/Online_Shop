@@ -145,126 +145,126 @@ namespace OnlineShop.Db.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Image");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6ff0cddb-19c5-4a96-b923-98ba28deb591"),
+                            Id = new Guid("54def983-272a-4338-b402-a1ede218b0ff"),
                             ProductId = new Guid("a3f432a9-17a0-4307-984b-290611a248f5"),
                             Url = "/img/Products/1.jpg"
                         },
                         new
                         {
-                            Id = new Guid("7f3f54ac-bf05-4faf-aaa1-0141eee34cdd"),
+                            Id = new Guid("7deac20e-8a6b-43ee-b7c0-336ef03aeb65"),
                             ProductId = new Guid("c9f07f92-c9d5-4e8f-8093-5c242997ba82"),
                             Url = "/img/Products/2.jpg"
                         },
                         new
                         {
-                            Id = new Guid("09eb85d7-e361-4320-bb94-35a5a405dd3c"),
+                            Id = new Guid("25083d34-a27d-4efa-b545-0861006ca727"),
                             ProductId = new Guid("fe7524c9-a431-4b5b-83b2-9568c7f37bfa"),
                             Url = "/img/Products/3.jpg"
                         },
                         new
                         {
-                            Id = new Guid("7d1d5dc1-195a-409d-a03e-7d1637cc589a"),
+                            Id = new Guid("167826b6-4bef-48ab-81d3-a1b02f865281"),
                             ProductId = new Guid("fce4ebfe-1ae7-4e47-b29f-1d34916fc298"),
                             Url = "/img/Products/3.jpg"
                         },
                         new
                         {
-                            Id = new Guid("dc2cdde7-2a0b-4735-8f1b-ab8cd787f3c7"),
+                            Id = new Guid("51e329e8-db1e-49a6-948b-b2b11be2d9f9"),
                             ProductId = new Guid("6e406ea4-2656-4c1f-a0d3-8acbc9265dd7"),
                             Url = "/img/Products/5.jpg"
                         },
                         new
                         {
-                            Id = new Guid("dc53b3c1-26df-4075-879a-5554f1b81127"),
+                            Id = new Guid("e0749463-894e-470a-95f7-6728b874f193"),
                             ProductId = new Guid("56db2983-947f-45d5-ba51-5d5cef5cf7a5"),
                             Url = "/img/Products/6.jpg"
                         },
                         new
                         {
-                            Id = new Guid("d0a0d6d4-3f3d-4eab-a454-b5d5653435e9"),
+                            Id = new Guid("a5ceb602-f754-4480-935b-9f5da57b0713"),
                             ProductId = new Guid("8002540c-9944-4b42-ac8c-01ad787e81e6"),
                             Url = "/img/Products/6.jpg"
                         },
                         new
                         {
-                            Id = new Guid("9efa8471-8cd1-4484-b0b7-dd96a645ab47"),
+                            Id = new Guid("c779322a-8045-49f6-a079-20fd0e031a02"),
                             ProductId = new Guid("7a2227e4-4603-444f-ae2d-099079474ea0"),
                             Url = "/img/Products/5.jpg"
                         },
                         new
                         {
-                            Id = new Guid("dcffa333-de6c-4f74-b3e1-25523be0df5e"),
+                            Id = new Guid("75db362d-10c3-4454-a3d6-44276002fb7b"),
                             ProductId = new Guid("a76d1ebe-cc7d-4618-ac9f-3d1f4935fe57"),
                             Url = "/img/Products/4.jpg"
                         },
                         new
                         {
-                            Id = new Guid("3fdcd0d6-5253-457c-9f2c-c46ebb89435c"),
+                            Id = new Guid("1fa03418-c5ef-44bb-902c-c4d545948317"),
                             ProductId = new Guid("e54fae4f-7d6c-4e34-aa1b-820cdc772653"),
                             Url = "/img/Products/3.jpg"
                         },
                         new
                         {
-                            Id = new Guid("58f18bde-226c-46b4-a430-7cb839dcb99f"),
+                            Id = new Guid("6b81ced9-6a52-45d1-b2e7-8baa5ac72923"),
                             ProductId = new Guid("615496eb-0537-4657-8237-f033266a3a57"),
                             Url = "/img/Products/2.jpg"
                         },
                         new
                         {
-                            Id = new Guid("b03da0cb-fd2e-44f1-b387-6fb13dce2889"),
+                            Id = new Guid("a821f92b-5cfc-45b9-957f-7529c1a04bdf"),
                             ProductId = new Guid("0cb8d9f0-c806-462c-a1b6-3f095b324761"),
                             Url = "/img/Products/1.jpg"
                         },
                         new
                         {
-                            Id = new Guid("91d24398-74a1-441b-aa26-ba354596b20b"),
+                            Id = new Guid("622e5a61-254f-4104-9b3d-591bb85be465"),
                             ProductId = new Guid("27baabe2-d81b-4c46-86e0-23b97d7637c8"),
                             Url = "/img/Products/2.jpg"
                         },
                         new
                         {
-                            Id = new Guid("329a7079-d90c-4599-a511-7907de74abaa"),
+                            Id = new Guid("68223097-9220-4aa2-b293-810792371772"),
                             ProductId = new Guid("fbb6b537-d539-47ee-95c6-386b5ac0679a"),
                             Url = "/img/Products/3.jpg"
                         },
                         new
                         {
-                            Id = new Guid("292467c7-f617-4262-80dc-9bae43c6d01b"),
+                            Id = new Guid("6ab01e98-7448-46ae-a6c4-39962f594e14"),
                             ProductId = new Guid("a1ffa88c-1316-42a8-8601-95d70a65d150"),
                             Url = "/img/Products/4.jpg"
                         },
                         new
                         {
-                            Id = new Guid("5bd7333f-2090-4f5f-8bd8-36f1afcc571d"),
+                            Id = new Guid("aa223248-3f96-41e2-845c-eb17c7819931"),
                             ProductId = new Guid("0794a187-dfea-4807-9259-a7ff279455f2"),
                             Url = "/img/Products/5.jpg"
                         },
                         new
                         {
-                            Id = new Guid("94fa046e-865c-41e2-89b8-53890c41f17e"),
+                            Id = new Guid("f609703a-7f81-421c-bb43-50cf9134a418"),
                             ProductId = new Guid("bb71353d-1a58-45a2-84da-9b4137bec6f6"),
                             Url = "/img/Products/6.jpg"
                         },
                         new
                         {
-                            Id = new Guid("723e08b3-faf6-487a-8c98-6f33473b4966"),
+                            Id = new Guid("b8ef5aae-849c-4adc-ad09-51271c3d95d8"),
                             ProductId = new Guid("755221a6-0f45-4e86-9948-6e9f85872734"),
                             Url = "/img/Products/4.jpg"
                         },
                         new
                         {
-                            Id = new Guid("326ba2c2-9d62-4146-8a20-a17cff2dd984"),
+                            Id = new Guid("9cd4a49c-734b-4e68-863e-d6f7a0c73894"),
                             ProductId = new Guid("133788f9-139f-453e-b543-98b5876c4cb7"),
                             Url = "/img/Products/3.jpg"
                         },
                         new
                         {
-                            Id = new Guid("2e01a790-a3cd-4a0b-b027-75f04948d969"),
+                            Id = new Guid("c3d8044a-85ca-4067-a260-62ff2b256dcf"),
                             ProductId = new Guid("beb1332d-fbe9-4d6e-88f1-c2603bc7a80f"),
                             Url = "/img/Products/1.jpg"
                         });

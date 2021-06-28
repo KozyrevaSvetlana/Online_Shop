@@ -40,8 +40,8 @@
                                 <img src="@Model.Image" />
                             </div>
                             <div>
-                                <label asp-for="Description">Добавить изображение</label>
-                                <input type="file" name="UploadedFile" class="form-control" />
+                                <label asp-for="Description">Добавить изображения</label>
+                                <input type="file" name="UploadedFile" class="form-control" multiple/>
                                 <input type="hidden" name="Id" value="@Model.Id" />
                                 <input type="hidden" name="Image" value="@Model.Image" />
                                 <span>

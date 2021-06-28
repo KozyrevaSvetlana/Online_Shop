@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Models
 
         public List<string> Images { get; set; }
         public string Image => Images.Count == 0 ? "/img/Products/1.jpg" : Images[0];
-        public IFormFile UploadedFile { get; set; }
+        public IFormFile[] UploadedFile { get; set; }
         public List<string> IsValid()
         {
             var errors = new List<string>();
