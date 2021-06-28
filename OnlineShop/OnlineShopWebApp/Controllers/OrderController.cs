@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
@@ -28,13 +29,22 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var user = userManager.GetUserAsync(HttpContext.User).Result;
-            var cart = cartsRepository.TryGetByUserId(user.UserName);
-            ViewBag.Cart = cart.Items.ToCartItemViewModels();
+            var userName = Request.Cookies["id"];
+            var cart = new Cart();
+            if(userName==null)
+            {
+                cart = cartsRepository.TryGetByUserId(user.UserName);
+            }
+            else
+            {
+                cart = cartsRepository.TryGetByUserId(userName);
+            }
             return View();
         }
         [HttpPost]
         public IActionResult Accept(string Comment, UserContactViewModel userContacts)
         {
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
             var errorsResult = userContacts.IsValid();
             if (errorsResult != null)
             {
@@ -46,8 +56,15 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 var order = new OrderViewModel();
-                order.AddContacts(Constants.UserId, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
-                var cart = cartsRepository.TryGetByUserId(Constants.UserId);
+                order.AddContacts(user.UserName, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
+                var cart = new Cart();
+                cart = cartsRepository.TryGetByUserId(user.UserName);
+                if(cart==null)
+                {
+                    var userName = Request.Cookies["id"];
+                    cart = cartsRepository.TryGetByUserId(userName);
+                    Response.Cookies.Delete("id");
+                }
                 order.Products =cart.Items.ToCartItemViewModels();
                 order.Number = ordersRepository.CountOrders();
                 ordersRepository.AddOrder(order.ToOrder(), cart);
@@ -58,7 +75,8 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Result()
         {
-            var order = ordersRepository.GetLastOrder(Constants.UserId);
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var order = ordersRepository.GetLastOrder(user.UserName);
             return View(order.ToOrderViewModels());
         }
     }

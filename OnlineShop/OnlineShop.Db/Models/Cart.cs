@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
 
 namespace OnlineShop.Db.Models
 {
@@ -13,7 +10,6 @@ namespace OnlineShop.Db.Models
         public Cart()
         {
             Items = new List<CartItem>();
-
         }
     }
 }

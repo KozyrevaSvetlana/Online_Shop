@@ -69,7 +69,6 @@ namespace OnlineShop.Db
                     });
                 }
             }
-
             databaseContext.SaveChanges();
         }
 
@@ -89,24 +88,18 @@ namespace OnlineShop.Db
                     }
                     else
                     {
-                        DeleteItem(userCartItem, userId);
+                        userCart.Items.Remove(userCartItem);
                     }
                     break;
             }
             databaseContext.SaveChanges();
         }
 
-        private void DeleteItem(CartItem cartItem, string userId)
-        {
-            var userCart = TryGetByUserId(userId);
-            userCart.Items.RemoveAll(x => x.Id == cartItem.Id);
-            databaseContext.SaveChanges();
-        }
-
         public void ClearCart(string userId)
         {
-            var existingCart = TryGetByUserId(userId);
-            databaseContext.Carts.Remove(existingCart);
+            var userCart = TryGetByUserId(userId);
+            userCart.Items.ForEach(x => databaseContext.Remove(x));
+            databaseContext.Carts.Remove(userCart);
             databaseContext.SaveChanges();
         }
     }
