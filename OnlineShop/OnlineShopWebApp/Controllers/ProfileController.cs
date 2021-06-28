@@ -85,8 +85,8 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult ChangeProfileImage(IFormFile File)
         {
             var userDb = userManager.GetUserAsync(HttpContext.User).Result;
-            var imagesPaths = imagesProvider.SafeFile(File, ImageFolders.Profiles);
-            userDb.Image = imagesPaths;
+            var imagesPath = imagesProvider.SafeFile(File, ImageFolders.Profiles);
+            userDb.Image = imagesPath;
             userManager.UpdateAsync(userDb).Wait();
             return RedirectToAction("Index");
         }
