@@ -17,9 +17,9 @@ namespace OnlineShop.Db
             {
                 roleManager.CreateAsync(new IdentityRole(Constants.UserRoleName)).Wait();
             }
-            if (userManager.FindByNameAsync(adminEmail).Result == null)
+            if (userManager.FindByNameAsync("admin@gmail.com").Result == null)
             {
-                var admin = new User { Email = adminEmail, UserName = adminEmail };
+                var admin = new User { Email = adminEmail, UserName = adminEmail, ContactsName="Администратор", Adress="Москва", Surname="Админ" };
                 var result = userManager.CreateAsync(admin, password).Result;
                 if (result.Succeeded)
                 {

@@ -1,4 +1,5 @@
-﻿using OnlineShop.Db.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,13 @@ namespace OnlineShop.Db
         {
             get
             {
-                return databaseContext.Products.ToList();
+                return databaseContext.Products.Include(x=>x.Images).ToList();
             }
         }
 
         public Product GetProductById(Guid id)
         {
-            return databaseContext.Products.FirstOrDefault(p => p.Id == id);
+            return databaseContext.Products.Include(x => x.Images).FirstOrDefault(p => p.Id == id);
         }
 
         public void DeleteItem(Guid id)
@@ -56,7 +57,7 @@ namespace OnlineShop.Db
 
             foreach (var word in seachResults)
             {
-                resultList = databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).ToList();
+                resultList = databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).Include(x => x.Images).ToList();
             }
             return resultList.Distinct().ToList();
         }

@@ -58,7 +58,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     Name = editProduct.Name,
                     Cost = editProduct.Cost,
                     Description = editProduct.Description,
-                    Image = editProduct.Image
+                    //Image = editProduct.Image
                 };
                 if (editProduct.UploadedFile != null)
                 {
@@ -68,7 +68,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     {
                         editProduct.UploadedFile.CopyTo(fileStream);
                     }
-                    productDb.Image = "/img/Products/" + fileName;
+                    //productDb.Image = "/img/Products/" + fileName;
                 }
                 productsRepository.Edit(productDb);
                 return RedirectToAction("Index");
@@ -119,7 +119,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     Name = newProduct.Name,
                     Cost = newProduct.Cost,
                     Description = newProduct.Description,
-                    Image = "/img/Products/" + fileName
+                    //Image = "/img/Products/" + fileName
                 };
                 productsRepository.Add(productDb);
                 return RedirectToAction("Index");

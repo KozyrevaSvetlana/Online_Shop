@@ -13,7 +13,7 @@ namespace OnlineShop.Db
             "ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate " +
             "velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat " +
             "cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
-        public static Product GeneradeRandomProduct()
+        public static Product GeneradeRandomProduct(List<Image> images)
         {
             var product = new Product()
             {
@@ -21,7 +21,7 @@ namespace OnlineShop.Db
                 Name = names[random.Next(0, 21)],
                 Cost = random.Next(1, 100001),
                 Description = lorem.Substring(0, random.Next(10, lorem.Length)),
-                Image = "/img/Products/" + random.Next(1, 7).ToString()+".jpg"
+                Images = images
             };
             return product;
         }

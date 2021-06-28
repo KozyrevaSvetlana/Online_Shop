@@ -27,7 +27,7 @@ namespace OnlineShopWebApp.Helpers
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description,
-                Image = product.Image
+                Images = product.Images.Select(x => x.Url).ToList()
             };
         }
 

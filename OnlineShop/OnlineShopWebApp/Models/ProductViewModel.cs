@@ -21,7 +21,8 @@ namespace OnlineShopWebApp.Models
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 300 символов")]
         public string Description { get; set; }
 
-        public string Image { get; set; }
+        public List<string> Images { get; set; }
+        public string Image => Images.Count == 0 ? "/img/Products/1.jpg" : Images[0];
         public IFormFile UploadedFile { get; set; }
         public List<string> IsValid()
         {
