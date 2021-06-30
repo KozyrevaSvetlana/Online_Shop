@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
@@ -14,5 +15,7 @@ namespace OnlineShop.Db.Models.Interfaces
         List<Order> GetOrdersByUserId(string userId);
         Order GetLastOrder(string UserId);
         int CountOrders();
+        bool IsInOrder(Guid id);
+        List<Order> ProductInOrders(Guid id);
     }
 }

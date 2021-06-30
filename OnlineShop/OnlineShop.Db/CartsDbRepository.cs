@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -94,13 +95,30 @@ namespace OnlineShop.Db
             }
             databaseContext.SaveChanges();
         }
-
         public void ClearCart(string userId)
         {
             var userCart = TryGetByUserId(userId);
             userCart.Items.ForEach(x => databaseContext.Remove(x));
             databaseContext.Carts.Remove(userCart);
             databaseContext.SaveChanges();
+        }
+        public void DeleteItem(Guid id)
+        {
+            var result = databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product.Id == id).ToList();
+            foreach (var cart in result)
+            {
+                var cartItem = cart.Items.FirstOrDefault(x => x.Product.Id == id);
+                if (cartItem!=null)
+                {
+                    cart.Items.Remove(cartItem);
+                }
+            }
+            databaseContext.SaveChanges();
+        }
+        public bool IsInCart(Product product)
+        {
+            var result = databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product.Id == product.Id).FirstOrDefault();
+            return result != null;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace OnlineShop.Db.Models.Interfaces
         int GetAllAmounts(string userId);
         void ChangeAmount(Product product, int sign, string userId);
         public void ClearCart(string userId);
+        bool IsInCart(Product product);
+        void DeleteItem(Guid id);
     }
 }

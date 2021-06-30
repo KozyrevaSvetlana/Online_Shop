@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
-using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
@@ -15,11 +14,15 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     {
         private readonly IProductsRepository productsRepository;
         private readonly ImagesProvider imagesProvider;
+        private readonly IOrdersRepository ordersRepository;
+        private readonly ICartsRepository cartsRepository;
 
-        public ProductsController(IProductsRepository productsRepository, ImagesProvider imagesProvider)
+        public ProductsController(IProductsRepository productsRepository, ImagesProvider imagesProvider, IOrdersRepository ordersRepository, ICartsRepository cartsRepository)
         {
             this.productsRepository = productsRepository;
             this.imagesProvider = imagesProvider;
+            this.ordersRepository = ordersRepository;
+            this.cartsRepository = cartsRepository;
         }
         public IActionResult Index()
         {
@@ -57,7 +60,21 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public ActionResult DeleteProduct(Guid id)
         {
-            //productsRepository.DeleteItem(id);
+            if (!ordersRepository.IsInOrder(id))
+            {
+                productsRepository.DeleteItem(id);
+            }
+            else
+            {
+                var result = ordersRepository.ProductInOrders(id);
+                string ordersNumbers = "";
+                foreach (var order in result)
+                {
+                    ordersNumbers += order.Number + ", ";
+                }
+                ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length-2)}");
+                return View("Index", productsRepository.AllProducts.ToProductViewModels());
+            }
             return RedirectToAction("Index");
         }
         public ActionResult AddProduct()
@@ -80,7 +97,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var imagesPaths = imagesProvider.SafeFiles(newProduct.UploadedFiles, ImageFolders.Products);
-               
+
                 productsRepository.Add(newProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");
             }

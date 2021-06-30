@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -84,6 +85,21 @@ namespace OnlineShop.Db
         {
             var result = databaseContext.Orders.Count();
             return result + 1;
+        }
+        public bool IsInOrder(Guid id)
+        {
+            return databaseContext.CartItems.FirstOrDefault(x => x.Product.Id == id) != null;
+        }
+        public List<Order> ProductInOrders(Guid id)
+        {
+            var items = databaseContext.CartItems.Where(x => x.Product.Id == id).ToList();
+            var result = new List<Order>();
+            foreach (var item in items)
+            {
+                var resultItem = databaseContext.Orders.Include(x => x.Items).ThenInclude(x => x.Product).First(x => x.Items.Contains(item));
+                result.Add(resultItem);
+            }
+            return result;
         }
     }
 }

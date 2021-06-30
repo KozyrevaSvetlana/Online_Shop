@@ -18,6 +18,10 @@
                     }
                     else
                     {
+                        <div class="py-2">
+                            <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
+                        </div>
+
                         <div>
                             <a class="btn btn-primary" asp-area="Admin" asp-controller="Products" asp-action="AddProduct" role="button">Добавить новый продукт</a>
                         </div>
