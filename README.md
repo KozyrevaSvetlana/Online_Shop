@@ -1,2 +1,2 @@
-# ASP.NET_Core_1.0
-Курс по ASP.NET Core
+ASP.NET_Core
+Online Shop
