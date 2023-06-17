@@ -5,6 +5,7 @@ using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -22,22 +23,22 @@ namespace OnlineShopWebApp.Controllers
             this.userManager = userManager;
             this.imagesProvider = imagesProvider;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+            var userDb = await userManager.GetUserAsync(HttpContext.User);
             return View(userDb.ToUserViewModel());
         }
-        public IActionResult Orders()
+        public async Task<IActionResult> OrdersAsync()
         {
-            var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+            var userDb = await userManager.GetUserAsync(HttpContext.User);
             var orders = ordersRepository.GetOrdersByUserId(userDb.UserName);
             var userVM = userDb.ToUserViewModel();
             userVM.Orders = orders.ToOrdersViewModels();
             return View(userVM);
         }
-        public IActionResult Contacts()
+        public async Task<IActionResult> ContactsAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var emptyContacts = user.ToUserViewModel().GetEmptyContacts();
             if (emptyContacts.Count != 0)
             {
@@ -45,14 +46,14 @@ namespace OnlineShopWebApp.Controllers
             }
             return View(user.ToUserViewModel());
         }
-        public IActionResult AddContacts()
+        public async Task<IActionResult> AddContactsAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             return View(user.ToUserViewModel().Contacts);
         }
 
         [HttpPost]
-        public IActionResult AcceptContacts(UserContactViewModel contacts)
+        public async Task<IActionResult> AcceptContactsAsync(UserContactViewModel contacts)
         {
             var errorsResult = contacts.IsValid();
             if (errorsResult != null)
@@ -64,16 +65,16 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+                var userDb = await userManager.GetUserAsync(HttpContext.User);
                 userDb.ChangeContactsUser(contacts);
-                userManager.UpdateAsync(userDb).Wait();
+                userManager.UpdateAsync(userDb);
                 return View("Contacts", userDb.ToUserViewModel());
             }
             return View("AddContacts", contacts);
         }
-        public IActionResult Favorites()
+        public async Task<IActionResult> FavoritesAsync()
         {
-            var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+            var userDb = await userManager.GetUserAsync(HttpContext.User);
             ViewBag.Favorites = favoritesRepository.TryGetByUserId(userDb.UserName);
             return View(userDb.ToUserViewModel());
         }
@@ -82,19 +83,19 @@ namespace OnlineShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult ChangeProfileImage(IFormFile File)
+        public async Task<IActionResult> ChangeProfileImageAsync(IFormFile File)
         {
-            var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+            var userDb = await userManager.GetUserAsync(HttpContext.User);
             var imagesPath = imagesProvider.SafeFile(File, ImageFolders.Profiles);
             userDb.Image = imagesPath;
-            userManager.UpdateAsync(userDb).Wait();
+            userManager.UpdateAsync(userDb);
             return RedirectToAction("Index");
         }
-        public IActionResult DeleteImage()
+        public async Task<IActionResult> DeleteImage()
         {
-            var userDb = userManager.GetUserAsync(HttpContext.User).Result;
+            var userDb = await userManager.GetUserAsync(HttpContext.User);
             userDb.Image = "/img/profile.webp";
-            userManager.UpdateAsync(userDb).Wait();
+            await userManager.UpdateAsync(userDb);
             return RedirectToAction("Index");
         }
     }

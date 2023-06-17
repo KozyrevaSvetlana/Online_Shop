@@ -8,6 +8,7 @@ using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -24,9 +25,9 @@ namespace OnlineShopWebApp.Controllers
             this.cartsRepository = cartsRepository;
             ordersRepository = ordersWithoutUserRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var userName = Request.Cookies["id"];
             var cart = new Cart();
             if(userName==null)
@@ -40,9 +41,9 @@ namespace OnlineShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Accept(string Comment, UserContactViewModel userContacts)
+        public async Task<IActionResult> AcceptAsync(string Comment, UserContactViewModel userContacts)
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var errorsResult = userContacts.IsValid();
             if (errorsResult != null)
             {
@@ -71,9 +72,9 @@ namespace OnlineShopWebApp.Controllers
             return View("Index");
         }
 
-        public IActionResult Result()
+        public async Task<IActionResult> ResultAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var order = ordersRepository.GetLastOrder(user.UserName);
             return View(order.ToOrderViewModels());
         }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Models;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -37,11 +38,11 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckIn(Login login)
+        public async Task<IActionResult> CheckInAsync(Login login)
         {
             if (ModelState.IsValid)
             {
-                var result = signInManager.PasswordSignInAsync(login.Name, login.Password, login.RememberMe, false).Result;
+                var result = await signInManager.PasswordSignInAsync(login.Name, login.Password, login.RememberMe, false);
                 if (result.Succeeded)
                 {
                     if (login.ReturnUrl == null)
@@ -58,7 +59,7 @@ namespace OnlineShopWebApp.Controllers
             return View(login);
         }
         [HttpPost]
-        public IActionResult Create(Register register)
+        public async Task<IActionResult> CreateAsync(Register register)
         {
             if (register.Name == register.Password)
             {
@@ -67,10 +68,10 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 User user = new User { UserName = register.Name };
-                var result = userManager.CreateAsync(user, register.Password).Result;
+                var result = await userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
-                    signInManager.SignInAsync(user, false).Wait();
+                    signInManager.SignInAsync(user, false);
                     if (register.ReturnUrl == null)
                     {
                         return RedirectToAction(nameof(HomeController.Index), "Home");
@@ -90,7 +91,7 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Logout()
         {
-            signInManager.SignOutAsync().Wait();
+            signInManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }

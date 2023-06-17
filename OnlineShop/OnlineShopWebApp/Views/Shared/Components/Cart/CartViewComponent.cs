@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
 {
@@ -17,9 +18,9 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
             this.userManager = userManager;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var cart = cartsRepository.TryGetByUserId(user.UserName);
             if (cart==null)
             {

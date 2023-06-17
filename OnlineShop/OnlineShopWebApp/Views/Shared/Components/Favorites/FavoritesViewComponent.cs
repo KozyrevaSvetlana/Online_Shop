@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
 {
@@ -17,10 +18,10 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
             this.favoritesRepository = favoritesRepository;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var favoritesItemsCount = 0;
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             if (user != null)
             {
                 var favorites = favoritesRepository.TryGetByUserId(user.UserName);

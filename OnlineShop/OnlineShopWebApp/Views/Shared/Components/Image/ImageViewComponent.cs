@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Views.Shared.ViewComponents.ImageViewComponent
 {
@@ -13,9 +14,9 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.ImageViewComponent
             this.userManager = userManager;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             if (user.Image == null || user.Image == "")
             {
                 return View("Image", "/img/profile.webp");

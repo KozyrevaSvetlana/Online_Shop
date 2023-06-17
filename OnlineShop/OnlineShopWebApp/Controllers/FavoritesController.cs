@@ -5,6 +5,7 @@ using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using System;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -21,29 +22,29 @@ namespace OnlineShopWebApp.Controllers
             this.favoritesRepository = favoritesRepository;
             this.userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var cart = favoritesRepository.TryGetByUserId(user.UserName);
             return View(cart.ToFavoritesViewModel());
         }
 
-        public IActionResult Add(Guid id)
+        public async Task<IActionResult> AddAsync(Guid id)
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var product = productsRepository.GetProductById(id);
             favoritesRepository.Add(product, user.UserName);
             return RedirectToAction("Index");
         }
-        public IActionResult Clear()
+        public async Task<IActionResult> ClearAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             favoritesRepository.Clear(user.UserName);
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             favoritesRepository.DeleteItem(id, user.UserName);
             return RedirectToAction("Index");
         }

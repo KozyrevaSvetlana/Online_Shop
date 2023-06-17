@@ -5,6 +5,7 @@ using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using System;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -20,9 +21,9 @@ namespace OnlineShopWebApp.Controllers
             this.cartsRepository = cartsRepository;
             this.userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             var cart = new Cart();
             if (user == null)
             {
@@ -36,10 +37,10 @@ namespace OnlineShopWebApp.Controllers
             return View(cart.ToCartViewModel());
         }
 
-        public IActionResult Add(Guid id)
+        public async Task<IActionResult> AddAsync(Guid id)
         {
             var product = productsRepository.GetProductById(id);
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             if(user==null)
             {
                 var cookieValue = Request.Cookies["id"];
@@ -58,10 +59,10 @@ namespace OnlineShopWebApp.Controllers
             }
             return RedirectToAction("Index");
         }
-        public IActionResult ChangeAmount(Guid id, int sign)
+        public async Task<IActionResult> ChangeAmountAsync(Guid id, int sign)
         {
             var product = productsRepository.GetProductById(id);
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             if (user==null)
             {
                 var userName = Request.Cookies["id"];
@@ -73,9 +74,9 @@ namespace OnlineShopWebApp.Controllers
             }
             return RedirectToAction("Index");
         }
-        public IActionResult Clear()
+        public async Task<IActionResult> ClearAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
             if (user==null)
             {
                 var userName = Request.Cookies["id"];
