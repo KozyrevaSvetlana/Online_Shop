@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user != null)
             {
-                var favorites = favoritesRepository.TryGetByUserId(user.UserName);
+                var favorites = await favoritesRepository.TryGetByUserId(user.UserName);
                 favoritesItemsCount = favorites?.Items.Count ?? 0;
             }
             return View("Favorites", favoritesItemsCount);

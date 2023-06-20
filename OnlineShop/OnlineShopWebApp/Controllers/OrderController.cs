@@ -32,11 +32,11 @@ namespace OnlineShopWebApp.Controllers
             var cart = new Cart();
             if(userName==null)
             {
-                cart = cartsRepository.TryGetByUserId(user.UserName);
+                cart = await cartsRepository.TryGetByUserId(user.UserName);
             }
             else
             {
-                cart = cartsRepository.TryGetByUserId(userName);
+                cart = await cartsRepository.TryGetByUserId(userName);
             }
             return View();
         }
@@ -57,15 +57,15 @@ namespace OnlineShopWebApp.Controllers
                 var order = new OrderViewModel();
                 order.AddContacts(user.UserName, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
                 var cart = new Cart();
-                cart = cartsRepository.TryGetByUserId(user.UserName);
+                cart = await cartsRepository.TryGetByUserId(user.UserName);
                 if(cart==null)
                 {
                     var userName = Request.Cookies["id"];
-                    cart = cartsRepository.TryGetByUserId(userName);
+                    cart = await cartsRepository.TryGetByUserId(userName);
                     Response.Cookies.Delete("id");
                 }
                 order.Products =cart.Items.ToCartItemViewModels();
-                order.Number = ordersRepository.CountOrders();
+                order.Number = await ordersRepository.CountOrders();
                 ordersRepository.AddOrder(order.ToOrder(), cart);
                 return RedirectToAction("Result");
             }
@@ -75,7 +75,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ResultAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var order = ordersRepository.GetLastOrder(user.UserName);
+            var order = await ordersRepository.GetLastOrder(user.UserName);
             return View(order.ToOrderViewModels());
         }
     }

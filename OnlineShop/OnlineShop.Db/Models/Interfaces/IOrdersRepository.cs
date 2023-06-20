@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
     public interface IOrdersRepository
     {
-        IEnumerable<Order> AllOrders { get; }
+        Task<IEnumerable<Order>> AllOrders();
 
-        void AddOrder(Order order, Cart cart);
-        Order TryGetByUserId(string userId);
-        void Edit(int number, int status);
-        Order GetOrderByNumber(int number);
-        void Delete(int number);
-        List<Order> GetOrdersByUserId(string userId);
-        Order GetLastOrder(string UserId);
-        int CountOrders();
-        bool IsInOrder(Guid id);
-        List<Order> ProductInOrders(Guid id);
+        Task AddOrder(Order order, Cart cart);
+        Task<Order> TryGetByUserId(string userId);
+        Task Edit(int number, int status);
+        Task<Order> GetOrderByNumber(int number);
+        Task Delete(int number);
+        Task<List<Order>> GetOrdersByUserId(string userId);
+        Task<Order> GetLastOrder(string UserId);
+        Task<int> CountOrders();
+        Task<bool> IsInOrder(Guid id);
+        Task<List<Order>> ProductInOrders(Guid id);
     }
 }

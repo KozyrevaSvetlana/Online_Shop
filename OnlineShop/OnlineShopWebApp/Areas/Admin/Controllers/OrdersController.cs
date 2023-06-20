@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -16,24 +17,25 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             this.ordersRepository = ordersRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(ordersRepository.AllOrders.ToOrdersViewModels());
+            var orders = await ordersRepository.AllOrders();
+            return View(orders.ToOrdersViewModels());
         }
-        public IActionResult OrderForm(int number)
+        public async Task<IActionResult> OrderForm(int number)
         {
-            var order = ordersRepository.GetOrderByNumber(number);
+            var order = await ordersRepository.GetOrderByNumber(number);
             ViewData["Statuses"] = order.ToOrderViewModels().InfoStatus.GetAllStatuses();
             return View(order.ToOrderViewModels());
         }
-        public IActionResult EditOrder(int number, string status)
+        public async Task<IActionResult> EditOrder(int number, string status)
         {
-            ordersRepository.Edit(number, Mapping.ToIntStatus(status));
+            await ordersRepository.Edit(number, Mapping.ToIntStatus(status));
             return RedirectToAction("Orders", "Admin");
         }
-        public ActionResult DeleteOrder(int number)
+        public async Task<IActionResult> DeleteOrder(int number)
         {
-            ordersRepository.Delete(number);
+            await ordersRepository.Delete(number);
             return RedirectToAction("Orders", "Admin");
         }
     }

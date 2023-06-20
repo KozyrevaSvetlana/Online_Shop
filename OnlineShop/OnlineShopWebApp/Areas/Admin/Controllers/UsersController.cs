@@ -109,8 +109,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<ActionResult> DeleteUserAsync(string name)
         {
             var user = await userManager.FindByNameAsync(name);
-            var orders = ordersRepository.GetOrdersByUserId(user.UserName);
-            if (orders.Count > 0)
+            var orders = await ordersRepository.GetOrdersByUserId(user.UserName);
+            if (orders.Any())
             {
                 string ordersNumbers = "";
                 foreach (var order in orders)

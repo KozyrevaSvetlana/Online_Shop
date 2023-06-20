@@ -4,6 +4,7 @@ using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OnlineShop.Db
 {
@@ -14,51 +15,48 @@ namespace OnlineShop.Db
         {
             this.databaseContext = databaseContext;
         }
-        public IEnumerable<Product> AllProducts
+        public async Task<IEnumerable<Product>> AllProducts()
         {
-            get
-            {
-                return databaseContext.Products.Include(x=>x.Images).ToList();
-            }
+            return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
 
-        public Product GetProductById(Guid id)
+        public async Task<Product> GetProductById(Guid id)
         {
-            return databaseContext.Products.Include(x => x.Images).FirstOrDefault(p => p.Id == id);
+            return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public void DeleteItem(Guid id)
+        public async Task DeleteItem(Guid id)
         {
-            var deleteProduct = databaseContext.Products.FirstOrDefault(p => p.Id == id);
+            var deleteProduct = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             databaseContext.Products.Remove(deleteProduct);
-            databaseContext.SaveChanges();
+            databaseContext.SaveChangesAsync();
         }
-        public void Edit(Product editProduct)
+        public async Task Edit(Product editProduct)
         {
-            var product = AllProducts.FirstOrDefault(p => p.Id == editProduct.Id);
+            var product = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == editProduct.Id);
             product.Name = editProduct.Name;
             product.Cost = editProduct.Cost;
             product.Description = editProduct.Description;
             product.Images = editProduct.Images;
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
-        public int GetCount()
+        public async Task<int> GetCount()
         {
-            return databaseContext.Products.Count();
+            return await databaseContext.Products.CountAsync();
         }
-        public void Add(Product newProduct)
+        public async Task Add(Product newProduct)
         {
             databaseContext.Products.Add(newProduct);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public List<Product> SeachProduct(string[] seachResults)
+        public async Task<List<Product>> SeachProduct(string[] seachResults)
         {
             var resultList = new List<Product>();
 
             foreach (var word in seachResults)
             {
-                resultList = databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).Include(x => x.Images).ToList();
+                resultList = await databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).Include(x => x.Images).ToListAsync();
             }
             return resultList.Distinct().ToList();
         }

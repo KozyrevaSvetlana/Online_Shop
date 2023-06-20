@@ -2,6 +2,7 @@
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using System;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -14,19 +15,19 @@ namespace OnlineShopWebApp.Controllers
             this.products = products;
         }
 
-        public ActionResult Index(Guid id)
+        public async Task<ActionResult> Index(Guid id)
         {
-            var result = products.GetProductById(id);
+            var result = await products.GetProductById(id);
             return View(result.ToProductViewModel());
         }
 
         [HttpPost]
-        public IActionResult Find(string result)
+        public async Task<ActionResult> Find(string result)
         {
             if (result != null)
             {
                 TempData["Result"] = result;
-                var searchResult = products.SeachProduct(result.Split());
+                var searchResult = await products.SeachProduct(result.Split());
                 return View(searchResult.ToProductViewModels());
             }
             return View();

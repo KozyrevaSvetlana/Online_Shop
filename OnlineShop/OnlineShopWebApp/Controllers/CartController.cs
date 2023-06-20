@@ -28,18 +28,18 @@ namespace OnlineShopWebApp.Controllers
             if (user == null)
             {
                 var userName = Request.Cookies["id"];
-                cart = cartsRepository.TryGetByUserId(userName);
+                cart = await cartsRepository.TryGetByUserId(userName);
             }
             else
             {
-                cart = cartsRepository.TryGetByUserId(user.UserName);
+                cart = await cartsRepository.TryGetByUserId(user.UserName);
             }
             return View(cart.ToCartViewModel());
         }
 
         public async Task<IActionResult> AddAsync(Guid id)
         {
-            var product = productsRepository.GetProductById(id);
+            var product = await productsRepository.GetProductById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
             if(user==null)
             {
@@ -51,26 +51,26 @@ namespace OnlineShopWebApp.Controllers
                     cookie.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Append("id", cookieValue, cookie);
                 }
-                cartsRepository.Add(product, cookieValue);
+                await cartsRepository.Add(product, cookieValue);
             }
             else
             {
-                cartsRepository.Add(product, user.UserName);
+                await cartsRepository.Add(product, user.UserName);
             }
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ChangeAmountAsync(Guid id, int sign)
         {
-            var product = productsRepository.GetProductById(id);
+            var product = await productsRepository.GetProductById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user==null)
             {
                 var userName = Request.Cookies["id"];
-                cartsRepository.ChangeAmount(product, sign, userName);
+                await cartsRepository.ChangeAmount(product, sign, userName);
             }
             else
             {
-                cartsRepository.ChangeAmount(product, sign, user.UserName);
+                await cartsRepository.ChangeAmount(product, sign, user.UserName);
             }
             return RedirectToAction("Index");
         }
@@ -80,11 +80,11 @@ namespace OnlineShopWebApp.Controllers
             if (user==null)
             {
                 var userName = Request.Cookies["id"];
-                cartsRepository.ClearCart(userName);
+                await cartsRepository.ClearCart(userName);
             }
             else
             {
-                cartsRepository.ClearCart(user.UserName);
+                await cartsRepository.ClearCart(user.UserName);
             }
 
             return RedirectToAction("Index");

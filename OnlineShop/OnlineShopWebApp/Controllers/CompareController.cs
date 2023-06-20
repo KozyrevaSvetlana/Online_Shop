@@ -25,27 +25,27 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var compareCart = compareRepository.TryGetByCompareId(user.UserName);
+            var compareCart = await compareRepository.TryGetByCompareId(user.UserName);
             return View(compareCart.ToCompareViewModel());
         }
 
         public async Task<IActionResult> AddAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var product = productsRepository.GetProductById(id);
+            var product = await productsRepository.GetProductById(id);
             compareRepository.Add(product, user.UserName);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ClearAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            compareRepository.Clear(user.UserName);
+            await compareRepository.Clear(user.UserName);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            compareRepository.DeleteItem(id, user.UserName);
+            await compareRepository.DeleteItem(id, user.UserName);
             return RedirectToAction("Index");
         }
     }

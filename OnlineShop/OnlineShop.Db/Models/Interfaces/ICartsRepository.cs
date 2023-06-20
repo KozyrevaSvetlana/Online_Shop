@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
     public interface ICartsRepository
     {
-        IEnumerable<Cart> AllCarts { get; }
-        Cart TryGetByUserId(string userId);
-        void Add(Product product, string userId);
-        int GetAllAmounts(string userId);
-        void ChangeAmount(Product product, int sign, string userId);
-        public void ClearCart(string userId);
-        bool IsInCart(Product product);
-        void DeleteItem(Guid id);
+        Task<IEnumerable<Cart>> AllCarts();
+        Task<Cart> TryGetByUserId(string userId);
+        Task Add(Product product, string userId);
+       Task<int> GetAllAmounts(string userId);
+        Task ChangeAmount(Product product, int sign, string userId);
+        Task ClearCart(string userId);
+        Task<bool> IsInCart(Product product);
     }
 }

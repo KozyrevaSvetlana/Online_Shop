@@ -31,7 +31,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> OrdersAsync()
         {
             var userDb = await userManager.GetUserAsync(HttpContext.User);
-            var orders = ordersRepository.GetOrdersByUserId(userDb.UserName);
+            var orders = await ordersRepository.GetOrdersByUserId(userDb.UserName);
             var userVM = userDb.ToUserViewModel();
             userVM.Orders = orders.ToOrdersViewModels();
             return View(userVM);
@@ -67,7 +67,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 var userDb = await userManager.GetUserAsync(HttpContext.User);
                 userDb.ChangeContactsUser(contacts);
-                userManager.UpdateAsync(userDb);
+                await userManager.UpdateAsync(userDb);
                 return View("Contacts", userDb.ToUserViewModel());
             }
             return View("AddContacts", contacts);
@@ -88,7 +88,7 @@ namespace OnlineShopWebApp.Controllers
             var userDb = await userManager.GetUserAsync(HttpContext.User);
             var imagesPath = imagesProvider.SafeFile(File, ImageFolders.Profiles);
             userDb.Image = imagesPath;
-            userManager.UpdateAsync(userDb);
+            await userManager.UpdateAsync(userDb);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> DeleteImage()

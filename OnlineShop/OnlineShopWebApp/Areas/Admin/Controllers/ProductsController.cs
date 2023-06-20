@@ -5,6 +5,7 @@ using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -24,18 +25,19 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(productsRepository.AllProducts.ToProductViewModels());
+            var products = await productsRepository.AllProducts();
+            return View(products.ToProductViewModels());
         }
-        public IActionResult Description(Guid id)
+        public async Task<IActionResult> Description(Guid id)
         {
-            var result = productsRepository.GetProductById(id);
+            var result = await productsRepository.GetProductById(id);
             return View(result.ToProductViewModel());
         }
-        public ActionResult EditForm(Guid id)
+        public async Task<IActionResult> EditForm(Guid id)
         {
-            var result = productsRepository.GetProductById(id);
+            var result = await productsRepository.GetProductById(id);
             return View(result.ToProductViewModel());
         }
         [HttpPost]
@@ -58,22 +60,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             return View("EditForm", editProduct);
         }
-        public ActionResult DeleteProduct(Guid id)
+        public async Task<IActionResult> DeleteProduct(Guid id)
         {
-            if (!ordersRepository.IsInOrder(id))
+            if (!await ordersRepository.IsInOrder(id))
             {
-                productsRepository.DeleteItem(id);
+                await productsRepository.DeleteItem(id);
             }
             else
             {
-                var result = ordersRepository.ProductInOrders(id);
+                var result = await ordersRepository.ProductInOrders(id);
                 string ordersNumbers = "";
                 foreach (var order in result)
                 {
                     ordersNumbers += order.Number + ", ";
                 }
                 ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length-2)}");
-                return View("Index", productsRepository.AllProducts.ToProductViewModels());
+                var products = await productsRepository.AllProducts();
+                return View("Index", products.ToProductViewModels());
             }
             return RedirectToAction("Index");
         }

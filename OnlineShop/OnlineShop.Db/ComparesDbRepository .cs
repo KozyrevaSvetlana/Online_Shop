@@ -4,6 +4,7 @@ using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OnlineShop.Db
 {
@@ -15,20 +16,17 @@ namespace OnlineShop.Db
             this.databaseContext = databaseContext;
         }
 
-        public IEnumerable<Compare> AllCompares
+        public async Task<IEnumerable<Compare>> AllCompares()
         {
-            get
-            {
-                return databaseContext.Compares.ToList();
-            }
+                return await databaseContext.Compares.ToListAsync();
         }
 
-        public void Add(Product product, string UserId)
+        public async Task Add(Product product, string UserId)
         {
-            var userCompareList = TryGetByCompareId(UserId);
+            var userCompareList = await TryGetByCompareId(UserId);
             if (userCompareList == null)
             {
-                AddNewCompare(product, UserId);
+                await AddNewCompare(product, UserId);
             }
             else
             {
@@ -38,28 +36,28 @@ namespace OnlineShop.Db
                     userCompareList.Items.Add(product);
                 }
             }
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public void Clear(string CompareId)
+        public async Task Clear(string CompareId)
         {
             var result = TryGetByCompareId(CompareId);
             databaseContext.Remove(result);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public void DeleteItem(Guid id, string CompareId)
+        public async Task DeleteItem(Guid id, string CompareId)
         {
-            var compare = TryGetByCompareId(CompareId);
+            var compare = await TryGetByCompareId(CompareId);
             compare.Items.RemoveAll(x => x.Id == id);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public Compare TryGetByCompareId(string CompareId)
+        public async Task<Compare> TryGetByCompareId(string CompareId)
         {
-            return databaseContext.Compares.Include(x => x.Items).FirstOrDefault(x => x.UserId == CompareId);
+            return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
         }
-        private void AddNewCompare(Product product, string userId)
+        private async Task AddNewCompare(Product product, string userId)
         {
             var newCart = new Compare
             {
@@ -68,7 +66,7 @@ namespace OnlineShop.Db
             };
             newCart.Items.Add(product);
             databaseContext.Compares.Add(newCart);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
     }
 }
