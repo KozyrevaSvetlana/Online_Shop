@@ -30,7 +30,7 @@ namespace OnlineShopWebApp.Controllers
             var user = await userManager.GetUserAsync(HttpContext.User);
             var userName = Request.Cookies["id"];
             var cart = new Cart();
-            if(userName==null)
+            if (userName == null)
             {
                 cart = await cartsRepository.TryGetByUserId(user.UserName);
             }
@@ -58,13 +58,13 @@ namespace OnlineShopWebApp.Controllers
                 order.AddContacts(user.UserName, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
                 var cart = new Cart();
                 cart = await cartsRepository.TryGetByUserId(user.UserName);
-                if(cart==null)
+                if (cart == null)
                 {
                     var userName = Request.Cookies["id"];
                     cart = await cartsRepository.TryGetByUserId(userName);
                     Response.Cookies.Delete("id");
                 }
-                order.Products =cart.Items.ToCartItemViewModels();
+                order.Products = cart.Items.ToCartItemViewModels();
                 order.Number = await ordersRepository.CountOrders();
                 ordersRepository.AddOrder(order.ToOrder(), cart);
                 return RedirectToAction("Result");

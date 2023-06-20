@@ -97,7 +97,7 @@ namespace OnlineShop.Db
                     }
                     break;
             }
-            await  databaseContext.SaveChangesAsync();
+            await databaseContext.SaveChangesAsync();
         }
 
         public async Task ClearCart(string userId)
@@ -105,7 +105,7 @@ namespace OnlineShop.Db
             var userCart = await TryGetByUserId(userId);
             userCart.Items.Select(x => databaseContext.Remove(x));
             databaseContext.Carts.Remove(userCart);
-            await  databaseContext.SaveChangesAsync();
+            await databaseContext.SaveChangesAsync();
         }
 
         public async Task<bool> IsInCart(Product product)

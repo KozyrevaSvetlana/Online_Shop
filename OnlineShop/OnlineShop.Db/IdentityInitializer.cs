@@ -20,7 +20,7 @@ namespace OnlineShop.Db
             }
             if (await userManager.FindByNameAsync("admin@gmail.com") == null)
             {
-                var admin = new User { Email = adminEmail, UserName = adminEmail, ContactsName="Администратор", Adress="Москва", Surname="Админ" };
+                var admin = new User { Email = adminEmail, UserName = adminEmail, ContactsName = "Администратор", Adress = "Москва", Surname = "Админ" };
                 var result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {

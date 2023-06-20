@@ -31,16 +31,16 @@
             {
                 <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
             }
-        <div class="py-3">
-            @if (Model == null)
-            {
-                <button type="submit" class="btn btn-dark container-fluid" asp-area="" asp-controller="Login" asp-action="Create" tabindex="4">Регистрация</button>
-            }
-            else
-            {
-                <button type="submit" class="btn btn-dark container-fluid" asp-area="" asp-controller="Login" asp-action="Create" asp-route-returnUrl="@Model.ReturnUrl" tabindex="4">Регистрация</button>
-            }
-        </div>
+            <div class="py-3">
+                @if (Model == null)
+                {
+                    <button type="submit" class="btn btn-dark container-fluid" asp-area="" asp-controller="Login" asp-action="Create" tabindex="4">Регистрация</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-dark container-fluid" asp-area="" asp-controller="Login" asp-action="Create" asp-route-returnUrl="@Model.ReturnUrl" tabindex="4">Регистрация</button>
+                }
+            </div>
         </form>
     </div>
 </div>

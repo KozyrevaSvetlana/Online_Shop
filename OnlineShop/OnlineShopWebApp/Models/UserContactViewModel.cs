@@ -32,7 +32,7 @@ namespace OnlineShopWebApp.Models
         public List<string> IsValid()
         {
             var errors = new List<string>();
-            if (Name== Surname)
+            if (Name == Surname)
             {
                 errors.Add("Имя и Фамилия не должны совпадать");
             }
@@ -54,7 +54,7 @@ namespace OnlineShopWebApp.Models
             }
             for (int i = 0; i < Phone.Length; i++)
             {
-                if(!char.IsDigit(Phone[i]))
+                if (!char.IsDigit(Phone[i]))
                 {
                     errors.Add("Номер телефона должен быть числом");
                     break;

@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Models
         {
             UserId = userId;
             User = user;
-            InfoStatus= infoStatus;
+            InfoStatus = infoStatus;
             Comment = comment;
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace OnlineShopWebApp.Models
 {
-    public class FavoritesViewModel: BaseProductList
+    public class FavoritesViewModel : BaseProductList
     {
     }
 }

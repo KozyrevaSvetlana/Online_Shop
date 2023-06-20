@@ -32,12 +32,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{ int i = 1;
-                                    string status;}
+                                @{
+                                    int i = 1;
+                                    string status;
+                                }
                                 @foreach (var order in Model)
                                 {
                                     <tr>
-                                        @{status = order.InfoStatus.GetStatus(order.InfoStatus.StatusOrder);}
+                                        @{
+                                            status = order.InfoStatus.GetStatus(order.InfoStatus.StatusOrder);
+                                        }
                                         <th scope="row">@i</th>
                                         <td>@order.Number</td>
                                         <td>@order.Cost</td>
@@ -50,7 +54,9 @@
                                         <td>
                                             <a class="btn btn-primary" asp-area="Admin" asp-controller="Orders" asp-action="OrderForm" asp-route-number="@order.Number" tabindex="6">Подробнее</a>
                                         </td>
-                                        @{i++;}
+                                        @{
+                                            i++;
+                                        }
                                     </tr>
                                 }
                             </tbody>

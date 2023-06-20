@@ -1,6 +1,6 @@
 ﻿namespace OnlineShopWebApp.Models
 {
-    public class CompareViewModel: BaseProductList
+    public class CompareViewModel : BaseProductList
     {
     }
 }

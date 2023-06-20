@@ -2,7 +2,7 @@
 {
     public enum ImageFolders
     {
-            Products,
-            Profiles
+        Products,
+        Profiles
     }
 }

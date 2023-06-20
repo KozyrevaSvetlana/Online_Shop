@@ -14,7 +14,7 @@ namespace OnlineShopWebApp.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Цена не указана")]
-        [Range(1,1000000, ErrorMessage = "Цена должна быть в пределах от 1 до 1 000 000 руб.")]
+        [Range(1, 1000000, ErrorMessage = "Цена должна быть в пределах от 1 до 1 000 000 руб.")]
         public decimal Cost { get; set; }
 
         [Required(ErrorMessage = "Не указано описание")]

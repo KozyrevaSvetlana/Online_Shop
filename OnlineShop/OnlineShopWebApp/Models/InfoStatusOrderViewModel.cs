@@ -9,12 +9,12 @@ namespace OnlineShopWebApp.Models
         public DateTime Data { get; set; }
         public enum Statuses
         {
-            Created=1,
-            InProcessing=2,
-            Delivering=3,
-            OnPost=4,
-            Done=5,
-            Canceled=6
+            Created = 1,
+            InProcessing = 2,
+            Delivering = 3,
+            OnPost = 4,
+            Done = 5,
+            Canceled = 6
         }
         public InfoStatusOrderViewModel(DateTime dateTime)
         {

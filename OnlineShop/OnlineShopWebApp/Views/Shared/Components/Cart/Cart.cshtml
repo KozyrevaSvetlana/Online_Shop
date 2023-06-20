@@ -10,7 +10,9 @@
             <th>Количество</th>
             <th>Стоимость</th>
         </tr>
-        @{ int i = 1; decimal totalCost = 0;}
+        @{
+            int i = 1; decimal totalCost = 0;
+        }
         @foreach (var item in Model.Items)
         {
             <tr class="text-center">
@@ -19,7 +21,9 @@
                 <th>@item.Product.Cost</th>
                 <th>@item.Amount</th>
                 <th>@item.Cost</th>
-                @{i++; totalCost += item.Cost;}
+                @{
+                    i++; totalCost += item.Cost;
+                }
             </tr>
         }
     </table>

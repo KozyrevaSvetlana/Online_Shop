@@ -19,7 +19,7 @@ namespace OnlineShopWebApp.Helpers
         public List<string> SafeFiles(IFormFile[] files, ImageFolders folder)
         {
             var imagesPaths = new List<string>();
-            if (files !=null)
+            if (files != null)
             {
                 foreach (var file in files)
                 {

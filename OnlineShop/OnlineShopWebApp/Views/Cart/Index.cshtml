@@ -22,7 +22,9 @@ else
                     <th></th>
                     <th>Стоимость</th>
                 </tr>
-                @{ int i = 1;}
+                @{
+                    int i = 1;
+                }
                 @foreach (var item in Model.Items)
                 {
                     <tr class="text-center">
@@ -37,7 +39,9 @@ else
                             <a type="button" class="btn btn-secondary" asp-area="" asp-controller="cart" asp-action="ChangeAmount" asp-route-id="@item.Product.Id" asp-route-sign="-1">-</a>
                         </th>
                         <th>@item.Cost</th>
-                        @{i++;}
+                        @{
+                            i++;
+                        }
                     </tr>
                 }
             </table>

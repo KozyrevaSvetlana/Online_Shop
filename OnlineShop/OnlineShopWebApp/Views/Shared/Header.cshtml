@@ -12,14 +12,14 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                <li class="nav-item">
-                    <p>
-                        <a href="/Profile/Index">
-                            <img class="rounded-circle" src="@await Component.InvokeAsync("Image")" width="35"
-                                 height="35" alt="Изображение">
-                        </a>
-                    </p>
-                </li>
+                        <li class="nav-item">
+                            <p>
+                                <a href="/Profile/Index">
+                                    <img class="rounded-circle" src="@await Component.InvokeAsync("Image")" width="35"
+                                     height="35" alt="Изображение">
+                                </a>
+                            </p>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Logout">Выйти</a>
                         </li>

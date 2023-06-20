@@ -22,7 +22,7 @@
                                 <span class="badge badge-danger" asp-validation-for="Name"></span>
                             </div>
                             <div>
-                                <label >Старая цена</label>
+                                <label>Старая цена</label>
                                 <input type="text" class="form-control" name="oldCost" value="@Model.Cost" readonly>
                             </div>
                             <div>
@@ -47,7 +47,7 @@
                             </div>
                             <div>
                                 <label asp-for="Description">Добавить изображения</label>
-                                <input type="file" name="UploadedFile" class="form-control" multiple/>
+                                <input type="file" name="UploadedFile" class="form-control" multiple />
                                 <input type="hidden" name="Id" value="@Model.Id" />
                                 <input type="hidden" name="Images" value="@Model.Image" />
                                 <span>

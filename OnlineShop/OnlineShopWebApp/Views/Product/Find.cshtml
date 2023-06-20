@@ -11,8 +11,10 @@ else
 {
     <h5>Вы искали:</h5>
     @foreach (var result in TempData["Result"] as string)
-    {@result;
-}
+    {
+        @result
+        ;
+    }
     <br />
     <h4>Результаты поиска:</h4>
     <br />

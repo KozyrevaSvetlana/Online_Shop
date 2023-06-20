@@ -22,7 +22,7 @@ namespace OnlineShopWebApp.Models
         public List<string> GetEmptyContacts()
         {
             var result = new List<string>();
-            if (Contacts.Name=="")
+            if (Contacts.Name == "")
             {
                 result.Add("Имя не заполнено");
             }

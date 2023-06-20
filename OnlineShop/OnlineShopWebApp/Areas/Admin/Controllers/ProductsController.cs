@@ -74,7 +74,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                 {
                     ordersNumbers += order.Number + ", ";
                 }
-                ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length-2)}");
+                ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length - 2)}");
                 var products = await productsRepository.AllProducts();
                 return View("Index", products.ToProductViewModels());
             }

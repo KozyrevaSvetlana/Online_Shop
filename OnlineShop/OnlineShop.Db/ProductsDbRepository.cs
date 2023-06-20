@@ -29,7 +29,7 @@ namespace OnlineShop.Db
         {
             var deleteProduct = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             databaseContext.Products.Remove(deleteProduct);
-            databaseContext.SaveChangesAsync();
+            await databaseContext.SaveChangesAsync();
         }
         public async Task Edit(Product editProduct)
         {

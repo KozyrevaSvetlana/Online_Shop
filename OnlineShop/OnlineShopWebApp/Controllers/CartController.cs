@@ -41,12 +41,12 @@ namespace OnlineShopWebApp.Controllers
         {
             var product = await productsRepository.GetProductById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
-            if(user==null)
+            if (user == null)
             {
                 var cookieValue = Request.Cookies["id"];
-                if(cookieValue == null)
+                if (cookieValue == null)
                 {
-                    cookieValue = Guid.NewGuid().ToString()+DateTime.Now.ToString("d");
+                    cookieValue = Guid.NewGuid().ToString() + DateTime.Now.ToString("d");
                     CookieOptions cookie = new CookieOptions();
                     cookie.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Append("id", cookieValue, cookie);
@@ -63,7 +63,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var product = await productsRepository.GetProductById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
-            if (user==null)
+            if (user == null)
             {
                 var userName = Request.Cookies["id"];
                 await cartsRepository.ChangeAmount(product, sign, userName);
@@ -77,7 +77,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ClearAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            if (user==null)
+            if (user == null)
             {
                 var userName = Request.Cookies["id"];
                 await cartsRepository.ClearCart(userName);
