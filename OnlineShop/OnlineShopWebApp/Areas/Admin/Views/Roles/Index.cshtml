@@ -30,26 +30,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{ int i = 1;}
+                                @{
+                                    int i = 1;
+                                }
                                 @foreach (var role in Model)
                                 {
                                     <tr>
                                         <th scope="row">@i</th>
                                         <td>@role.Name</td>
                                         <td>
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Подробнее
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="@role.Id" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Подробнее
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
                                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Roles" asp-action="EditRole" asp-route-id="@role.Id">Редактировать</a>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Roles" asp-action="DeleteRole" asp-route-id="@role.Id">Удалить</a>
-                                                    </div>
-                                                </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </td>
-                                        @{i++;}
+                                        @{
+                                            i++;
+                                        }
                                     </tr>
                                 }
                             </tbody>

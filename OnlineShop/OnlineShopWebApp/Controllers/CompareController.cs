@@ -33,7 +33,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             var product = await productsRepository.GetProductById(id);
-            compareRepository.Add(product, user.UserName);
+            await compareRepository.Add(product, user.UserName);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ClearAsync()
