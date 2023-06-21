@@ -10,7 +10,7 @@ namespace OnlineShop.Db.Helper
         {
             var adminEmail = "admin@gmail.com";
             var password = "_Aa123456";
-            if (await roleManager.FindByNameAsync(Constants.AdminRoleName) == null)
+            if(await roleManager.FindByNameAsync(Constants.AdminRoleName) == null)
             {
                 await roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName));
             }

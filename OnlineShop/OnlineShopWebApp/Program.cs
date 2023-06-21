@@ -22,7 +22,7 @@ namespace OnlineShopWebApp
 
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                IdentityInitializer.Initialize(userManager, roleManager);
+                IdentityInitializer.Initialize(userManager, roleManager).Wait();
             }
             host.Run();
         }
