@@ -117,10 +117,10 @@ namespace OnlineShopWebApp.Controllers
                 }
 
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                EmailService emailService = new EmailService();
-                await emailService.SendEmailAsync(model.Email, "Reset Password",
-                    $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
+                var callbackUrl = Url.Action("ResetPassword", "Login", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                //EmailService emailService = new EmailService();
+                //await emailService.SendEmailAsync(model.Email, "Reset Password",
+                //    $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                 return View("ForgotPasswordConfirmation");
             }
             return View(model);
