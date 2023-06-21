@@ -61,7 +61,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                 var resultRole = await userManager.AddToRoleAsync(newUser, "user");
                 if (resultRole.Succeeded)
                 {
-                    userManager.AddToRoleAsync(newUser, "user");
+                    await userManager.AddToRoleAsync(newUser, "user");
                 }
             }
             return RedirectToAction("Index");
@@ -154,7 +154,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     return View("EditForm", editUser);
                 }
             }
-            userManager.UpdateAsync(user);
+            await userManager.UpdateAsync(user);
             return RedirectToAction("Index");
         }
         public async Task<ActionResult> RolesAsync(string userName)

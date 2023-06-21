@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System.Threading.Tasks;
 
@@ -118,9 +119,9 @@ namespace OnlineShopWebApp.Controllers
 
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Login", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                //EmailService emailService = new EmailService();
-                //await emailService.SendEmailAsync(model.Email, "Reset Password",
-                //    $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
+                var emailService = new EmailService();
+                await emailService.SendEmailAsync(model.Email, "Reset Password",
+                    $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                 return View("ForgotPasswordConfirmation");
             }
             return View(model);

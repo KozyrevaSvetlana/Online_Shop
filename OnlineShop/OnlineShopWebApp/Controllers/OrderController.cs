@@ -66,7 +66,7 @@ namespace OnlineShopWebApp.Controllers
                 }
                 order.Products = cart.Items.ToCartItemViewModels();
                 order.Number = await ordersRepository.CountOrders();
-                ordersRepository.AddOrder(order.ToOrder(), cart);
+                await ordersRepository.AddOrder(order.ToOrder(), cart);
                 return RedirectToAction("Result");
             }
             return View("Index");
