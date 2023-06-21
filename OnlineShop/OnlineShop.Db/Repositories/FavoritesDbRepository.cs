@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineShop.Db
+namespace OnlineShop.Db.Repositories
 {
     public class FavoritesDbRepository : IFavoritesRepository
     {
@@ -18,7 +18,7 @@ namespace OnlineShop.Db
 
         public async Task<IEnumerable<Favorites>> AllFavorites()
         {
-                return await databaseContext.Favorites.ToListAsync();
+            return await databaseContext.Favorites.ToListAsync();
         }
 
         public async Task Add(Product product, string UserId)
@@ -57,7 +57,7 @@ namespace OnlineShop.Db
         {
             return await databaseContext.Favorites.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == UserId);
         }
-        private async Task  AddNewFavorite(Product product, string userId)
+        private async Task AddNewFavorite(Product product, string userId)
         {
             var newCart = new Favorites
             {

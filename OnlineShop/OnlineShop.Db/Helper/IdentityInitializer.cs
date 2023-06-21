@@ -2,7 +2,7 @@
 using OnlineShop.Db.Models;
 using System.Threading.Tasks;
 
-namespace OnlineShop.Db
+namespace OnlineShop.Db.Helper
 {
     public class IdentityInitializer
     {
@@ -18,7 +18,8 @@ namespace OnlineShop.Db
             {
                 await roleManager.CreateAsync(new IdentityRole(Constants.UserRoleName));
             }
-            if (await userManager.FindByNameAsync("admin@gmail.com") == null)
+            var test = await userManager.FindByNameAsync(adminEmail);
+            if (test == null)
             {
                 var admin = new User { Email = adminEmail, UserName = adminEmail, ContactsName = "Администратор", Adress = "Москва", Surname = "Админ" };
                 var result = await userManager.CreateAsync(admin, password);

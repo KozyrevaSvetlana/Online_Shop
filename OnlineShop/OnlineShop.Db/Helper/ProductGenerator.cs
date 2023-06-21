@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OnlineShop.Db
+namespace OnlineShop.Db.Helper
 {
     public static class ProductGenerator
     {

@@ -56,7 +56,7 @@ namespace OnlineShopWebApp.Controllers
                     ModelState.AddModelError("", "Неправильный пароль");
                 }
             }
-            return View(login);
+            return View("Index", login);
         }
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Register register)

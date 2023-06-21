@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineShop.Db
+namespace OnlineShop.Db.Repositories
 {
     public class ComparesDbRepository : ICompareRepository
     {
@@ -18,7 +18,7 @@ namespace OnlineShop.Db
 
         public async Task<IEnumerable<Compare>> AllCompares()
         {
-                return await databaseContext.Compares.ToListAsync();
+            return await databaseContext.Compares.ToListAsync();
         }
 
         public async Task Add(Product product, string UserId)
