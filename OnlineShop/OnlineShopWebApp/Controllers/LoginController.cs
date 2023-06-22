@@ -102,13 +102,6 @@ namespace OnlineShopWebApp.Controllers
                     await emailService.SendEmailAsync(register.Email, "Подтвердите ваш профиль",
                         $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
                     return View("ConfirmEmail");
-                    //return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
-                    //await signInManager.SignInAsync(user, false);
-                    //if (register.ReturnUrl == null)
-                    //{
-                    //    return RedirectToAction(nameof(HomeController.Index), "Home");
-                    //}
-                    //return Redirect(register.ReturnUrl);
                 }
                 else
                 {
