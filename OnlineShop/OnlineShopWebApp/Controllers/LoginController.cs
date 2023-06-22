@@ -149,7 +149,7 @@ namespace OnlineShopWebApp.Controllers
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Login", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 var emailService = new EmailService();
-                await emailService.SendEmailAsync(model.Email, "Сброс пароля", $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
+                await emailService.SendEmailAsync(model.Email, "Сброс пароля", $"Для сброса пароля пройдите <a href='{callbackUrl}'>по ссылке</a>");
                 return View("ForgotPasswordConfirmation");
             }
             return View(model);
