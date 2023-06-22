@@ -122,8 +122,7 @@ namespace OnlineShopWebApp.Controllers
             var result = await userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
-            else
-                return View("Error");
+            return View("Error");
         }
 
         [HttpPost]
