@@ -20,14 +20,14 @@ namespace OnlineShopWebApp.Helpers
 
             using (var client = new SmtpClient())
             {
-                // hjuzZFcUbzfXAnc9BDdt
-                // показать как настраивать доступ через почту
+                // показать как настраивать доступ через почту и получить пароль
                 await client.ConnectAsync("smtp.mail.ru", 587);
                 await client.AuthenticateAsync("kozyreva_online_shop@mail.ru", "hjuzZFcUbzfXAnc9BDdt");
                 await client.SendAsync(emailMessage);
-
                 await client.DisconnectAsync(true);
             }
+
+            // нужно ли показывать отправку через google почту и Яндекс? или майл.ру достаточно?
         }
     }
 }
