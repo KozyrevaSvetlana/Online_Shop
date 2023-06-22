@@ -98,15 +98,17 @@ namespace OnlineShopWebApp.Controllers
                         protocol: HttpContext.Request.Scheme);
 
                     var emailService = new EmailService();
-                    await emailService.SendEmailAsync(register.Email, "Confirm your account",
-                        $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
-                    return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
-                    await signInManager.SignInAsync(user, false);
-                    if (register.ReturnUrl == null)
-                    {
-                        return RedirectToAction(nameof(HomeController.Index), "Home");
-                    }
-                    return Redirect(register.ReturnUrl);
+
+                    await emailService.SendEmailAsync(register.Email, "Подтвердите ваш профиль",
+                        $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
+                    return View("ConfirmEmail");
+                    //return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
+                    //await signInManager.SignInAsync(user, false);
+                    //if (register.ReturnUrl == null)
+                    //{
+                    //    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    //}
+                    //return Redirect(register.ReturnUrl);
                 }
                 else
                 {

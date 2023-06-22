@@ -10,8 +10,8 @@ namespace OnlineShopWebApp.Helpers
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("Администрация сайта", "admin@metanit.com"));
-            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.From.Add(new MailboxAddress("Администрация сайта", "kozyreva_online_shop@mail.ru"));
+            emailMessage.To.Add(new MailboxAddress("Онлайн Магазин игрушек", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
@@ -20,8 +20,10 @@ namespace OnlineShopWebApp.Helpers
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.metanit.com", 465, true);
-                await client.AuthenticateAsync("admin@metanit.com", "password");
+                // hjuzZFcUbzfXAnc9BDdt
+                // показать как настраивать доступ через почту
+                await client.ConnectAsync("smtp.mail.ru", 587);
+                await client.AuthenticateAsync("kozyreva_online_shop@mail.ru", "hjuzZFcUbzfXAnc9BDdt");
                 await client.SendAsync(emailMessage);
 
                 await client.DisconnectAsync(true);
