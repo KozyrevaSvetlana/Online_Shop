@@ -89,7 +89,7 @@ namespace OnlineShopWebApp.Controllers
                 if (result.Succeeded)
                 {
                     var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                    var callbackUrl = Url.Action("ConfirmEmail", "Login",
                         new
                         {
                             userId = user.Id,
@@ -125,6 +125,10 @@ namespace OnlineShopWebApp.Controllers
             }
             var user = await userManager.FindByIdAsync(userId);
             if (user == null)
+            {
+                return View("Error");
+            }
+            if (user.EmailConfirmed)
             {
                 return View("Error");
             }
@@ -166,7 +170,7 @@ namespace OnlineShopWebApp.Controllers
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Login", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 var emailService = new EmailService();
-                await emailService.SendEmailAsync(model.Email, "Reset Password",
+                await emailService.SendEmailAsync(model.Email, "Сброс пароля",
                     $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                 return View("ForgotPasswordConfirmation");
             }
@@ -193,6 +197,12 @@ namespace OnlineShopWebApp.Controllers
             if (user == null)
             {
                 return View("ResetPasswordConfirmation");
+            }
+            var confirmPasswords = await userManager.CheckPasswordAsync(user, model.Password);
+            if (confirmPasswords)
+            {
+                ModelState.AddModelError(string.Empty, "Старый пароль не должен совпадать с новым. Введите новый пароль или зайдите под старым");
+                return View(model);
             }
             var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
