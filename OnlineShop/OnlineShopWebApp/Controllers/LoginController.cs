@@ -22,6 +22,7 @@ namespace OnlineShopWebApp.Controllers
             this.ordersRepository = ordersRepository;
         }
 
+        [HttpGet]
         public IActionResult Index(string returnUrl)
         {
             if (returnUrl != null)
@@ -40,23 +41,37 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CheckInAsync(Login login)
         {
             if (ModelState.IsValid)
             {
+                var user = await userManager.FindByNameAsync(login.Name);
+                if (user != null)
+                {
+                    // проверяем, подтвержден ли email
+                    if (!await userManager.IsEmailConfirmedAsync(user))
+                    {
+                        ModelState.AddModelError(string.Empty, "Вы не подтвердили свой email");
+                        return View(login);
+                    }
+                }
                 var result = await signInManager.PasswordSignInAsync(login.Name, login.Password, login.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    if (login.ReturnUrl == null)
-                    {
-                        return RedirectToAction(nameof(HomeController.Index), "Home");
-                    }
-                    return Redirect(login.ReturnUrl);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный пароль");
+                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
+
+
+                if (login.ReturnUrl == null)
+                {
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
+                return Redirect(login.ReturnUrl);
             }
             return View("Index", login);
         }
@@ -69,10 +84,23 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                User user = new User { UserName = register.Name };
+                User user = new User { UserName = register.Name, Email = register.Email };
                 var result = await userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
+                    var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                        new
+                        {
+                            userId = user.Id,
+                            code = code
+                        },
+                        protocol: HttpContext.Request.Scheme);
+
+                    var emailService = new EmailService();
+                    await emailService.SendEmailAsync(register.Email, "Confirm your account",
+                        $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+                    return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
                     await signInManager.SignInAsync(user, false);
                     if (register.ReturnUrl == null)
                     {
@@ -91,9 +119,32 @@ namespace OnlineShopWebApp.Controllers
             }
             return View("RegIndex", register);
         }
-        public IActionResult Logout()
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
-            signInManager.SignOutAsync();
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var result = await userManager.ConfirmEmailAsync(user, code);
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Home");
+            else
+                return View("Error");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 

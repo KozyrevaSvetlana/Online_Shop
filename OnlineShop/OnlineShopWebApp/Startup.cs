@@ -36,7 +36,8 @@ namespace OnlineShopWebApp
                             options.UseSqlServer(connection));
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityContext>();
+                .AddEntityFrameworkStores<IdentityContext>()
+                .AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -69,6 +70,7 @@ namespace OnlineShopWebApp
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
+            app.UseHttpsRedirection();
             app.UseSerilogRequestLogging();
             app.UseStaticFiles();
 

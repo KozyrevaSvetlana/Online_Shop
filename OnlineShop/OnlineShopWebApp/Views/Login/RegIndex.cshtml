@@ -8,6 +8,13 @@
             <div class="validatoin" asp-validation-summary="All"></div>
             <div class="py-1">
                 <div>
+                    <label asp-for="Name">Email</label>
+                </div>
+                <input class="container-fluid" asp-for="Email" type="email" name="Email" tabindex="1">
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="py-1">
+                <div>
                     <label asp-for="Name">Логин</label>
                 </div>
                 <input class="container-fluid" asp-for="Name" type="text" name="Name" tabindex="1">
