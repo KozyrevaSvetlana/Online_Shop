@@ -66,7 +66,6 @@ namespace OnlineShopWebApp.Controllers
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
 
-
                 if (login.ReturnUrl == null)
                 {
                     return RedirectToAction(nameof(HomeController.Index), "Home");
@@ -98,9 +97,7 @@ namespace OnlineShopWebApp.Controllers
                         protocol: HttpContext.Request.Scheme);
 
                     var emailService = new EmailService();
-
-                    await emailService.SendEmailAsync(register.Email, "Подтвердите ваш профиль",
-                        $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
+                    await emailService.SendEmailAsync(register.Email, "Подтвердите ваш профиль", $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
                     return View("ConfirmEmail");
                 }
                 else
@@ -118,18 +115,10 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
-            {
                 return View("Error");
-            }
             var user = await userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
+            if (user == null || user.EmailConfirmed)
                 return View("Error");
-            }
-            if (user.EmailConfirmed)
-            {
-                return View("Error");
-            }
             var result = await userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
@@ -156,15 +145,11 @@ namespace OnlineShopWebApp.Controllers
             {
                 var user = await userManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
-                {
                     return View("ForgotPasswordConfirmation");
-                }
-
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Login", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 var emailService = new EmailService();
-                await emailService.SendEmailAsync(model.Email, "Сброс пароля",
-                    $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
+                await emailService.SendEmailAsync(model.Email, "Сброс пароля", $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                 return View("ForgotPasswordConfirmation");
             }
             return View(model);
@@ -179,14 +164,10 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
-            {
                 return View("ResetPasswordConfirmation");
-            }
             var confirmPasswords = await userManager.CheckPasswordAsync(user, model.Password);
             if (confirmPasswords)
             {
@@ -195,9 +176,7 @@ namespace OnlineShopWebApp.Controllers
             }
             var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
-            {
                 return View("Index");
-            }
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
