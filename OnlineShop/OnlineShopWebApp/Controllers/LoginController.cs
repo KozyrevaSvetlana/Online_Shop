@@ -115,8 +115,6 @@ namespace OnlineShopWebApp.Controllers
             return View("RegIndex", register);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -140,23 +138,18 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        [HttpGet]
-        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -177,16 +170,12 @@ namespace OnlineShopWebApp.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
             return code == null ? View("Error") : View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -207,7 +196,7 @@ namespace OnlineShopWebApp.Controllers
             var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return View("ResetPasswordConfirmation");
+                return View("Index");
             }
             foreach (var error in result.Errors)
             {
