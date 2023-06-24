@@ -87,18 +87,12 @@ namespace OnlineShopWebApp.Controllers
                 var result = await userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
-                    var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Login",
-                        new
-                        {
-                            userId = user.Id,
-                            code = code
-                        },
-                        protocol: HttpContext.Request.Scheme);
-
-                    var emailService = new EmailService();
-                    await emailService.SendEmailAsync(register.Email, "Подтвердите ваш профиль", $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
-                    return View("ConfirmEmail");
+                    await signInManager.SignInAsync(user, false);
+                    if (register.ReturnUrl == null)
+                    {
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
+                    return Redirect(register.ReturnUrl);
                 }
                 else
                 {
