@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
+using OnlineShopWebApp.Configuration;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System.Threading.Tasks;
@@ -14,12 +15,14 @@ namespace OnlineShopWebApp.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IOrdersRepository ordersRepository;
+        private readonly IMailService emailService;
 
-        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager, IOrdersRepository ordersRepository)
+        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager, IOrdersRepository ordersRepository, IMailService emailService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.ordersRepository = ordersRepository;
+            this.emailService = emailService;
         }
 
         [HttpGet]
@@ -87,12 +90,17 @@ namespace OnlineShopWebApp.Controllers
                 var result = await userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
-                    await signInManager.SignInAsync(user, false);
-                    if (register.ReturnUrl == null)
-                    {
-                        return RedirectToAction(nameof(HomeController.Index), "Home");
-                    }
-                    return Redirect(register.ReturnUrl);
+                    var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Login",
+                        new
+                        {
+                            userId = user.Id,
+                            code = code
+                        },
+                        protocol: HttpContext.Request.Scheme);
+                    await emailService.SendEmailAsync(register.Email, "Подтвердите свой профиль",
+                        $"Подтвердите регистрацию, перейдя <a href='{callbackUrl}'>по ссылке</a>");
+                    return View("ConfirmEmail");
                 }
                 else
                 {
@@ -141,14 +149,13 @@ namespace OnlineShopWebApp.Controllers
                     return View("ForgotPasswordConfirmation");
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Login", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                var emailService = new EmailService();
                 await emailService.SendEmailAsync(model.Email, "Сброс пароля", $"Для сброса пароля пройдите <a href='{callbackUrl}'>по ссылке</a>");
                 return View("ForgotPasswordConfirmation");
             }
             return View(model);
         }
 
-        public IActionResult ResetPassword(string code = null)
+        public IActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
         }

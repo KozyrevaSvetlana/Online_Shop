@@ -10,6 +10,7 @@ using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShop.Db.Repositories;
+using OnlineShopWebApp.Configuration;
 using OnlineShopWebApp.Helpers;
 using Serilog;
 using System;
@@ -27,6 +28,7 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             string connection = Configuration.GetConnectionString("online_shop_kozyreva");
             services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlServer(connection));
@@ -56,6 +58,7 @@ namespace OnlineShopWebApp
             services.AddTransient<ICompareRepository, ComparesDbRepository>();
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
+            services.AddTransient<IMailService, EmailService>();
             services.AddControllersWithViews();
             services.AddTransient<ImagesProvider>();
             services.Configure<IdentityOptions>(options =>
