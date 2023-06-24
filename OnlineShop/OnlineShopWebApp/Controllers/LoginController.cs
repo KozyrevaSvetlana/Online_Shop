@@ -71,7 +71,7 @@ namespace OnlineShopWebApp.Controllers
                 var result = await userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
-                    signInManager.SignInAsync(user, false);
+                    await signInManager.SignInAsync(user, false);
                     if (register.ReturnUrl == null)
                     {
                         return RedirectToAction(nameof(HomeController.Index), "Home");
