@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Win32;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Configuration;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
+using System;
 using System.Threading.Tasks;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -56,6 +59,8 @@ namespace OnlineShopWebApp.Controllers
                     if (!await userManager.IsEmailConfirmedAsync(user))
                     {
                         ModelState.AddModelError(string.Empty, "Вы не подтвердили свой email");
+                        //TODO заменить поле имя на емейл
+                        //await SendConfimLetter(login.Email, user, code);
                         return View(login);
                     }
                 }
@@ -86,21 +91,35 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                User user = new User { UserName = register.Name, Email = register.Email };
+                var checkUser = await userManager.FindByEmailAsync(register.Email);
+                if(checkUser != null)
+                {
+                    ModelState.AddModelError("", "Пользователь с таким email уже существует. Авторизуйтесь");
+                    return View("RegIndex", register);
+                }
+                checkUser = await userManager.FindByNameAsync(register.Name);
+                if (checkUser != null)
+                {
+                    ModelState.AddModelError("", "Пользователь с таким логином уже существует. Авторизуйтесь");
+                    return View("RegIndex", register);
+                }
+
+                var user = new User { UserName = register.Name, Email = register.Email };
                 var result = await userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
-                    var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Login",
-                        new
-                        {
-                            userId = user.Id,
-                            code = code
-                        },
-                        protocol: HttpContext.Request.Scheme);
-                    await emailService.SendEmailAsync(register.Email, "Подтвердите свой профиль",
-                        $"Подтвердите регистрацию, перейдя <a href='{callbackUrl}'>по ссылке</a>");
-                    return View("ConfirmEmail");
+                    try
+                    {
+                        var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                        await SendConfimLetter(register.Email, user, code);
+                        return View("ConfirmEmail");
+                    }
+                    catch (Exception)
+                    {
+                        ModelState.AddModelError("", $"Во время отправки письма на почту {register.Email} произошла ошибка.Проверьте адрес почты");
+                        await userManager.DeleteAsync(user);
+                        return View("RegIndex", register);
+                    }
                 }
                 else
                 {
@@ -145,8 +164,18 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
-                    return View("ForgotPasswordConfirmation");
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Такая почта не зарегистрирована");
+                    return View(model);
+                }
+                if (!await userManager.IsEmailConfirmedAsync(user))
+                {
+                    ModelState.AddModelError(string.Empty, "Ваша почта не подтверждена. На нее отправлено письмо со ссылкой для подтверждения");
+                    var confirmCode = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await SendConfimLetter(model.Email, user, confirmCode);
+                    return View(model);
+                }
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Login", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 await emailService.SendEmailAsync(model.Email, "Сброс пароля", $"Для сброса пароля пройдите <a href='{callbackUrl}'>по ссылке</a>");
@@ -182,6 +211,19 @@ namespace OnlineShopWebApp.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
             return View(model);
+        }
+
+        private async Task SendConfimLetter(string email, User user, string code)
+        {
+            var callbackUrl = Url.Action("ConfirmEmail", "Login",
+                new
+                {
+                    userId = user.Id,
+                    code = code
+                },
+                protocol: HttpContext.Request.Scheme);
+            await emailService.SendEmailAsync(email, "Подтвердите свой профиль",
+                $"Подтвердите регистрацию, перейдя <a href='{callbackUrl}'>по ссылке</a>");
         }
     }
 }

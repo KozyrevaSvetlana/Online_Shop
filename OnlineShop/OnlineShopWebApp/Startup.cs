@@ -32,8 +32,6 @@ namespace OnlineShopWebApp
             string connection = Configuration.GetConnectionString("online_shop_kozyreva");
             services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlServer(connection));
-            services.AddDbContext<IdentityContext>(options =>
-            options.UseSqlServer(connection));
 
             services.AddDbContext<IdentityContext>(options =>
                             options.UseSqlServer(connection));
