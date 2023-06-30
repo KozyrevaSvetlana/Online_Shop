@@ -61,7 +61,7 @@ namespace OnlineShopWebApp.Controllers
                         ModelState.AddModelError(string.Empty, "Вы не подтвердили свой email");
                         //TODO заменить поле имя на емейл
                         //await SendConfimLetter(login.Email, user, code);
-                        return View(login);
+                        return View("Index", login);
                     }
                 }
                 var result = await signInManager.PasswordSignInAsync(login.Name, login.Password, login.RememberMe, false);
