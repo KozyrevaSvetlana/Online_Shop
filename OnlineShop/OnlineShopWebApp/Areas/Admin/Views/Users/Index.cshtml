@@ -42,7 +42,7 @@
                                     <tr>
                                         <td scope="row">@i</td>
                                         <td>
-                                            <a asp-area="Admin" asp-controller="Users" asp-action="UserInfo" asp-route-name="@user.Login.Name" role="button">@user.Login.Name</a>
+                                            <a asp-area="Admin" asp-controller="Users" asp-action="UserInfo" asp-route-name="@user.Login.Email" role="button">@user.Login.Email</a>
                                         </td>
                                         <td>@user.Contacts.Name</td>
                                         <td>@user.Contacts.Surname</td>
@@ -54,16 +54,16 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                     <li>
-                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="ChangePassword" asp-route-userName="@user.Login.Name">Сменить пароль</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="ChangePassword" asp-route-userName="@user.Login.Email">Сменить пароль</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="EditForm" asp-route-name="@user.Login.Name">Редактирование данных</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="EditForm" asp-route-name="@user.Login.Email">Редактирование данных</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="Roles" asp-route-userName="@user.Login.Name">Права доступа</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="Roles" asp-route-userName="@user.Login.Email">Права доступа</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-name="@user.Login.Name">Удалить пользователя</a>
+                                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-name="@user.Login.Email">Удалить пользователя</a>
                                                     </li>
                                                 </ul>
                                             </div>

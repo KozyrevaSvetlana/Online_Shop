@@ -52,7 +52,7 @@ namespace OnlineShopWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByNameAsync(login.Name);
+                var user = await userManager.FindByEmailAsync(login.Email);
                 if (user != null)
                 {
                     // проверяем, подтвержден ли email
@@ -64,7 +64,7 @@ namespace OnlineShopWebApp.Controllers
                         return View("Index", login);
                     }
                 }
-                var result = await signInManager.PasswordSignInAsync(login.Name, login.Password, login.RememberMe, false);
+                var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, login.RememberMe, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");

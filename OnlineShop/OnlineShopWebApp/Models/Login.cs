@@ -6,7 +6,7 @@ namespace OnlineShopWebApp.Models
     {
         [Required(ErrorMessage = "Не указано имя")]
         [StringLength(44, MinimumLength = 2, ErrorMessage = "Имя должно быть не менее 2 символов и не более 44 символов")]
-        public string Name { get; set; }
+        public string Email { get; set; }
 
 
         [Required(ErrorMessage = "Не указан пароль")]

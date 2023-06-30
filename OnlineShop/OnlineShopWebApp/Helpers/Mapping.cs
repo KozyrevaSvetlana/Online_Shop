@@ -178,7 +178,6 @@ namespace OnlineShopWebApp.Helpers
                 Role = new RoleViewModel()
             };
             userVM.Id = userDb.Id;
-            userVM.Login.Name = userDb.UserName;
             userVM.Contacts.Name = userDb.ContactsName ?? "";
             userVM.Contacts.Surname = userDb.Surname ?? "";
             userVM.Contacts.Adress = userDb.Adress ?? "";
