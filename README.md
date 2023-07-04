@@ -1,3 +1,3 @@
 ASP.NET_Core
 Online Shop
-adminEmail = "admin@gmail.com", password = "_Aa123456"
+adminEmail = "kozyreva_online_shop@mail.ru", password = "_Aa123456"
