@@ -28,13 +28,10 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             string connection = Configuration.GetConnectionString("online_shop_kozyreva");
-            services.AddDbContext<DatabaseContext>(options =>
-            options.UseSqlServer(connection));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
 
-            services.AddDbContext<IdentityContext>(options =>
-                            options.UseSqlServer(connection));
+            services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connection));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()
@@ -50,7 +47,7 @@ namespace OnlineShopWebApp
                     IsEssential = true
                 };
             });
-
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IProductsRepository, ProductsDbRepository>();
             services.AddTransient<ICartsRepository, CartsDbRepository>();
             services.AddTransient<ICompareRepository, ComparesDbRepository>();

@@ -41,14 +41,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> AddUserAsync(Register register)
         {
-            if (register.Name == register.Password)
+            if (register.Email == register.Password)
             {
-                ModelState.AddModelError("", "Логин и пароль не должны совпадать!");
+                ModelState.AddModelError("", "Email и пароль не должны совпадать!");
                 return View("AddUser", register);
             }
             if (ModelState.IsValid)
             {
-                User newUser = new User { UserName = register.Name };
+                User newUser = new User { UserName = register.Email };
                 var result = await userManager.CreateAsync(newUser, register.Password);
                 if (!result.Succeeded)
                 {

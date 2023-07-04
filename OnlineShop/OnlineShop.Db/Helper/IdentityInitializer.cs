@@ -8,7 +8,7 @@ namespace OnlineShop.Db.Helper
     {
         public static async Task Initialize(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            var adminEmail = "admin@gmail.com";
+            var adminEmail = "kozyreva_online_shop@mail.ru";
             var password = "_Aa123456";
             if(await roleManager.FindByNameAsync(Constants.AdminRoleName) == null)
             {
@@ -21,7 +21,7 @@ namespace OnlineShop.Db.Helper
             var test = await userManager.FindByNameAsync(adminEmail);
             if (test == null)
             {
-                var admin = new User { Email = adminEmail, UserName = adminEmail, ContactsName = "Администратор", Adress = "Москва", Surname = "Админ" };
+                var admin = new User { Email = adminEmail, UserName = adminEmail, ContactsName = "Администратор", Adress = "Москва", Surname = "Админ", EmailConfirmed = true };
                 var result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {

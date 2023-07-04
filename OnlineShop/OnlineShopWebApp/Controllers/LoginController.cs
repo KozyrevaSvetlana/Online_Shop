@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.Win32;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
-using OnlineShopWebApp.Configuration;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
 using System.Threading.Tasks;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -53,16 +49,17 @@ namespace OnlineShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(login.Email);
-                if (user != null)
+                if (user == null)
                 {
-                    // проверяем, подтвержден ли email
-                    if (!await userManager.IsEmailConfirmedAsync(user))
-                    {
-                        ModelState.AddModelError(string.Empty, "Вы не подтвердили свой email");
-                        //TODO заменить поле имя на емейл
-                        //await SendConfimLetter(login.Email, user, code);
-                        return View("Index", login);
-                    }
+                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    return View("Index", login);
+                }
+                if (!await userManager.IsEmailConfirmedAsync(user))
+                {
+                    ModelState.AddModelError(string.Empty, "Вы не подтвердили свой email");
+                    var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await SendConfimLetter(login.Email, user, code);
+                    return View("Index", login);
                 }
                 var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, login.RememberMe, false);
                 if (result.Succeeded)
@@ -72,8 +69,8 @@ namespace OnlineShopWebApp.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    return View("Index", login);
                 }
-
                 if (login.ReturnUrl == null)
                 {
                     return RedirectToAction(nameof(HomeController.Index), "Home");
@@ -85,26 +82,26 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Register register)
         {
-            if (register.Name == register.Password)
+            if (register.Email == register.Password)
             {
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать!");
             }
             if (ModelState.IsValid)
             {
                 var checkUser = await userManager.FindByEmailAsync(register.Email);
-                if(checkUser != null)
+                if (checkUser != null)
                 {
                     ModelState.AddModelError("", "Пользователь с таким email уже существует. Авторизуйтесь");
                     return View("RegIndex", register);
                 }
-                checkUser = await userManager.FindByNameAsync(register.Name);
+                checkUser = await userManager.FindByNameAsync(register.Email);
                 if (checkUser != null)
                 {
                     ModelState.AddModelError("", "Пользователь с таким логином уже существует. Авторизуйтесь");
                     return View("RegIndex", register);
                 }
 
-                var user = new User { UserName = register.Name, Email = register.Email };
+                var user = new User { UserName = register.Email, Email = register.Email };
                 var result = await userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
@@ -142,11 +139,10 @@ namespace OnlineShopWebApp.Controllers
                 return View("Error");
             var result = await userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             return View("Error");
         }
 
-        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

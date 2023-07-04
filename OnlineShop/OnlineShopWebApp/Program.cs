@@ -7,12 +7,13 @@ using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models;
 using Serilog;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace OnlineShopWebApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -22,7 +23,7 @@ namespace OnlineShopWebApp
 
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                IdentityInitializer.Initialize(userManager, roleManager).Wait();
+                await IdentityInitializer.Initialize(userManager, roleManager);
             }
             host.Run();
         }
