@@ -15,17 +15,17 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<Product>> AllProducts()
+        public async Task<IEnumerable<Product>> GetAll()
         {
             return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
 
-        public async Task<Product> GetProductById(Guid id)
+        public async Task<Product> GetById(Guid id)
         {
             return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task DeleteItem(Guid id)
+        public async Task Delete(Guid id)
         {
             var deleteProduct = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             databaseContext.Products.Remove(deleteProduct);
@@ -50,7 +50,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<List<Product>> SeachProduct(string[] seachResults)
+        public async Task<List<Product>> Search(string[] seachResults)
         {
             var resultList = new List<Product>();
 

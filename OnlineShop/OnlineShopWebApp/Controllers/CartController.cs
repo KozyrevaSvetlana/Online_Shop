@@ -39,7 +39,7 @@ namespace OnlineShopWebApp.Controllers
 
         public async Task<IActionResult> AddAsync(Guid id)
         {
-            var product = await productsRepository.GetProductById(id);
+            var product = await productsRepository.GetById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user == null)
             {
@@ -61,7 +61,7 @@ namespace OnlineShopWebApp.Controllers
         }
         public async Task<IActionResult> ChangeAmountAsync(Guid id, int sign)
         {
-            var product = await productsRepository.GetProductById(id);
+            var product = await productsRepository.GetById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user == null)
             {
@@ -80,11 +80,11 @@ namespace OnlineShopWebApp.Controllers
             if (user == null)
             {
                 var userName = Request.Cookies["id"];
-                await cartsRepository.ClearCart(userName);
+                await cartsRepository.Clear(userName);
             }
             else
             {
-                await cartsRepository.ClearCart(user.UserName);
+                await cartsRepository.Clear(user.UserName);
             }
 
             return RedirectToAction("Index");

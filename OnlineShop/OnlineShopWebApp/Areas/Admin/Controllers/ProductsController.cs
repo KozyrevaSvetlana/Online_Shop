@@ -27,17 +27,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var products = await productsRepository.AllProducts();
+            var products = await productsRepository.GetAll();
             return View(products.ToProductViewModels());
         }
         public async Task<IActionResult> Description(Guid id)
         {
-            var result = await productsRepository.GetProductById(id);
+            var result = await productsRepository.GetById(id);
             return View(result.ToProductViewModel());
         }
         public async Task<IActionResult> EditForm(Guid id)
         {
-            var result = await productsRepository.GetProductById(id);
+            var result = await productsRepository.GetById(id);
             return View(result.ToProductViewModel());
         }
         [HttpPost]
@@ -64,18 +64,18 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             if (!await ordersRepository.IsInOrder(id))
             {
-                await productsRepository.DeleteItem(id);
+                await productsRepository.Delete(id);
             }
             else
             {
-                var result = await ordersRepository.ProductInOrders(id);
+                var result = await ordersRepository.GetProductInOrders(id);
                 string ordersNumbers = "";
                 foreach (var order in result)
                 {
                     ordersNumbers += order.Number + ", ";
                 }
                 ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length - 2)}");
-                var products = await productsRepository.AllProducts();
+                var products = await productsRepository.GetAll();
                 return View("Index", products.ToProductViewModels());
             }
             return RedirectToAction("Index");

@@ -16,7 +16,7 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Favorites>> AllFavorites()
+        public async Task<IEnumerable<Favorites>> GetAll()
         {
             return await databaseContext.Favorites.ToListAsync();
         }
@@ -46,7 +46,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task DeleteItem(Guid id, string UserId)
+        public async Task Delete(Guid id, string UserId)
         {
             var favorite = await TryGetByUserId(UserId);
             favorite.Items.RemoveAll(x => x.Id == id);

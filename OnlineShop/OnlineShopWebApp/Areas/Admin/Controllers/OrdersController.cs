@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> OrderForm(int number)
         {
-            var order = await ordersRepository.GetOrderByNumber(number);
+            var order = await ordersRepository.GetByNumber(number);
             ViewData["Statuses"] = order.ToOrderViewModels().InfoStatus.GetAllStatuses();
             return View(order.ToOrderViewModels());
         }

@@ -25,14 +25,14 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var compareCart = await compareRepository.TryGetByCompareId(user.UserName);
+            var compareCart = await compareRepository.TryGetById(user.UserName);
             return View(compareCart.ToCompareViewModel());
         }
 
         public async Task<IActionResult> AddAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var product = await productsRepository.GetProductById(id);
+            var product = await productsRepository.GetById(id);
             await compareRepository.Add(product, user.UserName);
             return RedirectToAction("Index");
         }
@@ -45,7 +45,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await compareRepository.DeleteItem(id, user.UserName);
+            await compareRepository.Delete(id, user.UserName);
             return RedirectToAction("Index");
         }
     }
