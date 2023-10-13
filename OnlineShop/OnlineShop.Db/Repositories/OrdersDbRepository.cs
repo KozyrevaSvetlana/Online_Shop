@@ -26,7 +26,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Order>> AllOrders()
+        public async Task<IEnumerable<Order>> GetAll()
         {
             var allOrders = await databaseContext.Orders
                 .Where(q => q.UserId != null)

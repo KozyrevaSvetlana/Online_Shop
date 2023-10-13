@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
-    public interface IProductsRepository
+    public interface IProductsRepository : IBaseRepository<Product>
     {
-        Task<IEnumerable<Product>> GetAll();
+        
         Task<Product> GetById(Guid id);
         Task Delete(Guid id);
         Task Edit(Product editProduct);

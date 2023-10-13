@@ -19,7 +19,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var orders = await ordersRepository.AllOrders();
+            var orders = await ordersRepository.GetAll();
             return View(orders.ToOrdersViewModels());
         }
         public async Task<IActionResult> OrderForm(int number)
