@@ -15,7 +15,7 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public async Task AddOrder(Order order, Cart cart)
+        public async Task Add(Order order, Cart cart)
         {
             foreach (CartItem cartItem in cart.Items)
             {
@@ -26,7 +26,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Order>> AllOrders()
+        public async Task<IEnumerable<Order>> GetAll()
         {
             var allOrders = await databaseContext.Orders
                 .Where(q => q.UserId != null)
@@ -49,7 +49,7 @@ namespace OnlineShop.Db.Repositories
             order.InfoStatus = status;
             await databaseContext.SaveChangesAsync();
         }
-        public async Task<Order> GetOrderByNumber(int number)
+        public async Task<Order> GetByNumber(int number)
         {
             var order = await databaseContext.Orders
                 .Where(x => x.Number == number)
@@ -72,7 +72,7 @@ namespace OnlineShop.Db.Repositories
             databaseContext.Orders.Remove(order);
             await databaseContext.SaveChangesAsync();
         }
-        public async Task<List<Order>> GetOrdersByUserId(string userId)
+        public async Task<List<Order>> GetByUserId(string userId)
         {
             var allOrders = await databaseContext.Orders.Where(q => q.UserId == userId).Include(x => x.Items).ThenInclude(x => x.Product).ToListAsync();
             foreach (var order in allOrders)
@@ -81,7 +81,7 @@ namespace OnlineShop.Db.Repositories
             }
             return allOrders;
         }
-        public async Task<Order> GetLastOrder(string UserId)
+        public async Task<Order> GetLast(string UserId)
         {
             var order = await databaseContext.Orders
                 .Where(q => q.UserId == UserId)
@@ -92,7 +92,7 @@ namespace OnlineShop.Db.Repositories
             order.UserContacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
             return order;
         }
-        public async Task<int> CountOrders()
+        public async Task<int> Count()
         {
             var result = await databaseContext.Orders.CountAsync();
             return result + 1;
@@ -101,7 +101,7 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.CartItems.FirstOrDefaultAsync(x => x.Product.Id == id) != null;
         }
-        public async Task<List<Order>> ProductInOrders(Guid id)
+        public async Task<List<Order>> GetProductInOrders(Guid id)
         {
             var items = await databaseContext.CartItems.Where(x => x.Product.Id == id).ToListAsync();
             var result = new List<Order>();

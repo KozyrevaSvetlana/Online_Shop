@@ -32,7 +32,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> AddAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var product = await productsRepository.GetProductById(id);
+            var product = await productsRepository.GetById(id);
             await favoritesRepository.Add(product, user.UserName);
             return RedirectToAction("Index");
         }
@@ -45,7 +45,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await favoritesRepository.DeleteItem(id, user.UserName);
+            await favoritesRepository.Delete(id, user.UserName);
             return RedirectToAction("Index");
         }
     }

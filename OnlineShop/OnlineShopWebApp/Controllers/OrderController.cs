@@ -65,8 +65,8 @@ namespace OnlineShopWebApp.Controllers
                     Response.Cookies.Delete("id");
                 }
                 order.Products = cart.Items.ToCartItemViewModels();
-                order.Number = await ordersRepository.CountOrders();
-                await ordersRepository.AddOrder(order.ToOrder(), cart);
+                order.Number = await ordersRepository.Count();
+                await ordersRepository.Add(order.ToOrder(), cart);
                 return RedirectToAction("Result");
             }
             return View("Index");
@@ -75,7 +75,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ResultAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var order = await ordersRepository.GetLastOrder(user.UserName);
+            var order = await ordersRepository.GetLast(user.UserName);
             return View(order.ToOrderViewModels());
         }
     }

@@ -31,7 +31,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> OrdersAsync()
         {
             var userDb = await userManager.GetUserAsync(HttpContext.User);
-            var orders = await ordersRepository.GetOrdersByUserId(userDb.UserName);
+            var orders = await ordersRepository.GetByUserId(userDb.UserName);
             var userVM = userDb.ToUserViewModel();
             userVM.Orders = orders.ToOrdersViewModels();
             return View(userVM);

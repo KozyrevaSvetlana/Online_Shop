@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
-    public interface IProductsRepository
+    public interface IProductsRepository : IBaseRepository<Product>
     {
-        Task<IEnumerable<Product>> AllProducts();
-        Task<Product> GetProductById(Guid id);
-        Task DeleteItem(Guid id);
+        
+        Task<Product> GetById(Guid id);
+        Task Delete(Guid id);
         Task Edit(Product editProduct);
         Task<int> GetCount();
         Task Add(Product newProduct);
-        Task<List<Product>> SeachProduct(string[] seachResults);
+        Task<List<Product>> Search(string[] seachResults);
     }
 }

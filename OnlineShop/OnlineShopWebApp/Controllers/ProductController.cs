@@ -17,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
 
         public async Task<ActionResult> Index(Guid id)
         {
-            var result = await products.GetProductById(id);
+            var result = await products.GetById(id);
             return View(result.ToProductViewModel());
         }
 
@@ -27,7 +27,7 @@ namespace OnlineShopWebApp.Controllers
             if (result != null)
             {
                 TempData["Result"] = result;
-                var searchResult = await products.SeachProduct(result.Split());
+                var searchResult = await products.Search(result.Split());
                 return View(searchResult.ToProductViewModels());
             }
             return View();

@@ -16,14 +16,14 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Compare>> AllCompares()
+        public async Task<IEnumerable<Compare>> GetAll()
         {
             return await databaseContext.Compares.ToListAsync();
         }
 
         public async Task Add(Product product, string UserId)
         {
-            var userCompareList = await TryGetByCompareId(UserId);
+            var userCompareList = await TryGetById(UserId);
             if (userCompareList == null)
             {
                 await AddNewCompare(product, UserId);
@@ -41,19 +41,19 @@ namespace OnlineShop.Db.Repositories
 
         public async Task Clear(string CompareId)
         {
-            var result = TryGetByCompareId(CompareId);
+            var result = TryGetById(CompareId);
             databaseContext.Remove(result);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task DeleteItem(Guid id, string CompareId)
+        public async Task Delete(Guid id, string CompareId)
         {
-            var compare = await TryGetByCompareId(CompareId);
+            var compare = await TryGetById(CompareId);
             compare.Items.RemoveAll(x => x.Id == id);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<Compare> TryGetByCompareId(string CompareId)
+        public async Task<Compare> TryGetById(string CompareId)
         {
             return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
         }

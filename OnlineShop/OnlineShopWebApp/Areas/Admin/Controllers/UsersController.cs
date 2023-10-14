@@ -109,7 +109,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<ActionResult> DeleteUserAsync(string name)
         {
             var user = await userManager.FindByNameAsync(name);
-            var orders = await ordersRepository.GetOrdersByUserId(user.UserName);
+            var orders = await ordersRepository.GetByUserId(user.UserName);
             if (orders.Any())
             {
                 string ordersNumbers = "";

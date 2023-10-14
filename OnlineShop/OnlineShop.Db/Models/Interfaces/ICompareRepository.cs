@@ -4,12 +4,11 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
-    public interface ICompareRepository
+    public interface ICompareRepository : IBaseRepository<Compare>
     {
-        Task<IEnumerable<Compare>> AllCompares();
-        Task<Compare> TryGetByCompareId(string compareId);
+        Task<Compare> TryGetById(string compareId);
         Task Add(Product product, string compareId);
-        Task DeleteItem(Guid id, string compareId);
+        Task Delete(Guid id, string compareId);
         Task Clear(string compareId);
     }
 }

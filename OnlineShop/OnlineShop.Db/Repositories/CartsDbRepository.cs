@@ -17,7 +17,7 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Cart>> AllCarts()
+        public async Task<IEnumerable<Cart>> GetAll()
         {
             return await databaseContext.Carts.ToListAsync();
         }
@@ -71,7 +71,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<int> GetAllAmounts(string userId)
+        public async Task<int> Count(string userId)
         {
             var userCart = await TryGetByUserId(userId);
             return userCart?.Items?.Sum(x => x.Amount) ?? 0;
@@ -100,7 +100,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task ClearCart(string userId)
+        public async Task Clear(string userId)
         {
             var userCart = await TryGetByUserId(userId);
             userCart.Items.Select(x => databaseContext.Remove(x));
