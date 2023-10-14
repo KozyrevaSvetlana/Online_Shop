@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
@@ -65,8 +64,8 @@ namespace OnlineShopWebApp.Controllers
                     Response.Cookies.Delete("id");
                 }
                 order.Products = cart.Items.ToCartItemViewModels();
-                order.Number = await ordersRepository.GetCount();
-                await ordersRepository.Add(order.ToOrder(), cart);
+                order.Number = await ordersRepository.GetCountAsync();
+                await ordersRepository.AddAsync(cart.Id, order.UserId);
                 return RedirectToAction("Result");
             }
             return View("Index");

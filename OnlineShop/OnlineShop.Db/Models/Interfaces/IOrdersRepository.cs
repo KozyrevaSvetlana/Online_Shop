@@ -11,7 +11,9 @@ namespace OnlineShop.Db.Models.Interfaces
         Task Edit(int number, int status);
         Task<List<Order>> GetByUserId(string userId);
         Task<Order> GetLast(string UserId);
-        Task<bool> IsInOrder(Product id);
-        Task<List<Order>> GetOrders(Product id);
+        Task<bool> IsInOrder(Guid id);
+        Task<List<Order>> GetOrders(Guid id);
+
+        Task<int> GetCountAsync();
     }
 }

@@ -15,16 +15,6 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public async Task Add(Order order, Cart cart)
-        {
-            foreach (CartItem cartItem in cart.Items)
-            {
-                order.Items.Add(cartItem);
-            }
-            databaseContext.Orders.Add(order);
-            databaseContext.Carts.Remove(cart);
-            await databaseContext.SaveChangesAsync();
-        }
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
@@ -59,19 +49,7 @@ namespace OnlineShop.Db.Repositories
             order.UserContacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
             return order;
         }
-        public async Task Delete(int number)
-        {
-            var order = await databaseContext.Orders.FirstOrDefaultAsync(x => x.Number == number);
-            var contacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
-            var cartItems = await databaseContext.CartItems.Include(x => x.Order).FirstOrDefaultAsync(x => x.Order == order);
-            foreach (var cartItem in order.Items)
-            {
-                databaseContext.CartItems.Remove(cartItem);
-            }
-            databaseContext.UserContacts.Remove(contacts);
-            databaseContext.Orders.Remove(order);
-            await databaseContext.SaveChangesAsync();
-        }
+
         public async Task<List<Order>> GetByUserId(string userId)
         {
             var allOrders = await databaseContext.Orders.Where(q => q.UserId == userId).Include(x => x.Items).ThenInclude(x => x.Product).ToListAsync();
@@ -111,6 +89,40 @@ namespace OnlineShop.Db.Repositories
                 result.Add(resultItem);
             }
             return result;
+        }
+
+        public async Task ClearAsync(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteAsync(Guid id, string userId)
+        {
+            var order = await databaseContext.Orders.Include(x => x.UserContacts).FirstOrDefaultAsync(x => x.Id == id);
+            var cartItems = await databaseContext.CartItems.Include(x => x.Order).FirstOrDefaultAsync(x => x.Order == order);
+            databaseContext.CartItems.RemoveRange(order.Items);
+            databaseContext.UserContacts.Remove(order.UserContacts);
+            databaseContext.Orders.Remove(order);
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task AddAsync(Guid id, string userId = null)
+        {
+            var cart = await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id || (userId != null && x.UserId == userId));
+            var order = new Order(cart.Items);
+            databaseContext.Orders.Add(order);
+            databaseContext.Carts.Remove(cart);
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task Add(Order order, Cart cart)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await databaseContext.Orders.CountAsync();
         }
     }
 }

@@ -51,11 +51,11 @@ namespace OnlineShopWebApp.Controllers
                     cookie.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Append("id", cookieValue, cookie);
                 }
-                await cartsRepository.AddAsync(product, cookieValue);
+                await cartsRepository.AddAsync(product.Id, cookieValue);
             }
             else
             {
-                await cartsRepository.AddAsync(product, user.UserName);
+                await cartsRepository.AddAsync(product.Id, user.UserName);
             }
             return RedirectToAction("Index");
         }

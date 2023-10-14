@@ -15,23 +15,39 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<Models.Product>> GetAllAsync()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
 
-        public async Task<Models.Product> GetByIdAsync(System.Guid id)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
             return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task Delete(System.Guid id)
+        public async Task DeleteAsync(Product product)
         {
-            var deleteProduct = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
-            databaseContext.Products.Remove(deleteProduct);
+            databaseContext.Products.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
-        public async Task Edit(Models.Product editProduct)
+        public async Task AddAsync(Product product)
+        {
+            databaseContext.Products.Add(product);
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Product>> Search(string[] seachResults)
+        {
+            var resultList = new List<Product>();
+
+            foreach (var word in seachResults)
+            {
+                resultList = await databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).Include(x => x.Images).ToListAsync();
+            }
+            return resultList.Distinct().ToList();
+        }
+
+        public async Task EditAsync(Product editProduct)
         {
             var product = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == editProduct.Id);
             product.Name = editProduct.Name;
@@ -40,25 +56,15 @@ namespace OnlineShop.Db.Repositories
             product.Images = editProduct.Images;
             await databaseContext.SaveChangesAsync();
         }
-        public async Task<int> GetCount()
+
+        public async Task<int> GetCountAsync(string userId)
         {
             return await databaseContext.Products.CountAsync();
         }
-        public async Task Add(Models.Product newProduct)
-        {
-            databaseContext.Products.Add(newProduct);
-            await databaseContext.SaveChangesAsync();
-        }
 
-        public async Task<List<Models.Product>> Search(string[] seachResults)
+        public async Task CreateAsync(Product product)
         {
-            var resultList = new List<Models.Product>();
-
-            foreach (var word in seachResults)
-            {
-                resultList = await databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).Include(x => x.Images).ToListAsync();
-            }
-            return resultList.Distinct().ToList();
+            await AddAsync(product);
         }
     }
 }
