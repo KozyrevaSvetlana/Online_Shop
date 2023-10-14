@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user != null)
             {
-                var compare = await compareRepository.GetByUserIdAsync(user.UserName);
+                var compare = await compareRepository.GetByIdAsync(null, user.Id);
                 var compareViewModel = compare.ToCompareViewModel();
                 compareItemsCount = compareViewModel?.Items.Count ?? 0;
             }

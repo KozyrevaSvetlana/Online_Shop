@@ -41,21 +41,21 @@ namespace OnlineShop.Db.Repositories
 
         public async Task ClearAsync(string UserId)
         {
-            var result = await GetByUserIdAsync(UserId);
+            var result = await GetByIdAsync(null,UserId);
             databaseContext.Remove(result);
             await databaseContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Guid? id, string UserId)
         {
-            var favorite = await GetByUserIdAsync(UserId);
+            var favorite = await GetByIdAsync(null, UserId);
             favorite.Items.RemoveAll(x => x.Id == id);
             await databaseContext.SaveChangesAsync();
         }
 
         public async Task<Favorites> GetByIdAsync(Guid? id = null, string userId = null)
         {
-            return await databaseContext.Favorites.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == UserId);
+            return await databaseContext.Favorites.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == userId);
         }
         private async Task AddNewFavorite(Product product, string userId)
         {

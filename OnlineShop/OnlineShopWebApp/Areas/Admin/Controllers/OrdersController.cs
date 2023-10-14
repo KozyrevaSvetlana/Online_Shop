@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
+using System;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -33,9 +34,9 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             await ordersRepository.Edit(number, Mapping.ToIntStatus(status));
             return RedirectToAction("Orders", "Admin");
         }
-        public async Task<IActionResult> DeleteOrder(int number)
+        public async Task<IActionResult> DeleteOrder(Guid id)
         {
-            await ordersRepository.Delete(number);
+            await ordersRepository.DeleteAsync(id, null);
             return RedirectToAction("Orders", "Admin");
         }
     }

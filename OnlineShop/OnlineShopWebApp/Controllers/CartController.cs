@@ -27,12 +27,12 @@ namespace OnlineShopWebApp.Controllers
             var cart = new Cart();
             if (user == null)
             {
-                var userName = Request.Cookies["id"];
-                cart = await cartsRepository.GetByUserIdAsync(userName);
+                var userId = Request.Cookies["id"];
+                cart = await cartsRepository.GetByIdAsync(null, userId);
             }
             else
             {
-                cart = await cartsRepository.GetByUserIdAsync(user.UserName);
+                cart = await cartsRepository.GetByIdAsync(null, user.UserName); 
             }
             return View(cart.ToCartViewModel());
         }
@@ -65,8 +65,8 @@ namespace OnlineShopWebApp.Controllers
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user == null)
             {
-                var userName = Request.Cookies["id"];
-                await cartsRepository.ChangeAmount(product, sign, userName);
+                var userId = Request.Cookies["id"];
+                await cartsRepository.ChangeAmount(product, sign, userId);
             }
             else
             {
@@ -79,12 +79,12 @@ namespace OnlineShopWebApp.Controllers
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user == null)
             {
-                var userName = Request.Cookies["id"];
-                await cartsRepository.ClearAsync(userName);
+                var userId = Request.Cookies["id"];
+                await cartsRepository.DeleteAsync(null, userId);
             }
             else
             {
-                await cartsRepository.ClearAsync(user.UserName);
+                await cartsRepository.DeleteAsync(null,user.Id);
             }
 
             return RedirectToAction("Index");

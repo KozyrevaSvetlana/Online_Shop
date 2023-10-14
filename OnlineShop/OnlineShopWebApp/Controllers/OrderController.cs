@@ -27,15 +27,15 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var userName = Request.Cookies["id"];
+            var userId = Request.Cookies["id"];
             var cart = new Cart();
-            if (userName == null)
+            if (userId == null)
             {
-                cart = await cartsRepository.GetByUserIdAsync(user.UserName);
+                cart = await cartsRepository.GetByIdAsync(null, user.Id);
             }
             else
             {
-                cart = await cartsRepository.GetByUserIdAsync(userName);
+                cart = await cartsRepository.GetByIdAsync(null, userId);
             }
             return View();
         }
@@ -56,11 +56,11 @@ namespace OnlineShopWebApp.Controllers
                 var order = new OrderViewModel();
                 order.AddContacts(user.UserName, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
                 var cart = new Cart();
-                cart = await cartsRepository.GetByUserIdAsync(user.UserName);
+                cart = await cartsRepository.GetByIdAsync(null, user.Id);
                 if (cart == null)
                 {
-                    var userName = Request.Cookies["id"];
-                    cart = await cartsRepository.GetByUserIdAsync(userName);
+                    var userId = Request.Cookies["id"];
+                    cart = await cartsRepository.GetByIdAsync(null, userId);
                     Response.Cookies.Delete("id");
                 }
                 order.Products = cart.Items.ToCartItemViewModels();

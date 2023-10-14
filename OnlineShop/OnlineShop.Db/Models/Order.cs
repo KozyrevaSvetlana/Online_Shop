@@ -24,5 +24,9 @@ namespace OnlineShop.Db.Models
             Number = count;
             count++;
         }
+
+        public Order()
+        {
+        }
     }
 }

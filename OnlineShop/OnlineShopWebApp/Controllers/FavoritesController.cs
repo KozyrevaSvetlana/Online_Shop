@@ -25,24 +25,24 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var cart = await favoritesRepository.GetByUserIdAsync(user.UserName);
+            var cart = await favoritesRepository.GetByIdAsync(null, user.Id);
             return View(cart.ToFavoritesViewModel());
         }
 
-        public async Task<IActionResult> AddAsync(System.Guid id)
+        public async Task<IActionResult> AddAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             var product = await productsRepository.GetByIdAsync(id);
-            await favoritesRepository.AddAsync(product, user.UserName);
+            await favoritesRepository.AddAsync(product.Id, user.UserName);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ClearAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await favoritesRepository.ClearAsync(user.UserName);
+            await favoritesRepository.DeleteAsync(null, user.UserName);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> DeleteAsync(System.Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             await favoritesRepository.DeleteAsync(id, user.UserName);
