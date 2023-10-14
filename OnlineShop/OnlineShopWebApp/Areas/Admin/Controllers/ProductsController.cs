@@ -27,17 +27,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var products = await productsRepository.GetAll();
+            var products = await productsRepository.GetAllAsync();
             return View(products.ToProductViewModels());
         }
         public async Task<IActionResult> Description(Guid id)
         {
-            var result = await productsRepository.GetById(id);
+            var result = await productsRepository.GetByIdAsync(id);
             return View(result.ToProductViewModel());
         }
         public async Task<IActionResult> EditForm(Guid id)
         {
-            var result = await productsRepository.GetById(id);
+            var result = await productsRepository.GetByIdAsync(id);
             return View(result.ToProductViewModel());
         }
         [HttpPost]
@@ -55,7 +55,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var imagesPaths = imagesProvider.SafeFiles(editProduct.UploadedFile, ImageFolders.Products);
-                productsRepository.Edit(editProduct.ToProduct(imagesPaths));
+                productsRepository.EditAsync(editProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");
             }
             return View("EditForm", editProduct);
@@ -64,7 +64,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             if (!await ordersRepository.IsInOrder(id))
             {
-                await productsRepository.Delete(id);
+                await productsRepository.DeleteAsync(id);
             }
             else
             {
@@ -75,7 +75,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     ordersNumbers += order.Number + ", ";
                 }
                 ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length - 2)}");
-                var products = await productsRepository.GetAll();
+                var products = await productsRepository.GetAllAsync();
                 return View("Index", products.ToProductViewModels());
             }
             return RedirectToAction("Index");
@@ -101,7 +101,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             {
                 var imagesPaths = imagesProvider.SafeFiles(newProduct.UploadedFiles, ImageFolders.Products);
 
-                productsRepository.Add(newProduct.ToProduct(imagesPaths));
+                productsRepository.CreateAsync(newProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");
             }
             return View("AddProduct", newProduct);

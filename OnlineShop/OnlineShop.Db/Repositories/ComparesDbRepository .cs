@@ -16,14 +16,14 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Compare>> GetAll()
+        public async Task<IEnumerable<Compare>> GetAllAsync()
         {
             return await databaseContext.Compares.ToListAsync();
         }
 
-        public async Task Add(Models.Product product, string UserId)
+        public async Task AddAsync(Models.Guid product, string UserId)
         {
-            var userCompareList = await TryGetByUserId(UserId);
+            var userCompareList = await GetByUserIdAsync(UserId);
             if (userCompareList == null)
             {
                 await AddNewCompare(product, UserId);
@@ -39,30 +39,30 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Clear(string CompareId)
+        public async Task ClearAsync(string CompareId)
         {
-            var result = TryGetByUserId(CompareId);
+            var result = GetByUserIdAsync(CompareId);
             databaseContext.Remove(result);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Delete(System.Guid id, string CompareId)
+        public async Task DeleteAsync(System.Guid id, string CompareId)
         {
-            var compare = await TryGetByUserId(CompareId);
+            var compare = await GetByUserIdAsync(CompareId);
             compare.Items.RemoveAll(x => x.Id == id);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<Compare> TryGetByUserId(string CompareId)
+        public async Task<Compare> GetByUserIdAsync(string CompareId)
         {
             return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
         }
-        private async Task AddNewCompare(Models.Product product, string userId)
+        private async Task AddNewCompare(Models.Guid product, string userId)
         {
             var newCart = new Compare
             {
                 UserId = userId,
-                Items = new List<Models.Product>(),
+                Items = new List<Models.Guid>(),
             };
             newCart.Items.Add(product);
             databaseContext.Compares.Add(newCart);

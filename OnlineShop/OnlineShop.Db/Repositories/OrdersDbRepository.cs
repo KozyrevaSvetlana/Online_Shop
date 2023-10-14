@@ -26,7 +26,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Order>> GetAll()
+        public async Task<IEnumerable<Order>> GetAllAsync()
         {
             var allOrders = await databaseContext.Orders
                 .Where(q => q.UserId != null)
@@ -39,7 +39,7 @@ namespace OnlineShop.Db.Repositories
             }
             return allOrders;
         }
-        public async Task<Order> TryGetByUserId(string userId)
+        public async Task<Order> GetByUserIdAsync(string userId)
         {
             return await databaseContext.Orders.FirstOrDefaultAsync(x => x.UserId == userId);
         }

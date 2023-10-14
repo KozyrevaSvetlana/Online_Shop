@@ -21,11 +21,11 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var cart = await cartsRepository.TryGetByUserId(user.UserName);
+            var cart = await cartsRepository.GetByUserIdAsync(user.UserName);
             if (cart == null)
             {
                 var userName = Request.Cookies["id"];
-                cart = await cartsRepository.TryGetByUserId(userName);
+                cart = await cartsRepository.GetByUserIdAsync(userName);
             }
             return View("Cart", cart.ToCartViewModel());
         }

@@ -6,11 +6,11 @@ namespace OnlineShop.Db.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public List<Product> Items { get; set; }
+        public List<Guid> Items { get; set; }
 
         public Favorites()
         {
-            Items = new List<Product>();
+            Items = new List<Guid>();
         }
     }
 }

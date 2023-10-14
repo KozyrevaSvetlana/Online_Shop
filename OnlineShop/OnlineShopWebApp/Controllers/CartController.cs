@@ -28,18 +28,18 @@ namespace OnlineShopWebApp.Controllers
             if (user == null)
             {
                 var userName = Request.Cookies["id"];
-                cart = await cartsRepository.TryGetByUserId(userName);
+                cart = await cartsRepository.GetByUserIdAsync(userName);
             }
             else
             {
-                cart = await cartsRepository.TryGetByUserId(user.UserName);
+                cart = await cartsRepository.GetByUserIdAsync(user.UserName);
             }
             return View(cart.ToCartViewModel());
         }
 
         public async Task<IActionResult> AddAsync(System.Guid id)
         {
-            var product = await productsRepository.GetById(id);
+            var product = await productsRepository.GetByIdAsync(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user == null)
             {
@@ -51,17 +51,17 @@ namespace OnlineShopWebApp.Controllers
                     cookie.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Append("id", cookieValue, cookie);
                 }
-                await cartsRepository.Add(product, cookieValue);
+                await cartsRepository.AddAsync(product, cookieValue);
             }
             else
             {
-                await cartsRepository.Add(product, user.UserName);
+                await cartsRepository.AddAsync(product, user.UserName);
             }
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ChangeAmountAsync(System.Guid id, int sign)
         {
-            var product = await productsRepository.GetById(id);
+            var product = await productsRepository.GetByIdAsync(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (user == null)
             {
@@ -80,11 +80,11 @@ namespace OnlineShopWebApp.Controllers
             if (user == null)
             {
                 var userName = Request.Cookies["id"];
-                await cartsRepository.Clear(userName);
+                await cartsRepository.ClearAsync(userName);
             }
             else
             {
-                await cartsRepository.Clear(user.UserName);
+                await cartsRepository.ClearAsync(user.UserName);
             }
 
             return RedirectToAction("Index");

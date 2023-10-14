@@ -16,14 +16,14 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Favorites>> GetAll()
+        public async Task<IEnumerable<Favorites>> GetAllAsync()
         {
             return await databaseContext.Favorites.ToListAsync();
         }
 
-        public async Task Add(Models.Product product, string UserId)
+        public async Task AddAsync(Models.Guid product, string UserId)
         {
-            var userFavoritesList = await TryGetByUserId(UserId);
+            var userFavoritesList = await GetByUserIdAsync(UserId);
             if (userFavoritesList == null)
             {
                 await AddNewFavorite(product, UserId);
@@ -39,30 +39,30 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Clear(string UserId)
+        public async Task ClearAsync(string UserId)
         {
-            var result = await TryGetByUserId(UserId);
+            var result = await GetByUserIdAsync(UserId);
             databaseContext.Remove(result);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Delete(System.Guid id, string UserId)
+        public async Task DeleteAsync(System.Guid id, string UserId)
         {
-            var favorite = await TryGetByUserId(UserId);
+            var favorite = await GetByUserIdAsync(UserId);
             favorite.Items.RemoveAll(x => x.Id == id);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<Favorites> TryGetByUserId(string UserId)
+        public async Task<Favorites> GetByUserIdAsync(string UserId)
         {
             return await databaseContext.Favorites.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == UserId);
         }
-        private async Task AddNewFavorite(Models.Product product, string userId)
+        private async Task AddNewFavorite(Models.Guid product, string userId)
         {
             var newCart = new Favorites
             {
                 UserId = userId,
-                Items = new List<Models.Product>(),
+                Items = new List<Models.Guid>(),
             };
             newCart.Items.Add(product);
             databaseContext.Favorites.Add(newCart);

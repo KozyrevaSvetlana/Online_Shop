@@ -17,12 +17,12 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Cart>> GetAll()
+        public async Task<IEnumerable<Cart>> GetAllAsync()
         {
             return await databaseContext.Carts.ToListAsync();
         }
 
-        public async Task<Cart> TryGetByUserId(string userId)
+        public async Task<Cart> GetByUserIdAsync(string userId)
         {
             return await databaseContext.Carts
                 .Include(x => x.Items)
@@ -30,9 +30,9 @@ namespace OnlineShop.Db.Repositories
                 .FirstOrDefaultAsync(x => x.UserId == userId);
         }
 
-        public async Task Add(Models.Product product, string userId)
+        public async Task AddAsync(Models.Guid product, string userId)
         {
-            var existingCart = await TryGetByUserId(userId);
+            var existingCart = await GetByUserIdAsync(userId);
             if (existingCart == null)
             {
                 var newCart = new Cart
@@ -71,15 +71,15 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<int> GetCount(string userId)
+        public async Task<int> GetCountAsync(string userId)
         {
-            var userCart = await TryGetByUserId(userId);
+            var userCart = await GetByUserIdAsync(userId);
             return userCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
 
-        public async Task ChangeAmount(Models.Product product, int sign, string userId)
+        public async Task ChangeAmount(Models.Guid product, int sign, string userId)
         {
-            var userCart = await TryGetByUserId(userId);
+            var userCart = await GetByUserIdAsync(userId);
             var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
             switch (sign)
             {
@@ -100,15 +100,15 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Clear(string userId)
+        public async Task ClearAsync(string userId)
         {
-            var userCart = await TryGetByUserId(userId);
+            var userCart = await GetByUserIdAsync(userId);
             userCart.Items.Select(x => databaseContext.Remove(x));
             databaseContext.Carts.Remove(userCart);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsInCart(Models.Product product)
+        public async Task<bool> IsInCart(Models.Guid product)
         {
             return await databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product.Id == product.Id).AnyAsync();
         }
