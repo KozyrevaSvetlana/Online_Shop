@@ -17,7 +17,7 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Cart>> GetAllAsync()
+        public async Task<IEnumerable<Cart>> GetAllAsync(string userId = null)
         {
             return await databaseContext.Carts.ToListAsync();
         }
@@ -72,12 +72,12 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product.Id == product.Id).AnyAsync();
         }
 
-        public async Task<Cart> GetByIdAsync(Guid id)
+        public async Task<Cart> GetByIdAsync(Guid? id)
         {
             return await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task AddAsync(Guid id, string userId = null)
+        public async Task AddAsync(Guid? id, string userId = null)
         {
             var cart = await GetByUserIdAsync(userId);
             var product = await databaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
@@ -106,9 +106,9 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Cart cart)
+        public async Task DeleteAsync(Guid? id, string userId = null)
         {
-            await ClearAsync(cart.UserId);
+            await ClearAsync(userId);
         }
 
 
@@ -133,6 +133,13 @@ namespace OnlineShop.Db.Repositories
         public async Task AddAsync(Cart cart)
         {
             await databaseContext.Carts.AddAsync(cart);
+        }
+
+        public async Task<Cart> GetByIdAsync(Guid? id = null, string userId = null)
+        {
+            return await databaseContext.Carts
+                .Include(x=> x.Items)
+                .FirstOrDefaultAsync(x=> x.Id == id || (!string.IsNullOrEmpty(userId) && x.UserId == userId));
         }
     }
 }
