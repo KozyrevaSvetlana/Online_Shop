@@ -10,8 +10,8 @@ namespace OnlineShop.Db.Repositories
 {
     public class OrdersDbRepository : IOrdersRepository
     {
-        private readonly DatabaseContext databaseContext;
-        public OrdersDbRepository(DatabaseContext databaseContext)
+        private readonly IdentityContext databaseContext;
+        public OrdersDbRepository(IdentityContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }

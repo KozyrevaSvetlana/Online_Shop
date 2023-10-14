@@ -10,8 +10,8 @@ namespace OnlineShop.Db.Repositories
 {
     public class CompareDbRepository : ICompareRepository
     {
-        private readonly DatabaseContext databaseContext;
-        public CompareDbRepository(DatabaseContext databaseContext)
+        private readonly IdentityContext databaseContext;
+        public CompareDbRepository(IdentityContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }

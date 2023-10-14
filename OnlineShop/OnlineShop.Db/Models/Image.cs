@@ -1,12 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineShop.Db.Models
 {
     public class Image
     {
-        public Product Id { get; set; }
+        public Guid Id { get; set; }
         public string Url { get; set; }
-        public Product ProductId { get; set; }
-        public Product Product { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

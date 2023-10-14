@@ -10,8 +10,8 @@ namespace OnlineShop.Db.Repositories
 {
     public class FavoritesDbRepository : IFavoritesRepository
     {
-        private readonly DatabaseContext databaseContext;
-        public FavoritesDbRepository(DatabaseContext databaseContext)
+        private readonly IdentityContext databaseContext;
+        public FavoritesDbRepository(IdentityContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }

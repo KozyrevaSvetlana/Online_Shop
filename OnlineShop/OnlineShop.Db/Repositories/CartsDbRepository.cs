@@ -10,9 +10,9 @@ namespace OnlineShop.Db.Repositories
 {
     public class CartsDbRepository : ICartsRepository
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly IdentityContext databaseContext;
 
-        public CartsDbRepository(DatabaseContext databaseContext)
+        public CartsDbRepository(IdentityContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }
