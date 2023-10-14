@@ -9,7 +9,7 @@ using OnlineShop.Db;
 
 namespace OnlineShop.Db.Migrations
 {
-    [DbContext(typeof(OnlineShop.Db.DatabaseContext))]
+    [DbContext(typeof(DatabaseContext))]
     [Migration("20230704134521_initialization")]
     partial class initialization
     {

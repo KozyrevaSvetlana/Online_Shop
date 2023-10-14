@@ -8,7 +8,7 @@ using OnlineShop.Db;
 
 namespace OnlineShop.Db.Migrations
 {
-    [DbContext(typeof(OnlineShop.Db.DatabaseContext))]
+    [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
