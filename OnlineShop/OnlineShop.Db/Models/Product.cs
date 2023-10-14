@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace OnlineShop.Db.Models
 {
-    public class Guid
+    public class Product
     {
-        public Guid Id { get; set; }
+        public Product Id { get; set; }
         public string Name { get; set; }
         public decimal Cost { get; set; }
         public string Description { get; set; }
@@ -14,7 +14,7 @@ namespace OnlineShop.Db.Models
         public List<Compare> Compares { get; set; }
         public List<Favorites> Favorites { get; set; }
         public List<Image> Images { get; set; }
-        public Guid()
+        public Product()
         {
             CartItems = new List<CartItem>();
             Compares = new List<Compare>();

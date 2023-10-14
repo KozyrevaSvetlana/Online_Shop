@@ -99,7 +99,7 @@ namespace OnlineShop.Db.Repositories
         }
         public async Task<bool> IsInOrder(Guid id)
         {
-            return await databaseContext.CartItems.FirstOrDefaultAsync(x => x.Product.Id == id) != null;
+            return await databaseContext.CartItems.FirstOrDefaultAsync((System.Linq.Expressions.Expression<Func<CartItem, bool>>)(x => x.Product.Id == id)) != null;
         }
         public async Task<List<Order>> GetOrders(Guid id)
         {

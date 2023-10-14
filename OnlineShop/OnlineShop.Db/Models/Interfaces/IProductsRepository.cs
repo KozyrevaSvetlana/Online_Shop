@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
-    public interface IProductsRepository : IBaseRepository<Guid>
+    public interface IProductsRepository : IBaseRepository<Product>
     {
-        Task<List<Guid>> Search(string[] seachResults);
+        Task<List<Product>> Search(string[] seachResults);
     }
 }

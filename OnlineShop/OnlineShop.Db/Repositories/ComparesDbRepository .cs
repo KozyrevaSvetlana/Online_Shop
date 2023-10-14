@@ -21,7 +21,7 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Compares.ToListAsync();
         }
 
-        public async Task Add(Models.Guid product, string UserId)
+        public async Task Add(Models.Product product, string UserId)
         {
             var userCompareList = await TryGetByUserId(UserId);
             if (userCompareList == null)
@@ -57,12 +57,12 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
         }
-        private async Task AddNewCompare(Models.Guid product, string userId)
+        private async Task AddNewCompare(Models.Product product, string userId)
         {
             var newCart = new Compare
             {
                 UserId = userId,
-                Items = new List<Models.Guid>(),
+                Items = new List<Models.Product>(),
             };
             newCart.Items.Add(product);
             databaseContext.Compares.Add(newCart);

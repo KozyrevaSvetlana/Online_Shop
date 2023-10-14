@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
@@ -10,7 +11,7 @@ namespace OnlineShop.Db.Models.Interfaces
         Task<T> TryGetByUserId(string userId);
         Task Add(Guid id, string userId);
         Task Delete(Guid id, string userId);
-        Task Edit(Guid item, string userId);
+        Task Edit(T item, string userId);
         Task Clear(string userId);
         Task<int> GetCount(string userId);
     }

@@ -6,7 +6,7 @@ namespace OnlineShop.Db
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Models.Guid> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<UserContact> UserContacts { get; set; }
