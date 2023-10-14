@@ -36,7 +36,7 @@ namespace OnlineShop.Db.Repositories
             return userCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
 
-        public async Task ChangeAmount(Models.Product product, int sign, string userId)
+        public async Task ChangeAmount(Product product, int sign, string userId)
         {
             var userCart = await GetByUserIdAsync(userId);
             var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
@@ -67,7 +67,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsInCart(Models.Product product)
+        public async Task<bool> IsInCart(Product product)
         {
             return await databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product.Id == product.Id).AnyAsync();
         }
@@ -106,9 +106,9 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id, string userId = null)
+        public async Task DeleteAsync(Cart cart)
         {
-            throw new NotImplementedException();
+            await ClearAsync(cart.UserId);
         }
 
 
@@ -128,6 +128,11 @@ namespace OnlineShop.Db.Repositories
                     Cart = cart
                 });
             }
+        }
+
+        public async Task AddAsync(Cart cart)
+        {
+            await databaseContext.Carts.AddAsync(cart);
         }
     }
 }
