@@ -15,12 +15,12 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<Models.Guid>> GetAllAsync()
+        public async Task<IEnumerable<Models.Product>> GetAllAsync()
         {
             return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
 
-        public async Task<Models.Guid> GetByIdAsync(System.Guid id)
+        public async Task<Models.Product> GetByIdAsync(System.Guid id)
         {
             return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -31,7 +31,7 @@ namespace OnlineShop.Db.Repositories
             databaseContext.Products.Remove(deleteProduct);
             await databaseContext.SaveChangesAsync();
         }
-        public async Task Edit(Models.Guid editProduct)
+        public async Task Edit(Models.Product editProduct)
         {
             var product = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == editProduct.Id);
             product.Name = editProduct.Name;
@@ -44,15 +44,15 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.Products.CountAsync();
         }
-        public async Task Add(Models.Guid newProduct)
+        public async Task Add(Models.Product newProduct)
         {
             databaseContext.Products.Add(newProduct);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<List<Models.Guid>> Search(string[] seachResults)
+        public async Task<List<Models.Product>> Search(string[] seachResults)
         {
-            var resultList = new List<Models.Guid>();
+            var resultList = new List<Models.Product>();
 
             foreach (var word in seachResults)
             {

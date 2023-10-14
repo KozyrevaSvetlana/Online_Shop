@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Repositories
 {
-    public class ComparesDbRepository : ICompareRepository
+    public class CompareDbRepository : ICompareRepository
     {
         private readonly DatabaseContext databaseContext;
-        public ComparesDbRepository(DatabaseContext databaseContext)
+        public CompareDbRepository(DatabaseContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }
@@ -21,35 +21,18 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Compares.ToListAsync();
         }
 
-        public async Task AddAsync(Models.Guid product, string UserId)
+        public async Task ClearAsync(string userId)
         {
-            var userCompareList = await GetByUserIdAsync(UserId);
-            if (userCompareList == null)
-            {
-                await AddNewCompare(product, UserId);
-            }
-            else
-            {
-                var userCartItem = userCompareList.Items.FirstOrDefault(x => x.Id == product.Id);
-                if (userCartItem == null)
-                {
-                    userCompareList.Items.Add(product);
-                }
-            }
+            var compare = GetByUserIdAsync(userId);
+            databaseContext.Remove(compare);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task ClearAsync(string CompareId)
+        public async Task DeleteAsync(Guid id, string userId)
         {
-            var result = GetByUserIdAsync(CompareId);
-            databaseContext.Remove(result);
-            await databaseContext.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(System.Guid id, string CompareId)
-        {
-            var compare = await GetByUserIdAsync(CompareId);
-            compare.Items.RemoveAll(x => x.Id == id);
+            var compare = await GetByUserIdAsync(userId);
+            var product = compare.Items.FirstOrDefault(x=> x.Id == id);
+            compare.Items.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
 
@@ -57,15 +40,39 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
         }
-        private async Task AddNewCompare(Models.Guid product, string userId)
+        private async Task AddNewCompare(Models.Product product, string userId)
         {
             var newCart = new Compare
             {
                 UserId = userId,
-                Items = new List<Models.Guid>(),
+                Items = new List<Models.Product>(),
             };
             newCart.Items.Add(product);
             databaseContext.Compares.Add(newCart);
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task<Compare> GetByIdAsync(Guid id)
+        {
+            return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task AddAsync(Guid id, string userId = null)
+        {
+            var compare = await GetByUserIdAsync(userId);
+            var product = await databaseContext.Products.FirstOrDefaultAsync(x=> x.Id == id);
+            if (compare == null)
+            {
+                await AddNewCompare(product, userId);
+            }
+            else
+            {
+                var item = compare.Items.FirstOrDefault(x => x.Id == product.Id);
+                if (item == null)
+                {
+                    compare.Items.Add(product);
+                }
+            }
             await databaseContext.SaveChangesAsync();
         }
     }

@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Helpers
 {
     public static class Mapping
     {
-        public static List<ProductViewModel> ToProductViewModels(this IEnumerable<Guid> products)
+        public static List<ProductViewModel> ToProductViewModels(this IEnumerable<Product> products)
         {
             var productsViewModels = new List<ProductViewModel>();
             foreach (var product in products)
@@ -19,7 +19,7 @@ namespace OnlineShopWebApp.Helpers
             return productsViewModels;
         }
 
-        public static ProductViewModel ToProductViewModel(this Guid product)
+        public static ProductViewModel ToProductViewModel(this Product product)
         {
             return new ProductViewModel
             {
@@ -107,7 +107,7 @@ namespace OnlineShopWebApp.Helpers
                 Items = ToProductViewModels(compare.Items)
             };
         }
-        public static List<ProductViewModel> ToProductViewModels(this List<Guid> products)
+        public static List<ProductViewModel> ToProductViewModels(this List<Product> products)
         {
             var productsViewModels = new List<ProductViewModel>();
             foreach (var product in products)
@@ -235,9 +235,9 @@ namespace OnlineShopWebApp.Helpers
             role.Name = roleDb.Name ?? "Имя не указано";
             return role;
         }
-        public static Guid ToProduct(this AddProductViewModel addProductViewModel, List<string> imagesPaths)
+        public static Product ToProduct(this AddProductViewModel addProductViewModel, List<string> imagesPaths)
         {
-            return new Guid()
+            return new Product()
             {
                 Name = addProductViewModel.Name,
                 Cost = addProductViewModel.Cost,
@@ -249,9 +249,9 @@ namespace OnlineShopWebApp.Helpers
         {
             return paths.Select(x => new Image { Url = x }).ToList();
         }
-        public static Guid ToProduct(this ProductViewModel product, List<string> imagesPaths)
+        public static Product ToProduct(this ProductViewModel product, List<string> imagesPaths)
         {
-            return new Guid()
+            return new Product()
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -260,9 +260,9 @@ namespace OnlineShopWebApp.Helpers
                 Images = imagesPaths.ToImages()
             };
         }
-        public static Guid ToProduct(this ProductViewModel editProduct)
+        public static Product ToProduct(this ProductViewModel editProduct)
         {
-            return new Guid
+            return new Product
             {
                 Id = editProduct.Id,
                 Name = editProduct.Name,

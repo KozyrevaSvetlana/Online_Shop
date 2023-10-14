@@ -6,7 +6,7 @@ namespace OnlineShop.Db.Models
     public class Order
     {
         private static int count = 1;
-        public Guid Id { get; set; }
+        public Product Id { get; set; }
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }

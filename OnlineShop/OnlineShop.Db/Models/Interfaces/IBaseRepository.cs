@@ -11,9 +11,6 @@ namespace OnlineShop.Db.Models.Interfaces
         Task<T> GetByUserIdAsync(string userId);
         Task AddAsync(Guid id, string userId = null);
         Task DeleteAsync(Guid id, string userId = null);
-        Task EditAsync(Guid id, string userId = null);
         Task ClearAsync(string userId);
-        Task<int> GetCountAsync(string userId);
-        Task CreateAsync(string userId);
     }
 }

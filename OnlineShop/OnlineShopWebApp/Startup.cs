@@ -50,7 +50,7 @@ namespace OnlineShopWebApp
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IProductsRepository, ProductsDbRepository>();
             services.AddTransient<ICartsRepository, CartsDbRepository>();
-            services.AddTransient<ICompareRepository, ComparesDbRepository>();
+            services.AddTransient<ICompareRepository, CompareDbRepository>();
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
             services.AddTransient<IMailService, EmailService>();

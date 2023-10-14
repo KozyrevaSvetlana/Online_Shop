@@ -13,9 +13,9 @@ namespace OnlineShop.Db.Helper
             "ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate " +
             "velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat " +
             "cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
-        public static Models.Guid GeneradeRandomProduct(List<Image> images)
+        public static Models.Product GeneradeRandomProduct(List<Image> images)
         {
-            var product = new Models.Guid()
+            var product = new Models.Product()
             {
                 Id = System.Guid.NewGuid(),
                 Name = names[random.Next(0, 21)],

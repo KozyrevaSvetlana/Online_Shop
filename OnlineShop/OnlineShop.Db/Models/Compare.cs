@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineShop.Db.Models
 {
     public class Compare
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string UserId { get; set; }
-        public List<Guid> Items { get; set; }
+        public List<Product> Items { get; set; }
 
         public Compare()
         {
-            Items = new List<Guid>();
+            Items = new List<Product>();
         }
     }
 }

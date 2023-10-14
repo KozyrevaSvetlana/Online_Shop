@@ -21,7 +21,7 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Favorites.ToListAsync();
         }
 
-        public async Task AddAsync(Models.Guid product, string UserId)
+        public async Task AddAsync(Models.Product product, string UserId)
         {
             var userFavoritesList = await GetByUserIdAsync(UserId);
             if (userFavoritesList == null)
@@ -57,12 +57,12 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.Favorites.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == UserId);
         }
-        private async Task AddNewFavorite(Models.Guid product, string userId)
+        private async Task AddNewFavorite(Models.Product product, string userId)
         {
             var newCart = new Favorites
             {
                 UserId = userId,
-                Items = new List<Models.Guid>(),
+                Items = new List<Models.Product>(),
             };
             newCart.Items.Add(product);
             databaseContext.Favorites.Add(newCart);
