@@ -15,7 +15,7 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<IEnumerable<Product>> GetAllAsync(string userId = null)
         {
             return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
@@ -25,13 +25,15 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task DeleteAsync(Product product)
+        public async Task DeleteAsync(Guid? id = null, string userId = null)
         {
+            var product = await GetByIdAsync(id);
             databaseContext.Products.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
-        public async Task AddAsync(Product product)
+        public async Task AddAsync(Guid? id = null, string userId = null)
         {
+            var product = await databaseContext.Products.FirstOrDefaultAsync(x=> x.Id == id);
             databaseContext.Products.Add(product);
             await databaseContext.SaveChangesAsync();
         }
@@ -49,7 +51,7 @@ namespace OnlineShop.Db.Repositories
 
         public async Task EditAsync(Product editProduct)
         {
-            var product = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == editProduct.Id);
+            var product = await GetByIdAsync(editProduct.Id);
             product.Name = editProduct.Name;
             product.Cost = editProduct.Cost;
             product.Description = editProduct.Description;
@@ -64,7 +66,12 @@ namespace OnlineShop.Db.Repositories
 
         public async Task CreateAsync(Product product)
         {
-            await AddAsync(product);
+            await AddAsync(product.Id);
+        }
+
+        public async Task<Product> GetByIdAsync(Guid? id = null, string userId = null)
+        {
+            return await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

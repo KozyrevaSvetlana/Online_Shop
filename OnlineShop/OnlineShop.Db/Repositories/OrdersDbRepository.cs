@@ -16,7 +16,7 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<IEnumerable<Order>> GetAllAsync(string userId = null)
         {
             var allOrders = await databaseContext.Orders
                 .Where(q => q.UserId != null)
@@ -91,12 +91,7 @@ namespace OnlineShop.Db.Repositories
             return result;
         }
 
-        public async Task ClearAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task DeleteAsync(Guid id, string userId)
+        public async Task DeleteAsync(Guid? id, string userId)
         {
             var order = await databaseContext.Orders.Include(x => x.UserContacts).FirstOrDefaultAsync(x => x.Id == id);
             var cartItems = await databaseContext.CartItems.Include(x => x.Order).FirstOrDefaultAsync(x => x.Order == order);
@@ -106,7 +101,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task AddAsync(Guid id, string userId = null)
+        public async Task AddAsync(Guid? id, string userId)
         {
             var cart = await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id || (userId != null && x.UserId == userId));
             var order = new Order(cart.Items);
@@ -115,14 +110,19 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Add(Order order, Cart cart)
+        public async Task<int> GetCountAsync()
+        {
+            return await databaseContext.Orders.CountAsync();
+        }
+
+        public Task Add(Order order, Cart cart)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<int> GetCountAsync()
+        public Task<Order> GetByIdAsync(Guid? id = null, string userId = null)
         {
-            return await databaseContext.Orders.CountAsync();
+            throw new NotImplementedException();
         }
     }
 }
