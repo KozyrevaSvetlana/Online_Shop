@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
-    public interface ICartsRepository : IBaseRepository<Cart>
+    public interface ICartsRepository
     {
+        Task<IEnumerable<Cart>> GetAll();
         Task<Cart> TryGetByUserId(string userId);
         Task Add(Product product, string userId);
         Task<int> Count(string userId);

@@ -7,6 +7,5 @@ namespace OnlineShop.Db.Models.Interfaces
 {
     public interface IBaseRepository<T>
     {
-        Task<IEnumerable<T>> GetAll();
     }
 }
