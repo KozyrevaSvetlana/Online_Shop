@@ -9,9 +9,9 @@ namespace OnlineShop.Db.Models.Interfaces
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(Guid id);
         Task<T> TryGetByUserId(string userId);
-        Task Add(Guid id, string userId);
-        Task Delete(Guid id, string userId);
-        Task Edit(T item, string userId);
+        Task Add(T item, string userId = null);
+        Task Delete(Guid id, string userId = null);
+        Task Edit(T item, string userId = null);
         Task Clear(string userId);
         Task<int> GetCount(string userId);
     }
