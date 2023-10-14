@@ -65,7 +65,7 @@ namespace OnlineShopWebApp.Controllers
                     Response.Cookies.Delete("id");
                 }
                 order.Products = cart.Items.ToCartItemViewModels();
-                order.Number = await ordersRepository.Count();
+                order.Number = await ordersRepository.GetCount();
                 await ordersRepository.Add(order.ToOrder(), cart);
                 return RedirectToAction("Result");
             }

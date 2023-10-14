@@ -21,9 +21,9 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Compares.ToListAsync();
         }
 
-        public async Task Add(Product product, string UserId)
+        public async Task Add(Models.Guid product, string UserId)
         {
-            var userCompareList = await TryGetById(UserId);
+            var userCompareList = await TryGetByUserId(UserId);
             if (userCompareList == null)
             {
                 await AddNewCompare(product, UserId);
@@ -41,28 +41,28 @@ namespace OnlineShop.Db.Repositories
 
         public async Task Clear(string CompareId)
         {
-            var result = TryGetById(CompareId);
+            var result = TryGetByUserId(CompareId);
             databaseContext.Remove(result);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Guid id, string CompareId)
+        public async Task Delete(System.Guid id, string CompareId)
         {
-            var compare = await TryGetById(CompareId);
+            var compare = await TryGetByUserId(CompareId);
             compare.Items.RemoveAll(x => x.Id == id);
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<Compare> TryGetById(string CompareId)
+        public async Task<Compare> TryGetByUserId(string CompareId)
         {
             return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
         }
-        private async Task AddNewCompare(Product product, string userId)
+        private async Task AddNewCompare(Models.Guid product, string userId)
         {
             var newCart = new Compare
             {
                 UserId = userId,
-                Items = new List<Product>(),
+                Items = new List<Models.Guid>(),
             };
             newCart.Items.Add(product);
             databaseContext.Compares.Add(newCart);

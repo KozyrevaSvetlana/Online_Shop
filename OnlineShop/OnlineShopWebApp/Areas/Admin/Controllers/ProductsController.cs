@@ -68,7 +68,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             else
             {
-                var result = await ordersRepository.GetProductInOrders(id);
+                var result = await ordersRepository.GetOrders(id);
                 string ordersNumbers = "";
                 foreach (var order in result)
                 {

@@ -6,11 +6,7 @@ namespace OnlineShop.Db.Models.Interfaces
 {
     public interface ICartsRepository : IBaseRepository<Cart>
     {
-        Task<Cart> TryGetByUserId(string userId);
-        Task Add(Product product, string userId);
-        Task<int> Count(string userId);
-        Task ChangeAmount(Product product, int sign, string userId);
-        Task Clear(string userId);
-        Task<bool> IsInCart(Product product);
+        Task ChangeAmount(Guid product, int sign, string userId);
+        Task<bool> IsInCart(Guid product);
     }
 }

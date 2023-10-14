@@ -37,7 +37,7 @@ namespace OnlineShopWebApp.Controllers
             return View(cart.ToCartViewModel());
         }
 
-        public async Task<IActionResult> AddAsync(Guid id)
+        public async Task<IActionResult> AddAsync(System.Guid id)
         {
             var product = await productsRepository.GetById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
@@ -46,7 +46,7 @@ namespace OnlineShopWebApp.Controllers
                 var cookieValue = Request.Cookies["id"];
                 if (cookieValue == null)
                 {
-                    cookieValue = Guid.NewGuid().ToString() + DateTime.Now.ToString("d");
+                    cookieValue = System.Guid.NewGuid().ToString() + DateTime.Now.ToString("d");
                     CookieOptions cookie = new CookieOptions();
                     cookie.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Append("id", cookieValue, cookie);
@@ -59,7 +59,7 @@ namespace OnlineShopWebApp.Controllers
             }
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> ChangeAmountAsync(Guid id, int sign)
+        public async Task<IActionResult> ChangeAmountAsync(System.Guid id, int sign)
         {
             var product = await productsRepository.GetById(id);
             var user = await userManager.GetUserAsync(HttpContext.User);

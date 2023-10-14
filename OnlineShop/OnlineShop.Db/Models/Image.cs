@@ -7,6 +7,6 @@ namespace OnlineShop.Db.Models
         public Guid Id { get; set; }
         public string Url { get; set; }
         public Guid ProductId { get; set; }
-        public Product Product { get; set; }
+        public Guid Product { get; set; }
     }
 }

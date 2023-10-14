@@ -92,7 +92,7 @@ namespace OnlineShop.Db.Repositories
             order.UserContacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
             return order;
         }
-        public async Task<int> Count()
+        public async Task<int> GetCount()
         {
             var result = await databaseContext.Orders.CountAsync();
             return result + 1;
@@ -101,7 +101,7 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.CartItems.FirstOrDefaultAsync(x => x.Product.Id == id) != null;
         }
-        public async Task<List<Order>> GetProductInOrders(Guid id)
+        public async Task<List<Order>> GetOrders(Guid id)
         {
             var items = await databaseContext.CartItems.Where(x => x.Product.Id == id).ToListAsync();
             var result = new List<Order>();

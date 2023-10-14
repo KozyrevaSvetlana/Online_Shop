@@ -29,7 +29,7 @@ namespace OnlineShopWebApp.Controllers
             return View(cart.ToFavoritesViewModel());
         }
 
-        public async Task<IActionResult> AddAsync(Guid id)
+        public async Task<IActionResult> AddAsync(System.Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             var product = await productsRepository.GetById(id);
@@ -42,7 +42,7 @@ namespace OnlineShopWebApp.Controllers
             await favoritesRepository.Clear(user.UserName);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        public async Task<IActionResult> DeleteAsync(System.Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             await favoritesRepository.Delete(id, user.UserName);

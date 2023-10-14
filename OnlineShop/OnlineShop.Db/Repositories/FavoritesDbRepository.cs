@@ -21,7 +21,7 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Favorites.ToListAsync();
         }
 
-        public async Task Add(Product product, string UserId)
+        public async Task Add(Models.Guid product, string UserId)
         {
             var userFavoritesList = await TryGetByUserId(UserId);
             if (userFavoritesList == null)
@@ -46,7 +46,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Guid id, string UserId)
+        public async Task Delete(System.Guid id, string UserId)
         {
             var favorite = await TryGetByUserId(UserId);
             favorite.Items.RemoveAll(x => x.Id == id);
@@ -57,12 +57,12 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.Favorites.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == UserId);
         }
-        private async Task AddNewFavorite(Product product, string userId)
+        private async Task AddNewFavorite(Models.Guid product, string userId)
         {
             var newCart = new Favorites
             {
                 UserId = userId,
-                Items = new List<Product>(),
+                Items = new List<Models.Guid>(),
             };
             newCart.Items.Add(product);
             databaseContext.Favorites.Add(newCart);
