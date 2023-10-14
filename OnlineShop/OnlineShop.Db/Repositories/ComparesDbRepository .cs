@@ -40,21 +40,16 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
         }
-        private async Task AddNewCompare(Models.Product product, string userId)
+        private async Task AddNewCompare(Product product, string userId)
         {
             var newCart = new Compare
             {
                 UserId = userId,
-                Items = new List<Models.Product>(),
+                Items = new List<Product>(),
             };
             newCart.Items.Add(product);
             databaseContext.Compares.Add(newCart);
             await databaseContext.SaveChangesAsync();
-        }
-
-        public async Task<Compare> GetByIdAsync(Guid id)
-        {
-            return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task AddAsync(Guid id, string userId = null)
