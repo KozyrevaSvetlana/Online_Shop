@@ -10,5 +10,6 @@ namespace OnlineShop.Db.Models.Interfaces
         Task EditAsync(Guid id, string userId = null);
         Task<int> GetCountAsync(string userId);
         Task CreateAsync(string userId);
+        Task DeleteAsync(Guid id, string userId = null);
     }
 }

@@ -30,47 +30,6 @@ namespace OnlineShop.Db.Repositories
                 .FirstOrDefaultAsync(x => x.UserId == userId);
         }
 
-        public async Task AddAsync(Models.Product product, string userId)
-        {
-            var existingCart = await GetByUserIdAsync(userId);
-            if (existingCart == null)
-            {
-                var newCart = new Cart
-                {
-                    UserId = userId
-                };
-
-                newCart.Items = new List<CartItem>
-                    {
-                        new CartItem
-                        {
-                            Amount = 1,
-                            Product = product,
-                            Cart = newCart
-                        }
-                    };
-                await databaseContext.Carts.AddAsync(newCart);
-            }
-            else
-            {
-                var existingCartItem = existingCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
-                if (existingCartItem != null)
-                {
-                    existingCartItem.Amount += 1;
-                }
-                else
-                {
-                    existingCart.Items.Add(new CartItem
-                    {
-                        Amount = 1,
-                        Product = product,
-                        Cart = existingCart
-                    });
-                }
-            }
-            await databaseContext.SaveChangesAsync();
-        }
-
         public async Task<int> GetCountAsync(string userId)
         {
             var userCart = await GetByUserIdAsync(userId);
@@ -111,6 +70,64 @@ namespace OnlineShop.Db.Repositories
         public async Task<bool> IsInCart(Models.Product product)
         {
             return await databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product.Id == product.Id).AnyAsync();
+        }
+
+        public async Task<Cart> GetByIdAsync(Guid id)
+        {
+            return await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task AddAsync(Guid id, string userId = null)
+        {
+            var cart = await GetByUserIdAsync(userId);
+            var product = await databaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
+            if (cart == null)
+            {
+                var newCart = new Cart
+                {
+                    UserId = userId
+                };
+
+                newCart.Items = new List<CartItem>
+                    {
+                        new CartItem
+                        {
+                            Amount = 1,
+                            Product = product,
+                            Cart = newCart
+                        }
+                    };
+                await databaseContext.Carts.AddAsync(newCart);
+            }
+            else
+            {
+                AddItem(cart, product);
+            }
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid id, string userId = null)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private static void AddItem(Cart cart, Product product)
+        {
+            var item = cart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+            if (item != null)
+            {
+                item.Amount += 1;
+            }
+            else
+            {
+                cart.Items.Add(new CartItem
+                {
+                    Amount = 1,
+                    Product = product,
+                    Cart = cart
+                });
+            }
         }
     }
 }
