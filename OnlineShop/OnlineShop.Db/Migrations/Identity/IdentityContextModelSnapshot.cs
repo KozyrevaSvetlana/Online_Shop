@@ -273,6 +273,128 @@ namespace OnlineShop.Db.Migrations.Identity
                     b.HasIndex("ProductId");
 
                     b.ToTable("Image");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bf516feb-ee36-4359-8fb8-5a2d614c1e4c"),
+                            ProductId = new Guid("a3f432a9-17a0-4307-984b-290611a248f5"),
+                            Url = "/img/Products/1.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("dcf4871e-5f45-4337-b648-3accbbe160b3"),
+                            ProductId = new Guid("c9f07f92-c9d5-4e8f-8093-5c242997ba82"),
+                            Url = "/img/Products/2.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("ff6a3d51-de4f-42dc-94d7-fd20c8ba56ed"),
+                            ProductId = new Guid("fe7524c9-a431-4b5b-83b2-9568c7f37bfa"),
+                            Url = "/img/Products/3.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("4f6ed34b-6b41-4300-a572-8f42bfd49f00"),
+                            ProductId = new Guid("fce4ebfe-1ae7-4e47-b29f-1d34916fc298"),
+                            Url = "/img/Products/3.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("764a2356-2299-4ba5-9773-bd920bdd0c83"),
+                            ProductId = new Guid("6e406ea4-2656-4c1f-a0d3-8acbc9265dd7"),
+                            Url = "/img/Products/5.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("8c22393e-33de-457c-b6ca-3e8e6fe683af"),
+                            ProductId = new Guid("56db2983-947f-45d5-ba51-5d5cef5cf7a5"),
+                            Url = "/img/Products/6.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("25b815c8-66b1-45a9-a135-25b5f1bbf732"),
+                            ProductId = new Guid("8002540c-9944-4b42-ac8c-01ad787e81e6"),
+                            Url = "/img/Products/6.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("a3c5aa32-bb9f-4a5b-8940-f376ed800665"),
+                            ProductId = new Guid("7a2227e4-4603-444f-ae2d-099079474ea0"),
+                            Url = "/img/Products/5.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("7276209a-42f3-4f33-a3ea-3830ffacc02c"),
+                            ProductId = new Guid("a76d1ebe-cc7d-4618-ac9f-3d1f4935fe57"),
+                            Url = "/img/Products/4.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("270dde04-91f0-4904-a9f8-7d549da361c7"),
+                            ProductId = new Guid("e54fae4f-7d6c-4e34-aa1b-820cdc772653"),
+                            Url = "/img/Products/3.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("f873006b-bb3f-466e-94d1-d86fca504a3d"),
+                            ProductId = new Guid("615496eb-0537-4657-8237-f033266a3a57"),
+                            Url = "/img/Products/2.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("27455371-a22c-47d0-b25b-b497f075cbf4"),
+                            ProductId = new Guid("0cb8d9f0-c806-462c-a1b6-3f095b324761"),
+                            Url = "/img/Products/1.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("483ef989-cf7d-4819-8232-4e56251daced"),
+                            ProductId = new Guid("27baabe2-d81b-4c46-86e0-23b97d7637c8"),
+                            Url = "/img/Products/2.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("f9781ad5-ab5c-4422-b4ab-33301e835ed9"),
+                            ProductId = new Guid("fbb6b537-d539-47ee-95c6-386b5ac0679a"),
+                            Url = "/img/Products/3.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("3a94dd81-fb96-40c6-9f3c-97850b7b1b8f"),
+                            ProductId = new Guid("a1ffa88c-1316-42a8-8601-95d70a65d150"),
+                            Url = "/img/Products/4.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("f9e4198c-1d98-4178-bde5-a2936cae7643"),
+                            ProductId = new Guid("0794a187-dfea-4807-9259-a7ff279455f2"),
+                            Url = "/img/Products/5.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("c2f50f69-0abc-4c2c-8c65-e0b6188600bd"),
+                            ProductId = new Guid("bb71353d-1a58-45a2-84da-9b4137bec6f6"),
+                            Url = "/img/Products/6.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("f2ebc5c0-0288-4b0b-a7cf-cd3977ca72df"),
+                            ProductId = new Guid("755221a6-0f45-4e86-9948-6e9f85872734"),
+                            Url = "/img/Products/4.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("f206660f-69d6-47d5-aed9-4aa753fb2e69"),
+                            ProductId = new Guid("133788f9-139f-453e-b543-98b5876c4cb7"),
+                            Url = "/img/Products/3.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("d2343390-9c56-4db8-a14f-0b305f6c25bc"),
+                            ProductId = new Guid("beb1332d-fbe9-4d6e-88f1-c2603bc7a80f"),
+                            Url = "/img/Products/1.jpg"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Db.Models.Order", b =>
@@ -324,6 +446,148 @@ namespace OnlineShop.Db.Migrations.Identity
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a3f432a9-17a0-4307-984b-290611a248f5"),
+                            Cost = 11426m,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                            Name = "Пистолетик"
+                        },
+                        new
+                        {
+                            Id = new Guid("c9f07f92-c9d5-4e8f-8093-5c242997ba82"),
+                            Cost = 11426m,
+                            Description = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim",
+                            Name = "Шапка"
+                        },
+                        new
+                        {
+                            Id = new Guid("fe7524c9-a431-4b5b-83b2-9568c7f37bfa"),
+                            Cost = 10398m,
+                            Description = "Ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ",
+                            Name = "Конструктор"
+                        },
+                        new
+                        {
+                            Id = new Guid("fce4ebfe-1ae7-4e47-b29f-1d34916fc298"),
+                            Cost = 94608m,
+                            Description = "Ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate",
+                            Name = "Пистолетик"
+                        },
+                        new
+                        {
+                            Id = new Guid("6e406ea4-2656-4c1f-a0d3-8acbc9265dd7"),
+                            Cost = 83000m,
+                            Description = "Velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat",
+                            Name = "Мишка"
+                        },
+                        new
+                        {
+                            Id = new Guid("56db2983-947f-45d5-ba51-5d5cef5cf7a5"),
+                            Cost = 38020m,
+                            Description = "cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                            Name = "Пирамидка"
+                        },
+                        new
+                        {
+                            Id = new Guid("8002540c-9944-4b42-ac8c-01ad787e81e6"),
+                            Cost = 59657m,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing",
+                            Name = "Трусы"
+                        },
+                        new
+                        {
+                            Id = new Guid("7a2227e4-4603-444f-ae2d-099079474ea0"),
+                            Cost = 73815m,
+                            Description = "Ex ea commodo consequat.Duis aute irure dolor",
+                            Name = "Пистолетик"
+                        },
+                        new
+                        {
+                            Id = new Guid("a76d1ebe-cc7d-4618-ac9f-3d1f4935fe57"),
+                            Cost = 66068m,
+                            Description = "Sed do eiusmod tempor incididunt ut labore et dolore magna ",
+                            Name = "Пистолетик"
+                        },
+                        new
+                        {
+                            Id = new Guid("e54fae4f-7d6c-4e34-aa1b-820cdc772653"),
+                            Cost = 51625m,
+                            Description = "Velit esse cillum dolore eu fugiat nulla pariatur.E",
+                            Name = "Ложка"
+                        },
+                        new
+                        {
+                            Id = new Guid("615496eb-0537-4657-8237-f033266a3a57"),
+                            Cost = 76311m,
+                            Description = "Velit esse cillum dolore eu fugiat nulla pariatur.",
+                            Name = "Пистолетик"
+                        },
+                        new
+                        {
+                            Id = new Guid("0cb8d9f0-c806-462c-a1b6-3f095b324761"),
+                            Cost = 12248m,
+                            Description = "Ex ea commodo consequat.Duis aute irure dolor in reprehenderit in v",
+                            Name = "Соска"
+                        },
+                        new
+                        {
+                            Id = new Guid("27baabe2-d81b-4c46-86e0-23b97d7637c8"),
+                            Cost = 4225m,
+                            Description = "Ex ea commodo consequat.Duis aute i ",
+                            Name = "Ложка"
+                        },
+                        new
+                        {
+                            Id = new Guid("fbb6b537-d539-47ee-95c6-386b5ac0679a"),
+                            Cost = 54643m,
+                            Description = "Minim veniam, quis nostrud exercitation ullamco laboris ",
+                            Name = "Конструктор"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1ffa88c-1316-42a8-8601-95d70a65d150"),
+                            Cost = 18346m,
+                            Description = "Velit esse cillum dolore eu fugiat nulla pariatur.",
+                            Name = "Шапка"
+                        },
+                        new
+                        {
+                            Id = new Guid("0794a187-dfea-4807-9259-a7ff279455f2"),
+                            Cost = 94741m,
+                            Description = "Ex ea commodo consequat.Duis aute irure dolor in r",
+                            Name = "Кукла"
+                        },
+                        new
+                        {
+                            Id = new Guid("bb71353d-1a58-45a2-84da-9b4137bec6f6"),
+                            Cost = 6957m,
+                            Description = "Velit esse cillum dolore eu fugiat nulla pariatur.",
+                            Name = "Кукла"
+                        },
+                        new
+                        {
+                            Id = new Guid("755221a6-0f45-4e86-9948-6e9f85872734"),
+                            Cost = 82167m,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                            Name = "Ложка"
+                        },
+                        new
+                        {
+                            Id = new Guid("133788f9-139f-453e-b543-98b5876c4cb7"),
+                            Cost = 82167m,
+                            Description = "Velit esse cillum dolore eu fugiat nulla pariatur",
+                            Name = "Чашка"
+                        },
+                        new
+                        {
+                            Id = new Guid("beb1332d-fbe9-4d6e-88f1-c2603bc7a80f"),
+                            Cost = 88268m,
+                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                            Name = "Ползунки"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Db.Models.User", b =>

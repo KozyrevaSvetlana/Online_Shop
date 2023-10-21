@@ -20,16 +20,12 @@ namespace OnlineShop.Db
         {
             Database.Migrate();
         }
-    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //    {
-    //        modelBuilder.Entity<Image>().HasData(ProductGenerator.GenerateBaseImages());
-    //        modelBuilder.Entity<Product>().HasData(ProductGenerator.GenerateBaseProducts());
-    //        modelBuilder
-    //.Entity<User>(
-    //    eb =>
-    //    {
-    //        eb.HasNoKey();
-    //    });
-    //    }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Image>().HasData(ProductGenerator.GenerateBaseImages());
+            modelBuilder.Entity<Product>().HasData(ProductGenerator.GenerateBaseProducts());
+
+        }
     }
 }

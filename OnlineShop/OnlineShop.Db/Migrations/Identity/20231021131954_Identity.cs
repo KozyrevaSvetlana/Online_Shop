@@ -359,6 +359,60 @@ namespace OnlineShop.Db.Migrations.Identity
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "Cost", "Description", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("a3f432a9-17a0-4307-984b-290611a248f5"), 11426m, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Пистолетик" },
+                    { new Guid("755221a6-0f45-4e86-9948-6e9f85872734"), 82167m, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Ложка" },
+                    { new Guid("bb71353d-1a58-45a2-84da-9b4137bec6f6"), 6957m, "Velit esse cillum dolore eu fugiat nulla pariatur.", "Кукла" },
+                    { new Guid("0794a187-dfea-4807-9259-a7ff279455f2"), 94741m, "Ex ea commodo consequat.Duis aute irure dolor in r", "Кукла" },
+                    { new Guid("a1ffa88c-1316-42a8-8601-95d70a65d150"), 18346m, "Velit esse cillum dolore eu fugiat nulla pariatur.", "Шапка" },
+                    { new Guid("fbb6b537-d539-47ee-95c6-386b5ac0679a"), 54643m, "Minim veniam, quis nostrud exercitation ullamco laboris ", "Конструктор" },
+                    { new Guid("27baabe2-d81b-4c46-86e0-23b97d7637c8"), 4225m, "Ex ea commodo consequat.Duis aute i ", "Ложка" },
+                    { new Guid("0cb8d9f0-c806-462c-a1b6-3f095b324761"), 12248m, "Ex ea commodo consequat.Duis aute irure dolor in reprehenderit in v", "Соска" },
+                    { new Guid("615496eb-0537-4657-8237-f033266a3a57"), 76311m, "Velit esse cillum dolore eu fugiat nulla pariatur.", "Пистолетик" },
+                    { new Guid("e54fae4f-7d6c-4e34-aa1b-820cdc772653"), 51625m, "Velit esse cillum dolore eu fugiat nulla pariatur.E", "Ложка" },
+                    { new Guid("a76d1ebe-cc7d-4618-ac9f-3d1f4935fe57"), 66068m, "Sed do eiusmod tempor incididunt ut labore et dolore magna ", "Пистолетик" },
+                    { new Guid("7a2227e4-4603-444f-ae2d-099079474ea0"), 73815m, "Ex ea commodo consequat.Duis aute irure dolor", "Пистолетик" },
+                    { new Guid("8002540c-9944-4b42-ac8c-01ad787e81e6"), 59657m, "Lorem ipsum dolor sit amet, consectetur adipiscing", "Трусы" },
+                    { new Guid("56db2983-947f-45d5-ba51-5d5cef5cf7a5"), 38020m, "cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", "Пирамидка" },
+                    { new Guid("6e406ea4-2656-4c1f-a0d3-8acbc9265dd7"), 83000m, "Velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat", "Мишка" },
+                    { new Guid("fce4ebfe-1ae7-4e47-b29f-1d34916fc298"), 94608m, "Ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate", "Пистолетик" },
+                    { new Guid("fe7524c9-a431-4b5b-83b2-9568c7f37bfa"), 10398m, "Ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ", "Конструктор" },
+                    { new Guid("c9f07f92-c9d5-4e8f-8093-5c242997ba82"), 11426m, "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim", "Шапка" },
+                    { new Guid("133788f9-139f-453e-b543-98b5876c4cb7"), 82167m, "Velit esse cillum dolore eu fugiat nulla pariatur", "Чашка" },
+                    { new Guid("beb1332d-fbe9-4d6e-88f1-c2603bc7a80f"), 88268m, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Ползунки" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Image",
+                columns: new[] { "Id", "ProductId", "Url" },
+                values: new object[,]
+                {
+                    { new Guid("bf516feb-ee36-4359-8fb8-5a2d614c1e4c"), new Guid("a3f432a9-17a0-4307-984b-290611a248f5"), "/img/Products/1.jpg" },
+                    { new Guid("f2ebc5c0-0288-4b0b-a7cf-cd3977ca72df"), new Guid("755221a6-0f45-4e86-9948-6e9f85872734"), "/img/Products/4.jpg" },
+                    { new Guid("c2f50f69-0abc-4c2c-8c65-e0b6188600bd"), new Guid("bb71353d-1a58-45a2-84da-9b4137bec6f6"), "/img/Products/6.jpg" },
+                    { new Guid("f9e4198c-1d98-4178-bde5-a2936cae7643"), new Guid("0794a187-dfea-4807-9259-a7ff279455f2"), "/img/Products/5.jpg" },
+                    { new Guid("3a94dd81-fb96-40c6-9f3c-97850b7b1b8f"), new Guid("a1ffa88c-1316-42a8-8601-95d70a65d150"), "/img/Products/4.jpg" },
+                    { new Guid("f9781ad5-ab5c-4422-b4ab-33301e835ed9"), new Guid("fbb6b537-d539-47ee-95c6-386b5ac0679a"), "/img/Products/3.jpg" },
+                    { new Guid("483ef989-cf7d-4819-8232-4e56251daced"), new Guid("27baabe2-d81b-4c46-86e0-23b97d7637c8"), "/img/Products/2.jpg" },
+                    { new Guid("27455371-a22c-47d0-b25b-b497f075cbf4"), new Guid("0cb8d9f0-c806-462c-a1b6-3f095b324761"), "/img/Products/1.jpg" },
+                    { new Guid("f873006b-bb3f-466e-94d1-d86fca504a3d"), new Guid("615496eb-0537-4657-8237-f033266a3a57"), "/img/Products/2.jpg" },
+                    { new Guid("270dde04-91f0-4904-a9f8-7d549da361c7"), new Guid("e54fae4f-7d6c-4e34-aa1b-820cdc772653"), "/img/Products/3.jpg" },
+                    { new Guid("7276209a-42f3-4f33-a3ea-3830ffacc02c"), new Guid("a76d1ebe-cc7d-4618-ac9f-3d1f4935fe57"), "/img/Products/4.jpg" },
+                    { new Guid("a3c5aa32-bb9f-4a5b-8940-f376ed800665"), new Guid("7a2227e4-4603-444f-ae2d-099079474ea0"), "/img/Products/5.jpg" },
+                    { new Guid("25b815c8-66b1-45a9-a135-25b5f1bbf732"), new Guid("8002540c-9944-4b42-ac8c-01ad787e81e6"), "/img/Products/6.jpg" },
+                    { new Guid("8c22393e-33de-457c-b6ca-3e8e6fe683af"), new Guid("56db2983-947f-45d5-ba51-5d5cef5cf7a5"), "/img/Products/6.jpg" },
+                    { new Guid("764a2356-2299-4ba5-9773-bd920bdd0c83"), new Guid("6e406ea4-2656-4c1f-a0d3-8acbc9265dd7"), "/img/Products/5.jpg" },
+                    { new Guid("4f6ed34b-6b41-4300-a572-8f42bfd49f00"), new Guid("fce4ebfe-1ae7-4e47-b29f-1d34916fc298"), "/img/Products/3.jpg" },
+                    { new Guid("ff6a3d51-de4f-42dc-94d7-fd20c8ba56ed"), new Guid("fe7524c9-a431-4b5b-83b2-9568c7f37bfa"), "/img/Products/3.jpg" },
+                    { new Guid("dcf4871e-5f45-4337-b648-3accbbe160b3"), new Guid("c9f07f92-c9d5-4e8f-8093-5c242997ba82"), "/img/Products/2.jpg" },
+                    { new Guid("f206660f-69d6-47d5-aed9-4aa753fb2e69"), new Guid("133788f9-139f-453e-b543-98b5876c4cb7"), "/img/Products/3.jpg" },
+                    { new Guid("d2343390-9c56-4db8-a14f-0b305f6c25bc"), new Guid("beb1332d-fbe9-4d6e-88f1-c2603bc7a80f"), "/img/Products/1.jpg" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
