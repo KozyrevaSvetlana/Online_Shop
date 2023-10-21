@@ -63,15 +63,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var product = await productsRepository.GetByIdAsync(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
-            if (user == null)
-            {
-                var userId = Request.Cookies["id"];
-                await cartsRepository.ChangeAmount(product, sign, userId);
-            }
-            else
-            {
-                await cartsRepository.ChangeAmount(product, sign, user.UserName);
-            }
+            await cartsRepository.ChangeAmountAsync(product, sign, user.UserName ?? Request.Cookies["id"]);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ClearAsync()

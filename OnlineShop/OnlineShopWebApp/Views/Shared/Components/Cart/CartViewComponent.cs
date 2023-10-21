@@ -21,12 +21,7 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var cart = await cartsRepository.GetByIdAsync(null, user.Id);
-            if (cart == null)   
-            {
-                var userId = Request.Cookies["id"];
-                cart = await cartsRepository.GetByIdAsync(null, userId);
-            }
+            var cart = await cartsRepository.GetByIdAsync(null, user.Id ?? Request.Cookies["id"]);
             return View("Cart", cart.ToCartViewModel());
         }
     }

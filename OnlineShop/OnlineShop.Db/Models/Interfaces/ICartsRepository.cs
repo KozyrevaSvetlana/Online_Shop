@@ -4,7 +4,7 @@ namespace OnlineShop.Db.Models.Interfaces
 {
     public interface ICartsRepository : IBaseRepository<Cart>
     {
-        Task ChangeAmount(Product product, int sign, string userId);
-        Task<bool> IsInCart(Product product);
+        Task ChangeAmountAsync(Product product, int sign, string userId);
+        Task<bool> IsInCartAsync(Product product);
     }
 }

@@ -37,23 +37,23 @@ namespace OnlineShop.Db.Repositories
             return userCart?.Items?.Sum(x => x.Amount) ?? 0;
         }
 
-        public async Task ChangeAmount(Product product, int sign, string userId)
+        public async Task ChangeAmountAsync(Product product, int sign, string userId)
         {
-            var userCart = await GetByUserIdAsync(userId);
-            var userCartItem = userCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
+            var cart = await GetByUserIdAsync(userId);
+            var item = cart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
             switch (sign)
             {
                 case 1:
-                    userCartItem.Amount++;
+                    item.Amount++;
                     break;
                 case -1:
-                    if (userCartItem.Amount > 1)
+                    if (item.Amount > 1)
                     {
-                        userCartItem.Amount--;
+                        item.Amount--;
                     }
                     else
                     {
-                        userCart.Items.Remove(userCartItem);
+                        cart.Items.Remove(item);
                     }
                     break;
             }
@@ -68,7 +68,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsInCart(Product product)
+        public async Task<bool> IsInCartAsync(Product product)
         {
             return await databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product.Id == product.Id).AnyAsync();
         }
