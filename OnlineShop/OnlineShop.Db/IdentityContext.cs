@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models;
@@ -19,12 +20,16 @@ namespace OnlineShop.Db
         {
             Database.Migrate();
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Image>().HasData(ProductGenerator.GenerateBaseImages());
-            modelBuilder.Entity<Product>().HasData(ProductGenerator.GenerateBaseProducts());
-
-        }
-
+    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //    {
+    //        modelBuilder.Entity<Image>().HasData(ProductGenerator.GenerateBaseImages());
+    //        modelBuilder.Entity<Product>().HasData(ProductGenerator.GenerateBaseProducts());
+    //        modelBuilder
+    //.Entity<User>(
+    //    eb =>
+    //    {
+    //        eb.HasNoKey();
+    //    });
+    //    }
     }
 }

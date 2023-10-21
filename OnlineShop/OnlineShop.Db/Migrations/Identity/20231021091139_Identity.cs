@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace OnlineShop.Db.Migrations
+namespace OnlineShop.Db.Migrations.Identity
 {
     public partial class Identity : Migration
     {
