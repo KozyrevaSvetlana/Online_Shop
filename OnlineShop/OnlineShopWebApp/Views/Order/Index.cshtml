@@ -6,41 +6,41 @@
                 <div class="py-1">
                     <h5 class="card-title">Оформление заказа</h5>
                 </div>
-                <div class="validatoin" asp-validation-summary="ModelOnly"></div>
+                <div class="validatoin" asp-validation-summary="All"></div>
                 <p class="card-text">Введите Ваши данные</p>
                 <div>
                     <div>
                         <label asp-for="Name">Имя</label>
                     </div>
-                    <input asp-for="Name" tabindex="1" type="text" name="Email">
+                    <input asp-for="Name" tabindex="1" type="text" name="Email" required>
                     <span asp-validation-for="Name"></span>
                 </div>
                 <div>
                     <div>
                         <label asp-for="Surname">Фамилия</label>
                     </div>
-                    <input asp-for="Surname" tabindex="2" type="text" name="Surname">
+                    <input asp-for="Surname" tabindex="2" type="text" name="Surname" required>
                     <span asp-validation-for="Surname"></span>
                 </div>
                 <div>
                     <label asp-for="Adress">Адрес</label>
                 </div>
                 <div>
-                    <input asp-for="Adress" tabindex="3" type="text" name="Adress">
+                    <input asp-for="Adress" tabindex="3" type="text" name="Adress" required>
                     <span asp-validation-for="Adress"></span>
                 </div>
                 <div>
                     <div>
                         <label asp-for="Phone">Телефон</label>
                     </div>
-                    <input asp-for="Phone" tabindex="4" type="tel" name="Phone">
+                    <input asp-for="Phone" tabindex="4" type="tel" name="Phone" required>
                     <span asp-validation-for="Phone"></span>
                 </div>
                 <div>
                     <div>
                         <label asp-for="Email">Электронная почта</label>
                     </div>
-                    <input asp-for="Email" tabindex="5" type="text" name="Email">
+                    <input asp-for="Email" tabindex="5" type="text" name="Email" required>
                     <span asp-validation-for="Email"></span>
                 </div>
                 <div>
