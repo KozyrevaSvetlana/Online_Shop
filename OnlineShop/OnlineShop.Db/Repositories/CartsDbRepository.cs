@@ -24,10 +24,11 @@ namespace OnlineShop.Db.Repositories
 
         public async Task<Cart> GetByUserIdAsync(string userId)
         {
-            return await databaseContext.Carts
+            var cart =  await databaseContext.Carts
                 .Include(x => x.Items)
                 .ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync(x => x.UserId == userId);
+            return cart;
         }
 
         public async Task<int> GetCountAsync(string userId)
@@ -139,6 +140,7 @@ namespace OnlineShop.Db.Repositories
         {
             return await databaseContext.Carts
                 .Include(x=> x.Items)
+                .ThenInclude(x=> x.Product)
                 .FirstOrDefaultAsync(x=> x.Id == id || (!string.IsNullOrEmpty(userId) && x.UserId == userId));
         }
     }
