@@ -16,14 +16,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         private readonly IProductsRepository productsRepository;
         private readonly ImagesProvider imagesProvider;
         private readonly IOrdersRepository ordersRepository;
-        private readonly ICartsRepository cartsRepository;
 
-        public ProductsController(IProductsRepository productsRepository, ImagesProvider imagesProvider, IOrdersRepository ordersRepository, ICartsRepository cartsRepository)
+        public ProductsController(IProductsRepository productsRepository, ImagesProvider imagesProvider, IOrdersRepository ordersRepository)
         {
             this.productsRepository = productsRepository;
             this.imagesProvider = imagesProvider;
             this.ordersRepository = ordersRepository;
-            this.cartsRepository = cartsRepository;
         }
         public async Task<IActionResult> Index()
         {
