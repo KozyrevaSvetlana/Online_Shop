@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models;
