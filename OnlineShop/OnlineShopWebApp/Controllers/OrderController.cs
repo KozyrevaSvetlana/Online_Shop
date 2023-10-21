@@ -7,6 +7,7 @@ using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
@@ -44,7 +45,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             var errorsResult = userContacts.IsValid();
-            if (errorsResult != null)
+            if (errorsResult != null && errorsResult.Any())
             {
                 foreach (var error in errorsResult)
                 {
@@ -55,17 +56,11 @@ namespace OnlineShopWebApp.Controllers
             {
                 var order = new OrderViewModel();
                 order.AddContacts(user.UserName, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
-                var cart = new Cart();
-                cart = await cartsRepository.GetByIdAsync(null, user.Id);
-                if (cart == null)
-                {
-                    var userId = Request.Cookies["id"];
-                    cart = await cartsRepository.GetByIdAsync(null, userId);
-                    Response.Cookies.Delete("id");
-                }
+                var cart = await cartsRepository.GetByIdAsync(null, user.UserName ?? Request.Cookies["id"]);
+                Response.Cookies.Delete("id");
                 order.Products = cart.Items.ToCartItemViewModels();
                 order.Number = await ordersRepository.GetCountAsync();
-                await ordersRepository.AddAsync(cart.Id, order.UserId);
+                await ordersRepository.AddAsync(cart.Id, user.Id);
                 return RedirectToAction("Result");
             }
             return View("Index");
@@ -74,7 +69,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ResultAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var order = await ordersRepository.GetLast(user.UserName);
+            var order = await ordersRepository.GetLast(user.Id);
             return View(order.ToOrderViewModels());
         }
     }

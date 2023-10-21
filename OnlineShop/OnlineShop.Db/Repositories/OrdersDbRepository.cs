@@ -62,11 +62,10 @@ namespace OnlineShop.Db.Repositories
         public async Task<Order> GetLast(string UserId)
         {
             var order = await databaseContext.Orders
-                .Where(q => q.UserId == UserId)
                 .Include(x => x.Items)
                 .ThenInclude(x => x.Product)
                 .OrderByDescending(q => q.Number)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(q => q.UserId == UserId);
             order.UserContacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
             return order;
         }
@@ -105,6 +104,7 @@ namespace OnlineShop.Db.Repositories
         {
             var cart = await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id || (userId != null && x.UserId == userId));
             var order = new Order(cart.Items);
+            order.UserId = userId;
             databaseContext.Orders.Add(order);
             databaseContext.Carts.Remove(cart);
             await databaseContext.SaveChangesAsync();
