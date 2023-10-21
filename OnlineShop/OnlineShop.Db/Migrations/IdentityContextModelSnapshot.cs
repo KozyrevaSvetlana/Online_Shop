@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Db;
 
-namespace OnlineShop.Db.Migrations.Identity
+namespace OnlineShop.Db.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20231014172604_Identity")]
-    partial class Identity
+    partial class IdentityContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,6 +254,25 @@ namespace OnlineShop.Db.Migrations.Identity
                     b.HasKey("Id");
 
                     b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("OnlineShop.Db.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("OnlineShop.Db.Models.Order", b =>
@@ -526,6 +543,15 @@ namespace OnlineShop.Db.Migrations.Identity
                     b.Navigation("UserContact");
                 });
 
+            modelBuilder.Entity("OnlineShop.Db.Models.Image", b =>
+                {
+                    b.HasOne("OnlineShop.Db.Models.Product", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("OnlineShop.Db.Models.Order", b =>
                 {
                     b.HasOne("OnlineShop.Db.Models.Product", null)
@@ -559,6 +585,8 @@ namespace OnlineShop.Db.Migrations.Identity
             modelBuilder.Entity("OnlineShop.Db.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("Images");
 
                     b.Navigation("Orders");
                 });
