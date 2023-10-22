@@ -159,7 +159,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<ActionResult> RolesAsync(string userName)
         {
-            User user = await userManager.FindByNameAsync(userName);
+            var user = await userManager.FindByNameAsync(userName);
             var allRoles = roleManager.Roles;
             var model = new ChangeRoleViewModel();
             model.UserName = user.UserName;

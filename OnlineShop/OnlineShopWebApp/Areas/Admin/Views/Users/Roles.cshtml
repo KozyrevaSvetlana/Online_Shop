@@ -9,7 +9,7 @@
         @foreach (var role in Model.AllRoles)
         {
             <input type="checkbox" name="roles" value="@role.Name"
-               @(Model.UserRoles.Contains(role) ? "checked=\"checked\"" : "") />
+            @(Model.UserRoles.Select(x => x.Name).Contains(role.Name) ? "checked=\"checked\"" : "") />
 
             @role.Name <br />
         }
