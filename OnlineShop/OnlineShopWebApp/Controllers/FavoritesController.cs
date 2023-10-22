@@ -25,7 +25,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var cart = await favoritesRepository.GetByIdAsync(null, user.Id);
+            var cart = await favoritesRepository.GetByIdAsync(null, user.UserName);
             return View(cart.ToFavoritesViewModel());
         }
 
@@ -39,7 +39,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ClearAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await favoritesRepository.DeleteAsync(null, user.UserName);
+            await favoritesRepository.ClearAsync(user.UserName);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> DeleteAsync(Guid id)

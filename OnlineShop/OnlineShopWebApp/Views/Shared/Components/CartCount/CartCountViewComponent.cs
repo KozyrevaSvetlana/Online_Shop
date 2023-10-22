@@ -22,7 +22,7 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.CartCountViewComponents
         {
             var productCounts = 0;
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var cart = await cartsRepository.GetByIdAsync(null, user.UserName ?? Request.Cookies["id"]);
+            var cart = await cartsRepository.GetByIdAsync(null, user?.UserName ?? Request.Cookies["id"]);
             var cartViewModel = cart.ToCartViewModel();
             productCounts = cartViewModel?.Amount ?? 0;
             return View("CartCount", productCounts);

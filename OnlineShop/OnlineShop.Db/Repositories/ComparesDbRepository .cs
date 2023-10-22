@@ -21,17 +21,10 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Compares.ToListAsync();
         }
 
-        public async Task ClearAsync(string userId)
-        {
-            var compare = GetByIdAsync(null, userId);
-            databaseContext.Remove(compare);
-            await databaseContext.SaveChangesAsync();
-        }
-
         public async Task DeleteAsync(Guid? id, string userId)
         {
             var compare = await GetByIdAsync(null, userId);
-            var product = compare.Items.FirstOrDefault(x=> x.Id == id);
+            var product = compare.Items.FirstOrDefault(x => x.Id == id);
             compare.Items.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
@@ -55,7 +48,7 @@ namespace OnlineShop.Db.Repositories
         public async Task AddAsync(Guid? id, string userId = null)
         {
             var compare = await GetByIdAsync(null, userId);
-            var product = await databaseContext.Products.FirstOrDefaultAsync(x=> x.Id == id);
+            var product = await databaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
             if (compare == null)
             {
                 await AddNewCompare(product, userId);
@@ -68,6 +61,13 @@ namespace OnlineShop.Db.Repositories
                     compare.Items.Add(product);
                 }
             }
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task ClearAsync(string userName)
+        {
+            var compare = await GetByIdAsync(null, userName);
+            databaseContext.Remove(compare);
             await databaseContext.SaveChangesAsync();
         }
     }

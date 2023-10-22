@@ -32,7 +32,7 @@ namespace OnlineShopWebApp.Controllers
             var cart = new Cart();
             if (userId == null)
             {
-                cart = await cartsRepository.GetByIdAsync(null, user.Id);
+                cart = await cartsRepository.GetByIdAsync(null, user.UserName);
             }
             else
             {
