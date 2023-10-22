@@ -80,6 +80,7 @@ namespace OnlineShopWebApp.Helpers
         {
             var orderViewModels = new OrderViewModel()
             {
+                Id = orderDb.Id,
                 Number = orderDb.Number,
                 Comment = orderDb.Comment,
                 UserId = orderDb.UserId,

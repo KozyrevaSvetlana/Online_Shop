@@ -92,11 +92,12 @@ namespace OnlineShop.Db.Repositories
 
         public async Task DeleteAsync(Guid? id, string userId)
         {
-            var order = await databaseContext.Orders.Include(x => x.UserContacts).FirstOrDefaultAsync(x => x.Id == id);
-            var cartItems = await databaseContext.CartItems.Include(x => x.Order).FirstOrDefaultAsync(x => x.Order == order);
-            databaseContext.CartItems.RemoveRange(order.Items);
-            databaseContext.UserContacts.Remove(order.UserContacts);
-            databaseContext.Orders.Remove(order);
+            var order = await databaseContext.Orders
+                .Include(x => x.UserContacts)
+                .Include(x=> x.UserContacts)
+                .Include(x=> x.Items)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            databaseContext.Orders.RemoveRange(order);
             await databaseContext.SaveChangesAsync();
         }
 

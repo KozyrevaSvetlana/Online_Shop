@@ -32,12 +32,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<IActionResult> EditOrder(int number, string status)
         {
             await ordersRepository.Edit(number, Mapping.ToIntStatus(status));
-            return RedirectToAction("Orders", "Admin");
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> DeleteOrder(Guid id)
         {
-            await ordersRepository.DeleteAsync(id, null);
-            return RedirectToAction("Orders", "Admin");
+            await ordersRepository.DeleteAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }
