@@ -76,7 +76,11 @@ namespace OnlineShop.Db.Repositories
         }
         public async Task<bool> IsInOrder(Guid id)
         {
-            return await databaseContext.CartItems.FirstOrDefaultAsync((System.Linq.Expressions.Expression<Func<CartItem, bool>>)(x => x.Product.Id == id)) != null;
+            return await databaseContext.Orders
+                .Include(x => x.Items)
+                .ThenInclude(x => x.Product)
+                .SelectMany(x => x.Items)
+                .AnyAsync(x => x.Product.Id == id);
         }
         public async Task<List<Order>> GetOrders(Guid id)
         {
@@ -84,8 +88,9 @@ namespace OnlineShop.Db.Repositories
             var result = new List<Order>();
             foreach (var item in items)
             {
-                var resultItem = databaseContext.Orders.Include(x => x.Items).ThenInclude(x => x.Product).First(x => x.Items.Contains(item));
-                result.Add(resultItem);
+                var resultItem = await databaseContext.Orders.Include(x => x.Items).ThenInclude(x => x.Product).FirstOrDefaultAsync(x => x.Items.Contains(item));
+                if(resultItem != null)
+                    result.Add(resultItem);
             }
             return result;
         }

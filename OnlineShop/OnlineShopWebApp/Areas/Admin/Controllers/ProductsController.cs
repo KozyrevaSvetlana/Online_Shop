@@ -5,6 +5,7 @@ using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -72,14 +73,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             else
             {
                 var result = await ordersRepository.GetOrders(id);
-                string ordersNumbers = "";
-                foreach (var order in result)
+                if(result != null && result.Any())
                 {
-                    ordersNumbers += order.Number + ", ";
+                    string ordersNumbers = "";
+                    foreach (var order in result)
+                    {
+                        ordersNumbers += order.Number + ", ";
+                    }
+                    ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length - 2)}");
+                    var products = await productsRepository.GetAllAsync();
+                    return View("Index", products.ToProductViewModels());
                 }
-                ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length - 2)}");
-                var products = await productsRepository.GetAllAsync();
-                return View("Index", products.ToProductViewModels());
             }
             return RedirectToAction("Index");
         }

@@ -28,6 +28,8 @@ namespace OnlineShop.Db.Repositories
         public async Task DeleteAsync(Guid? id = null, string userId = null)
         {
             var product = await GetByIdAsync(id);
+            var cartitems = await databaseContext.CartItems.Include(x=> x.Product).Where(x => x.Id == product.Id).ToListAsync();
+            databaseContext.CartItems.RemoveRange(cartitems);
             databaseContext.Products.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
