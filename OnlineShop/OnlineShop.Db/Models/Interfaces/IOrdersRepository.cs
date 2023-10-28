@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
-    public interface IOrdersRepository
+    public interface IOrdersRepository : IBaseRepository<Order>
     {
         Task Add(Order order, Cart cart);
         Task<Order> GetByNumber(int number);

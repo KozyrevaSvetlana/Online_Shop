@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Models.Interfaces
 {
-    public interface IProductsRepository 
+    public interface IProductsRepository : IBaseRepository<Product>
     {
         Task<List<Product>> Search(string[] seachResults);
         Task EditAsync(Product product);
