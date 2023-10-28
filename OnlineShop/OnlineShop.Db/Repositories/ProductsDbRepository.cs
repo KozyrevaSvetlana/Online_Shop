@@ -15,7 +15,7 @@ namespace OnlineShop.Db.Repositories
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<Product>> GetAllAsync(string userId = null)
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
@@ -25,7 +25,7 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task DeleteAsync(Guid? id = null, string userId = null)
+        public async Task DeleteAsync(Guid id, string userId = null)
         {
             var product = await GetByIdAsync(id);
             var cartitems = await databaseContext.CartItems.Include(x=> x.Product).ThenInclude(x=> x.Images).Where(x => x.Id == product.Id).ToListAsync();
@@ -33,7 +33,7 @@ namespace OnlineShop.Db.Repositories
             databaseContext.Products.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
-        public async Task AddAsync(Guid? id = null, string userId = null)
+        public async Task AddAsync(Guid id, string userId)
         {
             var product = await databaseContext.Products.FirstOrDefaultAsync(x=> x.Id == id);
             databaseContext.Products.Add(product);

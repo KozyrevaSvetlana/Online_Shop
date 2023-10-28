@@ -16,7 +16,7 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync(string userId = null)
+        public async Task<IEnumerable<Order>> GetAllAsync()
         {
             var allOrders = await databaseContext.Orders
                 .Where(q => q.UserId != null)
@@ -95,7 +95,7 @@ namespace OnlineShop.Db.Repositories
             return result;
         }
 
-        public async Task DeleteAsync(Guid? id, string userId)
+        public async Task DeleteAsync(Guid id, string userId)
         {
             var order = await databaseContext.Orders
                 .Include(x => x.UserContacts)
@@ -106,7 +106,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task AddAsync(Guid? id, string userId)
+        public async Task AddAsync(Guid id, string userId)
         {
             var cart = await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id || (userId != null && x.UserId == userId));
             var order = new Order(cart.Items);

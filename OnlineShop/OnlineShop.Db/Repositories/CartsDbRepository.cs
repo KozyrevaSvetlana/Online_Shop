@@ -17,7 +17,7 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Cart>> GetAllAsync(string userId = null)
+        public async Task<IEnumerable<Cart>> GetAllAsync()
         {
             return await databaseContext.Carts.ToListAsync();
         }
@@ -78,7 +78,7 @@ namespace OnlineShop.Db.Repositories
             return await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task AddAsync(Guid? id, string userId = null)
+        public async Task AddAsync(Guid id, string userId)
         {
             var cart = await GetByUserIdAsync(userId);
             var product = await databaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
@@ -107,7 +107,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid? id, string userId = null)
+        public async Task DeleteAsync(Guid id, string userId = null)
         {
             await ClearAsync(userId);
         }

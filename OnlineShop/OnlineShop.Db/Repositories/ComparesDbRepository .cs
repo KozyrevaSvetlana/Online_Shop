@@ -16,12 +16,12 @@ namespace OnlineShop.Db.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<Compare>> GetAllAsync(string userId = null)
+        public async Task<IEnumerable<Compare>> GetAllAsync()
         {
             return await databaseContext.Compares.ToListAsync();
         }
 
-        public async Task DeleteAsync(Guid? id, string userId)
+        public async Task DeleteAsync(Guid id, string userId)
         {
             var compare = await GetByIdAsync(null, userId);
             var product = compare.Items.FirstOrDefault(x => x.Id == id);
@@ -45,7 +45,7 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task AddAsync(Guid? id, string userId = null)
+        public async Task AddAsync(Guid id, string userId)
         {
             var compare = await GetByIdAsync(null, userId);
             var product = await databaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
