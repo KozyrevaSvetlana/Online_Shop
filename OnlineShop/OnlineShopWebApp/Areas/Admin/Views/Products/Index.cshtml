@@ -18,10 +18,7 @@
                     }
                     else
                     {
-                        <div class="py-2">
-                            <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
-                        </div>
-
+                        <div class="text-danger" asp-validation-summary="All" />
                         <div>
                             <a class="btn btn-primary" asp-area="Admin" asp-controller="Products" asp-action="AddProduct" role="button">Добавить новый продукт</a>
                         </div>
@@ -42,14 +39,14 @@
                                 }
                                 @foreach (var product in Model)
                                 {
-                                    <tr>
+                                    <tr id="@product.Id">
                                         <th scope="row">@i</th>
                                         <td>@product.Id</td>
                                         <td>@product.Name</td>
                                         <td>@product.Cost</td>
                                         <td>
                                             <div class="dropdown">
-                                                <button class="btn btn-success dropdown-toggle" type="button" id="@product.Id" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Действия
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

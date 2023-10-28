@@ -11,9 +11,7 @@
                 <div class="list-group d-flex align-items-center py-5">
                     <h4>Добавление новой роли</h4>
                     <form method="post" class="form-group">
-                        <br />
-                        <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
-                        <br />
+                        <div class="text-danger" asp-validation-summary="All"/>
                         <div>
                             <label asp-for="Name">Название</label>
                             <input asp-for="Name" type="text" class="form-control" name="Name" tabindex="1">
