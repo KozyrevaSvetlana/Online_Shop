@@ -29,8 +29,9 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public async Task<ActionResult> AddNewRoleAsync(IdentityRole newRole)
+        public async Task<ActionResult> AddNewRoleAsync(RoleViewModel newRole)
         {
             if (ModelState.IsValid)
             {
