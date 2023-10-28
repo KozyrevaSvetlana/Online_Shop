@@ -28,7 +28,7 @@ namespace OnlineShop.Db.Repositories
         public async Task DeleteAsync(Guid? id = null, string userId = null)
         {
             var product = await GetByIdAsync(id);
-            var cartitems = await databaseContext.CartItems.Include(x=> x.Product).Where(x => x.Id == product.Id).ToListAsync();
+            var cartitems = await databaseContext.CartItems.Include(x=> x.Product).ThenInclude(x=> x.Images).Where(x => x.Id == product.Id).ToListAsync();
             databaseContext.CartItems.RemoveRange(cartitems);
             databaseContext.Products.Remove(product);
             await databaseContext.SaveChangesAsync();
@@ -78,7 +78,13 @@ namespace OnlineShop.Db.Repositories
 
         public async Task<Product> GetByIdAsync(Guid? id = null, string userId = null)
         {
-            return await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return await databaseContext.Products
+                .Include(x=> x.Images)
+                .Include(x=> x.Compares)
+                .Include(x=> x.Orders)
+                .Include(x=> x.Favorites)
+                .Include(x => x.CartItems)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }
