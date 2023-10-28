@@ -6,7 +6,6 @@ namespace OnlineShop.Db.Models.Interfaces
 {
     public interface IOrdersRepository
     {
-        Task<IEnumerable<Order>> GetAll();
         Task Add(Order order, Cart cart);
         Task<Order> GetByNumber(int number);
         Task Edit(int number, int status);
