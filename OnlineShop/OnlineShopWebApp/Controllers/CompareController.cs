@@ -25,27 +25,27 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var compareCart = await compareRepository.TryGetById(user.UserName);
+            var compareCart = await compareRepository.GetByIdAsync(null, user.UserName);
             return View(compareCart.ToCompareViewModel());
         }
 
-        public async Task<IActionResult> AddAsync(Guid id)
+        public async Task<IActionResult> AddAsync(System.Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var product = await productsRepository.GetById(id);
-            await compareRepository.Add(product, user.UserName);
+            var product = await productsRepository.GetByIdAsync(id);
+            await compareRepository.AddAsync(product.Id, user.UserName);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ClearAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await compareRepository.Clear(user.UserName);
+            await compareRepository.ClearAsync(user.UserName);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        public async Task<IActionResult> DeleteAsync(System.Guid id)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await compareRepository.Delete(id, user.UserName);
+            await compareRepository.DeleteAsync(id, user.UserName);
             return RedirectToAction("Index");
         }
     }

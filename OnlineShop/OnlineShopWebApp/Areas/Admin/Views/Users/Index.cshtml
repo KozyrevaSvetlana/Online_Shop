@@ -8,7 +8,7 @@
             <div class="col">
                 <div class="list-group d-flex align-items-center py-5">
                     <h2>Пользователи</h2>
-                    <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="text-danger" asp-validation-summary="All" />
                     @if (Model == null || Model.Count() == 0)
                     {
                         <p>Пользователей нет</p>

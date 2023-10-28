@@ -18,10 +18,7 @@
                     }
                     else
                     {
-                        <div class="py-2">
-                            <div class="validatoin badge badge-danger" asp-validation-summary="ModelOnly"></div>
-                        </div>
-
+                        <div class="text-danger" asp-validation-summary="All" />
                         <div>
                             <a class="btn btn-primary" asp-area="Admin" asp-controller="Products" asp-action="AddProduct" role="button">Добавить новый продукт</a>
                         </div>
@@ -42,23 +39,27 @@
                                 }
                                 @foreach (var product in Model)
                                 {
-                                    <tr>
+                                    <tr id="@product.Id">
                                         <th scope="row">@i</th>
                                         <td>@product.Id</td>
                                         <td>@product.Name</td>
                                         <td>@product.Cost</td>
                                         <td>
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Подробнее
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <div class="dropdown">
+                                                <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Действия
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
                                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Description" asp-route-Id="@product.Id">Описание</a>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="EditForm" asp-route-Id="@product.Id">Редактировать</a>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="DeleteProduct" asp-route-Id="@product.Id">Удалить</a>
-                                                    </div>
-                                                </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </td>
                                         @{

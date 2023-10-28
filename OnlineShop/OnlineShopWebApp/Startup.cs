@@ -29,10 +29,7 @@ namespace OnlineShopWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("online_shop_kozyreva");
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
-
             services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connection));
-
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
@@ -50,7 +47,7 @@ namespace OnlineShopWebApp
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IProductsRepository, ProductsDbRepository>();
             services.AddTransient<ICartsRepository, CartsDbRepository>();
-            services.AddTransient<ICompareRepository, ComparesDbRepository>();
+            services.AddTransient<ICompareRepository, CompareDbRepository>();
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
             services.AddTransient<IMailService, EmailService>();

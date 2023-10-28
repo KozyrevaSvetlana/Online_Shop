@@ -8,14 +8,13 @@ namespace OnlineShop.Db.Models.Interfaces
     {
         Task<IEnumerable<Order>> GetAll();
         Task Add(Order order, Cart cart);
-        Task<Order> TryGetByUserId(string userId);
-        Task Edit(int number, int status);
         Task<Order> GetByNumber(int number);
-        Task Delete(int number);
+        Task Edit(int number, int status);
         Task<List<Order>> GetByUserId(string userId);
         Task<Order> GetLast(string UserId);
-        Task<int> Count();
         Task<bool> IsInOrder(Guid id);
-        Task<List<Order>> GetProductInOrders(Guid id);
+        Task<List<Order>> GetOrders(Guid id);
+
+        Task<int> GetCountAsync();
     }
 }

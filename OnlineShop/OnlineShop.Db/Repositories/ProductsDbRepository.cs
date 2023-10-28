@@ -10,43 +10,33 @@ namespace OnlineShop.Db.Repositories
 {
     public class ProductsDbRepository : IProductsRepository
     {
-        private readonly DatabaseContext databaseContext;
-        public ProductsDbRepository(DatabaseContext databaseContext)
+        private readonly IdentityContext databaseContext;
+        public ProductsDbRepository(IdentityContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<Product>> GetAllAsync(string userId = null)
         {
             return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
 
-        public async Task<Product> GetById(Guid id)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
             return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid? id = null, string userId = null)
         {
-            var deleteProduct = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == id);
-            databaseContext.Products.Remove(deleteProduct);
+            var product = await GetByIdAsync(id);
+            var cartitems = await databaseContext.CartItems.Include(x=> x.Product).ThenInclude(x=> x.Images).Where(x => x.Id == product.Id).ToListAsync();
+            databaseContext.CartItems.RemoveRange(cartitems);
+            databaseContext.Products.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
-        public async Task Edit(Product editProduct)
+        public async Task AddAsync(Guid? id = null, string userId = null)
         {
-            var product = await databaseContext.Products.FirstOrDefaultAsync(p => p.Id == editProduct.Id);
-            product.Name = editProduct.Name;
-            product.Cost = editProduct.Cost;
-            product.Description = editProduct.Description;
-            product.Images = editProduct.Images;
-            await databaseContext.SaveChangesAsync();
-        }
-        public async Task<int> GetCount()
-        {
-            return await databaseContext.Products.CountAsync();
-        }
-        public async Task Add(Product newProduct)
-        {
-            databaseContext.Products.Add(newProduct);
+            var product = await databaseContext.Products.FirstOrDefaultAsync(x=> x.Id == id);
+            databaseContext.Products.Add(product);
             await databaseContext.SaveChangesAsync();
         }
 
@@ -59,6 +49,42 @@ namespace OnlineShop.Db.Repositories
                 resultList = await databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).Include(x => x.Images).ToListAsync();
             }
             return resultList.Distinct().ToList();
+        }
+
+        public async Task EditAsync(Product editProduct)
+        {
+            var product = await GetByIdAsync(editProduct.Id);
+            product.Name = editProduct.Name;
+            product.Cost = editProduct.Cost;
+            product.Description = editProduct.Description;
+            product.Images = editProduct.Images;
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task<int> GetCountAsync(string userId)
+        {
+            return await databaseContext.Products.CountAsync();
+        }
+
+        public async Task CreateAsync(Product product)
+        {
+            if (await databaseContext.Products.ContainsAsync(product))
+            {
+                throw new Exception("Такой товар уже добавлен");
+            }
+            await databaseContext.Products.AddAsync(product);
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task<Product> GetByIdAsync(Guid? id = null, string userId = null)
+        {
+            return await databaseContext.Products
+                .Include(x=> x.Images)
+                .Include(x=> x.Compares)
+                .Include(x=> x.Orders)
+                .Include(x=> x.Favorites)
+                .Include(x => x.CartItems)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

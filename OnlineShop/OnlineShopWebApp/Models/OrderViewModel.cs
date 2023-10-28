@@ -6,6 +6,7 @@ namespace OnlineShopWebApp.Models
 {
     public class OrderViewModel
     {
+        public Guid Id { get; set; }
         public int Number { get; set; }
         public string Comment { get; set; }
         public string UserId { get; set; }

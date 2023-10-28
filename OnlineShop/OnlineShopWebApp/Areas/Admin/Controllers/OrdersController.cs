@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
+using System;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -19,7 +20,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var orders = await ordersRepository.GetAll();
+            var orders = await ordersRepository.GetAllAsync();
             return View(orders.ToOrdersViewModels());
         }
         public async Task<IActionResult> OrderForm(int number)
@@ -31,12 +32,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<IActionResult> EditOrder(int number, string status)
         {
             await ordersRepository.Edit(number, Mapping.ToIntStatus(status));
-            return RedirectToAction("Orders", "Admin");
+            return RedirectToAction("Index");
         }
-        public async Task<IActionResult> DeleteOrder(int number)
+        public async Task<IActionResult> DeleteOrder(Guid id)
         {
-            await ordersRepository.Delete(number);
-            return RedirectToAction("Orders", "Admin");
+            await ordersRepository.DeleteAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }

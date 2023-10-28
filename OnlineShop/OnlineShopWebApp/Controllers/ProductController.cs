@@ -17,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
 
         public async Task<ActionResult> Index(Guid id)
         {
-            var result = await products.GetById(id);
+            var result = await products.GetByIdAsync(id);
             return View(result.ToProductViewModel());
         }
 

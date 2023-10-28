@@ -25,12 +25,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             return View(roleManager.Roles);
         }
-        public ActionResult AddRole()
+        public async Task<IActionResult> AddRole()
         {
             return View();
         }
+
         [HttpPost]
-        public async Task<ActionResult> AddNewRoleAsync(IdentityRole newRole)
+        public async Task<ActionResult> AddNewRoleAsync(RoleViewModel newRole)
         {
             if (ModelState.IsValid)
             {

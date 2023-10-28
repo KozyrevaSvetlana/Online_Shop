@@ -10,23 +10,13 @@ namespace OnlineShop.Db.Repositories
 {
     public class OrdersDbRepository : IOrdersRepository
     {
-        private readonly DatabaseContext databaseContext;
-        public OrdersDbRepository(DatabaseContext databaseContext)
+        private readonly IdentityContext databaseContext;
+        public OrdersDbRepository(IdentityContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }
-        public async Task Add(Order order, Cart cart)
-        {
-            foreach (CartItem cartItem in cart.Items)
-            {
-                order.Items.Add(cartItem);
-            }
-            databaseContext.Orders.Add(order);
-            databaseContext.Carts.Remove(cart);
-            await databaseContext.SaveChangesAsync();
-        }
 
-        public async Task<IEnumerable<Order>> GetAll()
+        public async Task<IEnumerable<Order>> GetAllAsync(string userId = null)
         {
             var allOrders = await databaseContext.Orders
                 .Where(q => q.UserId != null)
@@ -39,7 +29,7 @@ namespace OnlineShop.Db.Repositories
             }
             return allOrders;
         }
-        public async Task<Order> TryGetByUserId(string userId)
+        public async Task<Order> GetByUserIdAsync(string userId)
         {
             return await databaseContext.Orders.FirstOrDefaultAsync(x => x.UserId == userId);
         }
@@ -59,19 +49,7 @@ namespace OnlineShop.Db.Repositories
             order.UserContacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
             return order;
         }
-        public async Task Delete(int number)
-        {
-            var order = await databaseContext.Orders.FirstOrDefaultAsync(x => x.Number == number);
-            var contacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
-            var cartItems = await databaseContext.CartItems.Include(x => x.Order).FirstOrDefaultAsync(x => x.Order == order);
-            foreach (var cartItem in order.Items)
-            {
-                databaseContext.CartItems.Remove(cartItem);
-            }
-            databaseContext.UserContacts.Remove(contacts);
-            databaseContext.Orders.Remove(order);
-            await databaseContext.SaveChangesAsync();
-        }
+
         public async Task<List<Order>> GetByUserId(string userId)
         {
             var allOrders = await databaseContext.Orders.Where(q => q.UserId == userId).Include(x => x.Items).ThenInclude(x => x.Product).ToListAsync();
@@ -84,33 +62,73 @@ namespace OnlineShop.Db.Repositories
         public async Task<Order> GetLast(string UserId)
         {
             var order = await databaseContext.Orders
-                .Where(q => q.UserId == UserId)
                 .Include(x => x.Items)
                 .ThenInclude(x => x.Product)
                 .OrderByDescending(q => q.Number)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(q => q.UserId == UserId);
             order.UserContacts = await databaseContext.UserContacts.FirstOrDefaultAsync(x => x.OrderId == order.Id);
             return order;
         }
-        public async Task<int> Count()
+        public async Task<int> GetCount()
         {
             var result = await databaseContext.Orders.CountAsync();
             return result + 1;
         }
         public async Task<bool> IsInOrder(Guid id)
         {
-            return await databaseContext.CartItems.FirstOrDefaultAsync(x => x.Product.Id == id) != null;
+            return await databaseContext.Orders
+                .Include(x => x.Items)
+                .ThenInclude(x => x.Product)
+                .SelectMany(x => x.Items)
+                .AnyAsync(x => x.Product.Id == id);
         }
-        public async Task<List<Order>> GetProductInOrders(Guid id)
+        public async Task<List<Order>> GetOrders(Guid id)
         {
             var items = await databaseContext.CartItems.Where(x => x.Product.Id == id).ToListAsync();
             var result = new List<Order>();
             foreach (var item in items)
             {
-                var resultItem = databaseContext.Orders.Include(x => x.Items).ThenInclude(x => x.Product).First(x => x.Items.Contains(item));
-                result.Add(resultItem);
+                var resultItem = await databaseContext.Orders.Include(x => x.Items).ThenInclude(x => x.Product).FirstOrDefaultAsync(x => x.Items.Contains(item));
+                if(resultItem != null)
+                    result.Add(resultItem);
             }
             return result;
+        }
+
+        public async Task DeleteAsync(Guid? id, string userId)
+        {
+            var order = await databaseContext.Orders
+                .Include(x => x.UserContacts)
+                .Include(x=> x.UserContacts)
+                .Include(x=> x.Items)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            databaseContext.Orders.RemoveRange(order);
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task AddAsync(Guid? id, string userId)
+        {
+            var cart = await databaseContext.Carts.FirstOrDefaultAsync(x => x.Id == id || (userId != null && x.UserId == userId));
+            var order = new Order(cart.Items);
+            order.UserId = userId;
+            databaseContext.Orders.Add(order);
+            databaseContext.Carts.Remove(cart);
+            await databaseContext.SaveChangesAsync();
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await databaseContext.Orders.CountAsync();
+        }
+
+        public Task Add(Order order, Cart cart)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Order> GetByIdAsync(Guid? id = null, string userId = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

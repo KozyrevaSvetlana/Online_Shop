@@ -80,6 +80,7 @@ namespace OnlineShopWebApp.Helpers
         {
             var orderViewModels = new OrderViewModel()
             {
+                Id = orderDb.Id,
                 Number = orderDb.Number,
                 Comment = orderDb.Comment,
                 UserId = orderDb.UserId,
@@ -184,6 +185,7 @@ namespace OnlineShopWebApp.Helpers
             userVM.Contacts.Email = userDb.Email ?? "";
             userVM.Contacts.Phone = userDb.PhoneNumber ?? "";
             userVM.Image = userDb.Image ?? "/img/profile.webp";
+            userVM.Login.Email = userDb.UserName;
             return userVM;
         }
         public static void AddUserContactToUserViewModel(this UserContact userDb, UserContactViewModel user)

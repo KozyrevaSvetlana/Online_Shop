@@ -16,7 +16,7 @@ namespace OnlineShopWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var allProducts = await products.GetAll();
+            var allProducts = await products.GetAllAsync();
             return View(allProducts.ToProductViewModels());
         }
     }
