@@ -25,7 +25,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             return View(roleManager.Roles);
         }
-        public ActionResult AddRole()
+        public async Task<IActionResult> AddRole()
         {
             return View();
         }

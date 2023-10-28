@@ -66,7 +66,12 @@ namespace OnlineShop.Db.Repositories
 
         public async Task CreateAsync(Product product)
         {
-            await AddAsync(product.Id);
+            if (await databaseContext.Products.ContainsAsync(product))
+            {
+                throw new Exception("Такой товар уже добавлен");
+            }
+            await databaseContext.Products.AddAsync(product);
+            await databaseContext.SaveChangesAsync();
         }
 
         public async Task<Product> GetByIdAsync(Guid? id = null, string userId = null)

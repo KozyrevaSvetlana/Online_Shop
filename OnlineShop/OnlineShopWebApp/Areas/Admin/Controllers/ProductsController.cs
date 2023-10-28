@@ -23,24 +23,28 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             this.imagesProvider = imagesProvider;
             this.ordersRepository = ordersRepository;
         }
+
         public async Task<IActionResult> Index()
         {
             var products = await productsRepository.GetAllAsync();
             return View(products.ToProductViewModels());
         }
+
         public async Task<IActionResult> Description(Guid id)
         {
             var result = await productsRepository.GetByIdAsync(id);
             return View(result.ToProductViewModel());
         }
+
         public async Task<IActionResult> EditForm(Guid id)
         {
             var result = await productsRepository.GetByIdAsync(id);
             return View(result.ToProductViewModel());
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProduct(ProductViewModel editProduct)
+        public async Task<IActionResult> EditProduct(ProductViewModel editProduct)
         {
             var validResult = editProduct.IsValid();
             if (validResult.Count != 0)
@@ -53,11 +57,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var imagesPaths = imagesProvider.SafeFiles(editProduct.UploadedFile, ImageFolders.Products);
-                productsRepository.EditAsync(editProduct.ToProduct(imagesPaths));
+                await productsRepository.EditAsync(editProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");
             }
             return View("EditForm", editProduct);
         }
+
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
             if (!await ordersRepository.IsInOrder(id))
@@ -78,13 +83,15 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-        public ActionResult AddProduct()
+
+        public IActionResult AddProduct()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddNewProduct(AddProductViewModel newProduct)
+        public async Task<IActionResult> AddNewProduct(AddProductViewModel newProduct)
         {
             var errorsResult = newProduct.IsValid();
             if (errorsResult.Count != 0)
@@ -99,7 +106,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             {
                 var imagesPaths = imagesProvider.SafeFiles(newProduct.UploadedFiles, ImageFolders.Products);
 
-                productsRepository.CreateAsync(newProduct.ToProduct(imagesPaths));
+                await productsRepository.CreateAsync(newProduct.ToProduct(imagesPaths));
                 return RedirectToAction("Index");
             }
             return View("AddProduct", newProduct);

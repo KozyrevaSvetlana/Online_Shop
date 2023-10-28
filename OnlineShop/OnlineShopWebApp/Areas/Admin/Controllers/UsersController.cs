@@ -34,7 +34,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             var allUsers = userManager.Users;
             return View(allUsers.ToListUserViewModels());
         }
-        public ActionResult AddUser()
+        public async Task<IActionResult> AddUser()
         {
             return View();
         }
