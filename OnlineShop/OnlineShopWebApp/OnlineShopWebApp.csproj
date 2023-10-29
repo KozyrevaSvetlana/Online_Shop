@@ -12,6 +12,82 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Images\Вилка\01.webp" />
+    <Content Remove="wwwroot\Images\Вилка\02.webp" />
+    <Content Remove="wwwroot\Images\Вилка\03.webp" />
+    <Content Remove="wwwroot\Images\Детское пюре\01.webp" />
+    <Content Remove="wwwroot\Images\Журнал\01.webp" />
+    <Content Remove="wwwroot\Images\Журнал\02.webp" />
+    <Content Remove="wwwroot\Images\Журнал\03.webp" />
+    <Content Remove="wwwroot\Images\Конструктор\01.webp" />
+    <Content Remove="wwwroot\Images\Конструктор\02.webp" />
+    <Content Remove="wwwroot\Images\Конструктор\03.webp" />
+    <Content Remove="wwwroot\Images\Конструктор\04.webp" />
+    <Content Remove="wwwroot\Images\Крем\01.webp" />
+    <Content Remove="wwwroot\Images\Кукла\01.webp" />
+    <Content Remove="wwwroot\Images\Кукла\02.webp" />
+    <Content Remove="wwwroot\Images\Кукла\03.webp" />
+    <Content Remove="wwwroot\Images\Кукла\04.webp" />
+    <Content Remove="wwwroot\Images\Мишка\01.webp" />
+    <Content Remove="wwwroot\Images\Мишка\02.webp" />
+    <Content Remove="wwwroot\Images\Мишка\03.webp" />
+    <Content Remove="wwwroot\Images\Мишка\04.webp" />
+    <Content Remove="wwwroot\Images\Мячик\01.webp" />
+    <Content Remove="wwwroot\Images\Настольная игра\01.webp" />
+    <Content Remove="wwwroot\Images\Настольная игра\02.webp" />
+    <Content Remove="wwwroot\Images\Настольная игра\03.webp" />
+    <Content Remove="wwwroot\Images\Пирамидка\01.webp" />
+    <Content Remove="wwwroot\Images\Пирамидка\02.webp" />
+    <Content Remove="wwwroot\Images\Пирамидка\03.webp" />
+    <Content Remove="wwwroot\Images\пистолетик\01.webp" />
+    <Content Remove="wwwroot\Images\пистолетик\02.webp" />
+    <Content Remove="wwwroot\Images\пистолетик\03.webp" />
+    <Content Remove="wwwroot\Images\Соска\01.webp" />
+    <Content Remove="wwwroot\Images\Соска\02.webp" />
+    <Content Remove="wwwroot\Images\Соска\03.webp" />
+    <Content Remove="wwwroot\Images\Чашка\01.webp" />
+    <Content Remove="wwwroot\Images\Чашка\02.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\Вилка\01.webp" />
+    <None Include="wwwroot\Images\Вилка\02.webp" />
+    <None Include="wwwroot\Images\Вилка\03.webp" />
+    <None Include="wwwroot\Images\Детское пюре\01.webp" />
+    <None Include="wwwroot\Images\Журнал\01.webp" />
+    <None Include="wwwroot\Images\Журнал\02.webp" />
+    <None Include="wwwroot\Images\Журнал\03.webp" />
+    <None Include="wwwroot\Images\Конструктор\01.webp" />
+    <None Include="wwwroot\Images\Конструктор\02.webp" />
+    <None Include="wwwroot\Images\Конструктор\03.webp" />
+    <None Include="wwwroot\Images\Конструктор\04.webp" />
+    <None Include="wwwroot\Images\Крем\01.webp" />
+    <None Include="wwwroot\Images\Кукла\01.webp" />
+    <None Include="wwwroot\Images\Кукла\02.webp" />
+    <None Include="wwwroot\Images\Кукла\03.webp" />
+    <None Include="wwwroot\Images\Кукла\04.webp" />
+    <None Include="wwwroot\Images\Мишка\01.webp" />
+    <None Include="wwwroot\Images\Мишка\02.webp" />
+    <None Include="wwwroot\Images\Мишка\03.webp" />
+    <None Include="wwwroot\Images\Мишка\04.webp" />
+    <None Include="wwwroot\Images\Мячик\01.webp" />
+    <None Include="wwwroot\Images\Настольная игра\01.webp" />
+    <None Include="wwwroot\Images\Настольная игра\02.webp" />
+    <None Include="wwwroot\Images\Настольная игра\03.webp" />
+    <None Include="wwwroot\Images\Пирамидка\01.webp" />
+    <None Include="wwwroot\Images\Пирамидка\02.webp" />
+    <None Include="wwwroot\Images\Пирамидка\03.webp" />
+    <None Include="wwwroot\Images\пистолетик\01.webp" />
+    <None Include="wwwroot\Images\пистолетик\02.webp" />
+    <None Include="wwwroot\Images\пистолетик\03.webp" />
+    <None Include="wwwroot\Images\Соска\01.webp" />
+    <None Include="wwwroot\Images\Соска\02.webp" />
+    <None Include="wwwroot\Images\Соска\03.webp" />
+    <None Include="wwwroot\Images\Чашка\01.webp" />
+    <None Include="wwwroot\Images\Чашка\02.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>

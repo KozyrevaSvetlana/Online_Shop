@@ -1,12 +1,35 @@
 ﻿using OnlineShop.Db.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using Image = OnlineShop.Db.Models.Image;
 
 namespace OnlineShop.Db.Helper
 {
     public static class ProductGenerator
     {
+        public static List<Product> BaseProducts { get; set; } = new List<Product>();
+        public static List<Image> BaseImages { get; set; } = new List<Image>();
         private static Random random = new Random();
+        private static int count = 5;
+        private static List<string> names = new List<string>
+        {
+            "Вилка",
+            "Детское пюре",
+            "Журнал",
+            "Конструктор",
+            "Крем",
+            "Кукла",
+            "Мишка",
+            "Мячик",
+            "Настольная игра",
+            "Пирамидка",
+            "Пистолетик",
+            "Соска",
+            "Чашка"
+        };
         private static string rusLorem = @"Прежде всего, базовый вектор развития однозначно фиксирует необходимость своевременного 
 выполнения сверхзадачи. Задача организации, в особенности же повышение уровня гражданского сознания не оставляет шанса для позиций, 
 занимаемых участниками в отношении поставленных задач. Задача организации, в особенности же внедрение современных методик говорит о 
@@ -39,36 +62,34 @@ namespace OnlineShop.Db.Helper
 Современные технологии достигли такого уровня, что новая модель организационной деятельности влечет за собой процесс внедрения и 
 модернизации модели развития. Современные технологии достигли такого уровня, что реализация намеченных плановых заданий обеспечивает 
 актуальность анализа существующих паттернов поведения.";
-        public static Product GeneradeRandomProduct(List<Image> images)
+        public static Product[] GeneradeRandomProduct()
         {
-            var product = new Product()
+            foreach (var name in names)
             {
-                Id = Guid.NewGuid(),
-                Name = names[random.Next(0, 21)],
-                Cost = random.Next(1, 100001),
-                Description = rusLorem.Substring(0, random.Next(10, rusLorem.Length)),
-                Images = images
-            };
-            return product;
+                var imagePath = $"wwwroot\\Images\\{name}\\";
+                var files = Directory.GetFiles(imagePath);
+                var nameImages = files.Select(x => new Image() { Id = Guid.NewGuid(), Url = x }).ToList();
+                for (int i = 0; i < count; i++)
+                {
+                    var product = new Product()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = $"{name} №{i + 1}",
+                        Cost = random.Next(1, Int32.MaxValue),
+                        Description = rusLorem.Substring(0, random.Next(rusLorem.Length / 2, rusLorem.Length))
+                    };
+                    nameImages.All(x => { x.ProductId = product.Id; return true; });
+                    product.Images = nameImages;
+                    BaseProducts.Add(product);
+                    BaseImages.AddRange(nameImages);
+                }
+
+            }
+            return BaseProducts.ToArray();
         }
 
-        private static List<string> names = new List<string>
-        {
-            "Вилка", 
-            "Детское пюре",
-            "Журнал", 
-            "Конструктор", 
-            "Крем", 
-            "Кукла", 
-            "Мишка", 
-            "Мячик", 
-            "Настольная игра", 
-            "Пирамидка",
-            "Пистолетик", 
-            "Соска", 
-            "Чашка"
-        };
 
+        #region ToRemove
         public static Image[] GenerateBaseImages()
         {
             return new Image[]
@@ -327,6 +348,7 @@ namespace OnlineShop.Db.Helper
                 }
             };
         }
+        #endregion
     }
 }
 
