@@ -17,7 +17,6 @@ namespace OnlineShop.Db.Repositories
         }
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            var test = Helper.ProductGenerator.GeneradeRandomProduct();
             return await databaseContext.Products.Include(x => x.Images).ToListAsync();
         }
 
