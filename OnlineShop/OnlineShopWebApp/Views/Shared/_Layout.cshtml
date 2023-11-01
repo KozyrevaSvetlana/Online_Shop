@@ -18,5 +18,6 @@
         </main>
     </div>
     @await Html.PartialAsync("Footer")
+    @await RenderSectionAsync("_ValidationScriptsPartial", required: false)
 </body>
 </html>
