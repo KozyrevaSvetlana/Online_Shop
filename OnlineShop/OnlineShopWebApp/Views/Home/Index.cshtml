@@ -12,7 +12,7 @@
                     <div><img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" /></div>
                     <h2 class="card-title"><a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@product.Id">@product.Name</a></h2>
                     <div>
-                        <p class="font-weight-normal">@product.Description.Substring(0, product.Description.Length / 2)</p>
+                        <p class="font-weight-normal">@product.Description</p>
                     </div>
                     <p class="font-weight-normal">@product.Cost ₽</p>
                 </div>

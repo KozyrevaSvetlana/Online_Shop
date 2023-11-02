@@ -26,7 +26,7 @@ namespace OnlineShopWebApp.Helpers
                 Id = product.Id,
                 Name = product.Name,
                 Cost = product.Cost,
-                Description = product.Description,
+                Description = product.Description != null && product.Description.Length > 20 ? product.Description.Substring(0, 20) + "..." : product.Description?? "Пустое описание",
                 Images = product.Images.Select(x => x.Url).ToList()
             };
         }

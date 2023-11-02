@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Db;
 
 namespace OnlineShop.Db.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20231102175113_Identity2")]
+    partial class Identity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -268,13 +270,6 @@ namespace OnlineShop.Db.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Images");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("5e32cc56-ff1c-4216-b583-0574c1719efe"),
-                            Url = "testImage"
-                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Db.Models.Order", b =>
@@ -326,14 +321,6 @@ namespace OnlineShop.Db.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9527aaed-6914-4c92-ba08-a024d3befb04"),
-                            Cost = 100m,
-                            Name = "testProduct"
-                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Db.Models.ProductsImages", b =>
@@ -349,13 +336,6 @@ namespace OnlineShop.Db.Migrations
                     b.HasIndex("ImageId");
 
                     b.ToTable("ImagesProducts");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = new Guid("9527aaed-6914-4c92-ba08-a024d3befb04"),
-                            ImageId = new Guid("5e32cc56-ff1c-4216-b583-0574c1719efe")
-                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Db.Models.User", b =>
