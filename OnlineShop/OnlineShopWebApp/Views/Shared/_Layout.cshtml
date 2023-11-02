@@ -17,7 +17,8 @@
             @RenderBody()
         </main>
     </div>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @await RenderSectionAsync("Scripts", required: false)
     @await Html.PartialAsync("Footer")
-    @await RenderSectionAsync("_ValidationScriptsPartial", required: false)
 </body>
 </html>
