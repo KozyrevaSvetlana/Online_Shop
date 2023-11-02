@@ -84,7 +84,7 @@ namespace OnlineShop.Db.Helper
         {
             foreach (var name in names)
             {
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < random.Next(7, 20); i++)
                 {
                     var product = new Product()
                     {
