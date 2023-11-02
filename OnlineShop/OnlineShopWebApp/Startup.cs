@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.Db;
+using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShop.Db.Repositories;
@@ -28,6 +29,10 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
+            ProductGenerator.GeneradeRandomImages();
+            ProductGenerator.GeneradeRandomProducts();
+            ProductGenerator.GeneradeRandomProductsImages();
+
             string connection = Configuration.GetConnectionString("online_shop_kozyreva");
             services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connection));
             services.AddIdentity<User, IdentityRole>()

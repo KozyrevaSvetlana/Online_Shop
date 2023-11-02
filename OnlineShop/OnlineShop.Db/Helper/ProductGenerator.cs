@@ -1,5 +1,6 @@
 ﻿using OnlineShop.Db.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace OnlineShop.Db.Helper
     {
         public static List<Product> BaseProducts { get; set; } = new List<Product>();
         public static List<Image> BaseImages { get; set; } = new List<Image>();
+        public static List<ProductsImages> ProductsImages { get; set; } = new List<ProductsImages>();
         private static Random random = new Random();
         private static int count = 5;
         private static List<string> names = new List<string>
@@ -61,13 +63,27 @@ namespace OnlineShop.Db.Helper
 Современные технологии достигли такого уровня, что новая модель организационной деятельности влечет за собой процесс внедрения и 
 модернизации модели развития. Современные технологии достигли такого уровня, что реализация намеченных плановых заданий обеспечивает 
 актуальность анализа существующих паттернов поведения.";
-        public static List<Product> GeneradeRandomProduct()
+
+        /// <summary>
+        /// заполнение тестовыми данными изображений по папкам
+        /// </summary>
+        /// <returns></returns>
+        public static Image[] GeneradeRandomImages()
         {
+            // проходимся по папкам и созраняем изображения
             foreach (var name in names)
             {
                 var imagePath = $"wwwroot\\Images\\{name}\\";
                 var files = Directory.GetFiles(imagePath);
                 var images = files.Select(x => new Image() { Id = Guid.NewGuid(), Url = x }).ToList();
+                BaseImages.AddRange(images);
+            }
+            return BaseImages.ToArray();
+        }
+        public static List<Product> GeneradeRandomProducts()
+        {
+            foreach (var name in names)
+            {
                 for (int i = 0; i < count; i++)
                 {
                     var product = new Product()
@@ -77,11 +93,26 @@ namespace OnlineShop.Db.Helper
                         Cost = random.Next(1, Int32.MaxValue),
                         Description = rusLorem.Substring(0, random.Next(rusLorem.Length / 2, rusLorem.Length))
                     };
-                    //product.Images = images;
                     BaseProducts.Add(product);
+                    var imagePath = $"wwwroot\\Images\\{name}\\";
+                    var files = Directory.GetFiles(imagePath).ToList();
+                    files.ForEach(file =>
+                    {
+                        var productImage = new ProductsImages()
+                        {
+                            ProductId = product.Id,
+                            ImageId = BaseImages.FirstOrDefault(x => x.Url == file).Id
+                        };
+                        ProductsImages.Add(productImage);
+                    });
                 }
             }
             return BaseProducts;
+        }
+
+        public static ProductsImages[] GeneradeRandomProductsImages()
+        {
+            return ProductsImages.Distinct().ToArray();
         }
     }
 }

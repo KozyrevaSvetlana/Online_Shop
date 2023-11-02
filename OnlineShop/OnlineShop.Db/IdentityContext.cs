@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models;
 using System;
 using System.Collections.Generic;
@@ -34,26 +35,9 @@ namespace OnlineShop.Db
                        pi => pi.HasKey(prop => new { prop.ProductId, prop.ImageId}));
 
             base.OnModelCreating(builder);
-
-            var image = new Image()
-            {
-                Id = Guid.NewGuid(),
-                Url = "testImage"
-            };
-            var product = new Product()
-            {
-                Id = Guid.NewGuid(),
-                Name = "testProduct",
-                Cost = 100
-            };
-            var prodIm = new ProductsImages()
-            {
-                ImageId = image.Id,
-                ProductId = product.Id
-            };
-            builder.Entity<Product>().HasData(product);
-            builder.Entity<Image>().HasData(image);
-            builder.Entity<ProductsImages>().HasData(prodIm);
+            builder.Entity<Image>().HasData(ProductGenerator.GeneradeRandomImages());
+            builder.Entity<Product>().HasData(ProductGenerator.GeneradeRandomProducts());
+            builder.Entity<ProductsImages>().HasData(ProductGenerator.GeneradeRandomProductsImages());
         }
     }
 }
