@@ -29,10 +29,6 @@ namespace OnlineShopWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            ProductGenerator.GeneradeRandomImages();
-            ProductGenerator.GeneradeRandomProducts();
-            ProductGenerator.GeneradeRandomProductsImages();
-
             string connection = Configuration.GetConnectionString("online_shop_kozyreva");
             services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connection));
             services.AddIdentity<User, IdentityRole>()

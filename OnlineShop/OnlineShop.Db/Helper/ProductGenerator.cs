@@ -14,7 +14,6 @@ namespace OnlineShop.Db.Helper
         public static List<Image> BaseImages { get; set; } = new List<Image>();
         public static List<ProductsImages> ProductsImages { get; set; } = new List<ProductsImages>();
         private static Random random = new Random();
-        private static int count = 5;
         private static List<string> names = new List<string>
         {
             "Вилка",
@@ -62,7 +61,7 @@ namespace OnlineShop.Db.Helper
 направлений прогрессивного развития.
 Современные технологии достигли такого уровня, что новая модель организационной деятельности влечет за собой процесс внедрения и 
 модернизации модели развития. Современные технологии достигли такого уровня, что реализация намеченных плановых заданий обеспечивает 
-актуальность анализа существующих паттернов поведения.";
+актуальность анализа существующих паттернов поведения.".Replace("\r\n", "");
 
         /// <summary>
         /// заполнение тестовыми данными изображений по папкам
