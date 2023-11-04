@@ -27,7 +27,7 @@ namespace OnlineShopWebApp.Helpers
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description != null && product.Description.Length > 20 ? product.Description.Substring(0, 20) + "..." : product.Description?? "Пустое описание",
-                Images = product.Images.Select(x => x.Url).ToList()
+                Images = product.Images.Select(x => x.Image?.Url).ToList()
             };
         }
 
@@ -247,9 +247,9 @@ namespace OnlineShopWebApp.Helpers
                 Images = imagesPaths.ToImages()
             };
         }
-        public static List<Image> ToImages(this List<string> paths)
+        public static List<ProductsImages> ToImages(this List<string> paths)
         {
-            return paths.Select(x => new Image { Url = x }).ToList();
+            return paths.Select(x => new ProductsImages { Image = new Image { Url = x } }).ToList();
         }
         public static Product ToProduct(this ProductViewModel product, List<string> imagesPaths)
         {
