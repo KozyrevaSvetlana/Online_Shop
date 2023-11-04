@@ -67,19 +67,26 @@ namespace OnlineShop.Db.Helper
         /// заполнение тестовыми данными изображений по папкам
         /// </summary>
         /// <returns></returns>
-        public static Image[] GeneradeRandomImages()
+        public static Image[] GenerateImages()
         {
             // проходимся по папкам и созраняем изображения
             foreach (var name in names)
             {
-                var imagePath = $"wwwroot\\Images\\{name}\\";
+                var imagePath = $"wwwroot/Images/{name}/";
                 var files = Directory.GetFiles(imagePath);
-                var images = files.Select(x => new Image() { Id = Guid.NewGuid(), Url = x }).ToList();
-                BaseImages.AddRange(images);
+                if (files != null && files.Any())
+                {
+                    var images = files.Select(x => new Image() { Id = Guid.NewGuid(), Url = x.Replace("wwwroot", "~") }).ToList();
+                    BaseImages.AddRange(images);
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
             }
             return BaseImages.ToArray();
         }
-        public static List<Product> GeneradeRandomProducts()
+        public static List<Product> GenerateProducts()
         {
             foreach (var name in names)
             {
@@ -95,21 +102,30 @@ namespace OnlineShop.Db.Helper
                     BaseProducts.Add(product);
                     var imagePath = $"wwwroot\\Images\\{name}\\";
                     var files = Directory.GetFiles(imagePath).ToList();
-                    files.ForEach(file =>
+                    if (files != null && files.Any())
                     {
-                        var productImage = new ProductsImages()
+                        var images = files.Select(x => new Image() { Id = Guid.NewGuid(), Url = x.Replace("wwwroot", "~") }).ToList();
+                        BaseImages.AddRange(images);
+                        files.ForEach(file =>
                         {
-                            ProductId = product.Id,
-                            ImageId = BaseImages.FirstOrDefault(x => x.Url == file).Id
-                        };
-                        ProductsImages.Add(productImage);
-                    });
+                            var productImage = new ProductsImages()
+                            {
+                                ProductId = product.Id,
+                                ImageId = BaseImages.FirstOrDefault(x => x.Url == file.Replace("wwwroot", "~")).Id
+                            };
+                            ProductsImages.Add(productImage);
+                        });
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
                 }
             }
             return BaseProducts;
         }
 
-        public static ProductsImages[] GeneradeRandomProductsImages()
+        public static ProductsImages[] GenerateProductsImages()
         {
             return ProductsImages.Distinct().ToArray();
         }

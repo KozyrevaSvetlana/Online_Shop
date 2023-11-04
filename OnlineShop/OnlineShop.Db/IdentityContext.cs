@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Helper;
 using OnlineShop.Db.Models;
-using System;
-using System.Collections.Generic;
 using Image = OnlineShop.Db.Models.Image;
 
 namespace OnlineShop.Db
@@ -33,11 +31,10 @@ namespace OnlineShop.Db
                        pi => pi.HasOne(prop => prop.Image).WithMany().HasForeignKey(prop => prop.ImageId),
                        pi => pi.HasOne(prop => prop.Product).WithMany().HasForeignKey(prop => prop.ProductId),
                        pi => pi.HasKey(prop => new { prop.ProductId, prop.ImageId}));
-
+            builder.Entity<Image>().HasData(ProductGenerator.GenerateImages());
+            builder.Entity<Product>().HasData(ProductGenerator.GenerateProducts());
+            //builder.Entity<ProductsImages>().HasData(ProductGenerator.GeneradeRandomProductsImages());
             base.OnModelCreating(builder);
-            builder.Entity<Image>().HasData(ProductGenerator.GeneradeRandomImages());
-            builder.Entity<Product>().HasData(ProductGenerator.GeneradeRandomProducts());
-            builder.Entity<ProductsImages>().HasData(ProductGenerator.GeneradeRandomProductsImages());
         }
     }
 }

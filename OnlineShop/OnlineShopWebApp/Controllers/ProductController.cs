@@ -13,7 +13,6 @@ namespace OnlineShopWebApp.Controllers
         public ProductController(IProductsRepository products)
         {
             this.products = products;
-            //var result = ProductGenerator.GeneradeRandomProduct();
         }
 
         public async Task<ActionResult> Index(Guid id)
