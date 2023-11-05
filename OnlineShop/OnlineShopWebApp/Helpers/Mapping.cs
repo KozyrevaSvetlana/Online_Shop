@@ -2,8 +2,10 @@
 using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using static OnlineShopWebApp.Models.InfoStatusOrderViewModel;
+using Image = OnlineShop.Db.Models.Image;
 
 namespace OnlineShopWebApp.Helpers
 {
@@ -26,8 +28,8 @@ namespace OnlineShopWebApp.Helpers
                 Id = product.Id,
                 Name = product.Name,
                 Cost = product.Cost,
-                Description = product.Description != null && product.Description.Length > 20 ? product.Description.Substring(0, 20) + "..." : product.Description?? "Пустое описание",
-                Images = product.Images.Select(x => x.Url).ToList()
+                Description = product.Description != null && product.Description.Length > 20 ? product.Description.Substring(0, 20) + "..." : product.Description ?? "Пустое описание",
+                Images = product.Images.Select(x => x.Url.Replace("wwwroot", "")).ToList()
             };
         }
 

@@ -72,7 +72,7 @@ namespace OnlineShop.Db.Helper
             // проходимся по папкам и созраняем изображения
             foreach (var name in names)
             {
-                var imagePath = $"wwwroot\\Images\\{name}\\";
+                var imagePath = $"wwwroot/Images/{name}/";
                 var files = Directory.GetFiles(imagePath);
                 var images = files.Select(x => new Image() { Id = Guid.NewGuid(), Url = x }).ToList();
                 BaseImages.AddRange(images);
@@ -93,7 +93,7 @@ namespace OnlineShop.Db.Helper
                         Description = rusLorem.Substring(0, random.Next(rusLorem.Length / 2, rusLorem.Length))
                     };
                     BaseProducts.Add(product);
-                    var imagePath = $"wwwroot\\Images\\{name}\\";
+                    var imagePath = $"wwwroot/Images/{name}/";
                     var files = Directory.GetFiles(imagePath).ToList();
                     files.ForEach(file =>
                     {
