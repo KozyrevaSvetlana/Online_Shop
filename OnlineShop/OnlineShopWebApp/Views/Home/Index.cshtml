@@ -1,10 +1,10 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 <div><h1 class="display-4">Все товары</h1></div>
 <div class="row gx-4 gx-lg-5">
-    @foreach (var product in Model)
+    @foreach (var product in Model.Products)
     {
         <div class="col-md-4 mb-5">
             <div class="card h-100">
