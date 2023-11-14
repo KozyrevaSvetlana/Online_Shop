@@ -64,7 +64,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return View("EditForm", editProduct);
         }
 
-        public async Task<IActionResult> DeleteProduct(Guid id)
+        public async Task<IActionResult> DeleteProduct(Guid id)      
         {
             if (!await ordersRepository.IsInOrder(id))
             {
