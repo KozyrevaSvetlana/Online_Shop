@@ -17,25 +17,33 @@ namespace OnlineShop.Db.Repositories
         }
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await databaseContext.Products.Include(x => x.Images).ToListAsync();
+            return await databaseContext.Products
+                .Include(x => x.Images)
+                .ToListAsync();
         }
 
         public async Task<Product> GetByIdAsync(Guid id)
         {
-            return await databaseContext.Products.Include(x => x.Images).FirstOrDefaultAsync(p => p.Id == id);
+            return await databaseContext.Products
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task DeleteAsync(Guid id, string userId = null)
         {
             var product = await GetByIdAsync(id);
-            var cartitems = await databaseContext.CartItems.Include(x=> x.Product).ThenInclude(x=> x.Images).Where(x => x.Id == product.Id).ToListAsync();
+            var cartitems = await databaseContext.CartItems
+                .Include(x => x.Product)
+                .ThenInclude(x => x.Images)
+                .Where(x => x.Id == product.Id)
+                .ToListAsync();
             databaseContext.CartItems.RemoveRange(cartitems);
             databaseContext.Products.Remove(product);
             await databaseContext.SaveChangesAsync();
         }
         public async Task AddAsync(Guid id, string userId)
         {
-            var product = await databaseContext.Products.FirstOrDefaultAsync(x=> x.Id == id);
+            var product = await databaseContext.Products.FirstOrDefaultAsync(x => x.Id == id);
             databaseContext.Products.Add(product);
             await databaseContext.SaveChangesAsync();
         }
@@ -46,7 +54,10 @@ namespace OnlineShop.Db.Repositories
 
             foreach (var word in seachResults)
             {
-                resultList = await databaseContext.Products.Where(x => x.Name.ToLower().Contains(word.ToLower())).Include(x => x.Images).ToListAsync();
+                resultList = await databaseContext.Products
+                    .Where(x => x.Name.ToLower().Contains(word.ToLower()))
+                    .Include(x => x.Images)
+                    .ToListAsync();
             }
             return resultList.Distinct().ToList();
         }
@@ -79,12 +90,21 @@ namespace OnlineShop.Db.Repositories
         public async Task<Product> GetByIdAsync(Guid? id = null, string userId = null)
         {
             return await databaseContext.Products
-                .Include(x=> x.Images)
-                .Include(x=> x.Compares)
-                .Include(x=> x.Orders)
-                .Include(x=> x.Favorites)
+                .Include(x => x.Images)
+                .Include(x => x.Compares)
+                .Include(x => x.Orders)
+                .Include(x => x.Favorites)
                 .Include(x => x.CartItems)
                 .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<List<Product>> Paginate(int page, int take, int skip)
+        {
+            return await databaseContext.Products
+                .Include(x => x.Images)
+                .Skip(page * take)
+                .Take(take)
+                .ToListAsync();
         }
     }
 }
