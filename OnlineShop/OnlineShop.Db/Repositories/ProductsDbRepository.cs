@@ -98,13 +98,16 @@ namespace OnlineShop.Db.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<List<Product>> Paginate(int page, int take, int skip)
+        public async Task<(List<Product>, int)> Paginate(int take, int? page)
         {
-            return await databaseContext.Products
+            (List<Product>, int) result;
+            result.Item1 = await databaseContext.Products
                 .Include(x => x.Images)
-                .Skip(page * take)
+                .Skip((page ?? 1) * take)
                 .Take(take)
                 .ToListAsync();
+            result.Item2 = await databaseContext.Products.CountAsync();
+            return result;
         }
     }
 }

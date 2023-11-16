@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
@@ -17,19 +18,20 @@ namespace OnlineShopWebApp.Controllers
             this.products = products;
         }
 
-        public async Task<IActionResult> Index(int page, int count)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var allProducts = await products.GetAllAsync();
+            var result = await products.Paginate(20, page);
             var index = new IndexViewModel()
             {
-                Products = allProducts.ToProductViewModels(),
+                Products = result.Item1.ToProductViewModels(),
                 PageInfo = new PageInfo()
                 {
-                    PageNumber = 1,
-                    PageSize = (int)Math.Ceiling((decimal)allProducts.Count() / 20)
+                    PageNumber = page,
+                    PageSize = 20,
+                    TotalItems = result.Item2
                 }
             };
-            return base.View(index);
+            return View(index);
         }
     }
 }
