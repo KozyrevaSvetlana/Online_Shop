@@ -26,6 +26,14 @@
             </div>
         </div>
     }
+    <ul class="pagination">
+        @for (int i = 1; i < Model.PageInfo.TotalPages; i++)
+        {
+            <li class="@(i == Model.PageInfo.PageNumber ? "page-item active" : "page-item")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+    </ul>
 </div>
 
 

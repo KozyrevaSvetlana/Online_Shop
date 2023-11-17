@@ -18,16 +18,16 @@ namespace OnlineShopWebApp.Controllers
             this.products = products;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1, int count = 9)
         {
-            var result = await products.Paginate(20, page);
+            var result = await products.Paginate(count, page);
             var index = new IndexViewModel()
             {
                 Products = result.Item1.ToProductViewModels(),
                 PageInfo = new PageInfo()
                 {
                     PageNumber = page,
-                    PageSize = 20,
+                    PageSize = count,
                     TotalItems = result.Item2
                 }
             };

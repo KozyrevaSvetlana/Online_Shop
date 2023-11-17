@@ -24,16 +24,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var cart = new Cart();
-            if (user == null)
-            {
-                var userId = Request.Cookies["id"];
-                cart = await cartsRepository.GetByIdAsync(null, userId);
-            }
-            else
-            {
-                cart = await cartsRepository.GetByIdAsync(null, user.UserName); 
-            }
+            var cart = await cartsRepository.GetByIdAsync(null, user?.UserName ?? Request.Cookies["id"]);
             return View(cart.ToCartViewModel());
         }
 
@@ -47,7 +38,7 @@ namespace OnlineShopWebApp.Controllers
                 if (cookieValue == null)
                 {
                     cookieValue = Guid.NewGuid().ToString() + DateTime.Now.ToString("d");
-                    CookieOptions cookie = new CookieOptions();
+                    var cookie = new CookieOptions();
                     cookie.Expires = DateTime.Now.AddDays(30);
                     Response.Cookies.Append("id", cookieValue, cookie);
                 }
@@ -63,7 +54,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var product = await productsRepository.GetByIdAsync(id);
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await cartsRepository.ChangeAmountAsync(product, sign, user.UserName ?? Request.Cookies["id"]);
+            await cartsRepository.ChangeAmountAsync(product, sign, user?.UserName ?? Request.Cookies["id"]);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> ClearAsync()
