@@ -51,7 +51,7 @@ namespace OnlineShopWebApp
             services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
             services.AddTransient<IMailService, EmailService>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<ImagesProvider>();
             services.Configure<IdentityOptions>(options =>
             {
@@ -104,7 +104,7 @@ namespace OnlineShopWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{page?}");
+                    pattern: "{controller=Home}/{action=Index}");
             });
         }
     }
