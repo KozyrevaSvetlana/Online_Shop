@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ModelsLibrary.ModelsDto;
 using OnlineShop.Db.Helper;
-using OnlineShop.Db.Models;
-using System;
-using System.Collections.Generic;
-using Image = OnlineShop.Db.Models.Image;
 
 namespace OnlineShop.Db
 {

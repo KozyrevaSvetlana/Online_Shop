@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnlineShop.Db.Models
+namespace Models.ModelsDto
 {
     public class CartItem
     {

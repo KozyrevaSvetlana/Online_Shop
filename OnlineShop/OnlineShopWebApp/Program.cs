@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OnlineShop.Db;
-using OnlineShop.Db.Helper;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
+using ModelsLibrary.Helper;
 using Serilog;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp
@@ -23,7 +21,7 @@ namespace OnlineShopWebApp
 
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                await IdentityInitializer.Initialize(userManager, roleManager);
+                await ModelsLibrary.Helper.IdentityInitializer.Initialize(userManager, roleManager);
             }
             host.Run();
         }

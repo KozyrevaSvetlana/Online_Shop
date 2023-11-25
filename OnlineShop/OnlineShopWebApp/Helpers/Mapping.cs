@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using OnlineShopWebApp.Models;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using static OnlineShopWebApp.Models.InfoStatusOrderViewModel;
-using Image = OnlineShop.Db.Models.Image;
 
 namespace OnlineShopWebApp.Helpers
 {

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using OnlineShop.Db.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using ModelsLibrary.ModelsDto;
 
-namespace OnlineShop.Db.Helper
+namespace ModelsLibrary.Helper
 {
     public class IdentityInitializer
     {

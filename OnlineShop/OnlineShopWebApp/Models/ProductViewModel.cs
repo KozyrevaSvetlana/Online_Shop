@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
+using OnlineShopWebApp.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models
 {
+    [TypeConverter(typeof(SourceClassConverter))]
     public class ProductViewModel
     {
         public Guid Id { get; set; }

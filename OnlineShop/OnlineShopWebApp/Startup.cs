@@ -7,14 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.Db;
-using OnlineShop.Db.Helper;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShop.Db.Repositories;
 using OnlineShopWebApp.Configuration;
 using OnlineShopWebApp.Helpers;
-using Serilog;
 using System;
+using Serilog;
 
 namespace OnlineShopWebApp
 {
@@ -63,6 +62,11 @@ namespace OnlineShopWebApp
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             });
+
+            //TinyMapper.Bind<Product, ProductViewModel>(config =>
+            //{
+            //    config.Bind(source => source.Images.SelectMany(x=> x.Url) ?? null, target => target.Images);
+            //});
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -93,14 +97,14 @@ namespace OnlineShopWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "MyArea",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}");
             });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{page?}");
             });
         }
     }

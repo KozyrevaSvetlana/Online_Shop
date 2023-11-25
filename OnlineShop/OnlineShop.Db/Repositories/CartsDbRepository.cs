@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ModelsLibrary.ModelsDto;
 
 namespace OnlineShop.Db.Repositories
 {

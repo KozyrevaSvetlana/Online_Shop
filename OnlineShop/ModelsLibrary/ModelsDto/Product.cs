@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OnlineShop.Db.Models
+namespace ModelsLibrary.ModelsDto
 {
     public class Product
     {

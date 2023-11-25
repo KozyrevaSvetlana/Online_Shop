@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ModelsLibrary.ModelsDto;
 
 namespace OnlineShop.Db.Models.Interfaces
 {

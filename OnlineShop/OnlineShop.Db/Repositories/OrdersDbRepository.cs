@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;

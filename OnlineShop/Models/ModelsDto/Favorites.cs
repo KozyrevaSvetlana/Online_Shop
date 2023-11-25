@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OnlineShop.Db.Models
+namespace Models.ModelsDto
 {
     public class Favorites
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Views.Shared.ViewComponents.ImageViewComponent

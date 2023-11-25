@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using OnlineShop.Db.Models.Interfaces;
 using System.Threading.Tasks;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using OnlineShop.Db.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -62,7 +62,7 @@ namespace OnlineShop.Db.Repositories
             var newCart = new Favorites
             {
                 UserId = userId,
-                Items = new List<Models.Product>(),
+                Items = new List<Product>(),
             };
             newCart.Items.Add(product);
             databaseContext.Favorites.Add(newCart);

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db.Helper;
+using ModelsLibrary.Helper;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {

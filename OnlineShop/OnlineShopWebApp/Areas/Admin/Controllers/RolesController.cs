@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db.Helper;
-using OnlineShop.Db.Models;
+using ModelsLibrary.ModelsDto;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System.Threading.Tasks;
+using ModelsLibrary.Helper;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
