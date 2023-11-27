@@ -14,6 +14,9 @@ using OnlineShopWebApp.Configuration;
 using OnlineShopWebApp.Helpers;
 using System;
 using Serilog;
+using Nelibur.ObjectMapper;
+using OnlineShopWebApp.Models;
+using System.Collections.Generic;
 
 namespace OnlineShopWebApp
 {
@@ -63,10 +66,8 @@ namespace OnlineShopWebApp
                 options.Password.RequireUppercase = false;
             });
 
-            //TinyMapper.Bind<Product, ProductViewModel>(config =>
-            //{
-            //    config.Bind(source => source.Images.SelectMany(x=> x.Url) ?? null, target => target.Images);
-            //});
+            TinyMapper.Bind<IdentityRole, RoleViewModel>();
+
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

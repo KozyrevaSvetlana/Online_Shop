@@ -6,6 +6,8 @@ using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System.Threading.Tasks;
 using ModelsLibrary.Helper;
+using Nelibur.ObjectMapper;
+using System;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -69,7 +71,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<ActionResult> EditRoleAsync(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
-            return View(role.ToRoleViewModel());
+            var roleViewModel = TinyMapper.Map<RoleViewModel>(role);
+            return View(roleViewModel);
         }
         [HttpPost]
         public async Task<IActionResult> ChangeRoleAsync(string newName, string roleId)

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ModelsLibrary.ModelsDto;
+using Nelibur.ObjectMapper;
 using OnlineShopWebApp.Models;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using static OnlineShopWebApp.Models.InfoStatusOrderViewModel;
 
@@ -188,22 +190,6 @@ namespace OnlineShopWebApp.Helpers
             userVM.Login.Email = userDb.UserName;
             return userVM;
         }
-        public static void AddUserContactToUserViewModel(this UserContact userDb, UserContactViewModel user)
-        {
-            user.Name = userDb.Name;
-            user.Surname = userDb.Surname;
-            user.Adress = userDb.Adress;
-            user.Phone = userDb.Phone;
-            user.Email = userDb.Email;
-        }
-        public static void AddUserContactDb(this UserContact userDb, UserContactViewModel user)
-        {
-            userDb.Name = user.Name;
-            userDb.Surname = user.Surname;
-            userDb.Adress = user.Adress;
-            userDb.Phone = user.Phone;
-            userDb.Email = user.Email;
-        }
         public static List<UserViewModel> ToListUserViewModels(this IQueryable<User> usersDb)
         {
             var result = new List<UserViewModel>();
@@ -226,7 +212,7 @@ namespace OnlineShopWebApp.Helpers
             var result = new List<RoleViewModel>();
             foreach (var roleDb in rolesDb)
             {
-                result.Add(roleDb.ToRoleViewModel());
+                result.Add(TinyMapper.Map<RoleViewModel>(roleDb));
             }
             return result;
         }
@@ -260,17 +246,6 @@ namespace OnlineShopWebApp.Helpers
                 Cost = product.Cost,
                 Description = product.Description,
                 Images = imagesPaths.ToImages()
-            };
-        }
-        public static Product ToProduct(this ProductViewModel editProduct)
-        {
-            return new Product
-            {
-                Id = editProduct.Id,
-                Name = editProduct.Name,
-                Cost = editProduct.Cost,
-                Description = editProduct.Description,
-                Images = editProduct.Images.ToImages()
             };
         }
     }
