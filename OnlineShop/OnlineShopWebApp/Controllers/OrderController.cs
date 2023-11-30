@@ -29,15 +29,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             var userId = Request.Cookies["id"];
-            var cart = new Cart();
-            if (userId == null)
-            {
-                cart = await cartsRepository.GetByIdAsync(null, user.UserName);
-            }
-            else
-            {
-                cart = await cartsRepository.GetByIdAsync(null, userId);
-            }
+            var cart = await cartsRepository.GetByIdAsync(null, user.UserName ?? userId);
             return View();
         }
         [HttpPost]
