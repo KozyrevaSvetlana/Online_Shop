@@ -6,7 +6,7 @@ using ModelsLibrary.Converters;
 
 namespace ModelsLibrary.ModelsDto
 {
-    [TypeConverter(typeof(SourceClassConverter))]
+    [TypeConverter(typeof(ProductConverter))]
     public class Product
     {
         public Guid Id { get; set; }

@@ -67,6 +67,7 @@ namespace OnlineShopWebApp
             });
 
             TinyMapper.Bind<Product, ProductViewModel>();
+            TinyMapper.Bind<CartItem, CartItemViewModel>();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

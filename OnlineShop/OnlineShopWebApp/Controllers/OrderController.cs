@@ -9,6 +9,7 @@ using ModelsLibrary.ModelsVM;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Nelibur.ObjectMapper;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -50,7 +51,7 @@ namespace OnlineShopWebApp.Controllers
                 order.AddContacts(user.UserName, userContacts, new InfoStatusOrderViewModel(DateTime.Now), Comment);
                 var cart = await cartsRepository.GetByIdAsync(null, user.UserName ?? Request.Cookies["id"]);
                 Response.Cookies.Delete("id");
-                order.Products = cart.Items.ToCartItemViewModels();
+                order.Products = cart.Items.Select(TinyMapper.Map<CartItemViewModel>).ToList();
                 order.Number = await ordersRepository.GetCountAsync();
                 await ordersRepository.AddAsync(cart.Id, user.Id);
                 return RedirectToAction("Result");

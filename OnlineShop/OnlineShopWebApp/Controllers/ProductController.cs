@@ -5,6 +5,7 @@ using OnlineShopWebApp.Helpers;
 using ModelsLibrary.ModelsVM;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -31,7 +32,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 TempData["Result"] = result;
                 var searchResult = await products.Search(result.Split());
-                return View(searchResult.ToProductViewModels());
+                return View(searchResult.Select(TinyMapper.Map<ProductViewModel>).ToList());
             }
             return View();
         }

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using ModelsLibrary.Converters;
+using System;
+using System.ComponentModel;
 
 namespace ModelsLibrary.ModelsDto
 {
+    [TypeConverter(typeof(CartItemConverter))]
     public class CartItem
     {
         public Guid Id { get; set; }

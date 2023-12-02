@@ -34,7 +34,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> EditOrder(int number, string status)
         {
-            await ordersRepository.Edit(number, (int)EnumEx.GetValueFromDescription<Statuses>(status));
+            await ordersRepository.Edit(number, (int)EnumExtensions.GetValueFromDescription<Statuses>(status));
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> DeleteOrder(Guid id)

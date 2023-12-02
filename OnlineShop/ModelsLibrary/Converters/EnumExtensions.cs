@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace ModelsLibrary.Converters
 {
-    public static class EnumEx
+    public static class EnumExtensions
     {
         public static T GetValueFromDescription<T>(string description) where T : Enum
         {

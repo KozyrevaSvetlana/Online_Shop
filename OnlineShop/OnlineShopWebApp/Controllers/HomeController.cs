@@ -5,6 +5,7 @@ using ModelsLibrary.ModelsVM;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Nelibur.ObjectMapper;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -22,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
             var result = await products.Paginate(count ?? 9, page ?? 1);
             var index = new IndexViewModel()
             {
-                Products = result.Item1.ToProductViewModels(),
+                Products = result.Item1.Select(TinyMapper.Map<ProductViewModel>),
                 PageInfo = new PageInfo()
                 {
                     PageNumber = page ?? 1,

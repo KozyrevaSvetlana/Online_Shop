@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ModelsLibrary.ModelsVM
 {
-    [TypeConverter(typeof(SourceClassConverter))]
+    [TypeConverter(typeof(ProductConverter))]
     public class ProductViewModel
     {
         public Guid Id { get; set; }

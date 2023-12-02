@@ -21,24 +21,8 @@ namespace OnlineShopWebApp.Helpers
             {
                 Id = cart.Id,
                 UserId = cart.UserId,
-                Items = ToCartItemViewModels(cart.Items)
+                Items = cart.Items.Select(TinyMapper.Map<CartItemViewModel>).ToList()
             };
-        }
-
-        public static List<CartItemViewModel> ToCartItemViewModels(this List<CartItem> cartDbItems)
-        {
-            var cartItems = new List<CartItemViewModel>();
-            foreach (var cartDbItem in cartDbItems)
-            {
-                var cartItem = new CartItemViewModel
-                {
-                    Id = cartDbItem.Id,
-                    Amount = cartDbItem.Amount,
-                    Product = TinyMapper.Map<ProductViewModel>(cartDbItem.Product)
-                };
-                cartItems.Add(cartItem);
-            }
-            return cartItems;
         }
         public static OrderViewModel ToOrderViewModels(this Order orderDb)
         {
@@ -56,7 +40,7 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.User.Phone = orderDb.UserContacts.Phone;
             orderViewModels.User.Email = orderDb.UserContacts.Email;
             orderViewModels.InfoStatus.StatusOrder = (Statuses)orderDb.InfoStatus;
-            orderViewModels.Products = ToCartItemViewModels(orderDb.Items);
+            orderViewModels.Products = orderDb.Items.Select(TinyMapper.Map<CartItemViewModel>).ToList();
             return orderViewModels;
         }
         public static CompareViewModel ToCompareViewModel(this Compare compare)

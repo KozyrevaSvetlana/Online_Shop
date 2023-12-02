@@ -1,19 +1,18 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-using System;
+﻿using ModelsLibrary.ModelsDto;
 using ModelsLibrary.ModelsVM;
-using ModelsLibrary.ModelsDto;
+using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 
 namespace ModelsLibrary.Converters
 {
-    public class SourceClassConverter : TypeConverter
+    public class ProductConverter : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(ProductViewModel);
         }
-
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             var concreteValue = (Product)value;
