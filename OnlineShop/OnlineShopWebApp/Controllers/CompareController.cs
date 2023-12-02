@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLibrary.ModelsDto;
+using ModelsLibrary.ModelsVM;
+using Nelibur.ObjectMapper;
 using OnlineShop.Db.Models.Interfaces;
-using OnlineShopWebApp.Helpers;
-using System;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Controllers
@@ -26,7 +26,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             var compareCart = await compareRepository.GetByIdAsync(null, user.UserName);
-            return View(compareCart.ToCompareViewModel());
+            return View(TinyMapper.Map<CompareViewModel>(compareCart));
         }
 
         public async Task<IActionResult> AddAsync(System.Guid id)

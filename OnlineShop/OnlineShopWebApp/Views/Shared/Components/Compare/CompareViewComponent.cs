@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLibrary.ModelsDto;
+using ModelsLibrary.ModelsVM;
+using Nelibur.ObjectMapper;
 using OnlineShop.Db.Models.Interfaces;
-using OnlineShopWebApp.Helpers;
 using System.Threading.Tasks;
 
 namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
@@ -25,7 +26,7 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
             if (user != null)
             {
                 var compare = await compareRepository.GetByIdAsync(null, user.UserName);
-                var compareViewModel = compare.ToCompareViewModel();
+                var compareViewModel = TinyMapper.Map<CompareViewModel>(compare);
                 compareItemsCount = compareViewModel?.Items.Count ?? 0;
             }
             return View("Compare", compareItemsCount);

@@ -43,33 +43,6 @@ namespace OnlineShopWebApp.Helpers
             orderViewModels.Products = orderDb.Items.Select(TinyMapper.Map<CartItemViewModel>).ToList();
             return orderViewModels;
         }
-        public static CompareViewModel ToCompareViewModel(this Compare compare)
-        {
-            if (compare == null)
-            {
-                return null;
-            }
-            return new CompareViewModel
-            {
-                Id = compare.Id,
-                UserId = compare.UserId,
-                Items = compare.Items.Select(x=> TinyMapper.Map<ProductViewModel>(x)).ToList()
-            };
-        }
-        
-        public static FavoritesViewModel ToFavoritesViewModel(this Favorites favorite)
-        {
-            if (favorite == null)
-            {
-                return null;
-            }
-            return new FavoritesViewModel
-            {
-                Id = favorite.Id,
-                UserId = favorite.UserId,
-                Items = favorite.Items.Select(x => TinyMapper.Map<ProductViewModel>(x)).ToList()
-            };
-        }
         public static List<OrderViewModel> ToOrdersViewModels(this List<Order> ordersDb)
         {
             var ordersViewModel = new List<OrderViewModel>();

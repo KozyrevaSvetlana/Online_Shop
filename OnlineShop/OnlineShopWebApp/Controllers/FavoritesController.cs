@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLibrary.ModelsDto;
+using ModelsLibrary.ModelsVM;
+using Nelibur.ObjectMapper;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
 using System;
@@ -25,8 +27,8 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var cart = await favoritesRepository.GetByIdAsync(null, user.UserName);
-            return View(cart.ToFavoritesViewModel());
+            var favorites = await favoritesRepository.GetByIdAsync(null, user.UserName);
+            return View(TinyMapper.Map<FavoritesViewModel>(favorites));
         }
 
         public async Task<IActionResult> AddAsync(Guid id)

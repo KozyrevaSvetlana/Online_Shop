@@ -6,17 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OnlineShop.Db;
 using ModelsLibrary.ModelsDto;
+using ModelsLibrary.ModelsVM;
+using Nelibur.ObjectMapper;
+using OnlineShop.Db;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShop.Db.Repositories;
 using OnlineShopWebApp.Configuration;
 using OnlineShopWebApp.Helpers;
-using System;
 using Serilog;
-using Nelibur.ObjectMapper;
-using ModelsLibrary.ModelsVM;
-using System.Collections.Generic;
+using System;
 
 namespace OnlineShopWebApp
 {
@@ -68,7 +67,8 @@ namespace OnlineShopWebApp
 
             TinyMapper.Bind<Product, ProductViewModel>();
             TinyMapper.Bind<CartItem, CartItemViewModel>();
-
+            TinyMapper.Bind<Compare, CompareViewModel>();
+            TinyMapper.Bind<Favorites, FavoritesViewModel>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
