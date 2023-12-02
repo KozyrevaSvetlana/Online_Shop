@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLibrary.ModelsDto;
 using OnlineShopWebApp.Helpers;
-using OnlineShopWebApp.Models;
+using ModelsLibrary.ModelsVM;
 using System.Threading.Tasks;
 using ModelsLibrary.Helper;
 using Nelibur.ObjectMapper;

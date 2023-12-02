@@ -15,7 +15,7 @@ using OnlineShopWebApp.Helpers;
 using System;
 using Serilog;
 using Nelibur.ObjectMapper;
-using OnlineShopWebApp.Models;
+using ModelsLibrary.ModelsVM;
 using System.Collections.Generic;
 
 namespace OnlineShopWebApp

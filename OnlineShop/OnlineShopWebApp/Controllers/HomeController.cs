@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
-using OnlineShopWebApp.Models;
+using ModelsLibrary.ModelsVM;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

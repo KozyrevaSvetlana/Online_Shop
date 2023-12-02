@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ModelsLibrary.ModelsDto;
 using Nelibur.ObjectMapper;
-using OnlineShopWebApp.Models;
+using ModelsLibrary.ModelsVM;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using static OnlineShopWebApp.Models.InfoStatusOrderViewModel;
+using static ModelsLibrary.ModelsVM.InfoStatusOrderViewModel;
 
 namespace OnlineShopWebApp.Helpers
 {

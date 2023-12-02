@@ -2,7 +2,7 @@
 using Nelibur.ObjectMapper;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
-using OnlineShopWebApp.Models;
+using ModelsLibrary.ModelsVM;
 using System;
 using System.Threading.Tasks;
 
