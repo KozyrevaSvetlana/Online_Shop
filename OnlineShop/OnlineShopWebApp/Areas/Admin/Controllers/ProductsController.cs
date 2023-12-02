@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using ModelsLibrary.Helper;
 using System.Threading.Tasks;
+using Nelibur.ObjectMapper;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -29,7 +30,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await productsRepository.GetAllAsync();
-            return View(products.ToProductViewModels());
+            return View(products.Select(p=> TinyMapper.Map<ProductViewModel>(p)));
         }
 
         public async Task<IActionResult> Description(Guid id)
@@ -83,7 +84,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                     }
                     ModelState.AddModelError("", $"Невозможно удалить товар, он есть в заказах: {ordersNumbers.Substring(0, ordersNumbers.Length - 2)}");
                     var products = await productsRepository.GetAllAsync();
-                    return View("Index", products.ToProductViewModels());
+                    return View("Index", products.Select(x=> TinyMapper.Map<ProductViewModel>(x)));
                 }
             }
             return RedirectToAction("Index");

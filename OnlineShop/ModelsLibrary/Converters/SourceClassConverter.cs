@@ -23,7 +23,8 @@ namespace ModelsLibrary.Converters
                 Cost = concreteValue.Cost,
                 Description = concreteValue.Description,
                 Id = concreteValue.Id,
-                Images = concreteValue.Images.Select(x=> x.Url).ToList()            };
+                Images = concreteValue.Images.Select(x => x.Url.Replace("wwwroot", "")).ToList()
+            };
             return result;
         }
     }

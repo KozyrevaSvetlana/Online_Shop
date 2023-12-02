@@ -11,15 +11,6 @@ namespace OnlineShopWebApp.Helpers
 {
     public static class Mapping
     {
-        public static List<ProductViewModel> ToProductViewModels(this IEnumerable<Product> products)
-        {
-            var productsViewModels = new List<ProductViewModel>();
-            foreach (var product in products)
-            {
-                productsViewModels.Add(ToProductViewModel(product));
-            }
-            return productsViewModels;
-        }
 
         public static ProductViewModel ToProductViewModel(this Product product)
         {

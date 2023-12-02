@@ -19,9 +19,9 @@ namespace OnlineShopWebApp.Controllers
 
         public async Task<ActionResult> Index(Guid id)
         {
-            var result = await products.GetByIdAsync(id);
-            var resultTest = TinyMapper.Map<ProductViewModel>(result);
-            return View(result.ToProductViewModel());
+            var product = await products.GetByIdAsync(id);
+            var productVM = TinyMapper.Map<ProductViewModel>(product);
+            return View(productVM);
         }
 
         [HttpPost]
