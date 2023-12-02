@@ -11,19 +11,6 @@ namespace OnlineShopWebApp.Helpers
 {
     public static class Mapping
     {
-
-        public static ProductViewModel ToProductViewModel(this Product product)
-        {
-            return new ProductViewModel
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Cost = product.Cost,
-                Description = product.Description != null && product.Description.Length > 20 ? product.Description.Substring(0, 20) + "..." : product.Description ?? "Пустое описание",
-                Images = product.Images.Select(x => x.Url.Replace("wwwroot", "")).ToList()
-            };
-        }
-
         public static CartViewModel ToCartViewModel(this Cart cart)
         {
             if (cart == null)
@@ -47,27 +34,11 @@ namespace OnlineShopWebApp.Helpers
                 {
                     Id = cartDbItem.Id,
                     Amount = cartDbItem.Amount,
-                    Product = ToProductViewModel(cartDbItem.Product)
+                    Product = TinyMapper.Map<ProductViewModel>(cartDbItem.Product)
                 };
                 cartItems.Add(cartItem);
             }
             return cartItems;
-        }
-        public static Order ToOrder(this OrderViewModel order)
-        {
-            var orderDb = new Order()
-            {
-                Number = order.Number,
-                Comment = order.Comment,
-                UserId = order.UserId,
-            };
-            orderDb.UserContacts.Name = order.User.Name;
-            orderDb.UserContacts.Surname = order.User.Surname;
-            orderDb.UserContacts.Adress = order.User.Adress;
-            orderDb.UserContacts.Phone = order.User.Phone;
-            orderDb.UserContacts.Email = order.User.Email;
-            orderDb.InfoStatus = (int)order.InfoStatus.StatusOrder;
-            return orderDb;
         }
         public static OrderViewModel ToOrderViewModels(this Order orderDb)
         {
@@ -98,18 +69,10 @@ namespace OnlineShopWebApp.Helpers
             {
                 Id = compare.Id,
                 UserId = compare.UserId,
-                Items = ToProductViewModels(compare.Items)
+                Items = compare.Items.Select(x=> TinyMapper.Map<ProductViewModel>(x)).ToList()
             };
         }
-        public static List<ProductViewModel> ToProductViewModels(this List<Product> products)
-        {
-            var productsViewModels = new List<ProductViewModel>();
-            foreach (var product in products)
-            {
-                productsViewModels.Add(ToProductViewModel(product));
-            }
-            return productsViewModels;
-        }
+        
         public static FavoritesViewModel ToFavoritesViewModel(this Favorites favorite)
         {
             if (favorite == null)
@@ -120,7 +83,7 @@ namespace OnlineShopWebApp.Helpers
             {
                 Id = favorite.Id,
                 UserId = favorite.UserId,
-                Items = ToProductViewModels(favorite.Items)
+                Items = favorite.Items.Select(x => TinyMapper.Map<ProductViewModel>(x)).ToList()
             };
         }
         public static List<OrderViewModel> ToOrdersViewModels(this List<Order> ordersDb)
@@ -141,27 +104,7 @@ namespace OnlineShopWebApp.Helpers
             }
             return ordersViewModels;
         }
-        public static int ToIntStatus(string status)
-        {
-            switch (status)
-            {
-                case "Создан":
-                    return 1;
-                case "В работе":
-                    return 2;
-                case "В пути":
-                    return 3;
-                case "Готов к выдаче":
-                    return 4;
-                case "Выполнен":
-                    return 5;
-                case "Отменен":
-                    return 6;
-                case "Ошибка":
-                    return 0;
-            }
-            return 0;
-        }
+
         public static UserViewModel ToUserViewModel(this User userDb)
         {
             var userVM = new UserViewModel()

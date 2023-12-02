@@ -36,13 +36,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Description(Guid id)
         {
             var result = await productsRepository.GetByIdAsync(id);
-            return View(result.ToProductViewModel());
+            return View(TinyMapper.Map<ProductViewModel>(result));
         }
 
         public async Task<IActionResult> EditForm(Guid id)
         {
             var result = await productsRepository.GetByIdAsync(id);
-            return View(result.ToProductViewModel());
+            return View(TinyMapper.Map<ProductViewModel>(result));
         }
 
         [HttpPost]

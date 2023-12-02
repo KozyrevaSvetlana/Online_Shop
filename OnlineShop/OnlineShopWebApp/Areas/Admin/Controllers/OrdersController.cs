@@ -5,6 +5,9 @@ using OnlineShopWebApp.Helpers;
 using System;
 using ModelsLibrary.Helper;
 using System.Threading.Tasks;
+using ModelsLibrary.Converters;
+using ModelsLibrary.ModelsVM;
+using static ModelsLibrary.ModelsVM.InfoStatusOrderViewModel;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -31,7 +34,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> EditOrder(int number, string status)
         {
-            await ordersRepository.Edit(number, Mapping.ToIntStatus(status));
+            await ordersRepository.Edit(number, (int)EnumEx.GetValueFromDescription<Statuses>(status));
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> DeleteOrder(Guid id)
