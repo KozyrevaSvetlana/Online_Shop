@@ -66,7 +66,7 @@ namespace OnlineShopWebApp
                 options.Password.RequireUppercase = false;
             });
 
-            TinyMapper.Bind<IdentityRole, RoleViewModel>();
+            TinyMapper.Bind<Product, ProductViewModel>();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

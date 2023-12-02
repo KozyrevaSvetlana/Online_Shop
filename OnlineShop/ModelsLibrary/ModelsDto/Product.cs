@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using ModelsLibrary.Converters;
 
 namespace ModelsLibrary.ModelsDto
 {
+    [TypeConverter(typeof(SourceClassConverter))]
     public class Product
     {
         public Guid Id { get; set; }

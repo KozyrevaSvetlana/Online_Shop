@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
-using OnlineShopWebApp.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineShopWebApp.Models
+namespace ModelsLibrary.ModelsVM
 {
-    public class ProductViewModel
+    public class AddProductViewModel
     {
-        public Guid Id { get; set; }
-
         [Required(ErrorMessage = "Не указано имя")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Имя должно быть не менее 2 символов и не более 100 символов")]
         public string Name { get; set; }
@@ -23,9 +19,7 @@ namespace OnlineShopWebApp.Models
         [StringLength(300, MinimumLength = 2, ErrorMessage = "Описание должно быть не менее 2 символов и не более 300 символов")]
         public string Description { get; set; }
 
-        public List<string> Images { get; set; }
-        public string Image => Images.Count == 0 ? "/img/Products/1.jpg" : Images[0];
-        public IFormFile[] UploadedFile { get; set; }
+        public IFormFile[] UploadedFiles { get; set; }
         public List<string> IsValid()
         {
             var errors = new List<string>();

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nelibur.ObjectMapper;
 using OnlineShop.Db.Models.Interfaces;
 using OnlineShopWebApp.Helpers;
+using OnlineShopWebApp.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -13,12 +15,12 @@ namespace OnlineShopWebApp.Controllers
         public ProductController(IProductsRepository products)
         {
             this.products = products;
-            //var result = ProductGenerator.GeneradeRandomProduct();
         }
 
         public async Task<ActionResult> Index(Guid id)
         {
             var result = await products.GetByIdAsync(id);
+            var resultTest = TinyMapper.Map<ProductViewModel>(result);
             return View(result.ToProductViewModel());
         }
 
