@@ -34,7 +34,7 @@ namespace OnlineShopWebApp.Helpers
         {
             if (file != null)
             {
-                var folderPath = Path.Combine(appEnvironment.WebRootPath + "/img/" + folder);
+                var folderPath = Path.Combine(appEnvironment.WebRootPath + "wwwroot/img/" + folder);
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);

@@ -107,13 +107,6 @@ namespace OnlineShopWebApp.Helpers
             }
             return result;
         }
-        public static RoleViewModel ToRoleViewModel(this IdentityRole roleDb)
-        {
-            var role = new RoleViewModel();
-            role.Id = roleDb.Id;
-            role.Name = roleDb.Name ?? "Имя не указано";
-            return role;
-        }
         public static Product ToProduct(this AddProductViewModel addProductViewModel, List<string> imagesPaths)
         {
             return new Product()
@@ -127,17 +120,6 @@ namespace OnlineShopWebApp.Helpers
         public static List<Image> ToImages(this List<string> paths)
         {
             return paths.Select(x => new Image { Url = x }).ToList();
-        }
-        public static Product ToProduct(this ProductViewModel product, List<string> imagesPaths)
-        {
-            return new Product()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Cost = product.Cost,
-                Description = product.Description,
-                Images = imagesPaths.ToImages()
-            };
         }
     }
 }

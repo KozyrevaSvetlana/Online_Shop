@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLibrary.Helper;
+using ModelsLibrary.ModelsDto;
 using ModelsLibrary.ModelsVM;
 using Nelibur.ObjectMapper;
 using OnlineShop.Db.Models.Interfaces;
@@ -35,7 +36,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Description(Guid id)
         {
             var result = await productsRepository.GetByIdAsync(id);
-            return View(TinyMapper.Map<ProductViewModel>(result));
+            var product = TinyMapper.Map<ProductViewModel>(result);
+            return View(product);
         }
 
         public async Task<IActionResult> EditForm(Guid id)
@@ -59,7 +61,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var imagesPaths = imagesProvider.SafeFiles(editProduct.UploadedFile, ImageFolders.Products);
-                await productsRepository.EditAsync(editProduct.ToProduct(imagesPaths));
+                var productDB = TinyMapper.Map<Product>(editProduct);
+                await productsRepository.EditAsync(productDB);
                 return RedirectToAction("Index");
             }
             return View("EditForm", editProduct);
@@ -110,8 +113,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var imagesPaths = imagesProvider.SafeFiles(newProduct.UploadedFiles, ImageFolders.Products);
-
-                await productsRepository.CreateAsync(newProduct.ToProduct(imagesPaths));
+                var product = newProduct.ToProduct(imagesPaths);
+                await productsRepository.CreateAsync(product);
                 return RedirectToAction("Index");
             }
             return View("AddProduct", newProduct);

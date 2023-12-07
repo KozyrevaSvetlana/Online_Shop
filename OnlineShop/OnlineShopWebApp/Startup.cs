@@ -66,6 +66,8 @@ namespace OnlineShopWebApp
             });
 
             TinyMapper.Bind<Product, ProductViewModel>();
+            TinyMapper.Bind<ProductViewModel, Product>();
+
             TinyMapper.Bind<CartItem, CartItemViewModel>();
             TinyMapper.Bind<Compare, CompareViewModel>();
             TinyMapper.Bind<Favorites, FavoritesViewModel>();
