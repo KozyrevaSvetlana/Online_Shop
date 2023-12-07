@@ -1,6 +1,6 @@
 ﻿@model IndexViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Добро пожаловать";
 }
 <div><h1 class="display-4">Все товары</h1></div>
 <div class="row gx-4 gx-lg-5">
@@ -12,7 +12,7 @@
                     <div><img class="card-img-top" href="@product.Image" src="@product.Image" alt="@product.Name" /></div>
                     <h2 class="card-title"><a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@product.Id">@product.Name</a></h2>
                     <div>
-                        <p class="font-weight-normal">@product.Description</p>
+                        <p class="font-weight-normal">@(product.Description.Substring(0, 100))...</p>
                     </div>
                     <p class="font-weight-normal">@product.Cost ₽</p>
                 </div>
