@@ -26,8 +26,11 @@ namespace OnlineShopWebApp.Views.Shared.ViewComponents.FavoritesViewComponent
             if (user != null)
             {
                 var compare = await compareRepository.GetByIdAsync(null, user.UserName);
-                var compareViewModel = TinyMapper.Map<CompareViewModel>(compare);
-                compareItemsCount = compareViewModel?.Items.Count ?? 0;
+                if(compare != null)
+                {
+                    var compareViewModel = TinyMapper.Map<CompareViewModel>(compare);
+                    compareItemsCount = compareViewModel?.Items.Count ?? 0;
+                }
             }
             return View("Compare", compareItemsCount);
         }

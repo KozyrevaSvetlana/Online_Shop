@@ -11,38 +11,5 @@ namespace ModelsLibrary.ModelsVM
         public RoleViewModel Role { get; set; }
         public string Image { get; set; }
         public UserViewModel() { }
-        public void AddContacts(UserContactViewModel contacts)
-        {
-            Contacts.Name = contacts.Name;
-            Contacts.Surname = contacts.Surname;
-            Contacts.Email = contacts.Email;
-            Contacts.Phone = contacts.Phone;
-            Contacts.Address = contacts.Address;
-        }
-        public List<string> GetEmptyContacts()
-        {
-            var result = new List<string>();
-            if (Contacts.Name == "")
-            {
-                result.Add("Имя не заполнено");
-            }
-            if (Contacts.Surname == "")
-            {
-                result.Add("Фамилия не заполнена");
-            }
-            if (Contacts.Address == "")
-            {
-                result.Add("Адрес не заполнен");
-            }
-            if (Contacts.Phone == "")
-            {
-                result.Add("Телефон не заполнен");
-            }
-            if (Contacts.Email == "")
-            {
-                result.Add("Email не заполнен");
-            }
-            return result;
-        }
     }
 }

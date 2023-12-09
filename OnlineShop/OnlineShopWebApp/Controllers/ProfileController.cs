@@ -39,11 +39,6 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> ContactsAsync()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
-            var emptyContacts = user.ToUserViewModel().GetEmptyContacts();
-            if (emptyContacts.Count != 0)
-            {
-                ViewBag.Empty = emptyContacts;
-            }
             return View(user.ToUserViewModel());
         }
         public async Task<IActionResult> AddContactsAsync()

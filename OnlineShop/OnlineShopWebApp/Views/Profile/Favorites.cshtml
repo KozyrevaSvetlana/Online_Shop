@@ -9,7 +9,7 @@
                 <div class="row py-1">
                     <h1 class="display-4">Избранные товары</h1>
                 </div>
-                @if (ViewBag.Favorites == null)
+                @if (!ViewBag["Favorites"]?.Items?.Any())
                 {
                     <h2>Добавьте товар в избранное</h2>
                     <p>
