@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col">
                     <div class="list-group d-flex align-items-center py-5">
-                        <h4>Редактирование</h4>
+                        <h4>Редактирование !!!</h4>
                         <div class="text-danger" asp-validation-summary="All" />
                         <form method="post" class="form-group">
                             <div>
@@ -25,9 +25,9 @@
                                 <span class="badge badge-danger" asp-validation-for="Surname"></span>
                             </div>
                             <div>
-                                <label asp-for="Adress">Адрес</label>
-                                <input asp-for="Adress" class="form-control" type="text" name="Adress" tabindex="3" value="@Model.Adress">
-                                <span class="badge badge-danger" asp-validation-for="Adress"></span>
+                                <label asp-for="Address">Адрес</label>
+                                <input id="address" name="address" asp-for="Address" class="form-control" type="text" tabindex="3" value="@Model.Address">
+                                <span class="badge badge-danger" asp-validation-for="Address"></span>
                             </div>
                             <div>
                                 <label asp-for="Email">Email</label>

@@ -17,7 +17,7 @@ namespace ModelsLibrary.ModelsVM
             Contacts.Surname = contacts.Surname;
             Contacts.Email = contacts.Email;
             Contacts.Phone = contacts.Phone;
-            Contacts.Adress = contacts.Adress;
+            Contacts.Address = contacts.Address;
         }
         public List<string> GetEmptyContacts()
         {
@@ -30,7 +30,7 @@ namespace ModelsLibrary.ModelsVM
             {
                 result.Add("Фамилия не заполнена");
             }
-            if (Contacts.Adress == "")
+            if (Contacts.Address == "")
             {
                 result.Add("Адрес не заполнен");
             }

@@ -36,7 +36,7 @@ namespace OnlineShopWebApp.Helpers
             };
             orderViewModels.User.Name = orderDb.UserContacts.Name;
             orderViewModels.User.Surname = orderDb.UserContacts.Surname;
-            orderViewModels.User.Adress = orderDb.UserContacts.Adress;
+            orderViewModels.User.Address = orderDb.UserContacts.Adress;
             orderViewModels.User.Phone = orderDb.UserContacts.Phone;
             orderViewModels.User.Email = orderDb.UserContacts.Email;
             orderViewModels.InfoStatus.StatusOrder = (Statuses)orderDb.InfoStatus;
@@ -74,7 +74,7 @@ namespace OnlineShopWebApp.Helpers
             userVM.Id = userDb.Id;
             userVM.Contacts.Name = userDb.ContactsName ?? "";
             userVM.Contacts.Surname = userDb.Surname ?? "";
-            userVM.Contacts.Adress = userDb.Adress ?? "";
+            userVM.Contacts.Address = userDb.Adress ?? "";
             userVM.Contacts.Email = userDb.Email ?? "";
             userVM.Contacts.Phone = userDb.PhoneNumber ?? "";
             userVM.Image = userDb.Image ?? "/img/profile.webp";
@@ -94,7 +94,7 @@ namespace OnlineShopWebApp.Helpers
         {
             userDb.ContactsName = contacts.Name;
             userDb.Surname = contacts.Surname;
-            userDb.Adress = contacts.Adress;
+            userDb.Adress = contacts.Address;
             userDb.PhoneNumber = contacts.Phone;
             userDb.Email = contacts.Email;
         }

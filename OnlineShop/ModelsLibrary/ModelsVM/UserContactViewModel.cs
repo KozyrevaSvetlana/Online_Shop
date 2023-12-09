@@ -17,7 +17,7 @@ namespace ModelsLibrary.ModelsVM
 
         [Required(ErrorMessage = "Не указан адрес")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Неккоректный адрес. Он должен быть не менее 2 и не более 100 символов")]
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
 
         [Required(ErrorMessage = "Не указан телефон")]
@@ -36,7 +36,7 @@ namespace ModelsLibrary.ModelsVM
             {
                 errors.Add("Имя и Фамилия не должны совпадать");
             }
-            if (Name == Adress)
+            if (Name == Address)
             {
                 errors.Add("Имя и адрес не должны совпадать");
             }
