@@ -1,29 +1,44 @@
 ﻿@model IndexViewModel
+
+
+
+
 <div class="container px-4 text-center">
-    <div><h1 class="display-4">Все товары</h1></div>
-    <div class="row gx-4 gx-lg-5">
-        @foreach (var product in Model.Products)
-        {
-            <div class="col-md-4 mb-5 cardhover border">
-                <div class="card-body">
-                    <img class="card-img-top rounded" href="@product.Image" src="@product.Image" alt="@product.Name" />
-                    <h2 class="card-title"><a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@product.Id">@product.Name</a></h2>
-                    <div>
-                        <p class="font-weight-normal">@(product.Description.Substring(0, 100))...</p>
+    <div class="d-grid">
+        <h1 class="display-4">Все товары</h1>
+    </div>
+    <div class="d-grid">
+        <div class="row gx-4 gx-lg-5 p-2">
+            @foreach (var product in Model.Products)
+            {
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <img class="card-img-top rounded" href="@product.Image" src="@product.Image" alt="@product.Name" />
+                        <h5 class="card-title">
+                            <a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@product.Id">@product.Name</a>
+                        </h5>
+                        <p class="card-text">
+                            @(product.Description.Substring(0, 100))...
+                        </p>
+                        <form method="post">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="submit" class="btn btn-dark" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </button>
+                                <a type="button" class="btn btn-primary" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@product.Id">
+                                    <i class="fas fa-heart"></i>
+                                </a>
+                                <a type="button" class="btn btn-info" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@product.Id">
+                                    <i class="fa-solid fa-code-compare"></i>
+                                </a>
+                            </div>
+                        </form>
                     </div>
-                    <p class="font-weight-normal">@product.Cost ₽</p>
                 </div>
-                <form method="post">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="submit" class="btn btn-dark" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id">В корзину</button>
-                        <a type="button" class="btn btn-primary" asp-area="" asp-controller="Favorites" asp-action="Add" asp-route-id="@product.Id">В избранное</a>
-                        <a type="button" class="btn btn-info" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-id="@product.Id">Сравнить</a>
-                    </div>
-                </form>
-            </div>
-        }
-        <div class="d-grid gap-3">
-            <div class="p-2 bg-light border">
+            }
+        </div>
+        <div class="d-grid">
+            <div class="p-2">
                 <ul class="pagination">
                     @for (int i = 1; i < Model.PageInfo.TotalPages; i++)
                     {
