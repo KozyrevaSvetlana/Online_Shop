@@ -55,7 +55,7 @@ namespace OnlineShop.Db.Repositories
             foreach (var word in seachResults)
             {
                 resultList = await databaseContext.Products
-                    .Where(x => x.Name.ToLower().Contains(word.ToLower()))
+                    .Where(x => EF.Functions.Like(x.Name.ToLower(), $"%{word.ToLower()}%"))
                     .Include(x => x.Images)
                     .ToListAsync();
             }
