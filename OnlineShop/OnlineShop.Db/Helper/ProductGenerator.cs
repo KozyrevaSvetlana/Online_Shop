@@ -8,9 +8,9 @@ namespace OnlineShop.Db.Helper
 {
     public static class ProductGenerator
     {
-        public static List<Product> BaseProducts { get; set; } = new List<Product>();
-        public static List<Image> BaseImages { get; set; } = new List<Image>();
-        public static List<ProductsImages> ProductsImages { get; set; } = new List<ProductsImages>();
+        public static List<Product> BaseProducts { get; set; } = new ();
+        public static List<Image> BaseImages { get; set; } = new ();
+        public static HashSet<ProductsImages> ProductsImages { get; set; } = new ();
         private static Random random = new Random();
         private static List<string> names = new List<string>
         {
@@ -109,7 +109,7 @@ namespace OnlineShop.Db.Helper
 
         public static ProductsImages[] GeneradeRandomProductsImages()
         {
-            return ProductsImages.Distinct().ToArray();
+            return ProductsImages.ToArray();
         }
     }
 }

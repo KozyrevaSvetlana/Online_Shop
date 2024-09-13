@@ -10,7 +10,7 @@ namespace OnlineShop.Db.Helper
     {
         public static List<Product> BaseProducts { get; set; } = new List<Product>();
         public static List<Image> BaseImages { get; set; } = new List<Image>();
-        public static List<ProductsImages> ProductsImages { get; set; } = new List<ProductsImages>();
+        public static HashSet<ProductsImages> ProductsImages { get; set; } = new ();
         private static Random random = new Random();
         private static List<string> names = new List<string>
         {
@@ -105,11 +105,6 @@ namespace OnlineShop.Db.Helper
                 }
             }
             return BaseProducts;
-        }
-
-        public static ProductsImages[] GeneradeRandomProductsImages()
-        {
-            return ProductsImages.Distinct().ToArray();
         }
     }
 }
