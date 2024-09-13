@@ -48,18 +48,19 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<List<Product>> Search(string[] seachResults)
+        public async Task<List<Product>> Search(string[] words)
         {
-            var resultList = new List<Product>();
+            var result = new HashSet<Product>();
 
-            foreach (var word in seachResults)
+            foreach (var word in words)
             {
-                resultList = await databaseContext.Products
-                    .Where(x => EF.Functions.Like(x.Name.ToLower(), $"%{word.ToLower()}%"))
+                (await databaseContext.Products
+                    .Where(x => x.Name.ToLower().Contains(word.ToLower()))
                     .Include(x => x.Images)
-                    .ToListAsync();
+                    .ToListAsync())?
+                    .ForEach(x => result.Add(x));
             }
-            return resultList.Distinct().ToList();
+            return result.ToList();
         }
 
         public async Task EditAsync(Product editProduct)
