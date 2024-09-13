@@ -31,7 +31,9 @@ namespace OnlineShop.Db.Repositories
 
         public async Task<Compare> GetByIdAsync(Guid? id, string CompareId)
         {
-            return await databaseContext.Compares.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == CompareId);
+            return await databaseContext.Compares
+                .Include(x => x.Items)
+                .FirstOrDefaultAsync(x => x.UserId == CompareId) ?? new();
         }
         private async Task AddNewCompare(Product product, string userId)
         {

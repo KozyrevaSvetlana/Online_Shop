@@ -55,7 +55,9 @@ namespace OnlineShop.Db.Repositories
 
         public async Task<Favorites> GetByIdAsync(Guid? id = null, string userId = null)
         {
-            return await databaseContext.Favorites.Include(x => x.Items).FirstOrDefaultAsync(x => x.UserId == userId);
+            return await databaseContext.Favorites
+                .Include(x => x.Items)
+                .FirstOrDefaultAsync(x => x.UserId == userId) ?? new();
         }
         private async Task AddNewFavorite(Product product, string userId)
         {

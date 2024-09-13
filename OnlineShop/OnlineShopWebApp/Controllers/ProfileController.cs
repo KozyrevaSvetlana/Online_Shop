@@ -70,7 +70,7 @@ namespace OnlineShopWebApp.Controllers
         public async Task<IActionResult> FavoritesAsync()
         {
             var userDb = await userManager.GetUserAsync(HttpContext.User);
-            ViewBag.Favorites = favoritesRepository.GetByIdAsync(null, userDb.UserName);
+            ViewBag.Favorites = await favoritesRepository.GetByIdAsync(null, userDb.UserName);
             return View(userDb.ToUserViewModel());
         }
         public IActionResult ChangeProfileImage()
