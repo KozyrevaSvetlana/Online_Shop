@@ -48,11 +48,11 @@ namespace OnlineShop.Db.Repositories
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task<List<Product>> Search(string[] seachResults)
+        public async Task<List<Product>> Search(string[] words)
         {
             var result = new HashSet<Product>();
 
-            foreach (var word in seachResults)
+            foreach (var word in words)
             {
                 (await databaseContext.Products
                     .Where(x => x.Name.ToLower().Contains(word.ToLower()))
